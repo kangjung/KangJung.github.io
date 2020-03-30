@@ -1,2 +1,2 @@
-# aaggff1112.github.io
+# KangJung.github.io
 깃헙 블로그
