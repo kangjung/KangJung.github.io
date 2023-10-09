@@ -11,7 +11,7 @@ category: auto generated
 # multiple tag entries are possible
 tags: [eGovFrame, 컨트리뷰션, 전자정부 표준프레임워크]
 # thumbnail image for post
-img: ":post_pic1.jpg"
+img: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FXfkLQ%2FbtrLawGAupU%2FtPATa9kc46bN6lYCo8h210%2Fimg.png"
 # disable comments on this page
 comments_disable: true
 
@@ -44,9 +44,13 @@ date: 2022-09-02 11:32:53 +0900
 {%- include util/auto-content-generator.liquid -%}
 
 <!-- outline-start -->
+<img src = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FXfkLQ%2FbtrLawGAupU%2FtPATa9kc46bN6lYCo8h210%2Fimg.png" width="68%">
+<img src = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbeMTd6%2FbtrLchBPHyI%2FXcUBvMDSoS2CQlFWkpBNHk%2Fimg.png" width="31%">
+2022년 3월 28일부터 7월 31일까지 진행됐던 [2022 전자정부 표준 프레임워크 컨트리뷰션](https://open.egovframe.org/oc/support/noticeItem.do?nttId=20042&pageIndex=3)에서 참가자에게 주는 감사장과 기념품인 보조배터리가 왔습니다.
+회사에서 개발을 할 때 요구사항 때문에 egov를 사용하기는 하지만 전자정부의 기능이나 egov 공통 컴포넌트는 제대로 써본 적이 없는 것 같습니다. 거의 향만 첨가한다고 할까... 어쨌든 작년에도 했던 컨트리뷰션 행사는 2022년에도 진행했고, 그때는 이런것도 하는구나... 하고  넘어갔지만 올해는 나도 아주 살짝궁 발을 담가봤네요.
+![GIT 잔디](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcHYBsg%2FbtrLaCteF6e%2FuuhcPIRuOeaOSFXda1xZ70%2Fimg.png){:data-align="center"}
 
-{{ website_info_text_first }}
+이슈나 작업에 대한 반응은 없어서 아쉽긴 하지만, 물론 그래 봐야 엄청 간단한 오타 수정 정도의 Pull requests(제대로 수정한 건지도 모르겠지만..) 같은 내용 다른 프로젝트에 각각 한 번씩 2번 한 게 다였습니다.
+막상 할려고 하면 시간이 없다는 핑계에 발만 담갔는데 이슈를 하나 올리던 풀 리퀘스트를 하나 하던 참가만 하면 모두에게 기념품을 주니 뭔가 제대로 해볼걸... 이라는 생각이 들기도 한다. 내년에 또 참가한다면 그때는 좀 열심히 해봐야겠습다.
 
 <!-- outline-end -->
-
-{{ website_info_text_second }}
