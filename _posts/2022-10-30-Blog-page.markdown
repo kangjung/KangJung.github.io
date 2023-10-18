@@ -16,7 +16,7 @@ img: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%
 comments_disable: true
 
 # publish date
-date: 2022-09-02 11:32:53 +0900
+date: 2022-10-30 18:34:53 +0900
 
 # seo
 # if not specified, date will be used.
