@@ -120,3 +120,11 @@ sass:
 # Exclude these files or folders from production site
 ###########################################################
 exclude: ["Gemfile*", "vendor", ".github", ".vscode", "README*", "CODE_OF_CONDUCT.md", "LICENSE", "docs"]
+
+# Analytics
+analytics:
+  provider               : "google-gtag"
+  # false (default), "google", "google-universal", "google-gtag", "custom"
+  google:
+    tracking_id          : "G-NML6BS1JMB"
+    anonymize_ip         : # true, false (default)
