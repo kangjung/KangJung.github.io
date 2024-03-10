@@ -20,6 +20,18 @@
     </div>
     <script src="Build/PlanetGame.loader.js"></script>
     <script>
+
+      window.onresize = function() {
+        if(window.outerWidth < 320){
+          canvas.style.height = "60%";
+        } else if(window.outerWidth < 410){
+          canvas.style.height = "70%";
+        } else if(window.outerWidth < 436){
+          canvas.style.height = "80%";
+        } else {
+          canvas.style.height = "90%";
+        }
+      }
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
         var meta = document.createElement('meta');
@@ -29,7 +41,12 @@
 
         var canvas = document.querySelector("#unity-canvas");
         canvas.style.width = "100%";
-        canvas.style.height = "90%";
+        if(window.outerWidth < 436){
+          canvas.style.height = "70%";
+        } else {
+          canvas.style.height = "90%";
+        }
+
         canvas.style.position = "fixed";
 
         document.body.style.textAlign = "left";
