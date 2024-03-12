@@ -20,7 +20,17 @@
     </div>
     <script src="Build/PlanetGame.loader.js"></script>
     <script>
-
+      window.onload = function() {
+        if(window.outerWidth < 320){
+          canvas.style.height = "60%";
+        } else if(window.outerWidth < 410){
+          canvas.style.height = "70%";
+        } else if(window.outerWidth < 436){
+          canvas.style.height = "80%";
+        } else {
+          canvas.style.height = "90%";
+        }
+      }
       window.onresize = function() {
         if(window.outerWidth < 320){
           canvas.style.height = "60%";
