@@ -48,11 +48,11 @@ date: 2022-11-10 11:40:53 +0900
 ## ETRI OPEN SOURCE TECH DAY 2022
 
 2022년 11월 8일 진행된 **ETRI OPEN SOURCE TECH DAY 2022**에 갔다 왔습니다.
-![식권](https://blog.kakaocdn.net/dn/VCh0Q/btrQHBDyFA7/otNhadl52QVBTZW05o3FGk/img.jpg):data-align="center"}
+![식권](https://blog.kakaocdn.net/dn/VCh0Q/btrQHBDyFA7/otNhadl52QVBTZW05o3FGk/img.jpg){:data-align="center"}
 등록을 하니 식권과 명찰을 같이 받았고..
 
 ## 기조연설
-![기조연설](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FckzuIg%2FbtrQJPN4pcA%2FTDKMpQQJFlwT5R7L29BT6k%2Fimg.png):data-align="center"}
+![기조연설](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FckzuIg%2FbtrQJPN4pcA%2FTDKMpQQJFlwT5R7L29BT6k%2Fimg.png){:data-align="center"}
 
 오전 시간의 기조연설? 발표? 는 대강 오픈소스 산업에 대한 내용이였습니다.
 
@@ -68,7 +68,7 @@ date: 2022-11-10 11:40:53 +0900
 
 
 ## 점심
-![점심](https://blog.kakaocdn.net/dn/5Smiz/btrQGSywOez/ILZPn6AvOsIUx0xVcU5ajK/img.jpg):data-align="center"}
+![점심](https://blog.kakaocdn.net/dn/5Smiz/btrQGSywOez/ILZPn6AvOsIUx0xVcU5ajK/img.jpg){:data-align="center"}
 
 오전 기조연설을 듣고 나오니 아침에 받은 기념품 교환권으로 기념품을 교환해 주고 있었습니다.
 기념품은 작은 우산이었는데 가방 같은데 넣고 다니기 좋을것 같네요.
