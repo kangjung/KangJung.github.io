@@ -74,6 +74,7 @@ js13kGames는 13kb 이하로 자바스크립트 게임을 만드는 게임잼입
 그리고 용량을 생각하면 처음부터 이미지를 파일 하나로 저장해서 잘라 쓴다거나 벡터 그래픽을 쓰거나 했었다면 더 깔끔하게 용량을 맞췄을 것 같고, canvas를 좀 더 알고 있었다면 코드에서도 필요 없는 부분을 줄여서 마지막 날에 부랴부랴 압축 때문에 고생을 안 했을 것 같다는 생각이 들었습니다. 그래도 재밌는 경험이었고, 아마 내년에도 참가를 하지 않을까 싶습니다.
 게임 개발 실력은 늘지 않는 것 같지만, 뭐 애초에 평소에 개발을 안 했으니, 다음번엔 좀 더 잘해보기로!
 
+## 추가내용
 ![등수](https://private-user-images.githubusercontent.com/28768760/294091769-990b1f57-f7d3-4cc2-9c29-ef8a03eae3eb.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTAzMzY5NzEsIm5iZiI6MTcxMDMzNjY3MSwicGF0aCI6Ii8yODc2ODc2MC8yOTQwOTE3NjktOTkwYjFmNTctZjdkMy00Y2MyLTljMjktZWY4YTAzZWFlM2ViLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDAzMTMlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwMzEzVDEzMzExMVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTNiNjJmYWY0NGFiNjcwYmM0NTY0NDJiOGQ0OGI0ODg4MDNkMzQ1ODllOWZhYzk3MmY0MzlmMzNmZjZmMTY3YTcmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.d6Mh99VdU41jyqp2v2e4oz4fLZdKMNCMTs2IxXEMOsk)
 다행히 이번에는 100등안에 들어갈수 있었습니다.
 
