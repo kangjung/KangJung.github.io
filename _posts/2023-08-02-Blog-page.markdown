@@ -9,7 +9,7 @@ title: Google I/O Extended 2023 Seoul 후기
 # multiple category is not supported
 category: auto generated
 # multiple tag entries are possible
-tags: [Google I/O Extended 2023 Seoul, 컨퍼런스]
+tags: [컨퍼런스]
 # thumbnail image for post
 img: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdTbfSr%2FbtspNgqMocZ%2FeUCij0yXmbklJUHmXs45GK%2Fimg.png"
 # disable comments on this page

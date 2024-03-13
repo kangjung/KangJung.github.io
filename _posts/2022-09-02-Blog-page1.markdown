@@ -9,7 +9,7 @@ title: 2022 전자정부 표준프레임워크 컨트리뷰션 후기
 # multiple category is not supported
 category: auto generated
 # multiple tag entries are possible
-tags: [eGovFrame, 컨트리뷰션, 전자정부 표준프레임워크]
+tags: [eGovFrame, 컨트리뷰션]
 # thumbnail image for post
 img: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FXfkLQ%2FbtrLawGAupU%2FtPATa9kc46bN6lYCo8h210%2Fimg.png"
 # disable comments on this page
