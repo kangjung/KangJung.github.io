@@ -25,6 +25,16 @@
   <link rel="preconnect dns-prefetch" href="https://www.googletagmanager.com" crossorigin>
 {%- endif -%}
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NML6BS1JMB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-NML6BS1JMB');
+</script>
+
 {%-comment-%} Standard icons {%-endcomment%}
 <link rel="shortcut icon" href="{{ site.baseurl }}/assets/img/favicons/favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="{{ site.baseurl }}/assets/img/favicons/favicon-32x32.png">
