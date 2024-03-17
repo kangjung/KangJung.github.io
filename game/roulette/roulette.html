@@ -4,22 +4,23 @@
         <meta charset="utf-8" />
         <title>HTML Roulette</title>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2007216448786117" crossorigin="anonymous"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-NML6BS1JMB"></script>
         <style></style>
     </head>
     <style>
-		body {          
-			width: 100%; 
-	        height: 100vh; 
-			background: skyblue; 
+		body {
+			width: 100%;
+	        height: 100vh;
+			background: skyblue;
 			overflow : hidden;
-		}	
+		}
 		.container {
 			display: grid;
 			min-height: 100%;
 			align-content: center;
 			justify-content: center;
 		}
-		
+
 		#roullete {
 			width: 400px;
 			height: 400px;
@@ -28,7 +29,7 @@
 			border: 3px solid black;
 			position: relative;
 		}
-		
+
 		.panel {
 			position: absolute;
 			width: 400px;
@@ -37,7 +38,7 @@
 			-webkit-clip-path: polygon(0% 0%, 50% 50%, 0% 50%, 0% 0%);
 			clip-path: polygon(0% 0%, 50% 50%, 0% 50%, 0% 0%);
 		}
-		
+
 		.txt {
 			font-size: 24px;
 			width: 260px;
@@ -48,7 +49,7 @@
 			text-align: center;
 			transform: rotate(-67deg);
 		}
-		
+
 		.pallet{
 			width: 295px;
 			height: 180px;
@@ -65,27 +66,27 @@
 			margin: 1px 1px 0px 0px;
 			text-align: center;
 		}
-		.popup { 
-			position: fixed; 
-			left: 0; 
-			top: 0; 
-			width: 100%; 
-			height: 100%; 
-			background-color: rgba(0, 0, 0, 0.5); 
-			opacity: 0; 
-			visibility: hidden; 
-			transform: scale(1.1); 
-			transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s; 
-     	} 
-     	
-		.popup-content { 
-			position: absolute; 
-			top: 50%; 
-			left: 50%; 
-			transform: translate(-50%, -50%); 
-			background-color: white; 
-			padding: 1rem 1.5rem; 
-			border-radius: 0.5rem; 
+		.popup {
+			position: fixed;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.5);
+			opacity: 0;
+			visibility: hidden;
+			transform: scale(1.1);
+			transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+     	}
+
+		.popup-content {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background-color: white;
+			padding: 1rem 1.5rem;
+			border-radius: 0.5rem;
 		}
 		.btnArea {
     		float: right;
@@ -99,17 +100,17 @@
 		    padding-right: 15px;
 		    color: #ffffff
 	    }
-		.show-popup { 
-			opacity: 1; 
+		.show-popup {
+			opacity: 1;
 			z-index:5;
-			visibility: visible; 
-			transform: scale(1.0); 
-			transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s; 
+			visibility: visible;
+			transform: scale(1.0);
+			transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
 		}
 		#addDiv{
 					position: absolute;
 		}
-		.arrow{    
+		.arrow{
 			left: 50%;
 		    position: sticky;
 		    z-index: 1;
@@ -122,7 +123,7 @@
 		#copyright{
 			font-size: 7px;
 		}
-		
+
 		table {
 		    border-collapse: separate;
 		    border-spacing: 1px;
@@ -149,11 +150,11 @@
 		window.onload = function(){
 			initRoulette();
 		}
-		
+
     	function initRoulette(){
     		setRoulettePanel();
     		initAddPop();
-    		
+
         	document.getElementById("roullete").addEventListener("animationstart", function(e) {
         	    console.log("시작");
         	}, false);
@@ -168,26 +169,26 @@
     	}
     	function openAddPop(){
     		document.getElementById("btnArea").innerHTML = '<input type="button" id="cancelBtn" value="CANCEL" onclick="triggerAddPop();"><input type="button" id="addBtn" value="ADD" onclick="clickAddBtn();">';
-    		
+
    			document.getElementById("addText").value = "";
    			document.getElementById("fontColor").value = "";
    			document.getElementById("color").value = "";
    			document.getElementById("colorTypeBg").checked = "checked"
-    		
-    		document.querySelector(".popup").classList.toggle("show-popup"); 
+
+    		document.querySelector(".popup").classList.toggle("show-popup");
     	}
-    	
+
     	function openUpdatePop(index){
     		document.getElementById("btnArea").innerHTML = '<input type="button" id="cancelBtn" value="CANCEL" onclick="triggerAddPop();"><input type="button" id="saveBtn" value="SAVE" onclick="clickUpdateBtn('+index+');">';
-    		
+
 			var target = document.getElementById("panelInfo"+index);
 			document.getElementById("addText").value = target.innerHTML;
 			document.getElementById("fontColor").value = target.style.color;
 			document.getElementById("color").value = target.style.background;;
-			document.getElementById("colorTypeBg").checked = "checked"	
-	    	document.querySelector(".popup").classList.toggle("show-popup"); 
+			document.getElementById("colorTypeBg").checked = "checked"
+	    	document.querySelector(".popup").classList.toggle("show-popup");
     	}
-    	
+
     	function initAddPop(){
 			//2차원 배열 파레트 데이터
 			var pallet = [["#FF0000", "#FF5E00", "#FFBB00", "#FFE400", "#ABF200", "#1DDB16", "#00D8FF", "#0054FF", "#0100FF", "#5F00FF", "#FF00DD", "#FF007F", "#000000", "#FFFFFF"],
@@ -212,75 +213,75 @@
 				colorBox[i].style.background = colorBox[i].id;
 			}
 		}
-    	
+
     	function setRoulettePanel(){
     		var panelArr =  document.querySelectorAll(".panel")
     		let panelArrSize = panelArr.length;
     		let rotate = 360 / panelArrSize;
-    		
+
     		var i = 0
     		var panelRotate = 0;
     		var panelInfoTbody = [];
     		while ( i < panelArrSize){
-    			panelRotate = panelRotate + rotate; 
+    			panelRotate = panelRotate + rotate;
     			panelArr[i].style.transform = "rotate("+panelRotate+"deg)";
     			i = i + 1;
     			panelInfoTbody.push("<tr><td id=\"panelInfo"+i+"\" style=\"background:"+panelArr[i-1].style.background+"; color:"+panelArr[i-1].style.color+"\">"+panelArr[i-1].innerText+"</td>");
     			panelInfoTbody.push("<td><button onclick=\"openUpdatePop('"+i+"');\">수정</button></td></tr>");
-    			
+
     		}
     		panelInfoTbody.push("<tr><td colspan=\"2\"><button class=\"addBtn\" onclick=\"openAddPop('add');\">ADD</button></td></tr>");
     		document.getElementById("panelInfoTbody").innerHTML = panelInfoTbody.join('');
     	}
-    	
+
     	function clickAddBtn(){
     		var roullete = document.getElementById("roullete");
     		let size = document.querySelectorAll(".panel").length+1;
     		let addPanel = document.createElement("div");
     		var panelText = document.getElementById("addText").value;
-    		
+
     		addPanel.setAttribute("class", "panel panel_" + size);
     		addPanel.innerHTML = "<strong class=\"txt\">"+panelText+"</strong>";
 
     		addPanel.style.background = document.getElementById("color").value;
     		addPanel.style.color = document.getElementById("fontColor").value;
-    		
+
     		roullete.appendChild(addPanel);
     		roullete.setAttribute("class", "eq" + size);
     		setRoulettePanel();
-    		document.querySelector(".popup").classList.toggle("show-popup"); 
+    		document.querySelector(".popup").classList.toggle("show-popup");
     	}
-    	
+
     	function clickUpdateBtn(index){
     		let targetPanel = document.querySelector(".panel_" + index);
     		var panelText = document.getElementById("addText").value;
-    		
+
     		targetPanel.innerHTML = "<strong class=\"txt\">"+panelText+"</strong>";
 
     		targetPanel.style.background = document.getElementById("color").value;
     		targetPanel.style.color = document.getElementById("fontColor").value;
-    		
+
     		setRoulettePanel();
-    		document.querySelector(".popup").classList.toggle("show-popup"); 
+    		document.querySelector(".popup").classList.toggle("show-popup");
     	}
-    	
+
     	function clickStartBtn() {
-    		
+
     		document.getElementById("roullete").style.animation = "";
     		var randomRotate = (Math.random() * 3000) + 1000;
     		var randomAnimation = (Math.random() * 7000) + 2000;
-    		
+
     		//document.getElementById("roullete").style.animation = "rotation 7s forwards ease-in-out";
     		document.getElementById("roullete").animate([
     		    { transform: "rotate(0deg)" },{ transform: "rotate("+randomRotate + "deg)" }
-    	      ], 
+    	      ],
     	      {
     			fill: 'forwards',
     		    duration: randomAnimation,
     		    easing: 'ease-in-out'
     		   }
-    		);         
-    		
+    		);
+
 		}
 
     	function colorSet(target){
@@ -294,9 +295,9 @@
     		}
 		}
     </script>
-    
+
     <body>
-    	<div class="container"> 
+    	<div class="container">
     		<header class="header">
     			<h1 class="title">Roulette</h1>
     		</header>
@@ -325,10 +326,10 @@
 
 	        <p id="copyright">HTML Roulette Copyright (c) 2021 KangJungMin All rights reserved.</p>
         </div>
-        
+
         <!-- 롤렛 패널 수정 팝업  -->
-		<div class="popup"> 
-			<div class="popup-content"> 
+		<div class="popup">
+			<div class="popup-content">
 				<h1 class="title">panel edit</h1>
 				<table>
 					<tbody>
@@ -342,7 +343,7 @@
 							TEXT
 						</td>
 					</tr>
-					
+
 					<tr>
 						<td>
 							<input type="radio" id="colorTypeBg" name="colorType" value="background" checked="checked">
@@ -357,7 +358,7 @@
 							<input type="hidden" id="color">
 						</td>
 					</tr>
-					 
+
 					</tbody>
 				</table>
 		         <div class="btnArea" id="btnArea">
@@ -367,6 +368,6 @@
 		         </div>
 	         </div>
 	     </div>
-        
+
     </body>
 </html>

@@ -4,6 +4,7 @@
         <meta charset="utf-8" />
         <title>2048 GAME</title>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2007216448786117" crossorigin="anonymous"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-NML6BS1JMB"></script>
         <style></style>
     </head>
     <script type="text/javascript" src="./jsGame_2048.js"></script>
@@ -11,14 +12,14 @@
     	.pressed {
 		  transform: scale(1.1);
 		}
-		
-		body {          
-			width: 100%; 
-            height: 100vh; 
-			background: skyblue; 
+
+		body {
+			width: 100%;
+            height: 100vh;
+			background: skyblue;
 			overflow : hidden;
 		}
-		
+
 		#btnArea button {
 		    background: #2860c5;
 		    color: #fff;
@@ -46,7 +47,7 @@
 			align-content: center;
 			justify-content: center;
 		}
-		
+
 		#gamearea .cell {
 		    background: transparent;
 		    border: 1px solid #d6ced6;
@@ -63,7 +64,7 @@
 		    width:400px;
 		    height:400px;
 		}
-		
+
 		#content > div {
 			display: none;
 		}
@@ -71,12 +72,12 @@
 			display: block;
 		}
 
-		
+
 		#gamearea{
 		    width:400px;
 		    height:400px;
 		}
-		
+
 		h1 {
 		    font-size: 35px;
 		    float: left;
@@ -92,23 +93,23 @@
 		    margin: 0 1px;
 		    text-align: center;
     	}
-    	
+
     	.scorePad dl dd {
     		font-size: 19px;
     		padding-left: 2px;
     	}
-    	
+
     	.scorePad dl dt {
     		padding-bottom: 5px;
 	    	font-size: 14px;
     	}
-    	#intro{    
+    	#intro{
     	    width: 400px;
 			height: 400px;
     		background: rgba(0, 0, 0, 0.5);
 		    text-align: center;
     	}
-    	#intro p { 
+    	#intro p {
     		margin: 0 auto;
 	    	padding: 40px 0;
 		    color: #fff;
@@ -126,7 +127,7 @@
     	window.onload = function(){
 	   		window.addEventListener("keydown", e => {
 	   			const key = document.getElementById(e.key);
-	   			if (key) { 
+	   			if (key) {
 	   				key.classList.add('pressed');
 	   				key.click();
 	   			}
@@ -135,7 +136,7 @@
       		  	const key = document.getElementById(e.key);
       		  	if (key) key.classList.remove('pressed');
       		});
-	       	
+
 	       	//로컬 스토리지에 있는 최고점수 조회
 	   		var bestScore = localStorage.getItem("2048_best_score");
 	   		console.log(bestScore);
@@ -143,12 +144,12 @@
 	   			document.getElementById("bestScore").innerHTML = bestScore;
 	   		}
     	}
-    	
+
     </script>
-    
+
     <body>
-    
-    	<div class="container"> 
+
+    	<div class="container">
     		<header class="header">
     			<h1 class="title">2048</h1>
     			<div class="scorePad">
@@ -161,9 +162,9 @@
     					<dd id="bestScore">0</dd>
     				</dl>
     			</div>
-    			</span>	
+    			</span>
     		</header>
-    		
+
 			<div id="content">
 	    		<div id="intro" class="on">
 	    			<p>Arrow keys work too</p>

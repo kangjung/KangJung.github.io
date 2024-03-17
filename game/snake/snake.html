@@ -3,7 +3,8 @@
     <head>
         <meta charset="utf-8" />
         <title>SNAKE GAME</title>
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2007216448786117" crossorigin="anonymous"></script>       
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2007216448786117" crossorigin="anonymous"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-NML6BS1JMB"></script>
         <style></style>
     </head>
     <script type="text/javascript" src="./snake.js"></script>
@@ -11,14 +12,14 @@
     	.pressed {
 		  transform: scale(1.1);
 		}
-		
-		body {          
-			width: 100%; 
-            height: 100vh; 
-			background: skyblue; 
+
+		body {
+			width: 100%;
+            height: 100vh;
+			background: skyblue;
 			overflow : hidden;
 		}
-		
+
 		#btnArea button {
 		    background: #2860c5;
 		    color: #fff;
@@ -46,12 +47,12 @@
 			align-content: center;
 			justify-content: center;
 		}
-		
+
 		#content{
 		    width:400px;
 		    height:400px;
 		}
-		
+
 		#content > div {
 			display: none;
 		}
@@ -59,12 +60,12 @@
 			display: block;
 		}
 
-		
+
 		#gamearea{
 		    width:400px;
 		    height:400px;
 		}
-		
+
 		h1 {
 		    font-size: 35px;
 		    float: left;
@@ -80,23 +81,23 @@
 		    margin: 0 1px;
 		    text-align: center;
     	}
-    	
+
     	.scorePad dl dd {
     		font-size: 19px;
     		padding-left: 2px;
     	}
-    	
+
     	.scorePad dl dt {
     		padding-bottom: 5px;
 	    	font-size: 14px;
     	}
-    	#intro{    
+    	#intro{
     	    width: 400px;
 			height: 400px;
     		background: rgba(0, 0, 0, 0.5);
 		    text-align: center;
     	}
-    	#intro p { 
+    	#intro p {
     		margin: 0 auto;
 	    	padding: 40px 0;
 		    color: #fff;
@@ -109,7 +110,7 @@
 		    border-radius: 3px;
     		font-size: 30px;
     	}
-    	
+
 		#snakeGamearea {
 			width: 100%;
 			height: 100%;
@@ -120,11 +121,11 @@
 			height: 17px;
 			background-color: #61A350;
 		}
-		#snakeGamearea tr:nth-child(even) td:nth-child(even)  { 
-			background-color: #adfb97; 
+		#snakeGamearea tr:nth-child(even) td:nth-child(even)  {
+			background-color: #adfb97;
 		}
-		#snakeGamearea tr:nth-child(odd) td:nth-child(odd)  { 
-			background-color: #adfb97; 
+		#snakeGamearea tr:nth-child(odd) td:nth-child(odd)  {
+			background-color: #adfb97;
 		}
 		td.snake{
 			background:url('./snake.png');
@@ -134,13 +135,13 @@
 			background:url('./apple.png');
 			background-size:cover;
 		}
-		
+
     </style>
     <script type="text/javascript">
     	window.onload = function(){
 	   		window.addEventListener("keydown", e => {
 	   			const key = document.getElementById(e.key);
-	   			if (key) { 
+	   			if (key) {
 	   				key.classList.add('pressed');
 	   				key.click();
 	   			}
@@ -149,19 +150,19 @@
       		  	const key = document.getElementById(e.key);
       		  	if (key) key.classList.remove('pressed');
       		});
-	       	
+
 	       	//로컬 스토리지에 있는 최고점수 조회
 	   		var bestScore = localStorage.getItem("snake_best_score");
 	   		if(bestScore > 0){
 	   			document.getElementById("bestScore").innerHTML = bestScore;
 	   		}
     	}
-    	
+
     </script>
-    
+
     <body>
-    
-    	<div class="container"> 
+
+    	<div class="container">
     		<header class="header">
     			<h1 class="title">SNAKE</h1>
     			<div class="scorePad">
@@ -174,9 +175,9 @@
     					<dd id="bestScore">0</dd>
     				</dl>
     			</div>
-    			</span>	
+    			</span>
     		</header>
-    		
+
 			<div id="content">
 	    		<div id="intro" class="on">
 	    			<p>Arrow keys work too</p>
