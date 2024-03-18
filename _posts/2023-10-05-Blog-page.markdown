@@ -11,7 +11,7 @@ category: auto generated
 # multiple tag entries are possible
 tags: [Unity, Unity Education Day]
 # thumbnail image for post
-img: "https://www.unitysquare.co.kr/resources/images/summit/top_visual_text3.png"
+img: ""
 # disable comments on this page
 comments_disable: true
 
