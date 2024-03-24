@@ -11,7 +11,7 @@ category: auto generated
 # multiple tag entries are possible
 tags: [Unity, Unity Education Day]
 # thumbnail image for post
-img: ""
+img: "https://kangjung.github.io/assets/img/default/profile_pic.png"
 # disable comments on this page
 comments_disable: true
 
