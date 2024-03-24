@@ -11,7 +11,7 @@ category: auto generated
 # multiple tag entries are possible
 tags: [컨퍼런스]
 # thumbnail image for post
-img: "https://img1.daumcdn.net/thumb/R1280x0/?fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcgZnrr%2FbtrQOBW1eTt%2FQl5c2x7ERNb1m3Kt9jSJvk%2Fimg.png"
+img: "https://blog.kakaocdn.net/dn/cgZnrr/btrQOBW1eTt/Ql5c2x7ERNb1m3Kt9jSJvk/img.png"
 # disable comments on this page
 comments_disable: true
 
@@ -44,7 +44,7 @@ date: 2022-11-10 11:40:53 +0900
 {%- include util/auto-content-generator.liquid -%}
 
 <!-- outline-start -->
-![ETRI OPEN SOURCE TECH DAY 2022](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb0FpgR%2FbtrPYEezTu7%2F7CurLJWOEdhd06iEkipsj0%2Fimg.png){:data-align="center"}
+![ETRI OPEN SOURCE TECH DAY 2022](https://blog.kakaocdn.net/dn/cgZnrr/btrQOBW1eTt/Ql5c2x7ERNb1m3Kt9jSJvk/img.png){:data-align="center"}
 ## ETRI OPEN SOURCE TECH DAY 2022
 
 2022년 11월 8일 진행된 **ETRI OPEN SOURCE TECH DAY 2022**에 갔다 왔습니다.
