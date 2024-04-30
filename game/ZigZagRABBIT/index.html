@@ -6,40 +6,79 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2007216448786117" crossorigin="anonymous"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-NML6BS1JMB"></script>
     <title>ZigZag RABBIT</title>
+    <style>
+      body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+      .webgl-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      #canvas-container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90%;
+      }
+      #unity-canvas {
+        background: #231F20;
+      }
+    </style>
   </head>
   <body style="text-align: center">
   <!-- 확장프로그램 -->
   <!-- 본문 상단 수평 -->
 
-  <div class="webgl-content" style="width: 100%; height: 100%;">
-    <div style="width: 100%;height: 10vh ">
+  <div class="webgl-content">
+    <div style="height: 10% ">
       <!-- 확장프로그램광고 -->
       <ins class="adsbygoogle" style="display:inline-block;width:100%;min-width:380px; height:90px" data-ad-client="ca-pub-2007216448786117" data-ad-slot="8678539906"></ins>
       <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
       </script>
     </div>
-    <canvas id="unity-canvas" style="width: 50vh; height: 85vh; background: #231F20"></canvas>
+    <div id="canvas-container">
+      <canvas id="unity-canvas"></canvas>
+    </div>
   </div>
     <script src="Build/1f01944e80fe7a928833c8b91dd945a9.js"></script>
     <script>
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        document.getElementsByTagName('head')[0].appendChild(meta);
+      function resizeCanvas() {
+        var canvas = document.getElementById("unity-canvas");
+        var canvasContainer = document.getElementById("canvas-container");
+        var aspectRatio = 9 / 16; // 9:16 비율
 
-        var canvas = document.querySelector("#unity-canvas");
-        canvas.style.width = "100%";
-        if(window.outerWidth < 436){
-          canvas.style.height = "70%";
-        } else {
-          canvas.style.height = "90%";
+        // 현재 화면의 너비와 높이 가져오기
+        var screenWidth = window.innerWidth;
+        var screenHeight = window.innerHeight * 0.9;
+
+        // 캔버스의 너비를 화면의 너비보다 작거나 같도록 설정
+        var canvasWidth = screenWidth;
+        var canvasHeight = screenWidth / aspectRatio;
+
+        // 캔버스의 너비가 화면의 높이보다 클 경우 캔버스의 너비와 높이 재조정
+        if (canvasHeight > screenHeight) {
+          canvasHeight = screenHeight;
+          canvasWidth = screenHeight * aspectRatio;
         }
-        canvas.style.position = "fixed";
-        document.body.style.textAlign = "left";
+
+        // 캔버스 크기 설정
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeight;
+
+        // 캔버스를 수직 중앙에 정렬하기 위해 컨테이너의 높이 조정
+        canvasContainer.style.height = canvasHeight + "px";
       }
+      // 페이지 로드 시 캔버스 크기 조정
+      window.onload = resizeCanvas;
+      // 창 크기 변경 시 캔버스 크기 조정
+      window.onresize = resizeCanvas;
 
       createUnityInstance(document.querySelector("#unity-canvas"), {
         dataUrl: "Build/4f0d11cab0eb601b9c2f8977a7e56b46.data.unityweb",
