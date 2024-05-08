@@ -5,6 +5,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2007216448786117" crossorigin="anonymous"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-NML6BS1JMB"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-NML6BS1JMB');
+    </script>
     <title>ZigZag RABBIT</title>
     <style>
       body, html {
@@ -32,21 +39,17 @@
     </style>
   </head>
   <body style="text-align: center">
-  <!-- 확장프로그램 -->
-  <!-- 본문 상단 수평 -->
-
-  <div class="webgl-content">
-    <div style="height: 10% ">
-      <!-- 확장프로그램광고 -->
-      <ins class="adsbygoogle" style="display:inline-block;width:100%;min-width:380px; height:90px" data-ad-client="ca-pub-2007216448786117" data-ad-slot="8678539906"></ins>
-      <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
+    <div class="webgl-content">
+      <div style="height: 10% ">
+        <ins class="adsbygoogle" style="display:inline-block;width:100%;min-width:380px; height:90px" data-ad-client="ca-pub-2007216448786117" data-ad-slot="8678539906"></ins>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+      <div id="canvas-container">
+        <canvas id="unity-canvas"></canvas>
+      </div>
     </div>
-    <div id="canvas-container">
-      <canvas id="unity-canvas"></canvas>
-    </div>
-  </div>
     <script src="Build/1f01944e80fe7a928833c8b91dd945a9.js"></script>
     <script>
       function resizeCanvas() {
@@ -90,6 +93,7 @@
       window.onresize = resizeCanvas;
 
       createUnityInstance(document.querySelector("#unity-canvas"), {
+        arguments: [],
         dataUrl: "Build/4f0d11cab0eb601b9c2f8977a7e56b46.data.unityweb",
         frameworkUrl: "Build/e8e9daf39a7f6a650a7924f0beb1bf3c.js.unityweb",
         codeUrl: "Build/62ea2a2354d41d68c8e1e172ae4da4b7.wasm.unityweb",
