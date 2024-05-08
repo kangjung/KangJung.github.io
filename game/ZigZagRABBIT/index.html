@@ -75,6 +75,15 @@
         // 캔버스를 수직 중앙에 정렬하기 위해 컨테이너의 높이 조정
         canvasContainer.style.height = canvasHeight + "px";
       }
+
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // Mobile device style: fill the whole browser client area with the game canvas:
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
+      }
+
       // 페이지 로드 시 캔버스 크기 조정
       window.onload = resizeCanvas;
       // 창 크기 변경 시 캔버스 크기 조정
