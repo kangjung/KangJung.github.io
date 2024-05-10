@@ -55,28 +55,21 @@
       function resizeCanvas() {
         let canvas = document.getElementById("unity-canvas");
         let canvasContainer = document.getElementById("canvas-div");
-        let aspectRatio = 9 / 16; // 9:16 비율
+        let aspectRatio = 9 / 16;
 
-        // 현재 화면의 너비와 높이 가져오기
         let screenWidth = window.innerWidth;
         let screenHeight = window.innerHeight * 0.9;
 
-        // 캔버스의 너비를 화면의 너비보다 작거나 같도록 설정
         let canvasWidth = screenWidth;
         let canvasHeight = screenWidth / aspectRatio;
 
-        // 캔버스의 너비가 화면의 높이보다 클 경우 캔버스의 너비와 높이 재조정
         if (canvasHeight > screenHeight) {
           canvasHeight = screenHeight;
           canvasWidth = screenHeight * aspectRatio;
         }
 
-        // 캔버스 크기 설정
-        // canvas.width = canvasWidth;
-        // canvas.height = canvasHeight;
-        canvas.setAttribute("width", canvasWidth);
-        canvas.setAttribute("height", canvasHeight);
-        // 캔버스를 수직 중앙에 정렬하기 위해 컨테이너의 높이 조정
+        canvas.style.width = canvasWidth + "px";
+        canvas.style.height = canvasHeight + "px";
         canvasContainer.style.height = canvasHeight + "px";
       }
 
