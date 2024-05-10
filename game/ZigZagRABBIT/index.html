@@ -72,8 +72,10 @@
         }
 
         // 캔버스 크기 설정
-        canvas.width = canvasWidth;
-        canvas.height = canvasHeight;
+        // canvas.width = canvasWidth;
+        // canvas.height = canvasHeight;
+        canvas.setAttribute("width", canvasWidth);
+        canvas.setAttribute("height", canvasHeight);
         // 캔버스를 수직 중앙에 정렬하기 위해 컨테이너의 높이 조정
         canvasContainer.style.height = canvasHeight + "px";
       }
