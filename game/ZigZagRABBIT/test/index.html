@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | ZigZag RABBIT</title>
+  </head>
+  <body style="text-align: center">
+    <canvas id="unity-canvas" width=500 height=960 style="width: 500px; height: 960px; background: #231F20"></canvas>
+    <script src="Build/1f01944e80fe7a928833c8b91dd945a9.js"></script>
+    <script>
+      createUnityInstance(document.querySelector("#unity-canvas"), {
+        dataUrl: "Build/af8384f0872b97dca4a16d19a9464208.data.unityweb",
+        frameworkUrl: "Build/e8e9daf39a7f6a650a7924f0beb1bf3c.js.unityweb",
+        codeUrl: "Build/4964674220bf066dbc67cc777349894d.wasm.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "KangJung",
+        productName: "ZigZag RABBIT",
+        productVersion: "1",
+        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
+        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+      });
+    </script>
+  </body>
+</html>
