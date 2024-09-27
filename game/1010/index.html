@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2007216448786117" crossorigin="anonymous"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NML6BS1JMB"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-NML6BS1JMB');
+    </script>
+    <title>1010!</title>
+    <style>
+      body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+      .webgl-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      #canvas-div {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90%;
+      }
+      #unity-canvas {
+        background: #231F20;
+      }
+    </style>
+  </head>
+  <body style="text-align: center">
+  <div class="webgl-content">
+    <div style="height: 10% ">
+      <ins class="adsbygoogle" style="display:inline-block;width:100%;min-width:380px; height:90px" data-ad-client="ca-pub-2007216448786117" data-ad-slot="8678539906"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <div id="canvas-div">
+      <canvas id="unity-canvas"></canvas>
+    </div>
+  </div>
+  <script src="Build/1010.loader.js"></script>
+  <script>
+    function resizeCanvas() {
+      let canvas = document.getElementById("unity-canvas");
+      let canvasContainer = document.getElementById("canvas-div");
+      let aspectRatio = 9 / 16;
+
+      let screenWidth = window.innerWidth;
+      let screenHeight = window.innerHeight * 0.9;
+
+      let canvasWidth = screenWidth;
+      let canvasHeight = screenWidth / aspectRatio;
+
+      if (canvasHeight > screenHeight) {
+        canvasHeight = screenHeight;
+        canvasWidth = screenHeight * aspectRatio;
+      }
+
+      canvas.style.width = canvasWidth + "px";
+      canvas.style.height = canvasHeight + "px";
+      canvasContainer.style.height = canvasHeight + "px";
+    }
+
+    // 페이지 로드 시 캔버스 크기 조정
+    window.onload = resizeCanvas;
+    // 창 크기 변경 시 캔버스 크기 조정
+    window.onresize = resizeCanvas;
+
+    createUnityInstance(document.querySelector("#unity-canvas"), {
+      arguments: [],
+      dataUrl: "Build/6c9452b9adc16adef88021f343a851e9.data.unityweb",
+      frameworkUrl: "Build/335af82bece4265080b38624cdb80af0.js.unityweb",
+      codeUrl: "Build/908372188bb55af48c16e1b1d98ac826.wasm.unityweb",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "KangJung",
+      productName: "1010!",
+      productVersion: "1"
+    });
+  </script>
+  </body>
+</html>
