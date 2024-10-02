@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>닭 테스트</title>
+  <style>
+    canvas {
+      display: block;
+      margin: 0 auto;
+      background: skyblue;
+    }
+  </style>
+</head>
+<body>
+<canvas id="gameCanvas" width="320" height="480"></canvas>
+
+<script>
+  const canvas = document.getElementById('gameCanvas');
+  const ctx = canvas.getContext('2d');
+
+  let bird;
+  let birdImage = new Image();
+  birdImage.src = 'test.svg';
+  let pipes;
+  let pipeWidth = 50;
+  let pipeGap = 190;
+  let pipeSpeed = 1.5;
+  let frameCount = 0;
+  let score = 0;
+  let gameOver = false;
+  let gravity = 0.2;
+  let lift = -6;
+  let passedPipes = [];
+
+  function resetGame() {
+    bird = {
+      x: 50,
+      y: 150,
+      width: 40,
+      height: 40,
+      gravity: gravity,
+      lift: lift,
+      velocity: 0
+    };
+
+    pipes = [];
+    frameCount = 0;
+    score = 0;
+    passedPipes = [];  // 초기화
+    gameOver = false;
+
+    gameLoop();
+  }
+
+  resetGame();
+
+  document.addEventListener('keydown', function (event) {
+    if (event.code === 'Space' && !gameOver) {
+      bird.velocity = bird.lift;
+    }
+  });
+
+  canvas.addEventListener('click', function () {
+    if (gameOver) {
+      resetGame();
+    } else {
+      bird.velocity = bird.lift;
+    }
+  });
+
+  function drawBird() {
+    ctx.save();
+
+    ctx.translate(bird.x + bird.width / 2, bird.y + bird.height / 2);
+    ctx.scale(-1, 1);
+    ctx.drawImage(birdImage, -bird.width / 2, -bird.height / 2, bird.width, bird.height);
+
+    ctx.restore();
+  }
+
+  function drawPipes() {
+    ctx.fillStyle = 'green';
+    pipes.forEach(pipe => {
+      ctx.fillRect(pipe.x, 0, pipeWidth, pipe.top);
+      ctx.fillRect(pipe.x, canvas.height - pipe.bottom, pipeWidth, pipe.bottom);
+    });
+  }
+
+  function updateBird() {
+    bird.velocity += bird.gravity;
+    bird.y += bird.velocity;
+
+    if (bird.y + bird.height >= canvas.height || bird.y <= 0) {
+      gameOver = true;
+    }
+  }
+
+  function updatePipes() {
+    if (frameCount % 120 === 0) {
+      let topPipeHeight = Math.floor(Math.random() * (canvas.height - pipeGap));
+      let bottomPipeHeight = canvas.height - topPipeHeight - pipeGap;
+
+      pipes.push({
+        x: canvas.width,
+        top: topPipeHeight,
+        bottom: bottomPipeHeight,
+        passed: false  // 점수를 아직 얻지 않은 상태로 설정
+      });
+    }
+
+    pipes.forEach(pipe => {
+      pipe.x -= pipeSpeed;
+    });
+
+    pipes = pipes.filter(pipe => pipe.x + pipeWidth > 0);
+  }
+
+  function checkCollision() {
+    pipes.forEach(pipe => {
+      if (
+        bird.x < pipe.x + pipeWidth &&
+        bird.x + bird.width > pipe.x &&
+        (bird.y < pipe.top || bird.y + bird.height > canvas.height - pipe.bottom)
+      ) {
+        gameOver = true;
+      }
+    });
+  }
+
+  function updateScore() {
+    pipes.forEach(pipe => {
+      if (pipe.x + pipeWidth < bird.x && !pipe.passed) {
+        score++;
+        pipe.passed = true;
+      }
+    });
+  }
+
+  function drawScore() {
+    ctx.fillStyle = 'black';
+    ctx.font = '20px Arial';
+    ctx.fillText(`Score: ${score}`, 10, 25);
+  }
+
+  function gameLoop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (!gameOver) {
+      drawBird();
+      drawPipes();
+      drawScore();
+
+      updateBird();
+      updatePipes();
+      checkCollision();
+      updateScore();
+
+      frameCount++;
+      requestAnimationFrame(gameLoop);
+    } else {
+      ctx.fillStyle = 'red';
+      ctx.font = '40px Arial';
+      ctx.fillText('Game Over', 50, canvas.height / 2);
+      ctx.font = '20px Arial';
+      ctx.fillText('Click to Restart', 50, canvas.height / 2 + 50);
+    }
+  }
+
+  birdImage.onload = function() {
+    gameLoop();
+  };
+</script>
+</body>
+</html>
