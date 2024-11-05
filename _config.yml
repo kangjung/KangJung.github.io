@@ -128,3 +128,6 @@ analytics:
   google:
     tracking_id          : "G-NML6BS1JMB"
     anonymize_ip         : # true, false (default)
+
+include:
+  - app-ads.txt
