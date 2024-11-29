@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2007216448786117" crossorigin="anonymous"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NML6BS1JMB"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-NML6BS1JMB');
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>lllilll-Game:Find the wrong alphabet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            letter-spacing: -0.025em;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Martel+Sans:wght@200;300;400;600;700;800;900&display=swap');
+
+        body {
+            font-family: "Martel Sans", sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fef6e4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            color: #222;
+        }
+
+        .game-container {
+            text-align: center;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        #grid {
+            display: grid;
+            grid-template-columns: repeat(10, 40px);
+            grid-gap: 5px;
+            margin: 20px auto;
+            justify-content: center;
+        }
+
+        .cell {
+            font-family: 'Roboto', sans-serif;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+            background-color: #fcffb0;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .cell:hover {
+            background-color: #f7e8e8;
+            cursor: pointer;
+        }
+
+        .cell.correct {
+            background-color: #d5f5d1;
+        }
+
+        .cell.incorrect {
+            background-color: #f7c6c6;
+        }
+
+        .start-screen {
+            text-align: center;
+            background: linear-gradient(135deg, #f9d5e5, #d8f2f3);
+            padding: 40px 60px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 95%;
+            max-width: 700px;
+            height: 600px;
+        }
+
+        .start-screen h1 {
+            font-family: "Martel Sans", sans-serif;
+            font-size: 36px;
+            color: #ff69b4;
+            margin-bottom: 20px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .start-screen p {
+            font-family: "Martel Sans", sans-serif;
+            font-size: 18px;
+            color: #666;
+            line-height: 1.45;
+            margin-bottom: 30px;
+            margin-top: 16px;
+            letter-spacing: 0.5px;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .button {
+            padding: 15px 30px;
+            background-color: #ff8fc7;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .start-screen .button:hover {
+            background-color: #4b45c8;
+            transform: scale(1.1);
+        }
+
+
+        .button:hover {
+            background-color: #ff6fa3;
+            transform: scale(1.05);
+        }
+
+        .button:active {
+            transform: scale(1);
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .game-over-container {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 420px;
+        }
+
+        .game-over-container h1 {
+            font-size: 40px;
+            margin-bottom: 8px;
+        }
+
+        .game-over-container p {
+            font-size: 24px;
+            margin-bottom: 14px;
+        }
+
+        .game-over-container button {
+            background-color: #e74c3c;
+            padding: 14px 24px;
+            font-size: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .game-over-container button:hover {
+            background-color: #c0392b;
+        }
+
+        .start-screen {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .start-screen h1 {
+            font-size: 50px;
+            margin-bottom: 10px;
+            font-family: "Martel Sans", sans-serif;
+            font-weight: 700;
+        }
+
+        .start-screen p {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px auto;
+            padding: 10px 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 452px;
+            font-size: 20px;
+            gap: 8px;
+        }
+
+        .timer-ui {
+            display: flex;
+            align-items: center;
+            background-color: #f4f4f9;
+            border: 2px solid #e74c3c;
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 24px;
+            color: #2c3e50;
+            font-weight: bold;
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+
+        }
+
+        .info-bar .ui-box {
+            width: 33.3333%;
+            justify-content: center;
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .info-bar .ui-box span {
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .info-bar .ui-box span.timer-icon {
+            font-size: 24px;
+        }
+
+        .timer-icon {
+            font-size: 24px;
+            margin-right: 8px;
+            color: #e74c3c;
+        }
+
+        .timer-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #e74c3c;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .score-ui {
+            display: flex;
+            align-items: center;
+            background-color: #f4f4f9;
+            border: 2px solid #2ecc71;
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 24px;
+            color: #27ae60;
+            font-weight: bold;
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+            justify-content: center;
+        }
+
+        .score-label {
+            margin-right: 8px;
+        }
+
+        .score-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #27ae60;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .score-ui.animate {
+            transform: scale(1.2);
+            background-color: #2ecc71;
+        }
+
+        .score-value.animate {
+            transform: scale(1.1);
+            color: #ffffff;
+        }
+
+        .score-ui,
+        .score-value {
+            transform: scale(1);
+        }
+
+        .hint-ui {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f4f4f9;
+            border: 2px solid #3498db;
+            width: 33.33%;
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 24px;
+            color: #2980b9;
+            font-weight: bold;
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+        }
+
+        .hint-label {
+            margin-right: 8px;
+        }
+
+        .letter-highlight {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2980b9;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .hint-ui.animate {
+            transform: scale(1.2);
+            background-color: #3498db;
+        }
+
+        .letter-highlight.animate {
+            transform: scale(1.5);
+            color: #ffffff;
+        }
+
+        .hint-ui,
+        .letter-highlight {
+            transform: scale(1);
+        }
+
+        @media (max-width: 600px) {
+            .game-container {
+                padding: 0 10px;
+            }
+
+            .start-screen {
+                padding: 24px 14px;
+                height: auto;
+            }
+
+            #grid {
+                grid-template-columns: repeat(10, 1fr);
+                grid-gap: 5px;
+                width: 100%;
+                margin: 0 auto;
+            }
+
+            .cell {
+                font-size: calc(10px + 1vw);
+                aspect-ratio: 1;
+                width: auto;
+                height: auto;
+                border-radius: 4px;
+            }
+
+            .info-bar {
+                padding: 12px;
+                max-width: 100%;
+            }
+
+            .info-bar .ui-box {
+                font-size: 22px;
+            }
+
+            .timer-ui,
+            .hint-ui,
+            .score-ui {
+                font-size: 12px;
+                padding: 5px 10px;
+            }
+
+            .timer-icon,
+            .timer-value,
+            .score-value,
+            .letter-highlight,
+            .info-bar .ui-box span.timer-icon,
+            .info-bar .ui-box span {
+                font-size: 20px;
+            }
+
+            .start-screen h1 {
+                font-size: 24px;
+            }
+
+            .start-screen h2 {
+                font-size: 18px;
+
+            }
+
+            .start-screen p {
+                font-size: 16px;
+                margin-top: 8px;
+                margin-bottom: 0;
+            }
+
+            .start-screen p br {
+                display: none;
+            }
+
+            .button {
+                font-size: 14px;
+                padding: 10px 20px;
+                margin-top: 16px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .info-bar {
+                padding: 8px;
+            }
+
+            .timer-icon,
+            .timer-value,
+            .score-value,
+            .letter-highlight,
+            .info-bar .ui-box span.timer-icon,
+            .info-bar .ui-box span {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div style="width: 100%;height: 10% ">
+  <!-- 확장프로그램광고 -->
+  <ins class="adsbygoogle" style="display:inline-block;width:100%;min-width:380px; height:90px" data-ad-client="ca-pub-2007216448786117" data-ad-slot="8678539906"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+<div style="height: 80%;">
+  <div class="start-screen" id="startScreen">
+      <h1>lllilll Game</h1>
+      <h2>Find the wrong alphabet</h2>
+      <p>Find another alphabet among the same alphabet.<br> For example, l between i and F between E!<br>
+          The time is 20 seconds! Look for as many as you can.</p>
+      <button class="button" onclick="startGame()">Start Game</button>
+  </div>
+
+  <div class="game-container" id="gameContainer" style="display: none;">
+      <div class="info-bar">
+          <div class="ui-box timer-ui">
+              <span class="timer-icon">⏱</span>
+              <span id="timer" class="timer-value">20</span>
+          </div>
+          <div class="ui-box hint-ui">
+              <span class="hint-label">Find : </span>
+              <span id="currentPair" class="letter-highlight">i</span>
+          </div>
+          <div class="ui-box score-ui">
+              <span class="score-label">Score : </span>
+              <span id="score" class="score-value">0</span>
+          </div>
+      </div>
+      <div class="grid" id="grid"></div>
+      <button class="button" onclick="startGame()">Restart Game</button>
+  </div>
+  <div class="game-over-container" id="gameOverScreen">
+      <h1>Game Over!</h1>
+      <p>Your final score is: <span id="finalScore"></span></p>
+      <button onclick="restartGame()">Play Again</button>
+  </div>
+</div>
+<div style="width: 100%;height: 10% ">
+  <!-- 확장프로그램광고 -->
+  <ins class="adsbygoogle" style="display:inline-block;width:100%;min-width:380px; height:90px" data-ad-client="ca-pub-2007216448786117" data-ad-slot="8678539906"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+<script>
+    let score = 0;
+    let currentLetterPair = ['i', 'l'];
+    let grid = [];
+    let timeLeft = 20;
+    let timerInterval;
+    let index = 0;
+    const gridSize = 10;
+
+    const letterPairs = [
+        ['i', 'l'],
+        ['P', 'F'],
+        ['O', 'Q'],
+        ['E', 'F'],
+        ['l', 'i'],
+        ['Y', 'V'],
+        ['M', 'N'],
+        ['V', 'W'],
+        ['q', 'g'],
+        ['M', 'W'],
+        ['V', 'Y'],
+    ];
+
+    function generateGrid(letterPair) {
+        const gridContainer = document.getElementById('grid');
+        gridContainer.innerHTML = '';
+        grid = [];
+
+        const totalCells = gridSize * gridSize;
+
+        const letter2Position = Math.floor(Math.random() * totalCells);
+
+        for (let i = 0; i < totalCells; i++) {
+            let letter;
+
+            if (i === letter2Position) {
+                letter = letterPair[1];
+            } else {
+                letter = letterPair[0];
+            }
+
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            cell.textContent = letter;
+            cell.onclick = () => checkCell(cell, letter);
+            grid.push(cell);
+            gridContainer.appendChild(cell);
+        }
+    }
+
+    function checkCell(cell, letter) {
+        if (letter === currentLetterPair[1]) {
+            cell.style.backgroundColor = '#acc4ff';
+            cell.classList.add('correct');
+            score += 1;
+            updateScore();
+            document.getElementById('score').textContent = score;
+            checkAllFound();
+        } else {
+            cell.classList.add('incorrect');
+            setTimeout(() => cell.classList.remove('incorrect'), 500);
+        }
+    }
+
+    function checkAllFound() {
+        const allFound = grid.every(cell => cell.classList.contains("correct") || cell.textContent === currentLetterPair[0]);
+        if (allFound) {
+            changeLetterPair();
+            generateGrid(currentLetterPair);
+        }
+    }
+    function changeLetterPair() {
+        index++;
+        if(letterPairs.length === index) {
+            index = 0;
+        }
+        currentLetterPair = letterPairs[index];
+        updateHint();
+    }
+    function updateScore() {
+        const scoreElement = document.getElementById('score');
+        const scoreContainer = document.querySelector('.score-ui');
+
+        scoreElement.textContent = score;
+
+        scoreContainer.classList.add('animate');
+        scoreElement.classList.add('animate');
+
+        setTimeout(() => {
+            scoreContainer.classList.remove('animate');
+            scoreElement.classList.remove('animate');
+        }, 300);
+    }
+
+
+    function updateHint() {
+        currentLetterPair = letterPairs[index];
+
+        const hintContainer = document.querySelector('.hint-ui');
+        const currentPairElement = document.getElementById('currentPair');
+
+        currentPairElement.textContent = currentLetterPair[1];
+
+        hintContainer.classList.add('animate');
+        currentPairElement.classList.add('animate');
+
+        setTimeout(() => {
+            hintContainer.classList.remove('animate');
+            currentPairElement.classList.remove('animate');
+        }, 300);
+    }
+
+    function startGame() {
+        currentLetterPair = ['i', 'l'];
+        index = 0;
+        score = 0;
+        timeLeft = 20;
+        document.getElementById('score').textContent = score;
+        document.getElementById('timer').textContent = timeLeft;
+
+        document.getElementById('startScreen').style.display = 'none';
+        document.getElementById('gameContainer').style.display = 'block';
+
+        generateGrid(currentLetterPair);
+        updateHint();
+
+        clearInterval(timerInterval);
+        timerInterval = setInterval(updateTimer, 1000);
+    }
+
+    function updateTimer() {
+        timeLeft--;
+        document.getElementById('timer').textContent = timeLeft;
+
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            gameOver();
+        }
+    }
+
+    function gameOver() {
+        document.getElementById('finalScore').textContent = score;
+        document.getElementById('gameOverScreen').style.display = 'block';
+        document.getElementById('gameContainer').style.display = 'none';
+    }
+
+    function restartGame() {
+        document.getElementById('gameOverScreen').style.display = 'none';
+        document.getElementById('startScreen').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
