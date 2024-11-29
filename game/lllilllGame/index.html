@@ -459,6 +459,37 @@
                 font-size: 18px;
             }
         }
+        .language-selector {
+          display: flex;
+          justify-content: center;
+          gap: 10px;
+          margin-top: 20px;
+        }
+
+        .lang-button {
+          background-color: #fce4ec; /* 파스텔 핑크 */
+          color: #333; /* 텍스트 색상 */
+          border: 2px solid #f8bbd0; /* 테두리 */
+          border-radius: 8px;
+          padding: 10px 20px;
+          font-size: 16px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+        }
+
+        .lang-button:hover {
+          background-color: #f8bbd0; /* 호버 시 진한 핑크 */
+          color: white; /* 텍스트 색상 반전 */
+          transform: translateY(-3px); /* 살짝 위로 */
+          box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* 그림자 강조 */
+        }
+
+        .lang-button:active {
+          transform: translateY(0); /* 클릭 시 원래 위치 */
+          box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1); /* 그림자 축소 */
+        }
     </style>
 </head>
 
@@ -472,11 +503,17 @@
 </div>
 <div style="height: 80%;">
   <div class="start-screen" id="startScreen">
-      <h1>lllilll Game</h1>
-      <h2>Find the wrong alphabet</h2>
-      <p>Find another alphabet among the same alphabet.<br> For example, l between i and F between E!<br>
-          The time is 20 seconds! Look for as many as you can.</p>
-      <button class="button" onclick="startGame()">Start Game</button>
+    <div class="language-selector">
+      <button class="lang-button" onclick="setLanguage('ko')">한국어</button>
+      <button class="lang-button" onclick="setLanguage('en')">English</button>
+    </div>
+    <h1>lllilll Game</h1>
+    <h2 id="startGame">Find the wrong alphabet</h2>
+    <p><span id="startGame1">Find another alphabet among the same alphabet.</span><br>
+      <span id="startGame2">For example, l between i and F between E!</span><br>
+      <span id="startGame3">The time is 20 seconds! Look for as many as you can.</span></p>
+    <p><span id="highScoreText">Your High Score</span>: <span id="highScoreDisplay">0</span></p>
+    <button class="button" onclick="startGame()">Start Game</button>
   </div>
 
   <div class="game-container" id="gameContainer" style="display: none;">
@@ -486,11 +523,11 @@
               <span id="timer" class="timer-value">20</span>
           </div>
           <div class="ui-box hint-ui">
-              <span class="hint-label">Find : </span>
+              <span class="hint-label">Find:</span>
               <span id="currentPair" class="letter-highlight">i</span>
           </div>
           <div class="ui-box score-ui">
-              <span class="score-label">Score : </span>
+              <span class="score-label">Score:</span>
               <span id="score" class="score-value">0</span>
           </div>
       </div>
@@ -499,7 +536,7 @@
   </div>
   <div class="game-over-container" id="gameOverScreen">
       <h1>Game Over!</h1>
-      <p>Your final score is: <span id="finalScore"></span></p>
+    <p><span id="finalScoreText">Your final score is</span>: <span id="finalScore"></span></p>
       <button onclick="restartGame()">Play Again</button>
   </div>
 </div>
@@ -511,6 +548,42 @@
   </script>
 </div>
 <script>
+  let currentLanguage = localStorage.getItem("lllilllLLanguage") || "ko";
+  const translations = {
+    en: {
+      startGame: "Find the wrong alphabet",
+      startGame1: "Find another alphabet among the same alphabet.",
+      startGame2: "For example, l between i and F between E!",
+      startGame3: "The time is 20 seconds! Look for as many as you can.",
+      highScoreText: "Your High Score",
+      finalScoreText: "Your final score is",
+    },
+    ko: {
+      startGame: "틀린 알파벳 찾기",
+      startGame1: "같은 알파벳 중에서 다른 알파벳을 찾아보세요.",
+      startGame2: "예를 들어, i 사이의 l과 E 사이의 F!",
+      startGame3: "시간은 20초! 최대한 많이 찾아보세요.",
+      highScoreText: "최고 점수",
+      finalScoreText: "최종 점수",
+    },
+  };
+  function setLanguage(language) {
+    currentLanguage = language;
+    localStorage.setItem("lllilllLLanguage", language);
+    updateTexts();
+  }
+
+  function updateTexts() {
+    document.getElementById("highScoreText").textContent = translations[currentLanguage].highScoreText;
+    document.getElementById("startGame").textContent = translations[currentLanguage].startGame;
+    document.getElementById("startGame1").textContent = translations[currentLanguage].startGame1;
+    document.getElementById("startGame2").textContent = translations[currentLanguage].startGame2;
+    document.getElementById("startGame3").textContent = translations[currentLanguage].startGame3;
+    document.getElementById("finalScoreText").textContent = translations[currentLanguage].finalScoreText;
+  }
+  document.addEventListener("DOMContentLoaded", () => {
+    updateTexts();
+  });
     let score = 0;
     let currentLetterPair = ['i', 'l'];
     let grid = [];
@@ -651,15 +724,25 @@
     }
 
     function gameOver() {
+        const highScore = localStorage.getItem('lllilllScore') || 0;
+        if (score > highScore) {
+          localStorage.setItem('lllilllScore', score);
+        }
         document.getElementById('finalScore').textContent = score;
         document.getElementById('gameOverScreen').style.display = 'block';
         document.getElementById('gameContainer').style.display = 'none';
     }
 
     function restartGame() {
+        displayHighScore();
         document.getElementById('gameOverScreen').style.display = 'none';
         document.getElementById('startScreen').style.display = 'block';
     }
+    function displayHighScore() {
+      const highScore = localStorage.getItem('lllilllScore') || 0;
+      document.getElementById('highScoreDisplay').textContent = highScore;
+    }
+    document.addEventListener('DOMContentLoaded', displayHighScore);
 </script>
 
 </body>
