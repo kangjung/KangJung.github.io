@@ -52,6 +52,17 @@ layout: util/compress
         {% include default/img/img-path-converter.liquid content=returned_content layout=page.layout -%}
         {{ img_path_converter_out }}
         {%-comment-%} don't add anything here. If you want to add, check :last-child css selector for page bottom spacing. {%-endcomment-%}
+        <div class="adsense-container" style="float:right; width: 300px; margin-left: 20px;">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-2007216448786117"
+               data-ad-slot="8053884912"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
         <ins class="adsbygoogle"
              style="display:block"
              data-ad-client="ca-pub-2007216448786117"
