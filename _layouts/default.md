@@ -84,6 +84,14 @@ layout: util/compress
           </script>
         </div>
       </div>
+          <script>
+              if (window.innerWidth <= 767) {
+                var ads = document.querySelectorAll('.adsense-container');
+                ads.forEach(function(ad) {
+                  ad.style.display = 'none';
+                });
+              }
+          </script>
       {%- include default/footer.html -%}
       {% if site.data.conf.main.scroll_back_to_top_button -%}
       <div class="scroll-to-top-container">
