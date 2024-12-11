@@ -66,7 +66,7 @@ layout: util/compress
         <ins class="adsbygoogle"
              style="display:block"
              data-ad-client="ca-pub-2007216448786117"
-             data-ad-slot="8053884912"
+             data-ad-slot="7654258229"
              data-ad-format="auto"
              data-full-width-responsive="true"></ins>
         <script>
