@@ -63,26 +63,24 @@ layout: util/compress
         </script>
       </div>
       <div class="adsense-container" style="flex: 1; margin-left: auto; max-width:450px">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-          <ins class="adsbygoogle"
-                style="position: sticky; top: 20px; display:block;"
-               data-ad-client="ca-pub-2007216448786117"
-               data-ad-slot="7654258229"
-               data-ad-format="auto"
-               data-full-width-responsive="true"></ins>
-          <script>
-               (adsbygoogle = window.adsbygoogle || []).push({});
-          </script>
-          <ins class="adsbygoogle"
+        <ins class="adsbygoogle"
               style="position: sticky; top: 20px; display:block;"
-               data-ad-client="ca-pub-2007216448786117"
-               data-ad-slot="7654258229"
-               data-ad-format="auto"
-               data-full-width-responsive="true"></ins>
-          <script>
-               (adsbygoogle = window.adsbygoogle || []).push({});
-          </script>
-        </div>
+             data-ad-client="ca-pub-2007216448786117"
+             data-ad-slot="7654258229"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+        <ins class="adsbygoogle"
+            style="position: sticky; top: 20px; display:block;"
+             data-ad-client="ca-pub-2007216448786117"
+             data-ad-slot="7654258229"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
       </div>
       {%- include default/footer.html -%}
       {% if site.data.conf.main.scroll_back_to_top_button -%}
