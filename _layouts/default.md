@@ -62,10 +62,10 @@ layout: util/compress
              (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
       </div>
-      <div class="adsense-container" style="flex: 1; margin-left: auto; max-width:600px;">
-        <div style="display: flex; flex-direction: column; gap: 10px; height: 100%;">
-          <ins class="adsbygoogle" id="ad-1"
-                style="position: fixed; top: 20px; right: 0; display:block;"
+      <div class="adsense-container" style="flex: 1; margin-left: auto; max-width:450px">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <ins class="adsbygoogle"
+                style="position: sticky; top: 20px; display:block;"
                data-ad-client="ca-pub-2007216448786117"
                data-ad-slot="7654258229"
                data-ad-format="auto"
@@ -73,8 +73,8 @@ layout: util/compress
           <script>
                (adsbygoogle = window.adsbygoogle || []).push({});
           </script>
-          <ins class="adsbygoogle" id="ad-2"
-              style="position: fixed; right: 0; display:block;"
+          <ins class="adsbygoogle"
+              style="position: sticky; top: 20px; display:block;"
                data-ad-client="ca-pub-2007216448786117"
                data-ad-slot="7654258229"
                data-ad-format="auto"
