@@ -62,10 +62,10 @@ layout: util/compress
              (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
       </div>
-      <div class="adsense-container" style="flex: 1; margin-left: auto; max-width:450px">
+      <div class="adsense-container" style="flex: 1; margin-left: auto; max-width:600px;">
         <div style="display: flex; flex-direction: column; gap: 10px; height: 100%;">
           <ins class="adsbygoogle" id="ad-1"
-                style="position: sticky; top: 20px; display:block;"
+                style="position: fixed; top: 20px; right: 0; display:block;"
                data-ad-client="ca-pub-2007216448786117"
                data-ad-slot="7654258229"
                data-ad-format="auto"
@@ -74,7 +74,7 @@ layout: util/compress
                (adsbygoogle = window.adsbygoogle || []).push({});
           </script>
           <ins class="adsbygoogle" id="ad-2"
-              style="position: sticky; display:block;"
+              style="position: fixed; right: 0; display:block;"
                data-ad-client="ca-pub-2007216448786117"
                data-ad-slot="7654258229"
                data-ad-format="auto"
@@ -95,6 +95,12 @@ layout: util/compress
                 ad2.style.top = (ad1Height + 30) + 'px';
               }
               adjustStickyAds();
+              if (window.innerWidth <= 767) {
+                var ads = document.querySelectorAll('.adsense-container');
+                ads.forEach(function(ad) {
+                  ad.style.display = 'none';
+                });
+              }
           </script>
       {%- include default/footer.html -%}
       {% if site.data.conf.main.scroll_back_to_top_button -%}
@@ -106,7 +112,6 @@ layout: util/compress
     {% if site.data.conf.main.search_enable -%}
       {%- include default/search.html -%}
     {%- endif %}
-
     {% include default/scripts-include.html -%}
   </body>
 </html>
