@@ -63,7 +63,7 @@ layout: util/compress
         </script>
       </div>
       <div class="adsense-container" style="flex: 1; margin-left: auto; max-width:600px">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; height: 100%;">
+        <div style="display: flex; flex-direction: column; gap: 10px; height: 100%;">
           <ins class="adsbygoogle"
                 style="position: sticky; top: 20px; display:block;"
                data-ad-client="ca-pub-2007216448786117"
