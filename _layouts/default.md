@@ -84,24 +84,6 @@ layout: util/compress
           </script>
         </div>
       </div>
-          <script>
-                window.addEventListener('resize', function() {
-                  adjustStickyAds();
-                });
-              function adjustStickyAds() {
-                let ad1 = document.getElementById('ad-1');
-                let ad2 = document.getElementById('ad-2');
-                let ad1Height = ad1.offsetHeight;
-                ad2.style.top = (ad1Height + 30) + 'px';
-              }
-              adjustStickyAds();
-              if (window.innerWidth <= 767) {
-                var ads = document.querySelectorAll('.adsense-container');
-                ads.forEach(function(ad) {
-                  ad.style.display = 'none';
-                });
-              }
-          </script>
       {%- include default/footer.html -%}
       {% if site.data.conf.main.scroll_back_to_top_button -%}
       <div class="scroll-to-top-container">
