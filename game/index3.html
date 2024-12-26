@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Showcase</title>
+</head>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f5ff;
+    color: #333;
+  }
+
+  /* Header */
+  header {
+    text-align: center;
+    padding: 20px;
+    background-color: #d9f2f2;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+
+  /* App Cards */
+  .app-card {
+    background-color: #fce1e4;
+    border: 1px solid #e7dede;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .app-card:hover {
+    transform: scale(1.05);
+  }
+
+  /* Modal */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    text-align: center;
+    position: relative;
+  }
+
+  .modal-content iframe {
+    width: 100%;
+    height: 300px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+
+  .modal-content img {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+  }
+
+  .download-links a {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 4px;
+    background-color: #6cb9f0;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 1.5em;
+    cursor: pointer;
+  }
+  .technologies {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 8px;
+  }
+
+  .technologies span {
+    background-color: #d9f2f2;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+</style>
+<body>
+<header>
+  <h1>My Projects & Apps</h1>
+</header>
+<main class="grid-container">
+  <div class="app-card" data-app-id="app1">
+    <img src="./img/icon1.png" alt="ZigZag Rabbit icon">
+    <h2>ZigZag Rabbit</h2>
+    <div class="technologies"><span>Unity</span><span>C#</span><span>Android</span></div>
+    <p>Move as far as possible in zigzags without falling.</p>
+  </div>
+  <div class="app-card" data-app-id="app2">
+    <img src="./img/icon2.png" alt="Planet Game icon">
+    <h2>Planet Game - 행성 수박 게임</h2>
+    <div class="technologies"><span>Unity</span><span>C#</span><span>Android</span></div>
+    <p>Put the planets together to make a bigger planet.</p>
+  </div>
+  <div class="app-card" data-app-id="app3">
+    <img src="./img/icon3.png" alt="1010 icon">
+    <h2>1010!</h2>
+    <div class="technologies"><span>Unity</span><span>C#</span><span>Android</span></div>
+    <p>Short description of the app...</p>
+  </div>
+  <div class="app-card" data-app-id="app4">
+    <img src="./img/icon4.png" alt="lllilll Game icon">
+    <h2>lllilll Game</h2>
+    <div class="technologies"><span>JavaScript</span><span>HTML5</span><span>CSS</span></div>
+    <p>20초 동안 틀린 알파벳 찾기.</p>
+  </div>
+  <div class="app-card" data-app-id="app5">
+    <img src="./img/noimg.png" alt="noimg icon">
+    <h2>개발중</h2>
+  </div>
+</main>
+
+<div class="modal" id="appModal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <img id="appImage" src="" alt="App Image">
+    <div id="appTechnologies" class="technologies"></div>
+    <p id="appDescription"></p>
+    <iframe id="appVideo" src="" frameborder="0" allowfullscreen></iframe>
+    <div class="download-links">
+      <a id="googlePlay" href="#" target="_blank">Google Play</a>
+      <a id="oneStore" href="#" target="_blank">One Store</a>
+      <a id="whaleStore" href="#" target="_blank">Whale Store</a>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const appCards = document.querySelectorAll('.app-card');
+    const modal = document.getElementById('appModal');
+    const closeModalBtn = document.querySelector('.close-btn');
+    const video = document.getElementById('appVideo');
+    const image = document.getElementById('appImage');
+    const description = document.getElementById('appDescription');
+    const googlePlay = document.getElementById('googlePlay');
+    const oneStore = document.getElementById('oneStore');
+    const whaleStore = document.getElementById('whaleStore');
+
+    const appData = {
+      app1: {
+        video: "https://www.youtube.com/embed/MRz4zZ_zw2M",
+        image: "./img/icon1.png",
+        description: "Don't fall and move in zigzags as much as possible.<br>" +
+          "<br>" +
+          "To change the direction of the rabbit, simply click the screen or press the space bar. Be careful not to fall off the edge.<br>" +
+          "<br>" +
+          "* The sound and graphics were used by purchasing an asset from the Unity Asset Store.",
+        description_ko: "떨어지지 말고 지그재그로 최대한 멀리 이동하십시오.",
+        links: {
+          googlePlay: "https://play.google.com/store/apps/details?id=com.KangJung.ZigZagRABBIT",
+          oneStore: "https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000770293",
+          whaleStore: "https://store.whale.naver.com/detail/cbfooenflljbbhalfelkohpoiodnpnpo",
+        },
+        technologies: ["Unity", "C#", "Android"],
+      },
+      app2: {
+        video: "https://www.youtube.com/embed/xMWiHdya8hE",
+        image: "./img/icon2.png",
+        description: "The planet game is a planet version of the watermelon game.<br>" +
+          "<br>" +
+          "Crash planets to make larger planets.<br>" +
+          "<br>" +
+          " * Credit : The graphics used in the game were created using Aseprite.<br>" +
+          " * Fonts : DNFBitBit<br>" +
+          " * Sounds : FREE Casual Game SFX Pack, Ultimate Game Music Collection",
+        description_ko: "행성 게임은 수박 게임의 행성 버전입니다. 행성을 충돌시켜 더 큰 행성을 만드세요.",
+        links: {
+          googlePlay: "https://play.google.com/store/apps/details?id=com.Kangjung.PlanetGame",
+          oneStore: "https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000773862",
+          whaleStore: "https://store.whale.naver.com/detail/ndojlolokbmkbadhmmjdndmlaegjhlni",
+        },
+        technologies: ["Unity", "C#", "Android"],
+      },
+      app3: {
+        video: "https://www.youtube.com/embed/4Ac09UTo0hk",
+        image: "./img/icon3.png",
+        description: "This is a game where you place blocks in a 10 x 10 space and destroy them by completing rows horizontally and vertically.",
+        description_ko: "10 x 10 공간에 블록을 배치하여 가로 세로로 줄을 완성해서 파괴하는 게임입니다.",
+        links: {
+          googlePlay: "https://play.google.com/store/apps/details?id=com.KangJung.game_1010",
+          oneStore: "https://m.onestore.co.kr/ko-kr/apps/appsDetail.omp?prodId=0000780009",
+          whaleStore: "https://store.whale.naver.com/detail/mfcecojaaoogjnjbnkodlgecefbminic",
+        },
+        technologies: ["Unity", "C#", "Android"],
+      },
+      app4: {
+        video: "",
+        image: "./img/icon4.png",
+        description: "Find another alphabet among the same alphabet.<br>" +
+          "For example, l between i and F between E!" +
+          "<br>" +
+          "The time is 20 seconds! Look for as many as you can." +
+          "<br>" +
+          "Produced with HTML5 and JAVASCRIPT." +
+          "<br>" +
+          "* An entry for the 20Second Game Jam 2024.",
+        description_ko: "같은 알파벳 중에서 다른 알파벳을 찾아보세요." +
+          "<br>" +
+          "예를 들어, i 사이의 l과 E 사이의 F 같은 비슷한 알파벳 사이에서 말이죠." +
+          "<br>" +
+          "시간은 20초! 최대한 많이 찾아보세요." +
+          "<br>" +
+          "* 해당 게임은 html5와 JavaScript를 사용하여 만들었습니다." +
+          "<br>" +
+          "* itch에서 진행된 20 Second Game Jam 2024에 제출하기 위해 만든 간단한 게임입니다.",
+        links: {
+          googlePlay: "",
+          oneStore: "",
+          whaleStore: "https://store.whale.naver.com/detail/cbfooenflljbbhalfelkohpoiodnpnpo",
+        },
+        technologies: ["JavaScript", "HTML5", "CSS"],
+      },
+    };
+
+    appCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const appId = card.dataset.appId;
+        const app = appData[appId];
+
+        video.src = app.video;
+        image.src = app.image;
+        description.innerHTML = app.description;
+        googlePlay.href = app.links.googlePlay;
+        oneStore.href = app.links.oneStore;
+        whaleStore.href = app.links.whaleStore;
+        if(!app.links.googlePlay)
+          googlePlay.style.display = 'none';
+
+        if(!app.links.oneStore)
+          oneStore.style.display = 'none';
+
+        if(!app.links.whaleStore)
+          whaleStore.style.display = 'none';
+
+        if(!app.video)
+          video.style.display = 'none';
+
+        document.getElementById('appTechnologies').innerHTML = "";
+        if (app.technologies && app.technologies.length > 0) {
+          app.technologies.forEach(tech => {
+            const techTag = document.createElement('span');
+            techTag.textContent = tech;
+            document.getElementById('appTechnologies').appendChild(techTag);
+          });
+        }
+
+        modal.style.display = 'flex';
+      });
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+      googlePlay.style.display = 'inline-block';
+      oneStore.style.display = 'inline-block';
+      whaleStore.style.display = 'inline-block';
+      video.style.display = 'block';
+      video.src = "";
+    });
+  });
+
+</script>
+</body>
+</html>

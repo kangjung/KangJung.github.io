@@ -41,8 +41,8 @@ layout: util/compress
     {% if site.data.conf.posts.post_table_of_contents and page.layout == "post"-%}
       {%- include post/table-of-contents.html -%}
     {%- endif -%}
-    <div id="main-wrapper">
-      <div class="main-container">
+    <div id="main-wrapper" style="display: flex;">
+      <div class="main-container" style="flex: 1; margin-right: 20px;">
         {%- assign returned_content = content %}
         {%- comment -%} fix for tables. {%- endcomment -%}
         {% if returned_content contains 'class="markdown-style"' -%}
@@ -52,7 +52,46 @@ layout: util/compress
         {% include default/img/img-path-converter.liquid content=returned_content layout=page.layout -%}
         {{ img_path_converter_out }}
         {%-comment-%} don't add anything here. If you want to add, check :last-child css selector for page bottom spacing. {%-endcomment-%}
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-2007216448786117"
+             data-ad-slot="8053884912"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
       </div>
+      <div class="adsense-container" style="flex: 1; margin-left: auto; max-width:600px">
+        <div style="height: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <ins class="adsbygoogle"
+                style="position: sticky; top: 20px; display:block;"
+               data-ad-client="ca-pub-2007216448786117"
+               data-ad-slot="7654258229"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+          <ins class="adsbygoogle"
+              style="position: sticky; top: 20px; display:block;"
+               data-ad-client="ca-pub-2007216448786117"
+               data-ad-slot="7654258229"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+      </div>
+          <script>
+              if (window.innerWidth <= 767) {
+                var ads = document.querySelectorAll('.adsense-container');
+                ads.forEach(function(ad) {
+                  ad.style.display = 'none';
+                });
+              }
+          </script>
       {%- include default/footer.html -%}
       {% if site.data.conf.main.scroll_back_to_top_button -%}
       <div class="scroll-to-top-container">
@@ -60,11 +99,9 @@ layout: util/compress
       </div>
       {%- endif -%}
     </div>
-
     {% if site.data.conf.main.search_enable -%}
       {%- include default/search.html -%}
     {%- endif %}
-
     {% include default/scripts-include.html -%}
   </body>
 </html>
