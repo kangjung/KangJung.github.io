@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>OOO 스튜디오</title>
+ <style>
+   /* styles.css */
+   body {
+     font-family: Arial, sans-serif;
+     margin: 0;
+     padding: 0;
+     line-height: 1.6;
+   }
+
+   header {
+     background: #333;
+     color: #fff;
+     padding: 1rem 0;
+     text-align: center;
+   }
+
+   nav ul {
+     list-style: none;
+     padding: 0;
+   }
+
+   nav ul li {
+     display: inline;
+     margin: 0 1rem;
+   }
+
+   nav ul li a {
+     color: #fff;
+     text-decoration: none;
+   }
+
+   section {
+     padding: 2rem;
+     border-bottom: 1px solid #ccc;
+   }
+  .wrap {
+    height: auto;
+    min-height: 100%;
+    padding-bottom: 100px;
+  }
+   footer {
+     height: 100px;
+     position : relative;
+     transform : translateY(-100%);
+     text-align: center;
+     padding: 1rem 0;
+     background: #333;
+     color: #fff;
+   }
+   /* 기본 스타일은 이전과 동일 */
+   #banner {
+     background: url('game/img/game1.png') no-repeat center center/cover;
+     color: #fff;
+     text-align: center;
+     padding: 3rem 1rem;
+   }
+
+   #banner .btn {
+     background: #ff5722;
+     color: #fff;
+     padding: 0.5rem 1rem;
+     text-decoration: none;
+     border-radius: 5px;
+     margin-top: 1rem;
+     display: inline-block;
+   }
+
+   #banner .btn:hover {
+     background: #e64a19;
+   }
+
+   #app .thumbnails {
+     display: flex;
+     justify-content: space-around;
+     gap: 1rem;
+     flex-wrap: wrap;
+   }
+
+   .thumbnail {
+     border: 1px solid #ccc;
+     padding: 1rem;
+     text-align: center;
+     width: 30%;
+   }
+
+   .thumbnail img {
+     max-width: 100%;
+     height: auto;
+     margin-bottom: 1rem;
+   }
+
+   .thumbnail h3 {
+     margin: 0.5rem 0;
+   }
+
+   .thumbnail .btn {
+     background: #03a9f4;
+     color: #fff;
+     padding: 0.5rem 1rem;
+     text-decoration: none;
+     border-radius: 5px;
+   }
+
+   .thumbnail .btn:hover {
+     background: #0288d1;
+   }
+
+   </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>OOO 스튜디오</h1>
+    <nav>
+      <ul>
+        <li><a href="#home">홈</a></li>
+        <li><a href="#about">소개</a></li>
+        <li><a href="#app">APP</a></li>
+        <li><a href="#contact">연락처</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- 배너 섹션 -->
+  <section id="banner">
+    <div class="banner-content">
+      <h2>배너 제목</h2>
+      <p>배너 소게</p>
+      <a href="#app" class="btn">배너 클릭</a>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>소개</h2>
+    <p>소개 상세내용</p>
+  </section>
+
+  <!-- app 섹션 -->
+  <section id="app">
+    <h2>APP</h2>
+    <div class="thumbnails">
+      <div class="thumbnail">
+        <img src="https://kangjung.github.io/game/img/icon3.png" alt="1010 아이콘">
+        <h3>1010!</h3>
+        <p>10 x 10 공간에 블록을 배치하여 가로 세로로 줄을 완성해서 파괴하세요.</p>
+
+        <div style="margin-top: 10px; display: flex; justify-content: center;">
+          <a target="_blank"  href="https://store.whale.naver.com/detail/mfcecojaaoogjnjbnkodlgecefbminic" style="width: 30px; height: 30px; margin-right: 5px;">
+            <img src="https://store.whale.naver.com/img/ic_whale_home.png" alt="WHALE Store" style="width: 100%; height: 100%;" />
+          </a>
+        </div>
+      </div>
+      <div class="thumbnail">
+        <img src="https://kangjung.github.io/game/img/icon2.png" alt="Planet Game icon">
+        <h3>Planet Game - 행성 수박 게임</h3>
+        <p>행성 게임은 수박 게임의 행성 버전입니다. 행성을 충돌시켜 더 큰 행성을 만드세요.</p>
+        <div style="margin-top: 10px; display: flex; justify-content: center;">
+          <a target="_blank"  href="https://play.google.com/store/apps/details?id=com.Kangjung.PlanetGame" apps="apps" details="details" id="com.Kangjung.PlanetGame&quot;" style="width: 30px; height: 30px; margin-right: 5px;">
+            <img src="https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" alt="google Store" style="width: 100%; height: 100%;" />
+          </a>
+          <a target="_blank"  href="https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000773862" style="width: 30px; height: 30px; margin-right: 5px;">
+            <img src="https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" alt="one Store" style="width: 100%; height: 100%;" />
+          </a>
+          <a target="_blank"  href="https://store.whale.naver.com/detail/ndojlolokbmkbadhmmjdndmlaegjhlni" style="width: 30px; height: 30px;">
+            <img src="https://store.whale.naver.com/img/ic_whale_home.png" alt="WHALE Store" style="width: 100%; height: 100%;" />
+          </a>
+        </div>
+      </div>
+      <div class="thumbnail">
+        <img src="https://kangjung.github.io/game/img/icon1.png" alt="ZigZag RABBIT icon">
+        <h3>ZigZag RABBIT</h3>
+        <p>떨어지지 않고 지그재그로 가능한 한 멀리 이동하십시오.</p>
+        <div style="margin-top: 10px; display: flex; justify-content: center;">
+          <a target="_blank"  href="https://play.google.com/store/apps/details?id=com.KangJung.ZigZagRABBIT" style="width: 30px; height: 30px; margin-right: 5px;">
+            <img src="https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" alt="google Store" style="width: 100%; height: 100%;" />
+          </a>
+          <a target="_blank"  href="https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000770293" style="width: 30px; height: 30px; margin-right: 5px;">
+            <img src="https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" alt="one Store" style="width: 100%; height: 100%;" />
+          </a>
+          <a target="_blank"  href="https://store.whale.naver.com/detail/cbfooenflljbbhalfelkohpoiodnpnpo" style="width: 30px; height: 30px;">
+            <img src="https://store.whale.naver.com/img/ic_whale_home.png" alt="WHALE Store" style="width: 100%; height: 100%;" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<footer>
+  <p>&copy; 2024 KANGJUNG. 모든 권리 보유.</p>
+</footer>
+</body>
+</html>
