@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f9f9f9;
+      transition: background-color 0.3s, color 0.3s;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    body.dark-mode {
+      background-color: #1e1e2f;
+      color: #e4e4e4;
+    }
+
+    header {
+      padding: 2rem;
+      text-align: center;
+      background: linear-gradient(135deg, #0078d7, #005bb5);
+      color: white;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 2rem;
+      padding: 0 1rem;
+      flex: 1;
+    }
+
+    .about {
+      grid-column: span 2;
+      text-align: center;
+    }
+
+    .about h2 {
+      margin-bottom: 1rem;
+      font-size: 2rem;
+    }
+
+    .about p {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .rss-banner, .slider-banner {
+      background: white;
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .rss-banner h3, .slider-banner h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .rss-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .rss-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: #f4f4f9;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .rss-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .rss-card img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+    }
+
+    .rss-card div {
+      padding: 0.5rem;
+    }
+
+    .rss-card h4 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .rss-card p {
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .slider-banner {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+    }
+
+    .slider-banner img {
+      height: 150px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s;
+    }
+
+    .slider-banner img:hover {
+      transform: scale(1.1);
+    }
+
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #0078d7;
+      color: white;
+      position: relative;
+    }
+
+    .toggle-dark-mode {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #0078d7;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 15px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+  </style>
+</head>
+<body>
+<header>
+  <h1>My Portfolio</h1>
+  <p>Welcome to my personal space where I showcase my projects and share my thoughts!</p>
+</header>
+
+<main>
+  <div class="about">
+    <h2>About Me</h2>
+    <p>Hi, I'm [Your Name], a passionate software developer. Explore my projects and blog posts below to see my work.</p>
+  </div>
+
+  <div class="rss-banner">
+    <h3>Blog Updates</h3>
+    <div class="rss-feed">
+      <!-- Replace with dynamic RSS feed content -->
+      <div class="rss-card">
+        <img src="blog1.jpg" alt="Blog 1">
+        <div>
+          <h4><a href="#">Exciting Blog Title</a></h4>
+          <p>A brief summary of the blog post...</p>
+        </div>
+      </div>
+      <div class="rss-card">
+        <img src="blog2.jpg" alt="Blog 2">
+        <div>
+          <h4><a href="#">Another Blog Title</a></h4>
+          <p>Another brief summary of the blog post...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slider-banner">
+    <h3>My Projects</h3>
+    <img src="project1.jpg" alt="Project 1">
+    <img src="project2.jpg" alt="Project 2">
+    <img src="project3.jpg" alt="Project 3">
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2024 [Your Name] - All rights reserved.</p>
+</footer>
+
+<button class="toggle-dark-mode" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+<script>
+  async function fetchRSS() {
+    const url = 'https://rss.blog.naver.com/chicken_kangjung.xml'; // RSS 피드 URL
+    const response = await fetch(url);
+    const xmlText = await response.text();
+
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlText, 'application/xml');
+
+    // RSS 아이템들 가져오기
+    const items = xmlDoc.getElementsByTagName('item');
+
+    // HTML로 렌더링
+    const rssContainer = document.getElementById('rss-feed');
+    rssContainer.innerHTML = ''; // 기존 내용 초기화
+
+    Array.from(items).forEach(item => {
+      const title = item.getElementsByTagName('title')[0].textContent;
+      const link = item.getElementsByTagName('link')[0].textContent;
+      const description = item.getElementsByTagName('description')[0].textContent;
+
+      const article = document.createElement('article');
+      const h2 = document.createElement('h2');
+      const p = document.createElement('p');
+      const a = document.createElement('a');
+
+      h2.textContent = title;
+      p.textContent = description;
+      a.href = link;
+      a.textContent = 'Read more';
+
+      article.appendChild(h2);
+      article.appendChild(p);
+      article.appendChild(a);
+
+      rssContainer.appendChild(article);
+    });
+  }
+
+  fetchRSS();  // RSS 피드 가져오기
+
+  function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+  }
+</script>
+</body>
+</html>
