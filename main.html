@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,  viewport-fit=cover">
   <title>OOO 스튜디오</title>
  <style>
    /* styles.css */
@@ -238,25 +239,32 @@
      .modal-content iframe {
        height: 200px; /* 비디오 높이 축소 */
      }
-
      #menuToggle {
-       display: block;
+       display: block; /* 모바일에서 표시 */
+       position: absolute;
+       top: 33px;
+       right: 20px;
+       font-size: 24px;
+       cursor: pointer;
+       z-index: 10; /* 메뉴보다 위에 표시되도록 */
+       color: #fff;
+       background: none;
+       border: none;
      }
+
      nav ul {
        display: none;
      }
-      #navMenu {
-        display: none;
-      }
      nav ul.show {
        display: flex;
        flex-direction: column;
        background-color: #444; /* 배경 색상 */
        position: absolute;
-       top: 60px;
+       top: 100px;
        left: 0;
        width: 100%;
        padding: 10px 0;
+
      }
 
      nav ul li {
@@ -267,7 +275,7 @@
 
    @media screen and (max-width: 480px) {
      #banner {
-       height: 300px; /* 더 작은 배너 */
+       height: 200px; /* 더 작은 배너 */
      }
 
      .app-card h2, .asset-card h2 {
@@ -287,8 +295,8 @@
   <header>
     <h1>OOO 스튜디오</h1>
     <button id="menuToggle" aria-label="Toggle navigation">☰</button>
-    <nav id="navMenu">
-      <ul>
+    <nav>
+      <ul id="navMenu">
         <li><a href="#home">홈</a></li>
         <li><a href="#about">소개</a></li>
         <li><a href="#app">APP</a></li>
