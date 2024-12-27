@@ -44,48 +44,18 @@
     padding-bottom: 100px;
   }
    footer {
-     height: 100px;
-     position : relative;
-     transform : translateY(-100%);
      text-align: center;
-     padding: 1rem 0;
+     padding: 1rem;
      background: #333;
      color: #fff;
+     position: relative;
    }
-   /* 기본 스타일은 이전과 동일 */
    #banner {
-     background: url('game/img/game1.png') no-repeat center center/cover;
+     background: url('assets/img/banner.png') no-repeat center center/cover;
      color: #fff;
      text-align: center;
+     height: 600px;
      padding: 3rem 1rem;
-   }
-
-   #banner .btn {
-     background: #ff5722;
-     color: #fff;
-     padding: 0.5rem 1rem;
-     text-decoration: none;
-     border-radius: 5px;
-     margin-top: 1rem;
-     display: inline-block;
-   }
-
-   #banner .btn:hover {
-     background: #e64a19;
-   }
-
-   #app .thumbnails {
-     display: flex;
-     justify-content: space-around;
-     gap: 1rem;
-     flex-wrap: wrap;
-   }
-
-   .thumbnail {
-     border: 1px solid #ccc;
-     padding: 1rem;
-     text-align: center;
-     width: 30%;
    }
 
    .thumbnail img {
@@ -98,18 +68,128 @@
      margin: 0.5rem 0;
    }
 
-   .thumbnail .btn {
-     background: #03a9f4;
-     color: #fff;
-     padding: 0.5rem 1rem;
+   .thumbnail a:hover {
+     scale: 1.5;
+   }
+
+   .grid-container {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+     gap: 20px;
+     padding: 20px;
+   }
+
+   .app-card {
+     display: flex;
+     flex-direction: column; /* 세로 정렬 */
+     justify-content: space-between; /* 위아래 간격 조정 */
+     align-items: center; /* 가운데 정렬 */
+     padding: 1rem;
+     border: 1px solid #ddd;
+     border-radius: 10px;
+     background-color: #fce1e4;
+     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+     transition: transform 0.3s;
+     /* 높이 제한 설정 */
+     min-height: 150px; /* 최소 높이 */
+     overflow: hidden;
+     height: auto;
+     cursor: pointer;
+   }
+
+   .app-card:hover {
+     transform: scale(1.05);
+   }
+
+
+   /* Modal */
+   .modal {
+     display: none;
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background-color: rgba(0, 0, 0, 0.5);
+     justify-content: center;
+     align-items: center;
+   }
+
+   .modal-content {
+     background-color: #fff;
+     padding: 20px;
+     border-radius: 10px;
+     max-width: 600px;
+     text-align: center;
+     position: relative;
+   }
+
+   .modal-content iframe {
+     width: 100%;
+     height: 300px;
+     border-radius: 8px;
+     margin-bottom: 10px;
+   }
+
+   .modal-content img {
+     max-width: 100%;
+     height: auto;
+     margin: 10px 0;
+   }
+   .download-links a {
+     display: inline-block;
      text-decoration: none;
-     border-radius: 5px;
+     color: #fff;
+     border-radius: 4px;
+     width: 3vh;
+     height: 3vh;
+     margin-right: 5px;
    }
 
-   .thumbnail .btn:hover {
-     background: #0288d1;
+   .close-btn {
+     position: absolute;
+     top: 10px;
+     right: 20px;
+     font-size: 1.5em;
+     cursor: pointer;
+   }
+   .technologies {
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: center;
+     margin-top: 10px;
+     gap: 8px;
    }
 
+   .technologies span {
+     background-color: #d9f2f2;
+     color: #333;
+     padding: 5px 10px;
+     border-radius: 15px;
+     font-size: 0.9em;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   }
+
+   .asset-card {
+     display: flex;
+     flex-direction: column;
+     justify-content: space-between;
+     align-items: center;
+     padding: 1rem;
+     border: 1px solid #ddd;
+     border-radius: 10px;
+     background-color: #999999;
+     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+     transition: transform 0.3s;
+     min-height: 150px;
+     overflow: hidden;
+     height: auto;
+     cursor: pointer;
+   }
+
+   .asset-card:hover {
+     transform: scale(1.05);
+   }
    </style>
 </head>
 <body>
@@ -121,6 +201,7 @@
         <li><a href="#home">홈</a></li>
         <li><a href="#about">소개</a></li>
         <li><a href="#app">APP</a></li>
+        <li><a href="#asset">ASSET</a></li>
         <li><a href="#contact">연락처</a></li>
       </ul>
     </nav>
@@ -129,9 +210,6 @@
   <!-- 배너 섹션 -->
   <section id="banner">
     <div class="banner-content">
-      <h2>배너 제목</h2>
-      <p>배너 소게</p>
-      <a href="#app" class="btn">배너 클릭</a>
     </div>
   </section>
 
@@ -139,59 +217,237 @@
     <h2>소개</h2>
     <p>소개 상세내용</p>
   </section>
-
   <!-- app 섹션 -->
   <section id="app">
     <h2>APP</h2>
-    <div class="thumbnails">
-      <div class="thumbnail">
-        <img src="https://kangjung.github.io/game/img/icon3.png" alt="1010 아이콘">
-        <h3>1010!</h3>
-        <p>10 x 10 공간에 블록을 배치하여 가로 세로로 줄을 완성해서 파괴하세요.</p>
-
-        <div style="margin-top: 10px; display: flex; justify-content: center;">
-          <a target="_blank"  href="https://store.whale.naver.com/detail/mfcecojaaoogjnjbnkodlgecefbminic" style="width: 30px; height: 30px; margin-right: 5px;">
-            <img src="https://store.whale.naver.com/img/ic_whale_home.png" alt="WHALE Store" style="width: 100%; height: 100%;" />
-          </a>
-        </div>
+    <main class="grid-container">
+      <div class="app-card" data-app-id="app1">
+        <img src="game/img/icon1.png" alt="ZigZag Rabbit icon">
+        <h2>ZigZag Rabbit</h2>
+        <div class="technologies"><span>Unity</span><span>C#</span><span>Android</span></div>
+        <p>Move as far as possible in zigzags without falling.</p>
       </div>
-      <div class="thumbnail">
-        <img src="https://kangjung.github.io/game/img/icon2.png" alt="Planet Game icon">
-        <h3>Planet Game - 행성 수박 게임</h3>
-        <p>행성 게임은 수박 게임의 행성 버전입니다. 행성을 충돌시켜 더 큰 행성을 만드세요.</p>
-        <div style="margin-top: 10px; display: flex; justify-content: center;">
-          <a target="_blank"  href="https://play.google.com/store/apps/details?id=com.Kangjung.PlanetGame" apps="apps" details="details" id="com.Kangjung.PlanetGame&quot;" style="width: 30px; height: 30px; margin-right: 5px;">
-            <img src="https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" alt="google Store" style="width: 100%; height: 100%;" />
-          </a>
-          <a target="_blank"  href="https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000773862" style="width: 30px; height: 30px; margin-right: 5px;">
-            <img src="https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" alt="one Store" style="width: 100%; height: 100%;" />
-          </a>
-          <a target="_blank"  href="https://store.whale.naver.com/detail/ndojlolokbmkbadhmmjdndmlaegjhlni" style="width: 30px; height: 30px;">
-            <img src="https://store.whale.naver.com/img/ic_whale_home.png" alt="WHALE Store" style="width: 100%; height: 100%;" />
-          </a>
-        </div>
+      <div class="app-card" data-app-id="app2">
+        <img src="game/img/icon2.png" alt="Planet Game icon">
+        <h2>Planet Game - 행성 수박 게임</h2>
+        <div class="technologies"><span>Unity</span><span>C#</span><span>Android</span></div>
+        <p>Put the planets together to make a bigger planet.</p>
       </div>
-      <div class="thumbnail">
-        <img src="https://kangjung.github.io/game/img/icon1.png" alt="ZigZag RABBIT icon">
-        <h3>ZigZag RABBIT</h3>
-        <p>떨어지지 않고 지그재그로 가능한 한 멀리 이동하십시오.</p>
-        <div style="margin-top: 10px; display: flex; justify-content: center;">
-          <a target="_blank"  href="https://play.google.com/store/apps/details?id=com.KangJung.ZigZagRABBIT" style="width: 30px; height: 30px; margin-right: 5px;">
-            <img src="https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" alt="google Store" style="width: 100%; height: 100%;" />
-          </a>
-          <a target="_blank"  href="https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000770293" style="width: 30px; height: 30px; margin-right: 5px;">
-            <img src="https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" alt="one Store" style="width: 100%; height: 100%;" />
-          </a>
-          <a target="_blank"  href="https://store.whale.naver.com/detail/cbfooenflljbbhalfelkohpoiodnpnpo" style="width: 30px; height: 30px;">
-            <img src="https://store.whale.naver.com/img/ic_whale_home.png" alt="WHALE Store" style="width: 100%; height: 100%;" />
-          </a>
+      <div class="app-card" data-app-id="app3">
+        <img src="game/img/icon3.png" alt="1010 icon">
+        <h2>1010!</h2>
+        <div class="technologies"><span>Unity</span><span>C#</span><span>Android</span></div>
+        <p>Short description of the app...</p>
+      </div>
+      <div class="app-card" data-app-id="app4">
+        <img src="game/img/icon4.png" alt="lllilll Game icon">
+        <h2>lllilll Game</h2>
+        <div class="technologies"><span>JavaScript</span><span>HTML5</span><span>CSS</span></div>
+        <p>20초 동안 틀린 알파벳 찾기.</p>
+      </div>
+      <div class="app-card" data-app-id="app5">
+        <img src="game/img/noimg.png" alt="noimg icon" style="width: 120px; height: 120px">
+        <h2>개발중</h2>
+        <div class="technologies"></div>
+        <p>개발중.</p>
+      </div>
+    </main>
+    <div class="modal" id="appModal">
+      <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <img id="appImage" src="" alt="App Image">
+        <div id="appTechnologies" class="technologies"></div>
+        <div class="download-links">
+          <h4 style="margin-bottom: 0">Download & Play</h4>
+          <div style="display: flex; justify-content: center;">
+            <a id="googlePlay" href="#" target="_blank"><img src="https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" alt="google Store" style="width: 100%; height: 100%;" /></a>
+            <a id="oneStore" href="#" target="_blank"><img src="https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" alt="one Store" style="width: 100%; height: 100%;" /></a>
+            <a id="whaleStore" href="#" target="_blank"><img src="https://store.whale.naver.com/img/ic_whale_home.png" alt="WHALE Store" style="width: 100%; height: 100%;" /></a>
+            <a id="itchio" href="#" target="_blank"><img src="game/img/itchio-textless-black.svg" alt="itchio" style="width: 100%; height: 100%;" /></a>
+          </div>
         </div>
+        <p id="appDescription" style="text-align: left; margin-top: 20px"></p>
+        <iframe id="appVideo" src="" frameborder="0" allowfullscreen></iframe>
       </div>
     </div>
   </section>
 </div>
+<section id="asset">
+  <h2>ASSET</h2>
+  <main class="grid-container">
+    <div class="asset-card" onclick="window.open('https://kangjung.itch.io/planet-pixel')">
+      <img src="https://img.itch.zone/aW1nLzE1NDM3OTQxLnBuZw==/315x250%23c/NVkD4f.png" alt="Planet Pixel">
+      <h2>Planet Pixel</h2>
+      <div class="technologies"><span>pixel</span><span>2D</span></div>
+      <p>It's a background pixel image of planets such as Earth, Sun, Jupiter, etc. that I made when I made a planet game.</p>
+    </div>
+    <div class="asset-card" onclick="window.open('https://kangjung.itch.io/coin-pixel')">
+      <img src="https://img.itch.zone/aW1nLzExNjQ5OTE5LnBuZw==/315x250%23c/ARSP3L.png" alt="Coin Pixel">
+      <h2>Coin Pixel</h2>
+      <div class="technologies"><span>pixel</span><span>2D</span></div>
+      <p>This is a coin pixel art sprite sheet.</p>
+    </div>
+    <div class="asset-card" onclick="window.open('https://kangjung.itch.io/pigeon-pixel')">
+      <img src="https://img.itch.zone/aW1nLzExNTczMTc2LnBuZw==/315x250%23c/jo4vZb.png" alt="Pigeon Pixel">
+      <h2>Pigeon Pixel</h2>
+      <div class="technologies"><span>pixel</span><span>2D</span></div>
+      <p>This is a pigeon pixel art sprite sheet.</p>
+    </div>
+  </main>
+</section>
+
+<section id="contact">
+  <h2>연락처</h2>
+  <p>연락처</p>
+</section>
+</div>
 <footer>
-  <p>&copy; 2024 KANGJUNG. 모든 권리 보유.</p>
+  <p>&copy; 2024 KANGJUNG. - All rights reserved.</p>
 </footer>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const appCards = document.querySelectorAll('.app-card');
+    const modal = document.getElementById('appModal');
+    const closeModalBtn = document.querySelector('.close-btn');
+    const video = document.getElementById('appVideo');
+    const image = document.getElementById('appImage');
+    const description = document.getElementById('appDescription');
+    const googlePlay = document.getElementById('googlePlay');
+    const oneStore = document.getElementById('oneStore');
+    const whaleStore = document.getElementById('whaleStore');
+    const itchio = document.getElementById('itchio');
+
+    const appData = {
+      app1: {
+        video: "https://www.youtube.com/embed/MRz4zZ_zw2M",
+        image: "game/img/icon1.png",
+        description: "Don't fall and move in zigzags as much as possible.<br>" +
+          "<br>" +
+          "To change the direction of the rabbit, simply click the screen or press the space bar. Be careful not to fall off the edge.<br>" +
+          "<br>" +
+          "* The sound and graphics were used by purchasing an asset from the Unity Asset Store.",
+        description_ko: "떨어지지 말고 지그재그로 최대한 멀리 이동하십시오.",
+        links: {
+          googlePlay: "https://play.google.com/store/apps/details?id=com.KangJung.ZigZagRABBIT",
+          oneStore: "https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000770293",
+          whaleStore: "https://store.whale.naver.com/detail/cbfooenflljbbhalfelkohpoiodnpnpo",
+          itchio: "https://kangjung.itch.io/zigzag-rabbit",
+        },
+        technologies: ["Unity", "C#", "Android"],
+      },
+      app2: {
+        video: "https://www.youtube.com/embed/xMWiHdya8hE",
+        image: "game/img/icon2.png",
+        description: "The planet game is a planet version of the watermelon game.<br>" +
+          "<br>" +
+          "Crash planets to make larger planets.<br>" +
+          "<br>" +
+          " * Credit : The graphics used in the game were created using Aseprite.<br>" +
+          " * Fonts : DNFBitBit<br>" +
+          " * Sounds : FREE Casual Game SFX Pack, Ultimate Game Music Collection",
+        description_ko: "행성 게임은 수박 게임의 행성 버전입니다. 행성을 충돌시켜 더 큰 행성을 만드세요.",
+        links: {
+          googlePlay: "https://play.google.com/store/apps/details?id=com.Kangjung.PlanetGame",
+          oneStore: "https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000773862",
+          whaleStore: "https://store.whale.naver.com/detail/ndojlolokbmkbadhmmjdndmlaegjhlni",
+          itchio: "https://kangjung.itch.io/planet-game",
+        },
+        technologies: ["Unity", "C#", "Android"],
+      },
+      app3: {
+        video: "https://www.youtube.com/embed/4Ac09UTo0hk",
+        image: "game/img/icon3.png",
+        description: "This is a game where you place blocks in a 10 x 10 space and destroy them by completing rows horizontally and vertically.",
+        description_ko: "10 x 10 공간에 블록을 배치하여 가로 세로로 줄을 완성해서 파괴하는 게임입니다.",
+        links: {
+          googlePlay: "https://play.google.com/store/apps/details?id=com.KangJung.game_1010",
+          oneStore: "https://m.onestore.co.kr/ko-kr/apps/appsDetail.omp?prodId=0000780009",
+          whaleStore: "https://store.whale.naver.com/detail/mfcecojaaoogjnjbnkodlgecefbminic",
+          itchio: "",
+        },
+        technologies: ["Unity", "C#", "Android"],
+      },
+      app4: {
+        video: "",
+        image: "game/img/icon4.png",
+        description: "Find another alphabet among the same alphabet.<br>" +
+          "For example, l between i and F between E!" +
+          "<br>" +
+          "The time is 20 seconds! Look for as many as you can." +
+          "<br>" +
+          "Produced with HTML5 and JAVASCRIPT." +
+          "<br>" +
+          "* An entry for the 20Second Game Jam 2024.",
+        description_ko: "같은 알파벳 중에서 다른 알파벳을 찾아보세요." +
+          "<br>" +
+          "예를 들어, i 사이의 l과 E 사이의 F 같은 비슷한 알파벳 사이에서 말이죠." +
+          "<br>" +
+          "시간은 20초! 최대한 많이 찾아보세요." +
+          "<br>" +
+          "* 해당 게임은 html5와 JavaScript를 사용하여 만들었습니다." +
+          "<br>" +
+          "* itch에서 진행된 20 Second Game Jam 2024에 제출하기 위해 만든 간단한 게임입니다.",
+        links: {
+          googlePlay: "",
+          oneStore: "",
+          whaleStore: "https://store.whale.naver.com/detail/cbfooenflljbbhalfelkohpoiodnpnpo",
+          itchio: "https://kangjung.itch.io/lllilll-game",
+        },
+        technologies: ["JavaScript", "HTML5", "CSS"],
+      },
+    };
+
+    appCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const appId = card.dataset.appId;
+        const app = appData[appId];
+
+        video.src = app.video;
+        image.src = app.image;
+        description.innerHTML = app.description;
+        googlePlay.href = app.links.googlePlay;
+        oneStore.href = app.links.oneStore;
+        whaleStore.href = app.links.whaleStore;
+        itchio.href = app.links.itchio;
+        if(!app.links.googlePlay)
+          googlePlay.style.display = 'none';
+
+        if(!app.links.oneStore)
+          oneStore.style.display = 'none';
+
+        if(!app.links.whaleStore)
+          whaleStore.style.display = 'none';
+
+        if(!app.links.itchio)
+          itchio.style.display = 'none';
+
+        if(!app.video)
+          video.style.display = 'none';
+
+        document.getElementById('appTechnologies').innerHTML = "";
+        if (app.technologies && app.technologies.length > 0) {
+          app.technologies.forEach(tech => {
+            const techTag = document.createElement('span');
+            techTag.textContent = tech;
+            document.getElementById('appTechnologies').appendChild(techTag);
+          });
+        }
+
+        modal.style.display = 'flex';
+      });
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+      googlePlay.style.display = 'inline-block';
+      oneStore.style.display = 'inline-block';
+      whaleStore.style.display = 'inline-block';
+      itchio.style.display = 'inline-block';
+      video.style.display = 'block';
+      video.src = "";
+    });
+  });
+
+</script>
 </body>
 </html>
