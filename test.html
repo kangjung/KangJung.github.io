@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,  viewport-fit=cover">
+  <meta property="og:url" content="https://kangjung.github.io/main.html">
+  <meta property="og:title" content="KANGJUNG">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/img/banner.png">
+  <meta property="og:description" content="테스트">
+  <title>KANGJUNG</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #141e30, #243b55);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    nav {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 15px 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav ul li {
+      font-size: 1.2rem;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #ff7f50;
+    }
+
+    section {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    #about {
+      background: linear-gradient(135deg, #243b55, #141e30);
+    }
+
+    #projects {
+      background: linear-gradient(135deg, #141e30, #3b3b3b);
+    }
+
+    #contact {
+      background: linear-gradient(135deg, #3b3b3b, #243b55);
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.2rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 30px;
+      font-size: 1rem;
+      color: #fff;
+      background: #ff7f50;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #ff5722;
+    }
+
+    .project-card {
+      background: #242424;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 15px;
+      width: 300px;
+      text-align: left;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .project-card h3 {
+      font-size: 1.5rem;
+      color: #ff7f50;
+    }
+
+    .project-card p {
+      font-size: 1rem;
+      color: #ddd;
+    }
+
+    .project-card .btn {
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+
+    .project-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #242424;
+      padding: 20px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 500px;
+      text-align: center;
+      position: relative;
+      color: white;
+    }
+
+    .modal-content h2 {
+      color: #ff7f50;
+      margin-bottom: 15px;
+    }
+
+    .modal-content .btn {
+      margin-top: 10px;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 1.5rem;
+      color: white;
+      cursor: pointer;
+    }
+    .project-icon {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 10px;
+    }
+
+    .modal-icon {
+      width: 100px;
+      height: 100px;
+      margin: 10px auto;
+      display: block;
+    }
+
+    .download-links a {
+      display: inline-block;
+      text-decoration: none;
+      color: #fff;
+      border-radius: 4px;
+      width: 3vh;
+      height: 3vh;
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">GAME & APP</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+<section id="about">
+  <div>
+    <h1>About</h1>
+    <p>이 곳에 소개글을 쓰면될것 같습니당.</p>
+  </div>
+</section>
+<section id="projects">
+  <div>
+    <h1>GAME & APP</h1>
+    <p>앱이 어쩌구 게임이 어쩌구</p>
+    <div class="project-grid">
+      <div class="project-card">
+        <img src="game/img/icon1.png" alt="ZigZag Rabbit icon">
+        <h3>ZigZag Rabbit</h3>
+        <p>Move as far as possible in zigzags without falling.</p>
+        <a href="#" class="btn" data-app-id="app1">View Details</a>
+      </div>
+      <div class="project-card">
+        <img src="game/img/icon2.png" alt="Planet Game icon">
+        <h3>Planet Game</h3>
+        <p>Put the planets together to make a bigger planet.</p>
+        <a href="#" class="btn" data-app-id="app2">View Details</a>
+      </div>
+      <div class="project-card" >
+        <img src="game/img/icon3.png" alt="1010 icon">
+        <h3>1010!</h3>
+        <p>Place blocks in a 10 x 10 space and destroy them by completing rows horizontally and vertically.</p>
+        <a href="#" class="btn" data-app-id="app3">View Details</a>
+      </div>
+      <div class="project-card">
+        <img src="game/img/icon4.png" alt="lllilll Game icon">
+        <h3>lllilll Game</h3>
+        <p>Find the wrong alphabet in 20 seconds.</p>
+        <a href="#" class="btn" data-app-id="app4">View Details</a>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="contact">
+  <div>
+    <h1>Contact</h1>
+    <p>Get in touch with us for collaboration or inquiries. We are here to help bring your ideas to life.</p>
+    <a href="#" class="btn">Contact Us</a>
+  </div>
+</section>
+
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <img src="" alt="Project Icon" class="modal-icon" id="appImage">
+    <h2 id="appTitle">Project Details</h2>
+    <iframe id="video" width="100%" height="315" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <p id="appDescription">Here is the detailed description of the project. You can also include links to a live demo or store below.</p>
+    <div class="download-links">
+      <h4 style="margin-bottom: 0">Download & Play</h4>
+      <div style="display: flex; justify-content: center;">
+        <a id="googlePlay" href="#" target="_blank"><img src="https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" alt="google Store" style="width: 100%; height: 100%;" /></a>
+        <a id="oneStore" href="#" target="_blank"><img src="https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" alt="one Store" style="width: 100%; height: 100%;" /></a>
+        <a id="whaleStore" href="#" target="_blank"><img src="https://store.whale.naver.com/img/ic_whale_home.png" alt="WHALE Store" style="width: 100%; height: 100%;" /></a>
+        <a id="itchio" href="#" target="_blank"><img src="game/img/itchio-textless-black.svg" alt="itchio" style="width: 100%; height: 100%;" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById('modal');
+  const openButtons = document.querySelectorAll('.project-card .btn');
+  const appCards = document.querySelectorAll('.project-card');
+  const closeButton = document.querySelector('.close');
+
+  const appData = {
+    app1: {
+      title: "ZigZag Rabbit",
+      video: "https://www.youtube.com/embed/MRz4zZ_zw2M",
+      image: "game/img/icon1.png",
+      description: "Don't fall and move in zigzags as much as possible.<br>" +
+        "<br>" +
+        "To change the direction of the rabbit, simply click the screen or press the space bar. Be careful not to fall off the edge.<br>" +
+        "<br>" +
+        "* The sound and graphics were used by purchasing an asset from the Unity Asset Store.",
+      description_ko: "떨어지지 말고 지그재그로 최대한 멀리 이동하십시오.",
+      links: {
+        googlePlay: "https://play.google.com/store/apps/details?id=com.KangJung.ZigZagRABBIT",
+        oneStore: "https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000770293",
+        whaleStore: "https://store.whale.naver.com/detail/cbfooenflljbbhalfelkohpoiodnpnpo",
+        itchio: "https://kangjung.itch.io/zigzag-rabbit",
+      },
+      technologies: ["Unity", "C#", "Android"],
+    },
+    app2: {
+      title: "Planet Game",
+      video: "https://www.youtube.com/embed/xMWiHdya8hE",
+      image: "game/img/icon2.png",
+      description: "The planet game is a planet version of the watermelon game.<br>" +
+        "<br>" +
+        "Crash planets to make larger planets.<br>" +
+        "<br>" +
+        " * Credit : The graphics used in the game were created using Aseprite.<br>" +
+        " * Fonts : DNFBitBit<br>" +
+        " * Sounds : FREE Casual Game SFX Pack, Ultimate Game Music Collection",
+      description_ko: "행성 게임은 수박 게임의 행성 버전입니다. 행성을 충돌시켜 더 큰 행성을 만드세요.",
+      links: {
+        googlePlay: "https://play.google.com/store/apps/details?id=com.Kangjung.PlanetGame",
+        oneStore: "https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000773862",
+        whaleStore: "https://store.whale.naver.com/detail/ndojlolokbmkbadhmmjdndmlaegjhlni",
+        itchio: "https://kangjung.itch.io/planet-game",
+      },
+      technologies: ["Unity", "C#", "Android"],
+    },
+    app3: {
+      title: "1010!",
+      video: "https://www.youtube.com/embed/4Ac09UTo0hk",
+      image: "game/img/icon3.png",
+      description: "This is a game where you place blocks in a 10 x 10 space and destroy them by completing rows horizontally and vertically.",
+      description_ko: "10 x 10 공간에 블록을 배치하여 가로 세로로 줄을 완성해서 파괴하는 게임입니다.",
+      links: {
+        googlePlay: "https://play.google.com/store/apps/details?id=com.KangJung.game_1010",
+        oneStore: "https://m.onestore.co.kr/ko-kr/apps/appsDetail.omp?prodId=0000780009",
+        whaleStore: "https://store.whale.naver.com/detail/mfcecojaaoogjnjbnkodlgecefbminic",
+        itchio: "https://kangjung.itch.io/1010",
+      },
+      technologies: ["Unity", "C#", "Android"],
+    },
+    app4: {
+      title: "lllilll Game",
+      video: "",
+      image: "game/img/icon4.png",
+      description: "Find another alphabet among the same alphabet.<br>" +
+        "For example, l between i and F between E!" +
+        "<br>" +
+        "The time is 20 seconds! Look for as many as you can." +
+        "<br>" +
+        "Produced with HTML5 and JAVASCRIPT." +
+        "<br>" +
+        "* An entry for the 20Second Game Jam 2024.",
+      description_ko: "같은 알파벳 중에서 다른 알파벳을 찾아보세요." +
+        "<br>" +
+        "예를 들어, i 사이의 l과 E 사이의 F 같은 비슷한 알파벳 사이에서 말이죠." +
+        "<br>" +
+        "시간은 20초! 최대한 많이 찾아보세요." +
+        "<br>" +
+        "* 해당 게임은 html5와 JavaScript를 사용하여 만들었습니다." +
+        "<br>" +
+        "* itch에서 진행된 20 Second Game Jam 2024에 제출하기 위해 만든 간단한 게임입니다.",
+      links: {
+        googlePlay: "",
+        oneStore: "",
+        whaleStore: "https://store.whale.naver.com/detail/cbfooenflljbbhalfelkohpoiodnpnpo",
+        itchio: "https://kangjung.itch.io/lllilll-game",
+      },
+      technologies: ["JavaScript", "HTML5", "CSS"],
+    },
+  };
+  const title = document.getElementById('appTitle');
+  const video = document.getElementById('video');
+  const image = document.querySelector('.modal-icon');
+  const description = document.getElementById('appDescription');
+  const googlePlay = document.getElementById('googlePlay');
+  const oneStore = document.getElementById('oneStore');
+  const whaleStore = document.getElementById('whaleStore');
+  const itchio = document.getElementById('itchio');
+  openButtons.forEach(button => {
+    button.addEventListener('click', (event) => {
+      const appId = button.dataset.appId;
+      const app = appData[appId];
+
+      event.preventDefault();
+
+      if(!app.links.googlePlay)
+        googlePlay.style.display = 'none';
+
+      if(!app.links.oneStore)
+        oneStore.style.display = 'none';
+
+      if(!app.links.whaleStore)
+        whaleStore.style.display = 'none';
+
+      if(!app.links.itchio)
+        itchio.style.display = 'none';
+
+      if(!app.video)
+        video.style.display = 'none';
+
+      title.innerHTML = app.title;
+      video.src = app.video;
+      image.src = app.image;
+      description.innerHTML = app.description;
+      googlePlay.href = app.links.googlePlay;
+      oneStore.href = app.links.oneStore;
+      whaleStore.href = app.links.whaleStore;
+      itchio.href = app.links.itchio;
+
+      modal.style.display = 'flex';
+    });
+  });
+
+  closeButton.addEventListener('click', () => {
+    modal.style.display = 'none';
+    document.getElementById('video').src = ''; // Stop video playback
+    googlePlay.style.display = 'inline-block';
+    oneStore.style.display = 'inline-block';
+    whaleStore.style.display = 'inline-block';
+    itchio.style.display = 'inline-block';
+    video.style.display = 'block';
+    video.src = "";
+  });
+
+  window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+</script>
+</body>
+</html>
