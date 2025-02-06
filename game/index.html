@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Game Gallery</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,  viewport-fit=cover">
+  <meta property="og:url" content="KangJung.github.io/game/index.html">
+  <meta property="og:title" content="KANGJUNG">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/img/banner.png">
+  <meta property="og:description" content="KANGJUNG 게임 목록">
+  <title>KANGJUNG</title>
+  <title>Game Gallery</title>
 </head>
 <style>
 
@@ -32,76 +39,76 @@
   }
 
   .container {
-      width: 600px;
-      display: flex;
-      height: 55vh;
-      margin: 12% auto 0;
+    max-width: 1200px;
+    display: flex;
+    height: 55vh;
+    margin: 12% auto 0;
   }
 
   .card {
-      flex: 1;
-      position: relative;
-      border-radius: 12px;
-      margin: 0;
-      padding: 0;
-      transition: all 500ms cubic-bezier(.14, .69, .93, 1);
-      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
-      overflow: hidden;
+    flex: 1;
+    position: relative;
+    border-radius: 12px;
+    margin: 0;
+    padding: 0;
+    transition: all 500ms cubic-bezier(.14, .69, .93, 1);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
   }
 
   .card .background-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: opacity 500ms ease-in-out;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 500ms ease-in-out;
   }
 
   .card iframe {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 200%;
-      height: 200%;
-      transform: translate(-50%, -50%);
-      border: none;
-      transition: opacity 500ms ease-in-out;
-      opacity: 0;
-      pointer-events: none; /* Prevent video from being paused or interacted with */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    transform: translate(-50%, -50%);
+    border: none;
+    transition: opacity 500ms ease-in-out;
+    opacity: 0;
+    pointer-events: none; /* Prevent video from being paused or interacted with */
   }
 
   .card .overlay {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: white;
-      text-align: center;
-      z-index: 2;
-      padding: 20px;
-      backdrop-filter: blur(10px); /* Add blur effect */
-      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-      border-radius: 10px; /* Rounded corners for overlay */
-      opacity: 0;
-      transition: opacity 500ms ease-in-out;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    z-index: 2;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    background-color: rgba(68, 31, 62, 0.53);
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 500ms ease-in-out;
   }
 
   .card .overlay h2, .card .overlay p {
-      margin: 0;
-      padding: 0;
+    margin: 0;
+    padding: 0;
   }
 
   .card .app-icon {
-      width: 60px;
-      height: 60px;
-      margin-bottom: 10px;
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px;
   }
 
   .card .icon-container {
-      margin-top: 10px;
+    margin-top: 10px;
   }
 
   .card .icon-container a {
-      margin: 0 10px;
+    margin: 0 10px;
   }
 
   .card .icon-container img {
@@ -112,129 +119,195 @@
   }
 
   .card .icon-container img:hover {
-      transform: scale(1.1);
+    transform: scale(1.1);
   }
 
   .card:hover iframe {
-      opacity: 1;
+    opacity: 1;
   }
 
   .card:hover .background-image {
-      opacity: 0;
+    opacity: 0;
   }
 
   .card:hover .overlay {
-      opacity: 1;
+    opacity: 1;
   }
 
   .card:hover {
-      flex-basis: 35vw;
+    flex-basis: 35vw;
   }
 
   /* Make the container responsive */
   @media only screen and (min-width: 768px) and (max-width: 991px) {
-      .container {
-          width: 100%;
-      }
+    .container {
+      width: 100%;
+    }
   }
 
   @media only screen and (max-width: 767px) {
-      .container {
-          width: 100%;
-      }
+    .container {
+      width: 100%;
+    }
+  }
+  .download-links {
+    border-top: 1px solid #FFFFFF;
+    padding-top: 8px;
+  }
+  .card .overlay h2 {
+    padding-bottom: 20px;
   }
 </style>
 <body>
 
-  <div class="inner">
-    <div class="container">
-        <div class="card">
-            <img class="background-image" src="./img/zigzag.png" alt="Game Image">
-            <iframe src="https://www.youtube.com/embed/MRz4zZ_zw2M?autoplay=1&mute=1&loop=1&playlist=MRz4zZ_zw2M&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0"></iframe>
-            <div class="overlay">
-                <img class="app-icon" src="./img/icon1.png" alt="ZigZag Rabbit Icon">
-                <h2>ZigZag RABBIT</h2>
-                <p>Download from:</p>
-                <div class="icon-container">
-                    <a href="https://play.google.com/store/apps/details?id=com.KangJung.ZigZagRABBIT" target="_blank">
-                        <img src="./img/google-play-badge.png" alt="Google Play">
-                    </a>
-                    <a href="https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000770293" target="_blank">
-                        <img src="./img/one_downloadbadge_red_black.png" alt="원스토어">
-                    </a>
-                    <a href="https://store.whale.naver.com/detail/cbfooenflljbbhalfelkohpoiodnpnpo" target="_blank">
-                      <img src="./img/whelaStore.png" alt="whelaStore">
-                    </a>
-                </div>
-            </div>
+<div class="inner">
+  <div class="container">
+    <div class="card">
+      <img class="background-image" src="./img/zigzag.png" alt="Game Image">
+      <iframe src="https://www.youtube.com/embed/MRz4zZ_zw2M?autoplay=1&mute=1&loop=1&playlist=MRz4zZ_zw2M&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0"></iframe>
+      <div class="overlay">
+        <img class="app-icon" src="./img/icon1.png" alt="ZigZag Rabbit Icon">
+        <h2>ZigZag RABBIT</h2>
+<!--        <p>-->
+<!--          Don't fall and move in zigzags as much as possible.<br>-->
+<!--          <br>-->
+<!--          To change the direction of the rabbit, simply click the screen or press the space bar. Be careful not to fall off the edge.<br>-->
+<!--          <br>-->
+<!--        </p>-->
+        <h3 class="download-links">Download & Play</h3>
+        <div class="icon-container">
+          <a href="https://play.google.com/store/apps/details?id=com.KangJung.ZigZagRABBIT" target="_blank">
+            <img src="https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" alt="Google Play">
+          </a>
+          <a href="https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000770293" target="_blank">
+            <img src="https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" alt="원스토어">
+          </a>
+          <a href="https://store.whale.naver.com/detail/cbfooenflljbbhalfelkohpoiodnpnpo" target="_blank">
+            <img src="https://store.whale.naver.com/img/ic_whale_home.png" alt="WHALE Store">
+          </a>
+          <a href="https://kangjung.itch.io/zigzag-rabbit" target="_blank">
+            <img src="./img/itchio-textless-black.svg" alt="itchio">
+          </a>
         </div>
-        <div class="card">
-            <img class="background-image" src="./img/planet.png" alt="Game Image">
-            <iframe src="https://www.youtube.com/embed/xMWiHdya8hE?autoplay=1&mute=1&loop=1&playlist=xMWiHdya8hE&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=2&fs=0"></iframe>
-            <div class="overlay">
-                <img class="app-icon" src="./img/icon2.png" alt="Planet Game Icon">
-                <h2>Planet Game - 행성 수박 게임</h2>
-                <p>Download from:</p>
-                <div class="icon-container">
-                    <a href="https://play.google.com/store/apps/details?id=com.Kangjung.PlanetGame" target="_blank">
-                        <img src="./img/google-play-badge.png" alt="Google Play">
-                    </a>
-                    <a href="https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000773862" target="_blank">
-                        <img src="./img/one_downloadbadge_red_black.png" alt="원스토어">
-                    </a>
-                    <a href="https://store.whale.naver.com/detail/ndojlolokbmkbadhmmjdndmlaegjhlni" target="_blank">
-                      <img src="./img/whelaStore.png" alt="whelaStore">
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <img class="background-image" src="./img/1010.png" alt="Game Image">
-            <iframe src="https://www.youtube.com/embed/4Ac09UTo0hk?autoplay=1&mute=1&loop=1&playlist=4Ac09UTo0hk&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0"></iframe>
-            <div class="overlay">
-                <img class="app-icon" src="./img/icon3.png" alt="1010! Icon">
-                <h2>1010!</h2>
-                <p>Download from:</p>
-                <div class="icon-container">
-                    <a href="https://store.whale.naver.com/detail/mfcecojaaoogjnjbnkodlgecefbminic" target="_blank">
-                        <img src="./img/whelaStore.png" alt="whelaStore">
-                    </a>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-
-    <div id="content">
-      <h1 id="title" style="text-shadow: rgb(235, 73, 44) 14px 4px;">GAME LIST</h1>
+    <div class="card">
+      <img class="background-image" src="./img/planet.png" alt="Game Image">
+      <iframe src="https://www.youtube.com/embed/xMWiHdya8hE?autoplay=1&mute=1&loop=1&playlist=xMWiHdya8hE&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=2&fs=0"></iframe>
+      <div class="overlay">
+        <img class="app-icon" src="./img/icon2.png" alt="Planet Game Icon">
+        <h2>Planet Game - 행성 수박 게임</h2>
+<!--        <p>-->
+<!--          The planet game is a planet version of the watermelon game.<br><br>-->
+<!--          Crash planets to make larger planets.<br>-->
+<!--          <br>-->
+<!--        </p>-->
+        <h3 class="download-links">Download & Play</h3>
+        <div class="icon-container">
+          <a href="https://play.google.com/store/apps/details?id=com.Kangjung.PlanetGame" target="_blank">
+            <img src="https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" alt="Google Play">
+          </a>
+          <a href="https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000773862" target="_blank">
+            <img src="https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" alt="원스토어">
+          </a>
+          <a href="https://store.whale.naver.com/detail/ndojlolokbmkbadhmmjdndmlaegjhlni" target="_blank">
+            <img src="https://store.whale.naver.com/img/ic_whale_home.png" alt="WHALE Store">
+          </a>
+          <a href="https://kangjung.itch.io/planet-game" target="_blank">
+            <img src="./img/itchio-textless-black.svg" alt="itchio">
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <img class="background-image" src="./img/1010.png" alt="Game Image">
+      <iframe src="https://www.youtube.com/embed/4Ac09UTo0hk?autoplay=1&mute=1&loop=1&playlist=4Ac09UTo0hk&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0"></iframe>
+      <div class="overlay">
+        <img class="app-icon" src="./img/icon3.png" alt="1010! Icon">
+        <h2>1010!</h2>
+<!--        <p>This is a game where you place blocks in a 10 x 10 space and destroy them by completing rows horizontally and vertically.-->
+<!--          <br>-->
+<!--          <br>-->
+<!--        </p>-->
+        <h3 class="download-links">Download & Play</h3>
+        <div class="icon-container">
+          <a href="https://play.google.com/store/apps/details?id=com.KangJung.game_1010" target="_blank">
+            <img src="https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" alt="Google Play">
+          </a>
+          <a href="https://m.onestore.co.kr/ko-kr/apps/appsDetail.omp?prodId=0000780009" target="_blank">
+            <img src="https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" alt="원스토어">
+          </a>
+          <a href="https://store.whale.naver.com/detail/mfcecojaaoogjnjbnkodlgecefbminic" target="_blank">
+            <img src="https://store.whale.naver.com/img/ic_whale_home.png" alt="WHALE Store">
+          </a>
+          <a href="https://kangjung.itch.io/1010" target="_blank">
+            <img src="./img/itchio-textless-black.svg" alt="itchio">
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <img class="background-image" src="./img/lllilll.png" alt="Game Image">
+      <iframe src="https://www.youtube.com/embed/3MMABkxD55s?autoplay=1&mute=1&loop=1&playlist=3MMABkxD55s&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0"></iframe>
+      <div class="overlay">
+        <img class="app-icon" src="./img/icon4.png" alt="lllilll Game Icon">
+        <h2>1010!</h2>
+<!--        <p>Find another alphabet among the same alphabet.-->
+<!--          <br>-->
+<!--          For example, l between i and F between E!-->
+<!--          <br>-->
+<!--          The time is 20 seconds! Look for as many as you can.-->
+<!--          <br>-->
+<!--          Produced with HTML5 and JAVASCRIPT.-->
+<!--          <br>-->
+<!--          * An entry for the 20Second Game Jam 2024.-->
+<!--          <br>-->
+<!--          <br>-->
+<!--        </p>-->
+        <h3 class="download-links">Download & Play</h3>
+        <div class="icon-container">
+          <a href="https://store.whale.naver.com/detail/fkhebjhhenkphijnbnilkgjibllcjahk" target="_blank">
+            <img src="https://store.whale.naver.com/img/ic_whale_home.png" alt="WHALE Store">
+          </a>
+          <a href="https://kangjung.itch.io/lllilll-game" target="_blank">
+            <img src="./img/itchio-textless-black.svg" alt="itchio">
+          </a>
+        </div>
+      </div>
     </div>
   </div>
+
+  <div id="content">
+    <h1 id="title" style="text-shadow: rgb(235, 73, 44) 14px 4px;">GAME LIST</h1>
+  </div>
+</div>
 </body>
 
-  <script type="text/javascript">
+<script type="text/javascript">
 
-    const body = document.querySelector('body');
-    const text = document.getElementById('title');
+  const body = document.querySelector('body');
+  const text = document.getElementById('title');
 
-    const distance = 30;
+  const distance = 30;
 
-    body.addEventListener('mousemove', setShadow);
+  body.addEventListener('mousemove', setShadow);
 
-    function setShadow(e) {
-      const width = this.offsetWidth;
-      const height = this.offsetHeight;
+  function setShadow(e) {
+    const width = this.offsetWidth;
+    const height = this.offsetHeight;
 
-      let x = e.offsetX;
-      let y = e.offsetY;
+    let x = e.offsetX;
+    let y = e.offsetY;
 
-      if (this !== e.target) {
-        x = x + e.target.offsetLeft;
-        y = y + e.target.offsetTop;
-      }
-
-      const xDistance = Math.round((x / width * distance) - (distance / 2));
-      const yDistance = Math.round((y / height * distance) - (distance / 2));
-
-      text.style.textShadow = `${xDistance}px ${yDistance}px #EB492C`;
+    if (this !== e.target) {
+      x = x + e.target.offsetLeft;
+      y = y + e.target.offsetTop;
     }
-  </script>
+
+    const xDistance = Math.round((x / width * distance) - (distance / 2));
+    const yDistance = Math.round((y / height * distance) - (distance / 2));
+
+    text.style.textShadow = `${xDistance}px ${yDistance}px #EB492C`;
+  }
+</script>
 </html>
