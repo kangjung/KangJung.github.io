@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CBT 시험</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      margin: auto;
+    }
+    .question-box {
+      border: 1px solid #ccc;
+      padding: 15px;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      margin-bottom: 10px;
+    }
+    .question-number {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .question {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .options label {
+      display: block;
+      margin: 5px 0;
+    }
+    .hidden {
+      display: none;
+    }
+    .btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #0056b3;
+    }
+    .result {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+    .explanation {
+      font-size: 16px;
+      color: #555;
+      margin-top: 10px;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+    }
+    /* Modal 스타일 */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.4);
+      overflow: auto;
+      padding-top: 60px;
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 600px;
+      border-radius: 8px;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>📚 CBT 시험</h2>
+
+  <a class="btn" href="questions_template.xlsx" download>📥 엑셀 템플릿 다운로드</a>
+  <input type="file" accept=".xlsx" onchange="loadExcel(event)">
+
+  <div id="quiz-container">
+    <p id="progress"></p>
+    <div class="question-box">
+      <div class="question-number" id="question-number"></div>
+      <div class="question" id="question"></div>
+      <div class="options" id="options"></div>
+    </div>
+    <p id="result" class="result"></p>
+    <p id="explanation" class="explanation hidden"></p>
+    <button class="btn hidden" id="nextBtn" onclick="nextQuestion()">다음 문제</button>
+  </div>
+</div>
+
+<!-- Modal 팝업 -->
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2>문제를 만들고 첨부하여 시험을 시작하세요!</h2>
+    <p>엑셀 템플릿을 다운로드하여 문제를 만들어 주시기 바랍니다.</p>
+    <p>엑셀 파일을 업로드하면 자동으로 문제를 불러올 수 있습니다. 문제를 풀기 전에 반드시 템플릿을 다운로드하고 문제를 작성해 주세요.</p>
+  </div>
+</div>
+
+<script>
+  let questions = [];
+  let currentQuestionIndex = 0;
+  let score = 0;
+
+  function loadExcel(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsBinaryString(file);
+    reader.onload = (e) => {
+      const workbook = XLSX.read(e.target.result, { type: 'binary' });
+      const sheetName = workbook.SheetNames[0];
+      const sheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 });
+
+      questions = sheet.slice(1).map(row => {
+        if (row[0]) {
+          return {
+            question: row[0],
+            options: row.slice(1, 5),
+            answer: row[5] - 1,
+            explanation: row[6] || "해설이 없습니다."
+          };
+        }
+      }).filter(q => q);
+
+      displayQuestion();
+    };
+  }
+
+  function displayQuestion() {
+    if (currentQuestionIndex >= questions.length) {
+      document.getElementById("quiz-container").innerHTML = `
+                    <h3>🎉 시험 종료 🎉</h3>
+                    <p><strong>최종 점수: ${score} / ${questions.length}</strong></p>
+                    <button class="btn" onclick="location.reload()">다시 시작</button>
+                `;
+      return;
+    }
+
+    const q = questions[currentQuestionIndex];
+    document.getElementById("progress").innerHTML = `현재 ${currentQuestionIndex + 1} / ${questions.length} 문제`;
+    document.getElementById("question-number").innerText = `문제 ${currentQuestionIndex + 1}`;
+    document.getElementById("question").innerText = q.question;
+
+    const optionsContainer = document.getElementById("options");
+    optionsContainer.innerHTML = "";
+    q.options.forEach((option, index) => {
+      optionsContainer.innerHTML += `<label><input type="radio" name="q" value="${index}"> ${option}</label>`;
+    });
+
+    document.getElementById("result").innerHTML = "";
+    document.getElementById("explanation").innerHTML = "";
+    document.getElementById("explanation").classList.add("hidden");
+    document.getElementById("nextBtn").classList.add("hidden");
+
+    document.getElementById("nextBtn").innerText = (currentQuestionIndex === questions.length - 1) ? "결과 보기" : "다음 문제";
+  }
+
+  function submitAnswer() {
+    const selected = document.querySelector('input[name="q"]:checked');
+    const result = document.getElementById("result");
+    const explanation = document.getElementById("explanation");
+    const nextBtn = document.getElementById("nextBtn");
+
+    if (!selected) {
+      result.innerHTML = "답을 선택하세요.";
+      result.style.color = "black";
+      return;
+    }
+
+    if (parseInt(selected.value) === questions[currentQuestionIndex].answer) {
+      result.innerHTML = "✅ 정답입니다!";
+      result.style.color = "green";
+      score++;
+    } else {
+      result.innerHTML = "❌ 오답입니다.";
+      result.style.color = "red";
+    }
+
+    explanation.innerHTML = `📌 해설: ${questions[currentQuestionIndex].explanation}`;
+    explanation.classList.remove("hidden");
+    nextBtn.classList.remove("hidden");
+  }
+
+  function nextQuestion() {
+    currentQuestionIndex++;
+    displayQuestion();
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // 처음 페이지 로드 시 모달 팝업 표시
+    showModal();
+
+    document.getElementById("quiz-container").insertAdjacentHTML('beforeend', '<button class="btn" onclick="submitAnswer()">제출</button>');
+  });
+
+  function showModal() {
+    const modal = document.getElementById("myModal");
+    modal.style.display = "block";
+  }
+
+  function closeModal() {
+    const modal = document.getElementById("myModal");
+    modal.style.display = "none";
+  }
+</script>
+</body>
+</html>
