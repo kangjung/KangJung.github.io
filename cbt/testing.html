@@ -109,6 +109,11 @@
   <a class="btn" href="questions_template.xlsx" download>📥 엑셀 템플릿 다운로드</a>
   <input type="file" accept=".xlsx" onchange="loadExcel(event)">
 
+  <div id="saved-files">
+    <h3>저장된 파일</h3>
+    <ul id="file-list"></ul>
+  </div>
+
   <div id="quiz-container">
     <p id="progress"></p>
     <div class="question-box">
@@ -137,6 +142,7 @@
   let currentQuestionIndex = 0;
   let score = 0;
 
+  // 엑셀 파일 로딩 및 JSON으로 변환하여 로컬스토리지에 저장
   function loadExcel(event) {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -157,10 +163,44 @@
         }
       }).filter(q => q);
 
+      const fileName = file.name.split('.')[0];
+      localStorage.setItem(fileName, JSON.stringify(questions));
+      updateFileList();
       displayQuestion();
     };
   }
 
+  // 저장된 파일 목록을 업데이트하여 화면에 표시
+  function updateFileList() {
+    const fileList = document.getElementById("file-list");
+    fileList.innerHTML = "";
+    Object.keys(localStorage).forEach(fileName => {
+      const listItem = document.createElement("li");
+      listItem.innerHTML = `
+        ${fileName}
+        <button onclick="loadSavedFile('${fileName}')">불러오기</button>
+        <button onclick="deleteFile('${fileName}')">삭제</button>
+      `;
+      fileList.appendChild(listItem);
+    });
+  }
+
+  // 저장된 파일 불러오기
+  function loadSavedFile(fileName) {
+    const savedData = localStorage.getItem(fileName);
+    questions = JSON.parse(savedData);
+    currentQuestionIndex = 0;
+    score = 0;
+    displayQuestion();
+  }
+
+  // 저장된 파일 삭제
+  function deleteFile(fileName) {
+    localStorage.removeItem(fileName);
+    updateFileList();
+  }
+
+  // 문제 출력
   function displayQuestion() {
     if (currentQuestionIndex >= questions.length) {
       document.getElementById("quiz-container").innerHTML = `
@@ -190,6 +230,7 @@
     document.getElementById("nextBtn").innerText = (currentQuestionIndex === questions.length - 1) ? "결과 보기" : "다음 문제";
   }
 
+  // 답안 제출
   function submitAnswer() {
     const selected = document.querySelector('input[name="q"]:checked');
     const result = document.getElementById("result");
@@ -216,18 +257,13 @@
     nextBtn.classList.remove("hidden");
   }
 
+  // 다음 문제
   function nextQuestion() {
     currentQuestionIndex++;
     displayQuestion();
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    // 처음 페이지 로드 시 모달 팝업 표시
-    showModal();
-
-    document.getElementById("quiz-container").insertAdjacentHTML('beforeend', '<button class="btn" onclick="submitAnswer()">제출</button>');
-  });
-
+  // 모달 팝업
   function showModal() {
     const modal = document.getElementById("myModal");
     modal.style.display = "block";
@@ -237,6 +273,12 @@
     const modal = document.getElementById("myModal");
     modal.style.display = "none";
   }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // 처음 페이지 로드 시 모달 팝업 표시
+    showModal();
+    updateFileList(); // 로컬스토리지에 저장된 파일 목록을 업데이트
+  });
 </script>
 </body>
 </html>
