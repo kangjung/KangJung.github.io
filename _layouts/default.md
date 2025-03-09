@@ -41,7 +41,7 @@ layout: util/compress
     {% if site.data.conf.posts.post_table_of_contents and page.layout == "post"-%}
       {%- include post/table-of-contents.html -%}
     {%- endif -%}
-    <div id="main-wrapper" style="display: flex;">
+    <div id="main-wrapper" style="display: flex; height: 100vh;">
       <div class="main-container" style="flex: 1; margin-right: 20px;">
         {%- assign returned_content = content %}
         {%- comment -%} fix for tables. {%- endcomment -%}
@@ -62,8 +62,8 @@ layout: util/compress
              (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
       </div>
-      <div class="adsense-container" style="flex: 1; margin-left: auto; max-width:600px; position: sticky; top: 20px;">
-        <div style="height: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+      <div class="adsense-container" style="flex: 1;margin-left: auto; max-width: 300px; position: sticky; top: 20px; height: 100vh; overflow-y: auto;">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
           <ins class="adsbygoogle"
                style="display:block;"
                data-ad-client="ca-pub-2007216448786117"
