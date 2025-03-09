@@ -62,7 +62,7 @@ layout: util/compress
              (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
       </div>
-      <div class="adsense-container" style="flex: 1; margin-left: auto; max-width:600px">
+      <div class="adsense-container" style="flex: 1; margin-left: auto; max-width:600px; position: sticky; top: 20px;">
         <div style="height: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
           <ins class="adsbygoogle"
                 style="position: sticky; top: 20px; display:block;"
