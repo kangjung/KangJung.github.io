@@ -10,7 +10,7 @@ lng:
   # For html tags, you can enable or disable using html_lng_with_country_code defined in _data/conf/main.yml
   # based on ISO_3166-1 https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
   country: KR
-  switch_title: Kr
+  switch_title: 한글
   offer:
     title: 언어
     msg_page: 이 페이지를 한국어로 보기.
