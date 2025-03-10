@@ -42,7 +42,7 @@ layout: util/compress
       {%- include post/table-of-contents.html -%}
     {%- endif -%}
     <div id="main-wrapper" style="display: flex; height: 100vh;">
-      <div class="main-container" style="flex: 1; margin-right: 20px;">
+      <div class="main-container" style="flex: 1;">
         {%- assign returned_content = content %}
         {%- comment -%} fix for tables. {%- endcomment -%}
         {% if returned_content contains 'class="markdown-style"' -%}
