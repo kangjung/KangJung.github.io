@@ -5,11 +5,11 @@ title: SEF2023(소프트웨어 교육 페스티벌) 후기
 
 # post specific
 # if not specified, .name will be used from _data/owner/[language].yml
-#author: ""
+#author: "KangJung"
 # multiple category is not supported
-category: auto generated
+category: Conference
 # multiple tag entries are possible
-tags: [컨퍼런스]
+tags: [Conference]
 # thumbnail image for post
 img: "https://blog.kakaocdn.net/dn/dcPg96/btstqYN3whQ/hNRDanzOBbHQxD0POK0fOK/img.png"
 # disable comments on this page

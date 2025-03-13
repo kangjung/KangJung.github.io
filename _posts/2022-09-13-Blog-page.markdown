@@ -5,11 +5,11 @@ title: js13kGames 2022 참가 후기
 
 # post specific
 # if not specified, .name will be used from _data/owner/[language].yml
-#author: ""
+#author: "KangJung"
 # multiple category is not supported
-category: auto generated
+category: GameJam
 # multiple tag entries are possible
-tags: [js13kGames, Web Game, 게임 잼]
+tags: [js13kGames, Web Game, GameJam]
 # thumbnail image for post
 img: "https://blog.kakaocdn.net/dn/dnRvgm/btrLZzVZ52K/bVsJfnDVZgvv0pEjKk38K1/img.gif"
 # disable comments on this page
