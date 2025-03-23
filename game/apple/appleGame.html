@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사과 게임</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        #game-container { width: 300px; height: 400px; border: 2px solid black; margin: 20px auto; position: relative; }
+        .apple { width: 50px; height: 50px; background-color: red; color: white;
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            position: absolute; cursor: pointer; }
+        #score { font-size: 20px; margin: 10px; }
+        #timer { font-size: 18px; }
+        #start-screen, #end-screen { display: none; }
+        #start-screen.active, #end-screen.active { display: block; }
+    </style>
+</head>
+<body>
+<h1>🍏 사과 게임 🍏</h1>
+
+<div id="start-screen" class="active">
+    <h2>합계가 10이 되도록 사과를 선택하세요.</h2>
+    <button onclick="startGame()">게임 시작</button>
+</div>
+
+<div id="end-screen">
+    <h2>게임 종료</h2>
+    <p>최종 점수: <span id="final-score"></span></p>
+    <button onclick="restartGame()">다시 시작</button>
+</div>
+
+<p id="timer">남은 시간: <span id="time">30</span>초</p>
+<p id="score">점수: <span id="points">0</span></p>
+<div id="game-container" style="display:none;"></div>
+
+<script>
+    const gameContainer = document.getElementById('game-container');
+    const scoreDisplay = document.getElementById('points');
+    const timeDisplay = document.getElementById('time');
+    const startScreen = document.getElementById('start-screen');
+    const endScreen = document.getElementById('end-screen');
+    const finalScoreDisplay = document.getElementById('final-score');
+    let score = 0, time = 30, selectedApples = [], selectedSum = 0;
+
+    function spawnApple() {
+        const apple = document.createElement('div');
+        apple.classList.add('apple');
+        const number = Math.floor(Math.random() * 9) + 1;
+        apple.innerText = number;
+        apple.dataset.value = number;
+        apple.style.left = Math.random() * 250 + 'px';
+        apple.style.top = Math.random() * 350 + 'px';
+
+        apple.addEventListener('click', () => selectApple(apple));
+        gameContainer.appendChild(apple);
+    }
+
+    function selectApple(apple) {
+        const value = parseInt(apple.dataset.value);
+        selectedApples.push(apple);
+        selectedSum += value;
+        apple.style.backgroundColor = 'green';
+
+        if (selectedSum === 10) {
+            score += 10;
+            scoreDisplay.innerText = score;
+            selectedApples.forEach(a => a.remove());
+            selectedApples = [];
+            selectedSum = 0;
+        } else if (selectedSum > 10) {
+            selectedApples.forEach(a => a.style.backgroundColor = 'red');
+            selectedApples = [];
+            selectedSum = 0;
+        }
+    }
+
+    function startGame() {
+        startScreen.classList.remove('active');
+        gameContainer.style.display = 'block';
+
+        const interval = setInterval(() => {
+            time--;
+            timeDisplay.innerText = time;
+            spawnApple();
+            if (time <= 0) {
+                clearInterval(interval);
+                gameOver();
+            }
+        }, 1000);
+    }
+
+    function gameOver() {
+        gameContainer.style.display = 'none';
+        finalScoreDisplay.innerText = score;
+        endScreen.classList.add('active');
+    }
+
+    function restartGame() {
+        score = 0;
+        time = 30;
+        selectedApples = [];
+        selectedSum = 0;
+        scoreDisplay.innerText = score;
+        timeDisplay.innerText = time;
+        gameContainer.innerHTML = '';
+
+        endScreen.classList.remove('active');
+        startScreen.classList.add('active');
+    }
+</script>
+</body>
+</html>
