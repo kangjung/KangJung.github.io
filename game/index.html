@@ -72,6 +72,29 @@
     .store-badge { display: flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1rem; border-radius: 30px; background: var(--gradient); color: white; text-decoration: none; font-size: 0.98rem; font-weight: 600; transition: transform 0.3s, box-shadow 0.3s;}
     .store-badge img { width: 22px; height: 22px; border-radius: 5px; }
     .store-badge:hover { transform: scale(1.07); box-shadow: 0 4px 16px rgba(0,0,0,0.13);}
+    /* 태그 스타일 추가 */
+    .game-tags {
+      margin-top: 0.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .tag {
+      background: #f1f1f1;
+      color: #555;
+      font-size: 0.92rem;
+      border-radius: 14px;
+      padding: 0.22em 0.95em;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      border: none;
+      display: inline-block;
+      transition: background 0.2s, color 0.2s;
+    }
+    body.dark-mode .tag {
+      background: #333;
+      color: #fff;
+    }
     .footer { padding: 2rem 5%; text-align: center; border-top: 1px solid #eee;}
     body.dark-mode .footer { border-color: #333;}
     .about-me img { width:60px; border-radius:50%; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-bottom:0.5rem;}
@@ -98,7 +121,6 @@
     <button class="theme-toggle" onclick="toggleTheme()"></button>
   </div>
 </header>
-
 <main class="main">
   <div class="game-grid" id="game-container"></div>
 </main>
@@ -142,6 +164,7 @@
       img: "./img/zigzag.png",
       icon: "./img/icon1.png",
       video: "https://www.youtube.com/embed/MRz4zZ_zw2M?autoplay=1&mute=1&loop=1&playlist=MRz4zZ_zw2M&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0",
+      tags: ["Unity"],
       stores: [
         { name: "Google Play", url: "https://play.google.com/store/apps/details?id=com.KangJung.ZigZagRABBIT", icon: "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
         { name: "원스토어", url: "https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000770293", icon: "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" },
@@ -149,7 +172,6 @@
         { name: "itch.io", url: "https://kangjung.itch.io/zigzag-rabbit", icon: "./img/itchio-textless-black.svg" }
       ]
     },
-
     {
       title: { ko: "행성 수박 게임", en: "Planet Game" },
       desc: {
@@ -159,6 +181,7 @@
       img: "./img/planet.png",
       icon: "./img/icon2.png",
       video: "https://www.youtube.com/embed/xMWiHdya8hE?autoplay=1&mute=1&loop=1&playlist=xMWiHdya8hE&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=2&fs=0",
+      tags: ["Unity"],
       stores: [
         { name: "Google Play", url: "https://play.google.com/store/apps/details?id=com.Kangjung.PlanetGame", icon: "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
         { name: "원스토어", url: "https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000773862", icon: "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" },
@@ -175,6 +198,7 @@
       img: "./img/1010.png",
       icon: "./img/icon3.png",
       video: "https://www.youtube.com/embed/4Ac09UTo0hk?autoplay=1&mute=1&loop=1&playlist=4Ac09UTo0hk&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0",
+      tags: ["Unity"],
       stores: [
         { name: "Google Play", url: "https://play.google.com/store/apps/details?id=com.KangJung.game_1010", icon: "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
         { name: "원스토어", url: "https://m.onestore.co.kr/ko-kr/apps/appsDetail.omp?prodId=0000780009", icon: "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" },
@@ -191,6 +215,7 @@
       img: "./img/lllilll.png",
       icon: "./img/icon4.png",
       video: "https://www.youtube.com/embed/3MMABkxD55s?autoplay=1&mute=1&loop=1&playlist=3MMABkxD55s&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0",
+      tags: ["HTML5", "JavaScript"],
       stores: [
         { name: "WHALE Store", url: "https://store.whale.naver.com/detail/fkhebjhhenkphijnbnilkgjibllcjahk", icon: "https://store.whale.naver.com/img/ic_whale_home.png" },
         { name: "itch.io", url: "https://kangjung.itch.io/lllilll-game", icon: "./img/itchio-textless-black.svg" }
@@ -205,9 +230,9 @@
       img: "/assets/img/coming.png",
       icon: "/assets/img/coming.png",
       status: "developing",
+      tags: ["Vue.js", "Spring boot"],
       stores: []
-    }
-    ,
+    },
     {
       title: { ko: "뱀서류 게임", en: "Survivors-Like games" },
       desc: {
@@ -217,6 +242,7 @@
       img: "/assets/img/coming.png",
       icon: "/assets/img/coming.png",
       status: "developing",
+      tags: ["Unity"],
       stores: []
     }
   ];
@@ -241,32 +267,37 @@
   function renderGames() {
     const container = document.getElementById('game-container');
     container.innerHTML = games.map(game => `
-    <div class="game-card">
-      <div class="game-media">
-        <img src="${game.img}" alt="${game.title[currentLang]}">
-        ${game.video ? `<iframe src="${game.video}" frameborder="0" allow="autoplay"></iframe>` : ""}
-        ${game.status === "developing" ? `
-          <div class="badge-developing">
-            ${currentLang === "ko" ? "작업중" : "Coming Soon"}
-          </div>` : ""}
-      </div>
-      <div class="game-content">
-        <h3 class="game-title">
-          <img src="${game.icon}" class="app-icon-inline" alt="앱 아이콘">
-          ${game.title[currentLang]}
-        </h3>
-        <p class="game-description">${game.desc[currentLang]}</p>
-        <div class="store-badges">
-          ${game.stores.map(store => `
-            <a href="${store.url}" class="store-badge" target="_blank">
-              <img src="${store.icon}" alt="${store.name} 아이콘">
-              <span>${store.name}</span>
-            </a>
-          `).join('')}
+      <div class="game-card">
+        <div class="game-media">
+          <img src="${game.img}" alt="${game.title[currentLang]}">
+          ${game.video ? `<iframe src="${game.video}" frameborder="0" allow="autoplay"></iframe>` : ""}
+          ${game.status === "developing" ? `
+            <div class="badge-developing">
+              ${currentLang === "ko" ? "작업중" : "Coming Soon"}
+            </div>` : ""}
+        </div>
+        <div class="game-content">
+          ${game.tags && game.tags.length > 0 ? `
+            <div class="game-tags">
+              ${game.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+            </div>
+          ` : ''}
+          <h3 class="game-title">
+            <img src="${game.icon}" class="app-icon-inline" alt="앱 아이콘">
+            ${game.title[currentLang]}
+          </h3>
+          <p class="game-description">${game.desc[currentLang]}</p>
+          <div class="store-badges">
+            ${game.stores.map(store => `
+              <a href="${store.url}" class="store-badge" target="_blank">
+                <img src="${store.icon}" alt="${store.name} 아이콘">
+                <span>${store.name}</span>
+              </a>
+            `).join('')}
+          </div>
         </div>
       </div>
-    </div>
-  `).join('');
+    `).join('');
   }
 
   renderGames();
