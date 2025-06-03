@@ -1,0 +1,92 @@
+[
+  {
+    "title": { "ko": "지그재그 래빗", "en": "ZigZag RABBIT" },
+    "desc": {
+      "ko": "토끼가 떨어지지 말고 지그재그로 최대한 멀리 이동하는 게임",
+      "en": "Arcade game: A game where the rabbit moves as far as possible in a zigzag pattern without falling."
+    },
+    "img": "./img/zigzag.png",
+    "icon": "./img/icon1.png",
+    "video": "https://www.youtube.com/embed/MRz4zZ_zw2M?autoplay=1&mute=1&loop=1&playlist=MRz4zZ_zw2M&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0",
+    "tags": ["Unity"],
+    "stores": [
+      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.ZigZagRABBIT", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
+      { "name": "원스토어", "url": "https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000770293", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" },
+      { "name": "Whale Store", "url": "https://store.Whale.naver.com/detail/cbfooenflljbbhalfelkohpoiodnpnpo", "icon": "https://store.Whale.naver.com/img/ic_Whale_home.png" },
+      { "name": "itch.io", "url": "https://kangjung.itch.io/zigzag-rabbit", "icon": "./img/itchio-textless-black.svg" }
+    ]
+  },
+  {
+    "title": { "ko": "행성 수박 게임", "en": "Planet Game" },
+    "desc": {
+      "ko": "수박 게임의 행성 버전. 행성을 충돌시켜 더 큰 행성을 만드는 게임",
+      "en": "Puzzle game: A game where you collide planets to create bigger planets."
+    },
+    "img": "./img/planet.png",
+    "icon": "./img/icon2.png",
+    "video": "https://www.youtube.com/embed/xMWiHdya8hE?autoplay=1&mute=1&loop=1&playlist=xMWiHdya8hE&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=2&fs=0",
+    "tags": ["Unity"],
+    "stores": [
+      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.PlanetGame", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
+      { "name": "원스토어", "url": "https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000773862", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" },
+      { "name": "Whale Store", "url": "https://store.Whale.naver.com/detail/ndojlolokbmkbadhmmjdndmlaegjhlni", "icon": "https://store.Whale.naver.com/img/ic_Whale_home.png" },
+      { "name": "itch.io", "url": "https://kangjung.itch.io/planet-game", "icon": "./img/itchio-textless-black.svg" }
+    ]
+  },
+  {
+    "title": { "ko": "1010!", "en": "1010!" },
+    "desc": {
+      "ko": "10 x 10 공간에 블록을 배치하여 가로 세로로 줄을 완성해서 파괴하는 게임",
+      "en": "Puzzle game: Place blocks and clear lines in a 10x10 grid."
+    },
+    "img": "./img/1010.png",
+    "icon": "./img/icon3.png",
+    "video": "https://www.youtube.com/embed/4Ac09UTo0hk?autoplay=1&mute=1&loop=1&playlist=4Ac09UTo0hk&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0",
+    "tags": ["Unity"],
+    "stores": [
+      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.game_1010", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
+      { "name": "원스토어", "url": "https://m.onestore.co.kr/ko-kr/apps/appsDetail.omp?prodId=0000780009", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" },
+      { "name": "Whale Store", "url": "https://store.Whale.naver.com/detail/mfcecojaaoogjnjbnkodlgecefbminic", "icon": "https://store.Whale.naver.com/img/ic_Whale_home.png" },
+      { "name": "itch.io", "url": "https://kangjung.itch.io/1010", "icon": "./img/itchio-textless-black.svg" }
+    ]
+  },
+  {
+    "title": { "ko": "lllilll", "en": "lllilll" },
+    "desc": {
+      "ko": "비슷한 알파벳 중 다른 글자를 찾는 20초 게임",
+      "en": "Puzzle game: Find the different letter among similar ones in 20 seconds."
+    },
+    "img": "./img/lllilll.png",
+    "icon": "./img/icon4.png",
+    "video": "https://www.youtube.com/embed/3MMABkxD55s?autoplay=1&mute=1&loop=1&playlist=3MMABkxD55s&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0",
+    "tags": ["HTML5", "JavaScript"],
+    "stores": [
+      { "name": "Whale Store", "url": "https://store.Whale.naver.com/detail/fkhebjhhenkphijnbnilkgjibllcjahk", "icon": "https://store.Whale.naver.com/img/ic_Whale_home.png" },
+      { "name": "itch.io", "url": "https://kangjung.itch.io/lllilll-game", "icon": "./img/itchio-textless-black.svg" }
+    ]
+  },
+  {
+    "title": { "ko": "잠깐, 여행", "en": "wait, travel" },
+    "desc": {
+      "ko": "2025 관광데이터 활용 공모전 참가를 위한 위치기반 관광정보 조회 웹사이트 & 앱 서비스",
+      "en": "Location-based tourism information search service for participation in the 2025 tourism data utilization contest"
+    },
+    "img": "/assets/img/coming.png",
+    "icon": "/assets/img/coming.png",
+    "status": "developing",
+    "tags": ["Vue.js", "Spring boot"],
+    "stores": []
+  },
+  {
+    "title": { "ko": "뱀서류 게임", "en": "Survivors-Like games" },
+    "desc": {
+      "ko": "뱀서류 탑뷰 게임 개발중",
+      "en": "We're developing Survivors-Like games"
+    },
+    "img": "/assets/img/coming.png",
+    "icon": "/assets/img/coming.png",
+    "status": "developing",
+    "tags": ["Unity"],
+    "stores": []
+  }
+]
