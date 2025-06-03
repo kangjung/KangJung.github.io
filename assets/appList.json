@@ -5,16 +5,17 @@
       "ko": "토끼가 떨어지지 말고 지그재그로 최대한 멀리 이동하는 게임",
       "en": "Arcade game: A game where the rabbit moves as far as possible in a zigzag pattern without falling."
     },
-    "img": "./zigzagrabbit/img/zigzag.png",
+    "img": "./img/zigzagrabbit/zigzag.png",
     "icon": "./img/icon1.png",
     "video": "https://www.youtube.com/embed/MRz4zZ_zw2M?autoplay=1&mute=1&loop=1&playlist=MRz4zZ_zw2M&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0",
     "tags": ["Unity"],
     "stores": [
       { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.ZigZagRABBIT", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
       { "name": "원스토어", "url": "https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000770293", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" },
-      { "name": "Whale Store", "url": "https://store.Whale.naver.com/detail/cbfooenflljbbhalfelkohpoiodnpnpo", "icon": "https://store.Whale.naver.com/img/ic_Whale_home.png" },
+      { "name": "Whale Store", "url": "https://store.Whale.naver.com/detail/cbfooenflljbbhalfelkohpoiodnpnpo", "icon": "https://store.whale.naver.com/img/ic_whale_home.png" },
       { "name": "itch.io", "url": "https://kangjung.itch.io/zigzag-rabbit", "icon": "./img/itchio-textless-black.svg" }
-    ]
+    ],
+    "landingUrl": "/game/ZigZagRABBIT/info.html"
   },
   {
     "title": { "ko": "행성 수박 게임", "en": "Planet Game" },
