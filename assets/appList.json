@@ -12,7 +12,7 @@
     "stores": [
       { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.ZigZagRABBIT", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
       { "name": "원스토어", "url": "https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000770293", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" },
-      { "name": "Whale Store", "url": "https://store.Whale.naver.com/detail/cbfooenflljbbhalfelkohpoiodnpnpo", "icon": "https://store.whale.naver.com/img/ic_whale_home.png" },
+      { "name": "Whale Store", "url": "https://store.Whale.naver.com/detail/cbfooenflljbbhalfelkohpoiodnpnpo", "icon": "./img/ic_whale_home.png" },
       { "name": "itch.io", "url": "https://kangjung.itch.io/zigzag-rabbit", "icon": "./img/itchio-textless-black.svg" }
     ],
     "landingUrl": "/game/ZigZagRABBIT/info.html"
@@ -30,7 +30,7 @@
     "stores": [
       { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.PlanetGame", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
       { "name": "원스토어", "url": "https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000773862", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" },
-      { "name": "Whale Store", "url": "https://store.Whale.naver.com/detail/ndojlolokbmkbadhmmjdndmlaegjhlni", "icon": "https://store.Whale.naver.com/img/ic_Whale_home.png" },
+      { "name": "Whale Store", "url": "https://store.Whale.naver.com/detail/ndojlolokbmkbadhmmjdndmlaegjhlni", "icon": "./img/ic_whale_home.png" },
       { "name": "itch.io", "url": "https://kangjung.itch.io/planet-game", "icon": "./img/itchio-textless-black.svg" }
     ]
   },
@@ -47,7 +47,7 @@
     "stores": [
       { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.game_1010", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
       { "name": "원스토어", "url": "https://m.onestore.co.kr/ko-kr/apps/appsDetail.omp?prodId=0000780009", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" },
-      { "name": "Whale Store", "url": "https://store.Whale.naver.com/detail/mfcecojaaoogjnjbnkodlgecefbminic", "icon": "https://store.Whale.naver.com/img/ic_Whale_home.png" },
+      { "name": "Whale Store", "url": "https://store.Whale.naver.com/detail/mfcecojaaoogjnjbnkodlgecefbminic", "icon": "./img/ic_whale_home.png" },
       { "name": "itch.io", "url": "https://kangjung.itch.io/1010", "icon": "./img/itchio-textless-black.svg" }
     ]
   },
@@ -62,7 +62,7 @@
     "video": "https://www.youtube.com/embed/3MMABkxD55s?autoplay=1&mute=1&loop=1&playlist=3MMABkxD55s&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0",
     "tags": ["HTML5", "JavaScript"],
     "stores": [
-      { "name": "Whale Store", "url": "https://store.Whale.naver.com/detail/fkhebjhhenkphijnbnilkgjibllcjahk", "icon": "https://store.Whale.naver.com/img/ic_Whale_home.png" },
+      { "name": "Whale Store", "url": "https://store.Whale.naver.com/detail/fkhebjhhenkphijnbnilkgjibllcjahk", "icon": "./img/ic_whale_home.png" },
       { "name": "itch.io", "url": "https://kangjung.itch.io/lllilll-game", "icon": "./img/itchio-textless-black.svg" }
     ]
   },
