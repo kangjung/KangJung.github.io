@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>지그재그 래빗 | KANGJUNG</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&family=Pixelify+Sans&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #FF6B6B;
+      --secondary: #4ECDC4;
+      --dark: #2D3436;
+      --light: #F9F9F9;
+      --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; }
+    body { background: var(--light); color: var(--dark); transition: background 0.3s, color 0.3s; }
+    body.dark-mode { background: var(--dark); color: var(--light); }
+    .header { padding: 1rem 5%; position: fixed; width: 100%; top: 0; background: rgba(249, 249, 249, 0.95); backdrop-filter: blur(10px); z-index: 1000; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 15px rgba(0,0,0,0.1);}
+    body.dark-mode .header { background: rgba(45, 52, 54, 0.95);}
+    .brand { font-family: 'Pixelify Sans', cursive; font-size: 1.8rem; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+    .nav-tools { display: flex; gap: 1rem; align-items: center;}
+    .theme-toggle { width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer; background: var(--gradient); transition: transform 0.3s;}
+    .theme-toggle:hover { transform: rotate(180deg);}
+    .lang-select { display: flex; gap: 0.5rem;}
+    .lang-btn { padding: 0.5rem 1rem; border: 2px solid var(--dark); border-radius: 20px; background: transparent; cursor: pointer; transition: all 0.3s;}
+    .lang-btn.active { background: var(--dark); color: var(--light);}
+    body.dark-mode .lang-btn { border-color: var(--light); color: var(--light);}
+    body.dark-mode .lang-btn.active { background: var(--light); color: var(--dark);}
+    .main { margin-top: 90px; padding: 2rem 5%; max-width: 700px; margin-left:auto; margin-right:auto;}
+    .hero-media { border-radius: 16px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.12); margin-bottom:2rem; position:relative; aspect-ratio: 16/9; background: #111;}
+    .hero-media iframe, .hero-media img { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .app-title { display:flex; align-items:center; gap:1rem; margin-bottom:0.7rem;}
+    .app-icon { width: 54px; height: 54px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.13); border: 2px solid #fff; background: #fff; object-fit:cover;}
+    .game-tags { margin: 0.7rem 0 1.2rem 0; display: flex; flex-wrap: wrap; gap: 0.4rem;}
+    .tag { background: #f1f1f1; color: #555; font-size: 0.93rem; border-radius: 14px; padding: 0.22em 0.95em; font-weight: 500; letter-spacing: 0.02em;}
+    body.dark-mode .tag { background: #333; color: #fff;}
+    .desc { font-size: 1.13rem; color: #444; line-height: 1.7; margin-bottom: 1.5rem;}
+    body.dark-mode .desc { color: #ccc;}
+    .features { margin-bottom:1.7rem;}
+    .features h4 { margin-bottom:0.5rem; font-size:1.1rem; color:var(--primary);}
+    .features ul { list-style:square inside; color:#666; }
+    body.dark-mode .features ul { color:#aaa;}
+    .update { margin-bottom: 1.5rem; font-size:0.97rem; color:#888;}
+    body.dark-mode .update { color:#bbb;}
+    /* 가로 스크롤 갤러리 */
+    .screenshots {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--primary) #eee;
+    }
+    .screenshots img {
+      width: 200px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      object-fit: cover;
+      flex-shrink: 0;
+      background: #222;
+    }
+    .screenshots::-webkit-scrollbar {
+      height: 8px;
+    }
+    .screenshots::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 4px;
+    }
+    .screenshots::-webkit-scrollbar-track {
+      background: #eee;
+      border-radius: 4px;
+    }
+    .store-badges { display: flex; gap: 0.6rem; flex-wrap: wrap; margin: 1.4rem 0 2rem 0;}
+    .store-badge { display: flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1rem; border-radius: 30px; background: var(--gradient); color: white; text-decoration: none; font-size: 1.05rem; font-weight: 600; transition: transform 0.3s, box-shadow 0.3s;}
+    .store-badge img { width: 22px; height: 22px; border-radius: 5px; }
+    .store-badge:hover { transform: scale(1.07); box-shadow: 0 4px 16px rgba(0,0,0,0.13);}
+    .back-link { display:inline-block; margin-bottom:2rem; color:var(--primary); font-weight:600; text-decoration:none; transition:color 0.2s;}
+    .back-link:hover { color:var(--secondary);}
+    @media (max-width: 768px) {
+      .main { padding: 1rem 2%; }
+      .screenshots img { width: 120px; height: 80px;}
+      .app-icon { width:38px; height:38px;}
+      .hero-media { aspect-ratio: unset; }
+    }
+  </style>
+</head>
+<body>
+<header class="header">
+  <a href="/game/index.html" class="brand">KANGJUNG.dev</a>
+  <div class="nav-tools">
+    <div class="lang-select">
+      <button class="lang-btn active" onclick="setLang('ko')">🇰🇷</button>
+      <button class="lang-btn" onclick="setLang('en')">🇺🇸</button>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()"></button>
+  </div>
+</header>
+<main class="main">
+  <a href="/game/index.html" class="back-link">&larr; 목록으로 돌아가기</a>
+  <div class="hero-media">
+    <iframe src="https://www.youtube.com/embed/MRz4zZ_zw2M?autoplay=1&mute=1&loop=1&playlist=MRz4zZ_zw2M&controls=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=1"
+            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
+  <div class="app-title">
+    <img src="../img/icon1.png" class="app-icon" alt="앱 아이콘">
+    <div>
+      <h1 id="title-ko" style="margin:0;">지그재그 래빗</h1>
+      <h1 id="title-en" style="margin:0; display:none;">ZigZag RABBIT</h1>
+    </div>
+  </div>
+  <div class="game-tags">
+    <span class="tag">Unity</span>
+    <span class="tag">모바일앱</span>
+    <span class="tag">아케이드</span>
+  </div>
+  <div class="desc" id="desc-ko">
+    토끼가 떨어지지 않게 지그재그로 최대한 멀리 이동하세요!<br>
+    화면을 탭할 때마다 토끼의 방향이 바뀝니다.<br>
+    절벽에서 떨어지지 않게 조심하면서, 얼마나 멀리 갈 수 있는지 도전해 보세요.<br>
+    단순한 조작으로 남녀노소 누구나 즐길 수 있는 캐주얼 게임입니다.
+  </div>
+  <div class="desc" id="desc-en" style="display:none;">
+    Do not fall—zigzag and try to move as far as possible!<br>
+    Just tap the screen to change the direction of the rabbit.<br>
+    Try not to fall off the edges and see how far you can go.<br>
+    Simple controls make it easy for anyone to enjoy this casual game.
+  </div>
+  <div class="features">
+    <h4 id="features-title-ko">주요 특징</h4>
+    <h4 id="features-title-en" style="display:none;">Features</h4>
+    <ul id="features-list-ko">
+      <li>간단한 원터치 조작</li>
+      <li>귀여운 로우폴리 그래픽</li>
+    </ul>
+    <ul id="features-list-en" style="display:none;">
+      <li>Simple one-touch controls</li>
+      <li>Cute Low Poly graphics</li>
+    </ul>
+  </div>
+  <!-- 플레이 이미지(스크린샷) 가로 스크롤 갤러리 -->
+  <div class="screenshots">
+    <img src="../img/zigzagrabbit/zigzag1.png" alt="게임 스크린샷1">
+    <img src="../img/zigzagrabbit/zigzag.png" alt="게임 스크린샷2">
+    <img src="../img/zigzagrabbit/zigzag2.png" alt="게임 스크린샷3">
+    <img src="../img/zigzagrabbit/zigzag3.png" alt="게임 스크린샷4">
+  </div>
+  <div class="update" id="update-ko">
+    <b>최신 업데이트</b><br>
+    - 일부 기기에서 광고가 점수판을 가리는 현상 수정<br>
+    - Android SDK 버전 업그레이드
+  </div>
+  <div class="update" id="update-en" style="display:none;">
+    <b>Latest Update</b><br>
+    - Fixed an issue where ads obscured scores on screens of certain sizes.<br>
+    - Android SDK version upgrade
+  </div>
+  <div class="store-badges">
+    <a href="https://play.google.com/store/apps/details?id=com.KangJung.ZigZagRABBIT&hl=ko" class="store-badge" target="_blank">
+      <img src="https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" alt="Google Play">
+      Google Play
+    </a>
+    <a href="https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000770293" class="store-badge" target="_blank">
+      <img src="https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" alt="원스토어">
+      원스토어
+    </a>
+    <a href="https://store.whale.naver.com/detail/cbfooenflljbbhalfelkohpoiodnpnpo" class="store-badge" target="_blank">
+      <img src="https://store.whale.naver.com/img/ic_whale_home.png" alt="WHALE Store">
+      WHALE Store
+    </a>
+    <a href="https://kangjung.itch.io/zigzag-rabbit" class="store-badge" target="_blank">
+      <img src="../img/itchio-textless-black.svg" alt="itch.io">
+      itch.io
+    </a>
+  </div>
+</main>
+<script>
+  let currentLang = 'ko';
+  let isDarkMode = false;
+
+  function toggleTheme() {
+    isDarkMode = !isDarkMode;
+    document.body.classList.toggle('dark-mode', isDarkMode);
+  }
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(btn =>
+      btn.classList.toggle('active', btn.textContent.includes(lang === 'ko' ? '🇰🇷' : '🇺🇸'))
+    );
+    document.getElementById('title-ko').style.display = (lang === 'ko') ? '' : 'none';
+    document.getElementById('title-en').style.display = (lang === 'en') ? '' : 'none';
+    document.getElementById('desc-ko').style.display = (lang === 'ko') ? '' : 'none';
+    document.getElementById('desc-en').style.display = (lang === 'en') ? '' : 'none';
+    document.getElementById('features-title-ko').style.display = (lang === 'ko') ? '' : 'none';
+    document.getElementById('features-title-en').style.display = (lang === 'en') ? '' : 'none';
+    document.getElementById('features-list-ko').style.display = (lang === 'ko') ? '' : 'none';
+    document.getElementById('features-list-en').style.display = (lang === 'en') ? '' : 'none';
+    document.getElementById('update-ko').style.display = (lang === 'ko') ? '' : 'none';
+    document.getElementById('update-en').style.display = (lang === 'en') ? '' : 'none';
+  }
+</script>
+</body>
+</html>
