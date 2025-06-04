@@ -28,7 +28,7 @@
     "video": "https://www.youtube.com/embed/xMWiHdya8hE?autoplay=1&mute=1&loop=1&playlist=xMWiHdya8hE&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=2&fs=0",
     "tags": ["Unity"],
     "stores": [
-      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.PlanetGame", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
+      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.Kangjung.PlanetGame", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
       { "name": "원스토어", "url": "https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000773862", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" },
       { "name": "Whale Store", "url": "https://store.Whale.naver.com/detail/ndojlolokbmkbadhmmjdndmlaegjhlni", "icon": "./img/ic_whale_home.png" },
       { "name": "itch.io", "url": "https://kangjung.itch.io/planet-game", "icon": "./img/itchio-textless-black.svg" }
