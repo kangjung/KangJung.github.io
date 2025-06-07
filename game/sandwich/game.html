@@ -15,7 +15,6 @@
   </script>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
-    /* 공통 */
     body {
       background: repeating-linear-gradient(135deg, #fdf6f0 0px, #fdf6f0 40px, #ffe7f3 40px, #ffe7f3 80px);
       font-family: 'Press Start 2P', 'Pretendard', monospace, sans-serif;
@@ -23,14 +22,12 @@
       display: flex; flex-direction: column; align-items: center;
       letter-spacing: 1px;
     }
-    /* 시작화면 */
     .title-screen {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 80vh;
-      width: 100%;
+      min-height: 78vh;
       max-width: 480px;
       margin: 0 auto;
       padding: 24px;
@@ -82,13 +79,11 @@
       display: flex; align-items: flex-end; justify-content: center; position: relative;
       overflow: hidden;
     }
-    /* 게임 화면 */
     #gameScreen {
       display: none;
       flex-direction: column;
       align-items: center;
-      width: 100%;
-      max-width: 480px;
+      max-width: 500px;
       min-height: 80vh;
       margin: 0 auto;
       padding: 24px 0;
@@ -315,16 +310,13 @@
     ">닫기</button>
   </div>
 </div>
-<!-- 게임 화면 -->
 <div id="gameScreen">
   <div id="timer">TIME: 10</div>
   <div class="box-area" id="boxArea">
     <div class="pixel-ribbon" id="boxLabel">🍱 포장용기 1</div>
-    <!-- 샌드위치 슬롯이 동적으로 들어감 -->
   </div>
   <div class="sandwich-list" id="sandwichList"></div>
 </div>
-<!-- 게임오버 모달 -->
 <div id="gameOverModal" style="
   display: none;
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
