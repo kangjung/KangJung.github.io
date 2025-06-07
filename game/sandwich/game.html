@@ -89,6 +89,7 @@
       align-items: center;
       width: 100%;
       max-width: 480px;
+      min-height: 80vh;
       margin: 0 auto;
       padding: 24px 0;
     }
@@ -349,14 +350,12 @@
   </div>
 </div>
 <div style="width: 100%;height: 10% ">
-  <!-- 확장프로그램광고 -->
   <ins class="adsbygoogle" style="display:inline-block;width:100%;min-width:380px; height:90px" data-ad-client="ca-pub-2007216448786117" data-ad-slot="8678539906" data-auto-ads="false"></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
 </div>
 <script>
-  // 과일샌드위치 종류 데이터 (이미지는 실제 픽셀 PNG로 교체)
   const sandwiches = [
     { name: '딸기샌드', img: 'strawberry_pixel.png' },
     { name: '키위샌드', img: 'kiwi_pixel.png' },
@@ -367,33 +366,25 @@
     { name: '망고샌드', img: 'mango_pixel.png' }
   ];
 
-  // 게임 변수
   let round = 1;
   let time = 10;
   let timerId = null;
   let boxSandwiches = [];
   let filled = 0;
 
-  // 게임 시작 함수
   function startGame() {
     document.getElementById('titleScreen').style.display = 'none';
     document.getElementById('gameScreen').style.display = 'flex';
     reset();
   }
 
-  // 튜토리얼 함수
-  function showTutorial() {
-    alert('튜토리얼: 주문에 맞는 샌드위치를 순서대로 포장하세요!');
-  }
 
-  // 현재 라운드에서 사용 가능한 샌드위치 종류 계산
   function getAvailableSandwiches() {
     const baseCount = 3; // 초기 3종
     const addCount = Math.floor((round - 1) / 5);
     return sandwiches.slice(0, baseCount + addCount);
   }
 
-  // 상자에 들어갈 샌드위치 개수 계산
   function getBoxSandwichCount() {
     const available = getAvailableSandwiches();
     const addCountMax = Math.floor((round - 1) / 5);
@@ -407,11 +398,10 @@
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  // 시간 제한 계산 (5라운드마다 1초 감소)
   function getTimeLimit() {
     return Math.max(3, 10 - Math.floor((round - 1) / 5));
   }
-  // 상자(라운드) 시작
+
   function nextBox() {
     filled = 0;
     const available = getAvailableSandwiches();
@@ -425,7 +415,6 @@
     setBoxArea();
   }
 
-  // 슬롯(상자) 세팅
   function setBoxArea() {
     const box = document.getElementById('boxArea');
     box.querySelectorAll('.slot').forEach(e => e.remove());
@@ -433,43 +422,38 @@
     for (let i = 0; i < boxSandwiches.length; ++i) {
       const slot = document.createElement('div');
       slot.className = 'slot' + (i < filled ? ' filled' : '');
-      // 반투명 힌트 이미지
       const hintImg = document.createElement('img');
       hintImg.className = 'hint-img';
       hintImg.src = boxSandwiches[i].img;
       hintImg.alt = boxSandwiches[i].name;
       slot.appendChild(hintImg);
-      // 실제 담긴 경우만 선명하게
       if (i < filled) {
         const realImg = document.createElement('img');
         realImg.className = 'real-img';
         realImg.src = boxSandwiches[i].img;
         realImg.alt = boxSandwiches[i].name;
         slot.appendChild(realImg);
-        // emoji는 샌드위치 데이터에 없으니 필요시 추가
       }
       box.insertBefore(slot, box.querySelector('.pixel-ribbon').nextSibling);
     }
   }
 
-  // 샌드위치 선택지 세팅
   function setSandwichList() {
     const list = document.getElementById('sandwichList');
     list.innerHTML = '';
-    const available = getAvailableSandwiches(); // ✅ 현재 라운드에 맞는 종류 가져오기
+    const available = getAvailableSandwiches();
     available.forEach((s, idx) => {
       const btn = document.createElement('button');
       btn.className = 'sandwich-btn';
-      btn.onclick = () => check(idx); // ✅ available 배열 인덱스 사용
+      btn.onclick = () => check(idx);
       btn.innerHTML = `<img class="sandwich-img" src="${s.img}" alt="${s.name}"><span>${s.name}</span>`;
       list.appendChild(btn);
     });
   }
 
 
-  // 샌드위치 선택 체크
   function check(idx) {
-    const available = getAvailableSandwiches(); // 현재 사용 가능한 배열 가져오기
+    const available = getAvailableSandwiches();
     if (available[idx].name === boxSandwiches[filled].name) {
       filled++;
       setBoxArea();
@@ -485,7 +469,6 @@
     }
   }
 
-  // 타이머 업데이트
   function updateTimer() {
     document.getElementById('timer').textContent = `TIME: ${time}`;
 
@@ -528,7 +511,9 @@
     nextBox();
     updateTimer();
     if (timerId) clearInterval(timerId);
+
     startTimer();
+
     setSandwichList();
   }
   function showTutorial() {
@@ -543,14 +528,12 @@
     document.getElementById('gameOverModal').style.display = 'none';
     document.getElementById('gameScreen').style.display = 'none';
     document.getElementById('titleScreen').style.display = 'flex';
-    // 필요하다면 초기화 코드 추가
-    reset();
   }
   function displayHighScore() {
     const highScore = localStorage.getItem('sandwith_score') || 0;
     document.getElementById('sandwith_score').textContent = highScore;
   }
-  // 초기화: 시작화면만 보이게
+
   document.getElementById('gameScreen').style.display = 'none';
   document.addEventListener('DOMContentLoaded', displayHighScore);
 </script>
