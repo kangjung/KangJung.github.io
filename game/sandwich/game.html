@@ -30,6 +30,10 @@
       flex-direction: column;
       align-items: center;
       letter-spacing: 1px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
     }
 
     .title-screen {
@@ -242,6 +246,8 @@
       border: 3px solid #e95a8b;
       background: #fff3f7;
       cursor: pointer; outline: none;
+      transform: scale(1);
+      transition: transform 0.13s;
       transition: transform 0.13s, box-shadow 0.13s;
       border-radius: 10px;
       box-shadow: 2px 2px 0 #e95a8b44;
@@ -251,9 +257,11 @@
       min-width: 90px;
       min-height: 110px;
       display: flex; flex-direction: column; align-items: center;
+
     }
     .sandwich-btn:active, .sandwich-btn:focus, .sandwich-btn:hover {
       transform: scale(1.06) rotate(-2deg);
+      transition: transform 0.13s;
       box-shadow: 0 6px 16px #e95a8b33;
       background: #ffe7f3;
       z-index: 2;
@@ -544,7 +552,7 @@
     available.forEach((s, idx) => {
       const btn = document.createElement('button');
       btn.className = 'sandwich-btn';
-      btn.onclick = () => check(idx);
+      btn.onmousedown = () => check(idx);
       btn.innerHTML = `<img class="sandwich-img" src="${s.img}" alt="${s.name}"><span>${s.name}</span>`;
       list.appendChild(btn);
     });
