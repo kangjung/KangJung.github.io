@@ -67,10 +67,10 @@
     ]
   },
   {
-    "title": { "ko": "과일샌드위치 포장대작전", "en": "과일샌드위치 포장대작전" },
+    "title": { "ko": "과일샌드위치 포장대작전", "en": "Fruit Sandwich Packing" },
     "desc": {
-      "ko": "비슷한 알파벳 중 다른 글자를 찾는 20초 게임",
-      "en": "Puzzle game: Find the different letter among similar ones in 20 seconds."
+      "ko": "상자에 들어갈 샌드위치가 보여요. 순서대로 샌드위치를 선택하세요.",
+      "en": "You will see the sandwiches that will fit in the box. Choose the sandwiches in order."
     },
     "img": "./img/sandwich/sandwich_select.png",
     "icon": "./img/sandwich/icon.png",
