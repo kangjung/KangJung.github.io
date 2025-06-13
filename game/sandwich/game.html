@@ -678,7 +678,7 @@
 
   function check(idx) {
     const available = getAvailableSandwiches();
-    if (available[idx].name === boxSandwiches[filled].name) {
+    if (available[idx].img === boxSandwiches[filled].img) {
       filled++;
       setBoxArea();
       if (filled >= boxSandwiches.length) {
