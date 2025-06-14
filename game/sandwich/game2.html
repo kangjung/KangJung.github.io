@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>반응형 샌드위치 탑 쌓기</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <style>
+    html, body { height: 100%; margin: 0; padding: 0; }
+    body { background: #f0f0f0; }
+    #gameCanvas {
+      display: block;
+      background: #fff;
+      border: 2px solid #333;
+      touch-action: none;
+      max-width: 100vw;
+      max-height: 100vh;
+    }
+    .score { font-size: 24px; margin: 10px; }
+  </style>
+</head>
+<body>
+<canvas id="gameCanvas"></canvas>
+<script>
+  const sandwiches = [
+    { img: 'strawberry_pixel.png' },
+    { img: 'kiwi_pixel.png' },
+    { img: 'banana_pixel.png' },
+    { img: 'grape_pixel.png' },
+    { img: 'orange_pixel.png' },
+    { img: 'berry_pixel.png' },
+    { img: 'mango_pixel.png' }
+  ];
+
+  // 논리 좌표계(기준 해상도)
+  const LOGICAL_WIDTH = 800;
+  const LOGICAL_HEIGHT = 1200; // 세로를 넉넉히
+  let startScreen = true; // 시작화면 상태
+
+  let canvas = document.getElementById('gameCanvas');
+  let ctx = canvas.getContext('2d');
+
+  let dpr = 1, scale = 1;
+
+  // 반응형 캔버스 및 스케일 계산
+  function resizeCanvas() {
+    // 화면 비율 유지 (9:16)
+    let w = window.innerWidth;
+    let h = window.innerHeight - 80; // 헤더/점수 영역 고려
+    let ratio = LOGICAL_WIDTH / LOGICAL_HEIGHT;
+    if (w / h > ratio) w = h * ratio;
+    else h = w / ratio;
+    dpr = window.devicePixelRatio || 1;
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.scale(dpr, dpr);
+    scale = w / LOGICAL_WIDTH;
+  }
+  window.addEventListener('resize', resizeCanvas);
+
+  // 논리→실제 좌표 변환
+  function sx(x) { return x * scale; }
+  function sy(y) { return y * scale; }
+
+  function loadImages(arr, callback) {
+    let loaded = 0;
+    arr.forEach(item => {
+      const image = new Image();
+      image.src = item.img;
+      item.image = image;
+      image.onload = () => { loaded++; if (loaded === arr.length) callback(); };
+      image.onerror = () => { loaded++; if (loaded === arr.length) callback(); };
+    });
+  }
+
+  // 논리 크기(비율로 자동 조정)
+  let SANDWICH_ORG_WIDTH = 128, SANDWICH_ORG_HEIGHT = 256;
+  let SANDWICH_WIDTH = 256, SANDWICH_HEIGHT = 128; // 논리값(가로로 눕힘)
+  let PLATFORM_HEIGHT = 24;
+
+  let platform, stack, fallingSandwich, score, isGameOver, leftPressed, rightPressed, fallingBlocks;
+  let isDragging = false, lastTouchX = 0;
+
+  function resetGameVars() {
+    SANDWICH_WIDTH = LOGICAL_WIDTH * 0.32; // 화면의 32%
+    SANDWICH_HEIGHT = SANDWICH_WIDTH * (SANDWICH_ORG_WIDTH / SANDWICH_ORG_HEIGHT); // 128/256 = 0.5
+    PLATFORM_HEIGHT = LOGICAL_HEIGHT * 0.02;
+    platform = {
+      x: LOGICAL_WIDTH / 2 - SANDWICH_WIDTH / 2,
+      y: LOGICAL_HEIGHT - 60,
+      width: SANDWICH_WIDTH,
+      height: PLATFORM_HEIGHT,
+      color: '#3498db'
+    };
+    stack = [];
+    fallingSandwich = null;
+    score = 0;
+    isGameOver = false;
+    leftPressed = false;
+    rightPressed = false;
+    fallingBlocks = [];
+  }
+
+  // 입력 이벤트
+  canvas.addEventListener('mousemove', handleMouseMove);
+  canvas.addEventListener('touchstart', handleTouchStart, {passive: false});
+  canvas.addEventListener('touchmove', handleTouchMove, {passive: false});
+  canvas.addEventListener('touchend', handleTouchEnd);
+
+  function handleMouseMove(e) {
+    if (isGameOver) return;
+    const rect = canvas.getBoundingClientRect();
+    let mouseX = (e.clientX - rect.left) / scale;
+    let newX = mouseX - platform.width / 2;
+    let dx = newX - platform.x;
+    movePlatform(dx);
+  }
+  function handleTouchStart(e) {
+    if (isGameOver) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    const rect = canvas.getBoundingClientRect();
+    lastTouchX = (touch.clientX - rect.left) / scale;
+    isDragging = true;
+  }
+  function handleTouchMove(e) {
+    if (isGameOver || !isDragging) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    const rect = canvas.getBoundingClientRect();
+    const touchX = (touch.clientX - rect.left) / scale;
+    const dx = touchX - lastTouchX;
+    lastTouchX = touchX;
+    movePlatform(dx * 1.5); // 감도 보정
+  }
+  function handleTouchEnd(e) { isDragging = false; }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') leftPressed = true;
+    if (e.key === 'ArrowRight') rightPressed = true;
+  });
+  document.addEventListener('keyup', (e) => {
+    if (e.key === 'ArrowLeft') leftPressed = false;
+    if (e.key === 'ArrowRight') rightPressed = false;
+  });
+
+  function movePlatform(dx) {
+    if (dx === 0) return;
+    let nextX = platform.x + dx;
+    if (nextX < 0) dx -= nextX;
+    if (nextX > LOGICAL_WIDTH - platform.width) dx -= (nextX - (LOGICAL_WIDTH - platform.width));
+    platform.x += dx;
+    stack.forEach(sandwich => sandwich.x += dx);
+  }
+
+  function spawnFallingSandwich() {
+    const rand = Math.floor(Math.random() * sandwiches.length);
+    fallingSandwich = {
+      x: Math.random() * (LOGICAL_WIDTH - SANDWICH_WIDTH),
+      y: -SANDWICH_HEIGHT,
+      width: SANDWICH_WIDTH,
+      height: SANDWICH_HEIGHT,
+      speed: LOGICAL_HEIGHT * 0.005 + Math.random() * LOGICAL_HEIGHT * 0.002, // 속도도 비율로
+      img: sandwiches[rand].image
+    };
+  }
+
+  function getOverlap(box, rect) {
+    const left = Math.max(box.x, rect.x);
+    const right = Math.min(box.x + box.width, rect.x + rect.width);
+    return Math.max(0, right - left);
+  }
+
+  function updateFallingSandwich() {
+    if (!fallingSandwich) return;
+    fallingSandwich.y += fallingSandwich.speed;
+    let targetRect = stack.length === 0 ? platform : stack[stack.length - 1];
+    if (fallingSandwich.y + fallingSandwich.height >= targetRect.y &&
+      fallingSandwich.x + fallingSandwich.width > targetRect.x &&
+      fallingSandwich.x < targetRect.x + targetRect.width) {
+      const overlap = getOverlap(fallingSandwich, targetRect);
+      if (overlap < fallingSandwich.width * 0.5) {
+        // 회전하며 떨어지는 애니메이션 추가
+        fallingBlocks.push({
+          ...fallingSandwich,
+          vy: LOGICAL_HEIGHT * 0.008,
+          vx: (Math.random() - 0.5) * LOGICAL_WIDTH * 0.01,
+          angle: 0,
+          rotateSpeed: (Math.random() * 0.1 + 0.05) * (Math.random() < 0.5 ? -1 : 1),
+          isFalling: true
+        });
+        fallingSandwich = null;
+        setTimeout(() => { isGameOver = true; }, 1000);
+      } else {
+        fallingSandwich.y = targetRect.y - fallingSandwich.height;
+        stack.push({
+          x: fallingSandwich.x,
+          y: fallingSandwich.y,
+          width: fallingSandwich.width,
+          height: fallingSandwich.height,
+          img: fallingSandwich.img
+        });
+        score++;
+        fallingSandwich = null;
+        setTimeout(spawnFallingSandwich, 500);
+      }
+    }
+    else if (fallingSandwich.y + fallingSandwich.height > LOGICAL_HEIGHT) {
+      isGameOver = true;
+    }
+  }
+
+  function updateFallingBlocks() {
+    fallingBlocks.forEach(b => {
+      if (!b.isFalling) return;
+      b.x += b.vx;
+      b.y += b.vy;
+      b.angle += b.rotateSpeed;
+      b.vy += LOGICAL_HEIGHT * 0.0005;
+    });
+  }
+
+  function updatePlatform() {
+    if (isGameOver) return;
+    let dx = 0;
+    let moveSpeed = LOGICAL_WIDTH * 0.018;
+    if (leftPressed) dx -= moveSpeed;
+    if (rightPressed) dx += moveSpeed;
+    movePlatform(dx);
+  }
+
+  function shiftStackUp() {
+    let minY = platform.y;
+    if (stack.length > 0) minY = stack[stack.length - 1].y;
+    if (minY < LOGICAL_HEIGHT / 2) {
+      const shift = LOGICAL_HEIGHT / 2 - minY;
+      platform.y += shift;
+      stack.forEach(sandwich => sandwich.y += shift);
+      if (fallingSandwich) fallingSandwich.y += shift;
+      fallingBlocks.forEach(b => b.y += shift);
+    }
+  }
+
+  function drawRotatedImage(img, x, y, width, height, angle = 0) {
+    ctx.save();
+    ctx.translate(sx(x + width / 2), sy(y + height / 2));
+    ctx.rotate(Math.PI / 2 + angle);
+    ctx.drawImage(img, -sy(height / 2), -sx(width / 2), sy(height), sx(width));
+    ctx.restore();
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // 스코어 표시 (좌상단)
+    ctx.fillStyle = 'black';
+    ctx.font = '24px Arial';
+    ctx.textAlign = 'left';
+    ctx.fillText(`Score: ${score}`, 20, 36);
+
+
+    // 게임 시작 화면
+    if (startScreen) {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = 'white';
+      ctx.font = '48px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText('샌드위치 탑 쌓기', canvas.width / 2, canvas.height / 2 - 40);
+      ctx.font = '24px Arial';
+      ctx.fillText('터치 또는 클릭하여 시작', canvas.width / 2, canvas.height / 2 + 20);
+      return; // 시작화면일 때는 나머지 그리기 생략
+    }
+
+    ctx.fillStyle = platform.color;
+    ctx.fillRect(sx(platform.x), sy(platform.y), sx(platform.width), sy(platform.height));
+    stack.forEach(sandwich => {
+      drawRotatedImage(sandwich.img, sandwich.x, sandwich.y, sandwich.width, sandwich.height);
+    });
+    if (fallingSandwich) {
+      drawRotatedImage(fallingSandwich.img, fallingSandwich.x, fallingSandwich.y, fallingSandwich.width, fallingSandwich.height);
+    }
+    fallingBlocks.forEach(b => {
+      drawRotatedImage(b.img, b.x, b.y, b.width, b.height, b.angle);
+    });
+    if (isGameOver) {
+      ctx.save();
+      ctx.globalAlpha = 0.7;
+      ctx.fillStyle = '#000';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.globalAlpha = 1.0;
+      ctx.fillStyle = '#e74c3c';
+      ctx.font = `${Math.floor(canvas.width/13)}px Arial`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('Game Over!', canvas.width / 2, canvas.height / 2 - sy(40));
+      ctx.fillStyle = 'white';
+      ctx.font = `${Math.floor(canvas.width/27)}px Arial`;
+      ctx.fillText('클릭 또는 터치해서 재시작', canvas.width / 2, canvas.height / 2 + sy(40));
+      ctx.restore();
+    }
+  }
+
+  function gameLoop() {
+    updatePlatform();
+    updateFallingSandwich();
+    updateFallingBlocks();
+    shiftStackUp();
+    draw();
+    if (!isGameOver) {
+      requestAnimationFrame(gameLoop);
+    }
+  }
+
+  function startGame() {
+    resetGameVars();
+    spawnFallingSandwich();
+    gameLoop();
+  }
+  // 클릭/터치 이벤트에서 startScreen 처리
+  canvas.addEventListener('click', () => {
+    if (startScreen) {
+      startScreen = false;
+      startGame();
+    } else if (isGameOver) {
+      startGame();
+    }
+  });
+  canvas.addEventListener('touchstart', (e) => {
+    if (startScreen) {
+      e.preventDefault();
+      startScreen = false;
+      startGame();
+    } else if (isGameOver) {
+      e.preventDefault();
+      startGame();
+    }
+  }, {passive: false});
+
+  // 최초 실행
+  resizeCanvas();
+  loadImages(sandwiches, startGame);
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    // 게임 중에도 스케일/플랫폼 등 재조정
+    if (!isGameOver) {
+      // 플랫폼, 스택, 낙하중인 샌드위치의 위치/크기 재계산
+      let prevWidth = SANDWICH_WIDTH;
+      let prevHeight = SANDWICH_HEIGHT;
+      SANDWICH_WIDTH = LOGICAL_WIDTH * 0.32;
+      SANDWICH_HEIGHT = SANDWICH_WIDTH * (SANDWICH_ORG_WIDTH / SANDWICH_ORG_HEIGHT);
+      let scaleW = SANDWICH_WIDTH / prevWidth;
+      let scaleH = SANDWICH_HEIGHT / prevHeight;
+      platform.width = SANDWICH_WIDTH;
+      platform.height = PLATFORM_HEIGHT;
+      platform.x = Math.max(0, Math.min(platform.x, LOGICAL_WIDTH - platform.width));
+      stack.forEach(s => {
+        s.x *= scaleW;
+        s.y *= scaleH;
+        s.width = SANDWICH_WIDTH;
+        s.height = SANDWICH_HEIGHT;
+      });
+      if (fallingSandwich) {
+        fallingSandwich.x *= scaleW;
+        fallingSandwich.y *= scaleH;
+        fallingSandwich.width = SANDWICH_WIDTH;
+        fallingSandwich.height = SANDWICH_HEIGHT;
+      }
+    }
+  });
+</script>
+</body>
+</html>
