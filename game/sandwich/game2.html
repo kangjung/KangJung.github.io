@@ -15,7 +15,6 @@
       max-width: 100vw;
       max-height: 100vh;
     }
-    .score { font-size: 24px; margin: 10px; }
   </style>
 </head>
 <body>
@@ -31,10 +30,16 @@
     { img: 'mango_pixel.png' }
   ];
 
+  // 배경 이미지
+  const bg1 = new Image();
+  bg1.src = 'sandwichBG.png';
+  const bg2 = new Image();
+  bg2.src = 'sandwichBG2.png';
+
   // 논리 좌표계(기준 해상도)
   const LOGICAL_WIDTH = 800;
-  const LOGICAL_HEIGHT = 1200; // 세로를 넉넉히
-  let startScreen = true; // 시작화면 상태
+  const LOGICAL_HEIGHT = 1200;
+  let startScreen = true;
 
   let canvas = document.getElementById('gameCanvas');
   let ctx = canvas.getContext('2d');
@@ -43,9 +48,8 @@
 
   // 반응형 캔버스 및 스케일 계산
   function resizeCanvas() {
-    // 화면 비율 유지 (9:16)
     let w = window.innerWidth;
-    let h = window.innerHeight - 80; // 헤더/점수 영역 고려
+    let h = window.innerHeight;
     let ratio = LOGICAL_WIDTH / LOGICAL_HEIGHT;
     if (w / h > ratio) w = h * ratio;
     else h = w / ratio;
@@ -66,26 +70,42 @@
 
   function loadImages(arr, callback) {
     let loaded = 0;
+    const total = arr.length + 2; // 샌드위치 + 배경 이미지
+
+    function checkLoaded() {
+      loaded++;
+      if (loaded === total) callback();
+    }
+
     arr.forEach(item => {
       const image = new Image();
       image.src = item.img;
       item.image = image;
-      image.onload = () => { loaded++; if (loaded === arr.length) callback(); };
-      image.onerror = () => { loaded++; if (loaded === arr.length) callback(); };
+      image.onload = checkLoaded;
+      image.onerror = checkLoaded;
     });
+
+    bg1.onload = checkLoaded;
+    bg2.onload = checkLoaded;
   }
 
   // 논리 크기(비율로 자동 조정)
   let SANDWICH_ORG_WIDTH = 128, SANDWICH_ORG_HEIGHT = 256;
-  let SANDWICH_WIDTH = 256, SANDWICH_HEIGHT = 128; // 논리값(가로로 눕힘)
+  let SANDWICH_WIDTH = 256, SANDWICH_HEIGHT = 128;
   let PLATFORM_HEIGHT = 24;
 
   let platform, stack, fallingSandwich, score, isGameOver, leftPressed, rightPressed, fallingBlocks;
   let isDragging = false, lastTouchX = 0;
 
+  // 배경 관련 변수
+  let bg1_y = 0;
+  let bg2_y = - canvas.height; // 두 번째 배경 초기 위치 (첫 배경 위에)
+  let show_bg1 = true;
+  const BG_SCROLL_SPEED = 2;
+
   function resetGameVars() {
-    SANDWICH_WIDTH = LOGICAL_WIDTH * 0.32; // 화면의 32%
-    SANDWICH_HEIGHT = SANDWICH_WIDTH * (SANDWICH_ORG_WIDTH / SANDWICH_ORG_HEIGHT); // 128/256 = 0.5
+    SANDWICH_WIDTH = LOGICAL_WIDTH * 0.32;
+    SANDWICH_HEIGHT = SANDWICH_WIDTH * (SANDWICH_ORG_WIDTH / SANDWICH_ORG_HEIGHT);
     PLATFORM_HEIGHT = LOGICAL_HEIGHT * 0.02;
     platform = {
       x: LOGICAL_WIDTH / 2 - SANDWICH_WIDTH / 2,
@@ -101,6 +121,9 @@
     leftPressed = false;
     rightPressed = false;
     fallingBlocks = [];
+    bg1_y = 0;
+    bg2_y = -canvas.height;
+    show_bg1 = true;
   }
 
   // 입력 이벤트
@@ -110,37 +133,41 @@
   canvas.addEventListener('touchend', handleTouchEnd);
 
   function handleMouseMove(e) {
-    if (isGameOver) return;
+    if (isGameOver || startScreen) return;
     const rect = canvas.getBoundingClientRect();
     let mouseX = (e.clientX - rect.left) / scale;
     let newX = mouseX - platform.width / 2;
     let dx = newX - platform.x;
     movePlatform(dx);
   }
+
   function handleTouchStart(e) {
-    if (isGameOver) return;
+    if (isGameOver || startScreen) return;
     e.preventDefault();
     const touch = e.touches[0];
     const rect = canvas.getBoundingClientRect();
     lastTouchX = (touch.clientX - rect.left) / scale;
     isDragging = true;
   }
+
   function handleTouchMove(e) {
-    if (isGameOver || !isDragging) return;
+    if (isGameOver || startScreen || !isDragging) return;
     e.preventDefault();
     const touch = e.touches[0];
     const rect = canvas.getBoundingClientRect();
     const touchX = (touch.clientX - rect.left) / scale;
     const dx = touchX - lastTouchX;
     lastTouchX = touchX;
-    movePlatform(dx * 1.5); // 감도 보정
+    movePlatform(dx * 1.5);
   }
+
   function handleTouchEnd(e) { isDragging = false; }
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') leftPressed = true;
     if (e.key === 'ArrowRight') rightPressed = true;
   });
+
   document.addEventListener('keyup', (e) => {
     if (e.key === 'ArrowLeft') leftPressed = false;
     if (e.key === 'ArrowRight') rightPressed = false;
@@ -162,7 +189,7 @@
       y: -SANDWICH_HEIGHT,
       width: SANDWICH_WIDTH,
       height: SANDWICH_HEIGHT,
-      speed: LOGICAL_HEIGHT * 0.005 + Math.random() * LOGICAL_HEIGHT * 0.002, // 속도도 비율로
+      speed: LOGICAL_HEIGHT * 0.005 + Math.random() * LOGICAL_HEIGHT * 0.002,
       img: sandwiches[rand].image
     };
   }
@@ -182,7 +209,6 @@
       fallingSandwich.x < targetRect.x + targetRect.width) {
       const overlap = getOverlap(fallingSandwich, targetRect);
       if (overlap < fallingSandwich.width * 0.5) {
-        // 회전하며 떨어지는 애니메이션 추가
         fallingBlocks.push({
           ...fallingSandwich,
           vy: LOGICAL_HEIGHT * 0.008,
@@ -240,6 +266,15 @@
       stack.forEach(sandwich => sandwich.y += shift);
       if (fallingSandwich) fallingSandwich.y += shift;
       fallingBlocks.forEach(b => b.y += shift);
+
+      // 배경은 아래로 움직임(반대로!)
+      bg1_y += shift;
+      bg2_y += shift;
+
+      // bg1이 완전히 화면 아래로 나갔는지 체크
+      if (bg1_y >= canvas.height) {
+        show_bg1 = false;
+      }
     }
   }
 
@@ -250,15 +285,35 @@
     ctx.drawImage(img, -sy(height / 2), -sx(width / 2), sy(height), sx(width));
     ctx.restore();
   }
-
+  function drawBackground() {
+    console.log('Drawing background + ' + show_bg1);
+    if (show_bg1) {
+      // bg1과 bg2 모두 아래로 내려감
+      ctx.drawImage(bg1, 0, bg1_y, canvas.width, canvas.height);
+      ctx.drawImage(bg2, 0, bg2_y, canvas.width, canvas.height);
+      if (bg1_y % canvas.height > 0) {
+        // bg1이 화면 아래로 빠져나갈 때 bg2가 위에 붙도록
+        ctx.drawImage(bg2, 0, bg2_y % canvas.height - canvas.height, canvas.width, canvas.height);
+      }
+    } else {
+      // bg1이 완전히 사라진 후에는 bg2만 무한 반복
+      ctx.drawImage(bg2, 0, bg2_y % canvas.height, canvas.width, canvas.height);
+      ctx.drawImage(bg2, 0, bg2_y % canvas.height - canvas.height, canvas.width, canvas.height);
+    }
+  }
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // 스코어 표시 (좌상단)
+
+    // 배경 그리기
+    if (bg1.complete && bg2.complete) {
+      drawBackground();
+    }
+
+    // 스코어 표시
     ctx.fillStyle = 'black';
     ctx.font = '24px Arial';
     ctx.textAlign = 'left';
     ctx.fillText(`Score: ${score}`, 20, 36);
-
 
     // 게임 시작 화면
     if (startScreen) {
@@ -270,9 +325,10 @@
       ctx.fillText('샌드위치 탑 쌓기', canvas.width / 2, canvas.height / 2 - 40);
       ctx.font = '24px Arial';
       ctx.fillText('터치 또는 클릭하여 시작', canvas.width / 2, canvas.height / 2 + 20);
-      return; // 시작화면일 때는 나머지 그리기 생략
+      return;
     }
 
+    // 플랫폼 및 샌드위치 그리기
     ctx.fillStyle = platform.color;
     ctx.fillRect(sx(platform.x), sy(platform.y), sx(platform.width), sy(platform.height));
     stack.forEach(sandwich => {
@@ -284,6 +340,8 @@
     fallingBlocks.forEach(b => {
       drawRotatedImage(b.img, b.x, b.y, b.width, b.height, b.angle);
     });
+
+    // 게임 오버 화면
     if (isGameOver) {
       ctx.save();
       ctx.globalAlpha = 0.7;
@@ -308,7 +366,7 @@
     updateFallingBlocks();
     shiftStackUp();
     draw();
-    if (!isGameOver) {
+    if (!isGameOver && !startScreen) {
       requestAnimationFrame(gameLoop);
     }
   }
@@ -318,7 +376,8 @@
     spawnFallingSandwich();
     gameLoop();
   }
-  // 클릭/터치 이벤트에서 startScreen 처리
+
+  // 이벤트 리스너
   canvas.addEventListener('click', () => {
     if (startScreen) {
       startScreen = false;
@@ -327,6 +386,7 @@
       startGame();
     }
   });
+
   canvas.addEventListener('touchstart', (e) => {
     if (startScreen) {
       e.preventDefault();
@@ -338,14 +398,12 @@
     }
   }, {passive: false});
 
-  // 최초 실행
+  // 초기화
   resizeCanvas();
   loadImages(sandwiches, startGame);
   window.addEventListener('resize', () => {
     resizeCanvas();
-    // 게임 중에도 스케일/플랫폼 등 재조정
-    if (!isGameOver) {
-      // 플랫폼, 스택, 낙하중인 샌드위치의 위치/크기 재계산
+    if (!isGameOver && !startScreen) {
       let prevWidth = SANDWICH_WIDTH;
       let prevHeight = SANDWICH_HEIGHT;
       SANDWICH_WIDTH = LOGICAL_WIDTH * 0.32;
