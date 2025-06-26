@@ -243,6 +243,7 @@
           img: fallingSandwich.img
         });
         score++;
+        scoreElement.textContent = score;
         fallingSandwich = null;
         setTimeout(spawnFallingSandwich, 500);
       }
