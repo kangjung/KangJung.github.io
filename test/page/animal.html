@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>나랑 닮은 동물 테스트</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --main: #5468ff;
+      --accent: #ffc062;
+      --bg: #f7f8fa;
+      --white: #fff;
+      --gray: #e1e3e6;
+      --text: #2c3040;
+      --radius: 16px;
+      --max-animal-weight-ratio: 0.4;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: "Pretendard", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .container {
+      max-width: 420px;
+      margin: 40px auto;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: 0 6px 32px rgba(80, 90, 140, 0.09);
+      padding: 32px;
+      animation: fadeIn 1s;
+      display: flex;
+      flex-direction: column;
+      min-height: 600px;
+    }
+    header {
+      text-align: center;
+    }
+    header h1 {
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin: 0 0 10px 0;
+    }
+    header p {
+      color: var(--main);
+      margin: 0 0 18px 0;
+      letter-spacing: -0.5px;
+      font-size: 1.05rem;
+    }
+    .progress {
+      width: 90%;
+      margin: 16px auto 32px auto;
+      height: 6px;
+      background: var(--gray);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      background: linear-gradient(90deg, var(--main), var(--accent));
+      height: 100%;
+      width: 0;
+      transition: width 0.4s cubic-bezier(0.5, 2, 0.5, 1);
+    }
+    .question-area {
+      min-height: 140px;
+      font-size: 1.15rem;
+      margin-bottom: 28px;
+      text-align: center;
+      line-height: 1.6;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+      flex-grow: 1;
+    }
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .choicebtn {
+      border: none;
+      outline: none;
+      background: var(--gray);
+      color: var(--text);
+      font-size: 1.04rem;
+      padding: 18px;
+      border-radius: var(--radius);
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s, transform 0.14s;
+      font-weight: 500;
+      user-select: none;
+    }
+    .choicebtn.selected,
+    .choicebtn:active {
+      background: var(--main);
+      color: #fff;
+      transform: scale(1.03);
+    }
+    .hide {
+      display: none;
+    }
+    .result-area {
+      text-align: center;
+      animation: fadeInUp 0.7s;
+    }
+    .result-area .emoji {
+      font-size: 3.5rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .result-animal {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--main);
+      margin-bottom: 8px;
+      letter-spacing: -0.8px;
+    }
+    .result-desc {
+      color: #666;
+      font-weight: 400;
+      margin-bottom: 22px;
+      font-size: 1.09rem;
+    }
+    .keywords {
+      font-size: 1.03rem;
+      margin-bottom: 24px;
+      color: var(--accent);
+      letter-spacing: 0.01em;
+    }
+    .share-btn {
+      background: var(--main);
+      color: #fff;
+      padding: 14px 0;
+      width: 70%;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-family: inherit;
+      margin: 0 auto 12px auto;
+      cursor: pointer;
+      display: block;
+      transition: background 0.17s;
+      user-select: none;
+    }
+    .share-btn:hover {
+      background: #3f54cc;
+    }
+    .restart-btn {
+      background: var(--gray);
+      color: var(--text);
+      padding: 11px 0;
+      width: 50%;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 0.96rem;
+      font-family: inherit;
+      margin: 0 auto;
+      cursor: pointer;
+      display: block;
+      transition: background 0.2s;
+      user-select: none;
+    }
+    .restart-btn:hover {
+      background: #c6c7cd;
+    }
+    @media (max-width: 560px) {
+      .container {
+        padding: 15px;
+        min-height: 600px;
+      }
+    }
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container" role="main" aria-label="나랑 닮은 동물 테스트">
+  <header>
+    <h1>나랑 닮은 동물 테스트</h1>
+    <p>
+      <b>20문항만 답하면<br />내 성향과 닮은 동물이 나와요!</b>
+    </p>
+  </header>
+  <div class="progress" aria-label="진행률">
+    <div class="progress-bar"></div>
+  </div>
+  <div class="question-area" aria-live="polite"></div>
+  <div class="choices"></div>
+  <div class="result-area hide" aria-live="polite"></div>
+</div>
+<script>
+  const dataPool = {
+    questions: [
+      {"text": "새로운 사람과 금방 친해지는 편이다.", "scores": {"강아지": 5, "여우": 3, "펭귄": 2}},
+      {"text": "즉흥적인 여행이나 계획을 좋아한다.", "scores": {"여우": 5, "치타": 4, "토끼": 2}},
+      {"text": "힘들 때 가족이나 친구에게 바로 털어놓는다.", "scores": {"강아지": 5, "펭귄": 3, "판다": 2}},
+      {"text": "혼자 있는 시간이 꼭 필요하다.", "scores": {"고양이": 5, "사슴": 4, "부엉이": 3}},
+      {"text": "계획에 어긋나면 불안하다.", "scores": {"부엉이": 5, "곰": 3, "고양이": 2}},
+      {"text": "작은 변화나 낌새도 잘 알아차린다.", "scores": {"고양이": 5, "토끼": 3, "사슴": 2}},
+      {"text": "타인의 감정에 쉽게 공감하는 편이다.", "scores": {"토끼": 5, "판다": 4, "펭귄": 2}},
+      {"text": "어려운 상황을 만나면 스스로 방법을 찾으려 한다.", "scores": {"곰": 5, "부엉이": 4, "치타": 3}},
+      {"text": "감정보다는 논리로 판단하는 편이다.", "scores": {"부엉이": 5, "곰": 3, "여우": 2}},
+      {"text": "여럿이 모이는 활동이 즐겁다.", "scores": {"강아지": 5, "펭귄": 4, "토끼": 2}},
+      {"text": "실패를 해도 금방 다시 도전한다.", "scores": {"치타": 5, "곰": 4, "사슴": 2}},
+      {"text": "고민이 있을 때 머릿속으로 여러 시나리오를 상상한다.", "scores": {"부엉이": 5, "고양이": 3, "여우": 2}},
+      {"text": "세부적인 것보단 전체적인 흐름을 중시한다.", "scores": {"여우": 5, "치타": 4, "부엉이": 2}},
+      {"text": "아는 것, 모르는 게 명확한 편이다.", "scores": {"부엉이": 5, "곰": 3, "고양이": 2}},
+      {"text": "불필요한 대화는 피한다.", "scores": {"고양이": 5, "부엉이": 3, "사슴": 2}},
+      {"text": "일을 미루지 않고 바로 처리하려고 한다.", "scores": {"곰": 5, "치타": 4, "펭귄": 2}},
+      {"text": "남을 도와주는 일이 많다.", "scores": {"토끼": 5, "펭귄": 4, "판다": 3}},
+      {"text": "경쟁보다는 협력을 추구한다.", "scores": {"펭귄": 5, "토끼": 4, "판다": 2}},
+      {"text": "유머러스하다는 얘기를 종종 듣는다.", "scores": {"펭귄": 5, "여우": 4, "치타": 2}},
+      {"text": "새로운 시도를 두려워하지 않는다.", "scores": {"치타": 5, "여우": 4, "강아지": 2}},
+      {"text": "나는 일상에서 작은 일에 행복을 느낀다.", "scores": {"판다":5,"사슴":3,"고양이":2}},
+      {"text": "리더십을 발휘할 기회가 있으면 주저하지 않고 나선다.", "scores": {"곰":5,"치타":4,"부엉이":3}},
+      {"text": "사람들을 웃기는 걸 좋아한다.", "scores": {"펭귄":5,"여우":4,"강아지":2}},
+      {"text": "새로운 지식을 배우는 데 즐거움을 느낀다.", "scores": {"부엉이":5,"고양이":3,"치타":2}},
+      {"text": "변화하는 상황에 빠르게 적응하는 편이다.", "scores": {"여우":5,"치타":4,"펭귄":3}},
+      {"text": "혼자 여행하는 걸 좋아한다.", "scores": {"고양이":5,"사슴":4,"판다":3}},
+      {"text": "어려운 감정도 잘 숨기고 침착하게 넘긴다.", "scores": {"곰":5,"부엉이":4,"토끼":3}},
+      {"text": "팀의 분위기를 밝게 만드는 역할을 자주 맡는다.", "scores": {"강아지":5,"펭귄":4,"토끼":3}},
+      {"text": "실수를 해도 스스로를 빨리 용서하는 편이다.", "scores": {"판다":5,"치타":3,"강아지":2}},
+      {"text": "자신만의 스타일이 뚜렷하다.", "scores": {"고양이":5,"여우":4,"부엉이":2}},
+      {"text": "친구나 동료의 고민을 진심으로 들어준다.", "scores": {"토끼":5,"판다":4,"고양이":2}},
+      {"text": "새로운 글쓰기나 그림 등 창의적 작업을 즐긴다.", "scores": {"여우":5,"고양이":4,"치타":3}},
+      {"text": "목표를 세우면 끝까지 포기하지 않고 노력한다.", "scores": {"곰":5,"사슴":4,"부엉이":3}},
+      {"text": "가끔은 즉흥적으로 행동하는 걸 좋아한다.", "scores": {"치타":5,"여우":4,"펭귄":2}},
+      {"text": "다른 사람과의 조화와 균형을 중요하게 생각한다.", "scores": {"펭귄":5,"토끼":4,"사슴":3}}
+    ],
+    results: [
+      {"animal": "고양이", "keywords": ["관찰력", "독립적", "섬세함"], "description": "당신은 관찰력이 뛰어나고 혼자만의 시간을 소중하게 여기는 섬세한 타입이에요.", "emoji": "🐱"},
+      {"animal": "강아지", "keywords": ["사교적", "에너지", "충성심"], "description": "사교성과 에너지가 넘치며, 친구와 있을 때 가장 행복한 사람입니다!", "emoji": "🐶"},
+      {"animal": "부엉이", "keywords": ["논리", "차분함", "지혜"], "description": "항상 침착하게 상황을 바라보는 논리적 리더! 깊은 지혜가 느껴져요.", "emoji": "🦉"},
+      {"animal": "토끼", "keywords": ["민감함", "다정함", "사회성"], "description": "감수성이 풍부하고 배려심 넘치는 사회적 존재네요.", "emoji": "🐰"},
+      {"animal": "사슴", "keywords": ["조용함", "꾸준함", "온화함"], "description": "조용하지만 다정하고, 한결같은 온화함이 매력 포인트예요.", "emoji": "🦌"},
+      {"animal": "여우", "keywords": ["재치", "유연함", "센스"], "description": "센스 있고 적응력이 뛰어나는 당신! 재치가 넘쳐요.", "emoji": "🦊"},
+      {"animal": "곰", "keywords": ["묵직함", "책임감", "우직함"], "description": "묵묵히 자기 길을 가며 책임감이 강한 타입입니다.", "emoji": "🐻"},
+      {"animal": "펭귄", "keywords": ["팀워크", "친근함", "유머"], "description": "모두와 잘 어울리고, 집단 생활을 즐기는 유머러스한 스타일!", "emoji": "🐧"},
+      {"animal": "치타", "keywords": ["속도", "즉흥적", "적극적"], "description": "즉각적인 실행력과 활력, 새로운 것에 도전하는 걸 두려워하지 않아 멋져요.", "emoji": "🐆"},
+      {"animal": "판다", "keywords": ["평화", "온순함", "긍정"], "description": "평화롭고 느긋하며, 주변을 편하게 만들어주는 따뜻한 사람입니다.", "emoji": "🐼"}
+    ]
+  };
+
+  const QUESTION_COUNT = 20;
+  const MAX_RETRY = 10;
+  const MAX_ANIMAL_WEIGHT_RATIO = 0.4;
+
+  const choiceList = [
+    { label: "매우 그렇다", value: 5 },
+    { label: "그렇다", value: 4 },
+    { label: "보통", value: 3 },
+    { label: "아니다", value: 2 },
+    { label: "전혀 아니다", value: 1 },
+  ];
+
+  const container = document.querySelector(".container");
+  const $qArea = document.querySelector(".question-area");
+  const $choices = document.querySelector(".choices");
+  const $result = document.querySelector(".result-area");
+  const $progress = document.querySelector(".progress-bar");
+
+  let curIdx = 0;
+  let answers = [];
+  let selectedQuestions = [];
+  const animalList = dataPool.results.map((r) => r.animal);
+
+  let animalScores = {};
+
+  function pickBalancedQuestions() {
+    for (let attempt = 0; attempt < MAX_RETRY; attempt++) {
+      const shuffledPool = [...dataPool.questions].sort(() => Math.random() - 0.5);
+      const candidateQuestions = shuffledPool.slice(0, QUESTION_COUNT);
+
+      // 각 동물 점수 합산
+      const totalWeights = {};
+      animalList.forEach((a) => (totalWeights[a] = 0));
+
+      candidateQuestions.forEach((q) => {
+        for (const [animal, w] of Object.entries(q.scores)) {
+          totalWeights[animal] += w;
+        }
+      });
+      const totalWeightSum = Object.values(totalWeights).reduce((a,b) => a + b, 0);
+
+      // 가장 큰 동물 가중치 비율 체크
+      const maxRatio = Math.max(...Object.values(totalWeights)) / totalWeightSum;
+
+      // 비율이 너무 크면 재시도
+      if (maxRatio > MAX_ANIMAL_WEIGHT_RATIO) {
+        continue;
+      }
+
+      // 적절한 밸런스면 선택
+      console.log("질문 선택 성공:", totalWeights);
+      return candidateQuestions;
+    }
+    // 재시도 모두 실패시 그냥 앞 20개 사용 (최악 방지)
+    console.warn("밸런스 유지 실패, 기본 20문항 선택");
+    return dataPool.questions.slice(0, QUESTION_COUNT);
+  }
+
+  // 문제 출제 (밸런스 체크) 후 렌더링 시작
+  function startTest() {
+    selectedQuestions = pickBalancedQuestions();
+    animalScores = {};
+    animalList.forEach((a) => {
+      animalScores[a] = 0;
+    });
+    answers = new Array(selectedQuestions.length);
+    curIdx = 0;
+    $result.classList.add("hide");
+    $qArea.classList.remove("hide");
+    $choices.classList.remove("hide");
+    renderQuestion(curIdx);
+  }
+
+  // 문제 렌더
+  function renderQuestion(idx) {
+    const qObj = selectedQuestions[idx];
+    $qArea.innerHTML = `<span>${idx + 1}. ${qObj.text}</span>`;
+    $choices.innerHTML = "";
+    choiceList.forEach((c) => {
+      const btn = document.createElement("button");
+      btn.className = "choicebtn";
+      btn.type = "button";
+      btn.innerText = c.label;
+      btn.onclick = () => answer(idx, c.value, btn);
+      $choices.appendChild(btn);
+    });
+    $progress.style.width = ((idx / selectedQuestions.length) * 100) + "%";
+    setTimeout(() => {
+      $choices.firstElementChild?.focus();
+    }, 50);
+  }
+
+  function answer(idx, point, btn) {
+    [...$choices.children].forEach((b) => (b.disabled = true));
+    btn.classList.add("selected");
+    answers[idx] = point;
+    setTimeout(() => {
+      if (curIdx < selectedQuestions.length - 1) {
+        curIdx++;
+        renderQuestion(curIdx);
+      } else {
+        showResult();
+      }
+    }, 350);
+  }
+
+  function showResult() {
+    animalList.forEach((a) => (animalScores[a] = 0));
+
+    selectedQuestions.forEach((q, i) => {
+      const userPoint = answers[i];
+      for (const [animal, weight] of Object.entries(q.scores)) {
+        animalScores[animal] += userPoint * weight;
+      }
+    });
+
+    console.log("최종 동물 점수:", animalScores);
+
+    const sortedScores = Object.entries(animalScores).sort((a, b) => b[1] - a[1]);
+    const bestAnimal = sortedScores[0][0];
+    const resultObj = dataPool.results.find((r) => r.animal === bestAnimal);
+
+    $qArea.classList.add("hide");
+    $choices.classList.add("hide");
+    $progress.style.width = "100%";
+    $result.classList.remove("hide");
+    $result.innerHTML = `
+        <div class="emoji" aria-hidden="true">${resultObj.emoji}</div>
+        <div class="result-animal">${resultObj.animal}</div>
+        <div class="keywords" aria-label="키워드">#${resultObj.keywords.join(" #")}</div>
+        <div class="result-desc">${resultObj.description}</div>
+        <button class="share-btn" type="button" aria-label="결과 복사하기" onclick="copyResult()">결과 복사하기</button>
+        <button class="restart-btn" type="button" aria-label="테스트 다시하기" onclick="startTest()">테스트 다시하기</button>
+      `;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function copyResult() {
+    const animal = document.querySelector(".result-animal").innerText;
+    const desc = document.querySelector(".result-desc").innerText;
+    const keys = document.querySelector(".keywords").innerText;
+    const text = `[동물심리 테스트 결과]\n\n${animal}\n${keys}\n${desc}\n\n👉 직접 해보기: ${location.origin}${location.pathname}`;
+    navigator.clipboard.writeText(text).then(() => {
+      alert("결과가 복사됐어요!\n친구에게 붙여넣기 해보세요.");
+    });
+  }
+
+  startTest();
+</script>
+</body>
+</html>

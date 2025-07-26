@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>내가 빛나는 MBTI 컬러</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=SUITE:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue: #639aff; --red: #ff6575; --yellow: #ffe16e;
+      --purple: #b585ff; --mint: #6cf3cb; --orange: #ffac6e;
+      --white: #fff; --gray: #eceaf7; --main: #7153ff; --radius: 18px;
+    }
+    body { margin:0; background:var(--gray); color:#323246; font-family:'SUITE',sans-serif;}
+    .container{max-width:400px;background:var(--white);margin:36px auto 0 auto;border-radius:var(--radius);
+      padding:32px 18px 28px 18px; box-shadow:0 9px 40px #a5a8db1f;}
+    header{text-align:center;margin-bottom:22px;}
+    header h1{font-size:2.08rem;margin-bottom:7px;color:var(--main);font-weight:700;letter-spacing:-0.8px;}
+    header .desc{color:#7c5cff;font-size:1.11rem;word-break:keep-all;}
+    .progress{width:87%;margin:17px auto 30px auto;height:6px;background:#eee;border-radius:3px;}
+    .progress-bar{background:linear-gradient(90deg,var(--main),#ffe16e);height:100%;width:0;
+      border-radius:3px;transition:width .3s;}
+    .question-area{min-height:120px;font-size:1.13rem;font-weight:600;text-align:center;margin-bottom:20px;}
+    .choices{display:flex;flex-direction:column;gap:13px;}
+    .choicebtn{border:none;outline:none;background:#eef0fa;font-family:inherit;font-size:1.04rem;
+      font-weight:500;color:#435187;padding:17px;border-radius:var(--radius);cursor:pointer;transition:background .16s, color .16s;}
+    .choicebtn.selected,.choicebtn:active{background:var(--main);color:#fff;}
+    .hide{display:none;}
+    .result-area{text-align:center;animation:fadeInUp 0.8s;margin-top:24px;}
+    .color-bubble{width:72px;height:72px;border-radius:23px;margin:0 auto 13px auto;display:flex;align-items:center;justify-content:center;
+      font-size:2.25rem;box-shadow:0 4px 22px #b5b8df55;}
+    .color-blue{background:var(--blue);}
+    .color-red{background:var(--red);}
+    .color-yellow{background:var(--yellow);}
+    .color-purple{background:var(--purple);}
+    .color-mint{background:var(--mint);}
+    .color-orange{background:var(--orange);}
+    .result-title{font-weight:700;font-size:1.33rem;color:var(--main);margin-bottom:2px;}
+    .result-keywords{color:#5f74be;font-size:1.01rem;margin-bottom:10px;}
+    .result-desc{color:#656087;font-size:1.1rem;margin-bottom:20px;}
+    .share-btn{background:var(--main);color:#fff;border:none;border-radius:15px;font-size:1.01rem;width:70%;
+      font-family:inherit;font-weight:600;padding:12px 0;margin:auto;display:block;margin-bottom:13px;cursor:pointer;transition:background .13s;}
+    .restart-btn{background:#e6e9fa;color:#454175;border:none;border-radius:14px;font-size:0.96rem;width:50%;
+      font-family:inherit;font-weight:500;padding:9px 0;margin:auto;display:block;cursor:pointer;transition:background .16s;}
+    @media(max-width:480px){.container{padding:12px 2px 16px 2px;}.question-area{font-size:1rem;}}
+    @keyframes fadeInUp{0%{opacity:0;transform:translateY(26px);}100%{opacity:1;transform:translateY(0);}}
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>내가 빛나는 MBTI 컬러</h1>
+    <div class="desc">15문항으로<br><b>찰떡! 분위기 컬러를 추천해드려요</b></div>
+  </header>
+  <div class="progress"><div class="progress-bar"></div></div>
+  <div class="question-area"></div>
+  <div class="choices"></div>
+  <div class="result-area hide"></div>
+</div>
+<script>
+  const QUESTION_COUNT = 15; // 출제 개수
+  const COLOR_LIST = ["blue","red","yellow","purple","mint","orange"];
+  const BALANCE_RATIO = 0.36; // 한 컬러에 가중치 36% 이상 몰리면 우선 배제
+  // 질문풀 예시
+  const allColorQuestions = [
+    { text:"계획을 세우는 걸 좋아한다.",                     scores:{blue:4,purple:2}},
+    { text:"즉흥적인 도전을 잘 하는 편이다.",                 scores:{orange:5,red:3}},
+    { text:"혼자만의 시간에서 에너지를 충전한다.",           scores:{mint:5,blue:2}},
+    { text:"사람들과 어울리며 에너지를 얻는다.",              scores:{yellow:5,orange:3}},
+    { text:"갈등 상황에서도 침착하게 의견을 말한다.",         scores:{blue:4,purple:3}},
+    { text:"나를 표현하는 걸 좋아한다.",                    scores:{red:5,orange:3}},
+    { text:"정해진 것을 지키는 걸 중요하게 여긴다.",         scores:{blue:5,yellow:3}},
+    { text:"변화나 새로운 시도를 두려워하지 않는다.",        scores:{orange:5,mint:3}},
+    { text:"남을 공감하고 도와주는 게 자연스럽다.",          scores:{mint:5,yellow:4}},
+    { text:"내 감정에 솔직하다.",                           scores:{red:5,purple:3}},
+    { text:"즐겁고 유쾌한 분위기를 선호한다.",               scores:{yellow:5,orange:3}},
+    { text:"나만의 취향·개성이 뚜렷한 편이다.",             scores:{purple:5,red:3}},
+    // 아래 추가 확장 14개 (예시)
+    { text:"혼자 계획 세우고 조용히 실행하는 게 편하다.",    scores:{blue:4,mint:3}},
+    { text:"타인의 감정에 민감하고 배려심이 많다.",          scores:{mint:5,yellow:2}},
+    { text:"새로운 시도, 변화에 설레는 편이다.",             scores:{orange:5,red:2}},
+    { text:"리더십을 발휘할 때 에너지 넘친다.",              scores:{red:4,blue:2}},
+    { text:"한 곳에 집중하기보다 여러 일 즐기는 편이다.",     scores:{yellow:5,orange:2}},
+    { text:"감성적이고 예술적 체험을 좋아한다.",            scores:{purple:5,mint:3}},
+    { text:"내 스타일·취향 어필에 거리낌 없다.",             scores:{red:5,purple:3}},
+    { text:"규칙, 약속은 중요하다 생각한다.",               scores:{blue:5,yellow:2}},
+    { text:"감정을 깊이 이해하고 공감한다.",                 scores:{mint:5,purple:2}},
+    { text:"즉흥·모험적인 선택이 내 스타일이다.",            scores:{orange:5,red:3}},
+    { text:"새로운 사람을 만나는 걸 즐긴다.",                scores:{yellow:5,orange:4}},
+    { text:"재미있는 이야기를 좋아하고 잘 전달한다.",         scores:{yellow:4,orange:2}},
+    { text:"나만의 창작, 취미가 삶의 큰 즐거움이다.",         scores:{purple:5,mint:2}},
+    { text:"집이나 나만의 공간 꾸미기에 신경 쓴다.",          scores:{blue:4,mint:3}}
+  ];
+
+  const colorResults = [
+    { color:"blue",   emoji:"🔵", keywords:["차분함","믿음직함","섬세함"],bubble:"color-blue",
+      description: "책임감 있고 신뢰받는 타입. 논리적이면서도 부드러운 분위기, 깊이 있는 매력을 지닌 당신에게는 푸른색 계열이 잘 어울려요!" },
+    { color:"red",    emoji:"🔴", keywords:["열정","표현력","진취적"],bubble:"color-red",
+      description: "강렬하고 자신감 넘치는 스타일! 주변을 이끄는 열정, 솔직한 매력의 소유자인 당신은 레드톤 또는 생동감 있는 컬러가 찰떡이에요." },
+    { color:"yellow", emoji:"🟡", keywords:["명랑함","유쾌함","긍정"],bubble:"color-yellow",
+      description: "밝고 유쾌해, 누구와도 잘 어울리는 타입! 밝은 옐로우, 라이트그린 같은 경쾌한 컬러가 당신의 매력을 한껏 돋보이게 할 거예요." },
+    { color:"purple", emoji:"🟣", keywords:["개성","상상력","자유분방"],bubble:"color-purple",
+      description: "독특함과 창의력이 돋보이는 예술가형! 감각적이면서 신비로운 퍼플, 바이올렛 컬러와 찰떡궁합입니다." },
+    { color:"mint",   emoji:"🟢", keywords:["평온함","관용","공감"],bubble:"color-mint",
+      description: "차분하면서도 따뜻한 감성! 부드럽고 평화로운 민트, 라이트블루 계열에서 당신만의 여유와 매력이 자연스럽게 느껴집니다." },
+    { color:"orange", emoji:"🟠", keywords:["활기","모험","유연함"],bubble:"color-orange",
+      description: "활동적이고 자유로운 모험가! 낙천적이고 에너지 넘치는 당신에겐 오렌지·코랄 계열의 컬러가 생기를 한껏 더해줄 거예요." }
+  ];
+  // 상태
+  let answers = []; let curIdx = 0;
+  let colorScores = {};
+  let selectedQuestions = [];
+
+  // 5점 척도
+  const choiceList = [
+    {label:"매우 그렇다",value:5},
+    {label:"그렇다",value:4},
+    {label:"보통",value:3},
+    {label:"아니다",value:2},
+    {label:"전혀 아니다",value:1}
+  ];
+  // DOM
+  const $qArea = document.querySelector('.question-area');
+  const $choices = document.querySelector('.choices');
+  const $result = document.querySelector('.result-area');
+  const $progress = document.querySelector('.progress-bar');
+
+  function pickBalancedQuestions(){
+    // 컬러별 가중치가 한쪽으로 너무 쏠리면 다음 후보를 골라 교체하는 로직
+    let attempts = 0;
+    while (attempts < 9) {
+      let qPool = [...allColorQuestions].sort(()=>Math.random()-0.5);
+      let candidate = qPool.slice(0, QUESTION_COUNT);
+      let colorWeight = {};
+      COLOR_LIST.forEach(c=>colorWeight[c]=0);
+      candidate.forEach(q=>{
+        Object.entries(q.scores).forEach(([c, w])=>{
+          colorWeight[c] += w;
+        });
+      });
+      const sum = Object.values(colorWeight).reduce((a,b)=>a+b,0);
+      const ratios = Object.values(colorWeight).map(val=>val/sum);
+      if(Math.max(...ratios) < BALANCE_RATIO) return candidate;
+      attempts++;
+    }
+    // 실패 시 앞 15개 반환
+    return allColorQuestions.slice(0, QUESTION_COUNT);
+  }
+
+  function renderQuestion(idx){
+    const qObj = selectedQuestions[idx];
+    $qArea.innerHTML = `<span>${idx+1}. ${qObj.text}</span>`;
+    $choices.innerHTML = '';
+    choiceList.forEach(c=>{
+      const btn = document.createElement('button');
+      btn.className = 'choicebtn';
+      btn.type = "button";
+      btn.innerText = c.label;
+      btn.onclick = () => answer(idx, c.value, btn);
+      $choices.appendChild(btn);
+    });
+    $progress.style.width = ((idx/QUESTION_COUNT)*100)+'%';
+  }
+  function answer(idx, point, btn){
+    [...$choices.children].forEach(b=>b.disabled=true);
+    btn.classList.add('selected');
+    answers[idx]=point;
+    setTimeout(()=>{
+      if(curIdx < QUESTION_COUNT-1){
+        curIdx++; renderQuestion(curIdx);
+      } else {
+        showResult();
+      }
+    },330);
+  }
+  function showResult() {
+    colorScores = {};
+    COLOR_LIST.forEach(c=>colorScores[c]=0);
+    selectedQuestions.forEach((q,qIdx)=>{
+      const userPoint = answers[qIdx] || 3;
+      Object.entries(q.scores).forEach(([color,weight])=>{
+        colorScores[color] += userPoint * weight;
+      });
+    });
+    const sorted = Object.entries(colorScores).sort((a,b)=>b[1]-a[1]);
+    const bestColor = sorted[0][0];
+    const resultObj = colorResults.find(r=>r.color === bestColor);
+
+    $qArea.classList.add('hide');
+    $choices.classList.add('hide');
+    $progress.style.width = "100%";
+    $result.classList.remove('hide');
+    $result.innerHTML = `
+    <div class="color-bubble ${resultObj.bubble}">${resultObj.emoji}</div>
+    <div class="result-title">${resultObj.color.toUpperCase()}</div>
+    <div class="result-keywords">#${resultObj.keywords.join(' #')}</div>
+    <div class="result-desc">${resultObj.description}</div>
+    <button class="share-btn" onclick="copyColorResult()">결과 복사하기</button>
+    <button class="restart-btn" onclick="restartTest()">테스트 다시하기</button>
+  `;
+  }
+  function copyColorResult(){
+    const $title = document.querySelector('.result-title').innerText;
+    const $desc = document.querySelector('.result-desc').innerText;
+    const $keys = document.querySelector('.result-keywords').innerText;
+    const txt = `[MBTI 컬러 결과]\n\n${$title}\n${$keys}\n${$desc}\n\n👉 직접 해보기: ${location.origin}${location.pathname}`;
+    navigator.clipboard.writeText(txt).then(()=>{
+      alert("결과가 복사됐어요! 친구에게 붙여넣기 해보세요.");
+    });
+  }
+  function restartTest(){
+    answers = []; curIdx = 0; selectedQuestions=pickBalancedQuestions();
+    $result.classList.add('hide');
+    $qArea.classList.remove('hide');
+    $choices.classList.remove('hide');
+    renderQuestion(0);
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  // 초기 시작
+  selectedQuestions=pickBalancedQuestions(); renderQuestion(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>감성 심리테스트 모음 메인</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=SUITE:wght@400;700&family=Gowun+Dodum&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --main: #6d6aff;
+      --gradient: linear-gradient(116deg, #ffc3a0 0%, #ffd6e2 49%, #d1ebff 100%);
+      --card-bg: #fff7f1;
+      --accent: #f476ff;
+      --shadow: 0 4px 32px rgba(52,28,50,.08), 0 1.5px 5px rgba(80,97,150,.08);
+      --radius: 22px;
+    }
+    html, body { height:100%; margin:0;padding:0; }
+    body {
+      min-height: 100vh;
+      font-family: 'SUITE', 'Gowun Dodum', sans-serif;
+      background: var(--gradient);
+      margin: 0;
+      color: #45334e;
+    }
+    .main-wrap {
+      max-width: 750px;
+      margin: 0 auto;
+      padding: 0 16px 48px 16px;
+    }
+    header {
+      text-align: center;
+      margin-top: 52px;
+      margin-bottom: 38px;
+    }
+    .cover-img {
+      width: 90px;
+      height: 90px;
+      border-radius: 24px 32px 12px 28px;
+      margin: 0 auto 16px auto;
+      box-shadow: 0 8px 26px #f4bfdea0;
+      background: url('https://cdn.pixabay.com/photo/2015/07/28/22/05/book-865110_1280.jpg') center/cover no-repeat;
+    }
+    h1 {
+      font-family: 'SUITE', sans-serif;
+      margin: 0 0 8px 0;
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -1.6px;
+      color: #39265b;
+      text-shadow: 0 3px 12px #ffe6ed70;
+    }
+    header .desc {
+      color: #aa529b;
+      font-size: 1.12rem;
+      letter-spacing: -0.04em;
+      font-weight: 400;
+      margin-bottom:12px;
+    }
+    .test-list {
+      display: grid;
+      gap: 28px 18px;
+      grid-template-columns: 1fr 1fr;
+      margin-top: 38px;
+    }
+    @media (max-width: 680px) {
+      .test-list { grid-template-columns: 1fr;}
+      header { margin-top: 36px;}
+    }
+    .test-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 30px 20px 18px 20px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      min-height: 236px;
+      transition: transform .14s, box-shadow .13s;
+      overflow:hidden;
+      opacity: 0;
+      transform: translateY(38px);
+      animation: fadeCardIn .95s cubic-bezier(.84,.14,0,1.11) forwards;
+    }
+    .test-card:nth-child(1) { animation-delay: 0.05s; }
+    .test-card:nth-child(2) { animation-delay: 0.21s; }
+    .test-card:nth-child(3) { animation-delay: 0.35s; }
+    .test-card:nth-child(4) { animation-delay: 0.45s; }
+    .test-card:hover {
+      transform: scale(1.035) rotate(-1deg);
+      box-shadow: 0 8px 44px #ffd6e6a6, 0 1.5px 6px rgba(80,97,150,.15);
+    }
+    @keyframes fadeCardIn {
+      0% {opacity:0; transform:translateY(38px);}
+      100% {opacity:1; transform:translateY(0);}
+    }
+    .card-ico {
+      font-size:2.5rem; margin-bottom:13px;
+      text-shadow: 0 5px 16px #ffd6e2b8;
+    }
+    .test-title {
+      font-size: 1.19rem;
+      font-weight: 700;
+      color: var(--main);
+      margin-bottom: 9px;
+      letter-spacing: -0.5px;
+    }
+    .test-desc {
+      color: #76435c;
+      font-size: 1.06rem;
+      font-weight: 400;
+      margin-bottom: 17px;
+      text-align: center;
+      min-height: 32px;
+    }
+    .tag-list { margin-top: 0; padding-left:0;}
+    .tag {
+      display: inline-block;
+      background: #ffe4fb;
+      border-radius: 11px;
+      padding: 2.5px 13px 2.5px 13px;
+      margin: 1.5px 5px 0 0;
+      font-size:0.93rem;
+      color:#b878ae;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+    .more-btn {
+      margin-top:24px;
+      padding:15px 0 13px 0;
+      width: 70%;
+      background: var(--main);
+      color: #fff;
+      border: none;
+      border-radius: 18px;
+      font-size: 1.01rem;
+      font-family: inherit;
+      font-weight:700;
+      cursor:pointer;
+      box-shadow: 0 1.5px 6px #e1d6f3b8;
+      transition: background .13s;
+    }
+    .more-btn:hover { background: #4431be; }
+    footer {
+      color:#ba9bbe;
+      text-align:center;
+      font-size:0.98rem;
+      margin-top:24px;
+      letter-spacing:0.01em;
+      padding-bottom:13px;
+    }
+  </style>
+</head>
+<body>
+<div class="main-wrap">
+  <header>
+    <div class="cover-img" aria-hidden="true"></div>
+    <h1>심리테스트 아틀리에</h1>
+    <div class="desc">
+      개발자가 갑자기 만들고 싶어서 만드는 심리테스트/MBTI/동물유형 진단<br>
+      <span style="color:#725c8a;font-size:1em;">마음이 끌리는 테스트를 골라보세요!</span>
+    </div>
+  </header>
+  <section class="test-list">
+    <!-- 테스트 예시 카드들 -->
+    <div class="test-card" onclick="location.href='page/animal.html'">
+      <div class="card-ico" aria-hidden="true">🐾</div>
+      <div class="test-title">나랑 닮은 동물 테스트</div>
+      <div class="test-desc">20문항으로 알아보는<br><b>내 성향과 가장 닮은 동물</b></div>
+      <div class="tag">
+        동물유형
+      </div>
+      <div class="tag">
+        #성격진단
+      </div>
+    </div>
+    <div class="test-card" onclick="location.href='page/color.html'">
+      <div class="card-ico" aria-hidden="true">🎨</div>
+      <div class="test-title">내가 빛나는 MBTI 컬러</div>
+      <div class="test-desc">심플 12문항만으로<br>내 성향과 잘 어울리는 색상/분위기 추천</div>
+      <div class="tag">
+        MBTI
+      </div>
+      <div class="tag">
+        #컬러심리
+      </div>
+    </div>
+<!--    <div class="test-card" onclick="location.href='relationship_match.html'">-->
+<!--      <div class="card-ico" aria-hidden="true">💖</div>-->
+<!--      <div class="test-title">찐친/연애 궁합 테스트</div>-->
+<!--      <div class="test-desc">너와 나의 찐친력, 연애 성향까지 한 번에!</div>-->
+<!--      <span class="tag">#관계심리</span>-->
+<!--      <span class="tag">#궁합</span>-->
+<!--    </div>-->
+<!--    <div class="test-card" onclick="location.href='vibe_today.html'">-->
+<!--      <div class="card-ico" aria-hidden="true">🌱</div>-->
+<!--      <div class="test-title">오늘의 나 감성 바이브</div>-->
+<!--      <div class="test-desc">오늘 내 마음과 가장 닮은 분위기/테마 진단</div>-->
+<!--      <span class="tag">#감정테스트</span>-->
+<!--      <span class="tag">#오늘의기분</span>-->
+<!--    </div>-->
+  </section>
+  <button class="more-btn" type="button" onclick="alert('더 다양한 테스트가 준비 중이에요!')">더 다양한 테스트 준비 중!</button>
+  <footer>
+    © 2025 심리테스트 아틀리에<br>
+    made with ☕ & 💻
+  </footer>
+</div>
+<script>
+  // 카드 자연스러운 애니메이션 효과(최신 UX)
+  document.querySelectorAll('.test-card').forEach((el, idx) => {
+    el.style.animationDelay = (0.08*idx+0.06) + "s";
+  });
+</script>
+</body>
+</html>
