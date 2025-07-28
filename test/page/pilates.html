@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>나에게 맞는 필라테스 프로그램 찾기</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700&display=swap" rel="stylesheet"/>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <style>
+    body {margin:0;background:#f8f6fd;color:#302a40;font-family:'Pretendard',sans-serif;}
+    .container{max-width:400px;background:#fff;margin:40px auto;border-radius:20px;padding:33px 17px 26px 17px;
+      box-shadow:0 8px 38px #ceb1fa33;}
+    header{text-align:center;}
+    header h1{font-size:2rem;font-weight:700;letter-spacing:-1.1px;margin:0 0 12px 0;}
+    header p{color:#725de0;font-size:1.02rem;}
+    .progress{width:90%;margin:16px auto 31px auto;height:6px;background:#e5e1f3;border-radius:3px;}
+    .progress-bar{background:linear-gradient(90deg,#8e7bff,#ffd274);height:100%;width:0;
+      transition:width 0.35s;}
+    .question-area{min-height:130px;margin-bottom:24px;text-align:center;font-size:1.13rem;
+      font-weight:600;line-height:1.6;}
+    .choices{display:flex;flex-direction:column;gap:13px;}
+    .choicebtn{border:none;outline:none;background:#eceaf8;color:#514684;
+      font-size:1.06rem;padding:17px;border-radius:15px;font-family:inherit;
+      cursor:pointer;transition:background .16s, color .16s;}
+    .choicebtn.selected,.choicebtn:active{background:#725de0;color:#fff;}
+    .hide{display:none;}
+    .result-area{text-align:center;margin-top:16px;animation:fadeInUp 0.8s;}
+    .result-card{
+      width:100%; max-width:340px; margin:24px auto 11px auto; background:#fff;
+      border-radius:18px; box-shadow:0 7px 26px #b2bbfc28, 0 0.5px 3px #a98ffc08;
+      padding:25px 19px;text-align:center;position:relative;font-family:'Pretendard',sans-serif;
+    }
+    .card-title{font-size:1.42rem;font-weight:700;color:#8566d4;margin-bottom:6px;}
+    .program-list{margin:9px 0 2px 0;padding:0;}
+    .program{font-size:1.11rem;color:#4b4198;font-weight:600;margin-bottom:1px;}
+    .desc{color:#876983;margin:8px 0 13px 0;font-size:1.01rem;}
+    .tip{background:#f7f0fb;color:#9b61cf;padding:7px 13px;border-radius:10px;margin-top:10px;font-size:.98rem;}
+    .share-btn, .image-btn, .restart-btn{
+      border:none; cursor:pointer; font-family:inherit; border-radius:14px; font-weight:600;
+      display:block;margin:8px auto 0 auto;transition:background .13s, color .13s;
+    }
+    .share-btn {background:#7c66e5;color:#fff;padding:12px 0;width:70%;font-size:1.01rem;}
+    .share-btn:hover{background:#5b51a3;}
+    .image-btn{background:#f9edc3;color:#754fcf;padding:10px 0;width:70%;font-size:.99rem;}
+    .image-btn:hover{background:#ffeedf;}
+    .restart-btn{background:#ece9f5;color:#6a659c;padding:9px 0;width:50%;font-size:0.95rem;}
+    .restart-btn:hover{background:#c7c2ee;}
+    @keyframes fadeInUp{0%{opacity:0;transform:translateY(26px);}100%{opacity:1;transform:translateY(0);}}
+    @media(max-width:480px){.container{padding:9px 1px 13px 1px;}.result-card{padding:12px 4px;}}
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>내게 딱 맞는 필라테스 프로그램 찾기</h1>
+    <p>7가지 질문에 답하면<br><b>내 목표·상황별 프로그램을 추천</b>해드려요!</p>
+  </header>
+  <div class="progress"><div class="progress-bar"></div></div>
+  <div class="question-area"></div>
+  <div class="choices"></div>
+  <div class="result-area hide"></div>
+</div>
+<script>
+const PROGRAMS=["코어앤코어","풀바디글로우","파워하우스","어드밴스드","소베이직","필라프레스트","아로마플로우","힘앤슬더","바디밸런스","힘앤슬더"];
+const data = {
+  questions:[
+    { text:"필라테스를 시작하는 주된 목적은?", options:[
+      {label:"체력 및 근력 증가", weights:{코어앤코어:4, 풀바디글로우:3, 파워하우스:3, 어드밴스드:2}},
+      {label:"힐링, 스트레스 해소", weights:{소베이직:4, 필라프레스트:3, 아로마플로우:3}},
+      {label:"자세 교정", weights:{소베이직:3, 힘앤슬더:3, 바디밸런스:4}}
+    ]},
+    { text:"필라테스 경험 기간은?", options:[
+      {label:"0~6개월", weights:{소베이직:4, 필라프레스트:3}},
+      {label:"1년 이상", weights:{코어앤코어:3, 힘앤슬더:3, 바디밸런스:3}},
+      {label:"3년 이상", weights:{파워하우스:3, 어드밴스드:4, 풀바디글로우:2}}
+    ]},
+    { text:"본인에게 가장 중요한 신체 부위는?", options:[
+      {label:"코어·허리", weights:{코어앤코어:4, 파워하우스:3}},
+      {label:"상체(어깨·등)", weights:{힘앤슬더:4, 바디밸런스:2}},
+      {label:"전신의 밸런스", weights:{풀바디글로우:4, 필라프레스트:2}},
+      {label:"이완/유연성", weights:{아로마플로우:4, 소베이직:2}}
+    ]},
+    { text:"운동할 때, 선호하는 스타일은?", options:[
+      {label:"가벼운 운동·천천히", weights:{소베이직:4, 필라프레스트:3}},
+      {label:"강도 높게, 땀이 많이", weights:{코어앤코어:3, 파워하우스:3, 어드밴스드:3}},
+      {label:"균형 잡힌 중강도", weights:{바디밸런스:3, 힘앤슬더:2, 풀바디글로우:2}}
+    ]},
+    { text:"필라테스 외 평소 활동량은?", options:[
+      {label:"거의 없음", weights:{소베이직:4, 아로마플로우:3}},
+      {label:"가끔 산책 등 가벼움", weights:{필라프레스트:3, 바디밸런스:2}},
+      {label:"운동을 자주 함", weights:{파워하우스:3, 어드밴스드:3, 코어앤코어:2}}
+    ]},
+    { text:"어떤 분위기를 원하세요?", options:[
+      {label:"편안/명상/음악", weights:{아로마플로우:4, 소베이직:3}},
+      {label:"에너지/몰입/다이나믹", weights:{파워하우스:4, 코어앤코어:3}},
+      {label:"밸런스/탄탄함/집중", weights:{풀바디글로우:3, 힘앤슬더:2, 바디밸런스:3}}
+    ]},
+    { text:"스스로 중요하게 생각하는 목표는?", options:[
+      {label:"꾸준히 습관화", weights:{필라프레스트:4, 소베이직:2}},
+      {label:"늘 새로운 도전", weights:{어드밴스드:4, 파워하우스:2}},
+      {label:"내 몸에 집중", weights:{코어앤코어:3, 힘앤슬더:3, 바디밸런스:2}}
+    ]}
+  ]
+};
+// 프로그램별 설명(실제 센터 정보에 맞게 변경 가능)
+const programInfo={
+  "코어앤코어":"심부근육·코어, 허리 강화에 집중된 고효율 프로그램.",
+  "풀바디글로우":"전신 근육 활성화+밸런스, 운동 초중급 모두 추천.",
+  "파워하우스":"강력 코어와 근력·체력 증진, 고강도 운동 선호자에게.",
+  "어드밴스드":"3년 이상, 숙련자용 고난도 동작과 체력 강화.",
+  "소베이직":"기초자·가벼운 운동, 심신 안정을 위한 맞춤.",
+  "필라프레스트":"자연·편안함·꾸준한 습관화, 초보~중급자 계속적 성장.",
+  "아로마플로우":"아로마·요가 감성, 유연성+마음 이완·힐링 최적.",
+  "힘앤슬더":"상체, 어깨·등 강화 특화, 자세 교정 동반.",
+  "바디밸런스":"균형·정렬, 잘못된 습관 개선/체형 교정에 중점."
+};
+
+let curIdx=0, answers=[], progScores={};
+function renderQuestion(idx){
+  const q=data.questions[idx];
+  document.querySelector('.question-area').innerHTML=`<span>${idx+1}. ${q.text}</span>`;
+  const box=document.querySelector('.choices'); box.innerHTML='';
+  q.options.forEach((op,i)=>{
+    const btn=document.createElement('button');
+    btn.className='choicebtn'; btn.type='button'; btn.innerText=op.label;
+    btn.onclick=()=>answer(idx,i,btn);
+    box.appendChild(btn);
+  });
+  setProgress(idx/data.questions.length*100);
+}
+function answer(idx,op,btn){
+  [...document.querySelector('.choices').children].forEach(b=>b.disabled=true);
+  btn.classList.add('selected'); answers[idx]=op;
+  setTimeout(()=>{
+    if(curIdx < data.questions.length-1){ curIdx++; renderQuestion(curIdx);}
+    else showResult();
+  },330);
+}
+function setProgress(v){document.querySelector('.progress-bar').style.width=v+'%';}
+function showResult(){
+  // 프로그램 점수 0 초기화
+  progScores={}; PROGRAMS.forEach(p=>progScores[p]=0);
+  data.questions.forEach((q,i)=>{
+    const sel=q.options[answers[i]];
+    Object.entries(sel.weights).forEach(([prog,pt])=>{
+      if(progScores[prog]!==undefined) progScores[prog]+=pt;
+    });
+  });
+  // 최고 점수 상위 2~3개 추출
+  const sorted=Object.entries(progScores)
+    .sort((a,b)=>b[1]-a[1])
+    .filter(e=>e[1]>=Math.max(...Object.values(progScores))-1);
+  const best=sorted.slice(0,3);
+  document.querySelector('.question-area').classList.add('hide');
+  document.querySelector('.choices').classList.add('hide');
+  setProgress(100);
+  const $result=document.querySelector('.result-area');
+  $result.classList.remove('hide');
+  $result.innerHTML=`
+    <div class="result-card" id="resultCard">
+      <div class="card-title">추천 프로그램</div>
+      <div class="program-list">${
+         best.map(e=>`<div class="program">${e[0]}</div>`).join("")
+      }</div>
+      <div class="desc">${best.map(e=> programInfo[e[0]]).join("<br>")}</div>
+      <div class="tip">개인 체질·목표에 따라 인스트럭터 상담 후 시작하면 더 좋아요!</div>
+    </div>
+    <button class="share-btn" onclick="copyResult()">결과 텍스트 복사</button>
+    <button class="image-btn" onclick="captureResultCard()">결과 카드 이미지 저장</button>
+    <button class="restart-btn" onclick="restartTest()">테스트 다시하기</button>`;
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function copyResult(){
+  const progs=[...document.querySelectorAll('.program')].map(e=>e.innerText).join(', ');
+  const desc=document.querySelector('.desc').innerText;
+  const txt=`[필라테스 추천 결과]\n\n${progs}\n${desc}\n\n👉 직접 해보기: ${location.origin}${location.pathname}`;
+  navigator.clipboard.writeText(txt).then(()=>alert('결과가 복사됐어요!'));
+}
+function captureResultCard(){
+  const card=document.getElementById("resultCard");
+  if(!card)return;
+  html2canvas(card,{
+    backgroundColor:"#fff",
+    scale:window.devicePixelRatio||2
+  }).then(canvas=>{
+    const link=document.createElement("a");
+    link.download="pilates_result_card.png";
+    link.href=canvas.toDataURL();
+    link.click();
+  });
+}
+function restartTest(){
+  answers=[]; curIdx=0;
+  document.querySelector('.result-area').classList.add('hide');
+  document.querySelector('.question-area').classList.remove('hide');
+  document.querySelector('.choices').classList.remove('hide');
+  renderQuestion(0); setProgress(0);
+}
+renderQuestion(0);
+</script>
+</body>
+</html>
