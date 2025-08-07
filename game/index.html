@@ -29,7 +29,13 @@
     .lang-btn.active { background: var(--dark); color: var(--light);}
     body.dark-mode .lang-btn { border-color: var(--light); color: var(--light);}
     body.dark-mode .lang-btn.active { background: var(--light); color: var(--dark);}
-    .main { margin-top: 80px; padding: 2rem 5%;}
+    /* 네비게이션 메뉴 스타일 */
+    .nav-menu { display: flex; gap: 1.5rem; margin-left: 2rem;}
+    .nav-link { font-weight: 600; color: var(--dark); text-decoration: none; padding: 0.5rem 1rem; border-radius: 20px; transition: background 0.2s, color 0.2s;}
+    .nav-link.active, .nav-link:hover { background: var(--gradient); color: #fff; }
+    body.dark-mode .nav-link { color: var(--light); }
+    html { scroll-behavior: smooth; }
+    .main { margin-top: 100px; padding: 2rem 5%;}
     .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; padding: 2rem 0;}
     .game-card { background: rgba(255,255,255,0.95); border-radius: 20px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; position: relative;}
     body.dark-mode .game-card { background: rgba(255,255,255,0.07);}
@@ -72,7 +78,6 @@
     .store-badge { display: flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1rem; border-radius: 30px; background: var(--gradient); color: white; text-decoration: none; font-size: 0.98rem; font-weight: 600; transition: transform 0.3s, box-shadow 0.3s;}
     .store-badge img { width: 22px; height: 22px; border-radius: 5px; }
     .store-badge:hover { transform: scale(1.07); box-shadow: 0 4px 16px rgba(0,0,0,0.13);}
-    /* 태그 스타일 추가 */
     .game-tags {
       margin-bottom: 0.8rem;
       display: flex;
@@ -95,6 +100,11 @@
       background: #333;
       color: #fff;
     }
+    /* 갤러리 섹션 스타일 */
+    .gallery-section { margin: 3rem 0; }
+    .gallery-section h2 { font-size: 2rem; margin-bottom: 1.2rem; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 1rem; }
+    .gallery-grid img { width: 100%; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); background: #fff; }
     .footer { padding: 2rem 5%; text-align: center; border-top: 1px solid #eee;}
     body.dark-mode .footer { border-color: #333;}
     .about-me img { width:60px; border-radius:50%; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-bottom:0.5rem;}
@@ -102,7 +112,6 @@
     .social-link { width: 40px; height: 40px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; transition: transform 0.3s;}
     .social-link:hover { transform: translateY(-3px);}
     .social-link img { width: 60%; filter: brightness(0) invert(1);}
-
     .landing-link {
       display: inline-flex;
       align-items: center;
@@ -116,18 +125,41 @@
       opacity: 1;
       color: var(--primary);
     }
-
+    .badge-playable {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: var(--secondary);
+      color: #fff;
+      padding: 0.35em 1em;
+      border-radius: 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+      z-index: 2;
+      letter-spacing: 1px;
+    }
+    .play-badge {
+      background: var(--secondary) !important;
+    }
     @media (max-width: 768px) {
       .header { padding: 1rem;}
       .brand { font-size: 1.5rem;}
+      .nav-menu { display: none; } /* 모바일에서 메뉴 숨김 처리, 필요시 햄버거로 대체 */
       .game-grid { grid-template-columns: 1fr;}
       .lang-btn { padding: 0.3rem 0.8rem; font-size: 0.9rem;}
+      .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
     }
   </style>
 </head>
 <body>
 <header class="header">
   <div class="brand">KANGJUNG.dev</div>
+  <nav class="nav-menu">
+<!--    <a href="#games" class="nav-link">게임/앱</a>-->
+<!--    <a href="#pixel-art" class="nav-link">에셋</a>-->
+<!--    <a href="#about" class="nav-link">소개</a>-->
+  </nav>
   <div class="nav-tools">
     <div class="lang-select">
       <button class="lang-btn active" onclick="setLang('ko')">🇰🇷</button>
@@ -139,9 +171,32 @@
   </div>
 </header>
 <main class="main">
-  <div class="game-grid" id="game-container"></div>
+  <section id="games">
+    <div class="game-grid" id="game-container"></div>
+  </section>
+  <section id="pixel-art" class="gallery-section">
+    <h2>Assets</h2>
+    <div class="gallery-grid">
+      <!-- 예시 이미지, 실제 파일 경로로 교체 -->
+      <img onclick="window.open('https://kangjung.itch.io/planet-pixel')" src="https://img.itch.zone/aW1nLzE1NDM3OTQxLnBuZw==/315x250%23c/NVkD4f.png" alt="Planet Pixel">
+      <img onclick="window.open('https://kangjung.itch.io/coin-pixel')" src="https://img.itch.zone/aW1nLzExNjQ5OTE5LnBuZw==/315x250%23c/ARSP3L.png" alt="Coin Pixel">
+      <img onclick="window.open('https://kangjung.itch.io/pigeon-pixel')" src="https://img.itch.zone/aW1nLzExNTczMTc2LnBuZw==/315x250%23c/jo4vZb.png" alt="Pigeon Pixel">
+      <img onclick="window.open('https://kangjung.itch.io/reaper-pixel')" src="https://img.itch.zone/aW1nLzE5Mjk0OTU1LnBuZw==/315x250%23c/rCBmYI.png" alt="Reaper Pixel">
+      <img onclick="window.open('https://kangjung.itch.io/fruit-sandwich')" src="https://img.itch.zone/aW1nLzIxNzY2NzI3LnBuZw==/315x250%23c/JWVqDJ.png" alt="Pigeon Pixel">
+    </div>
+  </section>
+
+<!--  <section id="emoji" class="gallery-section">-->
+<!--    <h2>이모티콘 갤러리</h2>-->
+<!--    <div class="gallery-grid">-->
+<!--      &lt;!&ndash; 예시 이미지, 실제 파일 경로로 교체 &ndash;&gt;-->
+<!--      <img src="/assets/emoji1.png" alt="이모티콘1">-->
+<!--      <img src="/assets/emoji2.png" alt="이모티콘2">-->
+<!--      <img src="/assets/emoji3.png" alt="이모티콘3">-->
+<!--    </div>-->
+<!--  </section>-->
 </main>
-<footer class="footer">
+<footer class="footer" id="about">
   <div class="about-me" style="margin-bottom:1.5rem;">
     <img src="/assets/img/about.png" alt="프로필" style="width:60px; border-radius:50%; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-bottom:0.5rem;">
     <div style="font-weight:bold; font-size:1.1rem;">KANGJUNG</div>
@@ -209,6 +264,7 @@
             <div class="badge-developing">
               ${currentLang === "ko" ? "작업중" : "Coming Soon"}
             </div>` : ""}
+          ${game.playable ? `<div class="badge-playable">${currentLang === "ko" ? "바로 플레이" : "Play Now"}</div>` : ""}
         </div>
         <div class="game-content">
           ${game.tags && game.tags.length > 0 ? `
@@ -239,6 +295,23 @@
       </div>
     `).join('');
   }
+
+  // 메뉴 active 상태 동적 처리 (선택, 필요시)
+  // const navLinks = document.querySelectorAll('.nav-link');
+  // window.addEventListener('scroll', () => {
+  //   const scrollPos = window.scrollY + 120;
+  //   ['games', 'pixel-art', 'emoji', 'about'].forEach((id, idx) => {
+  //     const section = document.getElementById(id) || document.getElementsByClassName(id)[0];
+  //     if (section) {
+  //       const top = section.offsetTop;
+  //       const height = section.offsetHeight;
+  //       if (scrollPos >= top && scrollPos < top + height) {
+  //         navLinks.forEach(link => link.classList.remove('active'));
+  //         navLinks[idx].classList.add('active');
+  //       }
+  //     }
+  //   });
+  // });
 
   renderGames();
 </script>
