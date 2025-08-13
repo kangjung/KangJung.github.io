@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>GitHub Grass Tower Defense</title>
+  <style>
+    body { background:#1e1e2f; color:#eee; font-family:'Courier New', monospace; margin:0; text-align:center; }
+    header { background:#2e2e4d; padding:15px; border-bottom:2px solid #444; }
+    input,button { font-size:16px; padding:6px 10px; margin:5px; border-radius:4px; border:none; }
+    input { width:220px; color:#222; }
+    button { background:#4cafef; color:white; cursor:pointer; }
+    button:hover { background:#3a8ddd; }
+    .lang-btn {
+      border:none; background:#3a3a5c; color:white;
+      padding:5px 8px; border-radius:4px; font-size:14px;
+      cursor:pointer; transition:background 0.2s, transform 0.1s;
+    }
+    .lang-btn:hover { background:#50507a; transform:scale(1.05); }
+    .lang-btn:active { transform:scale(0.92); }
+    canvas { display:block; margin:20px auto; background:#252539; border:3px solid #444; image-rendering:pixelated; }
+    footer { font-size:12px; color:#888; padding:20px; }
+    .social-link { width: 40px; height: 40px; border-radius: 50%; background: var(--gradient,#3a3a5c); display: flex; align-items: center; justify-content: center; transition: transform 0.3s;}
+    .social-link img { width: 60%; filter: brightness(0) invert(1); }
+    .social-link:hover { transform:scale(1.1);}
+    .social-links { display: flex; justify-content: center; gap: 1.5rem; margin: 1rem 0;}
+  </style>
+</head>
+<body>
+<header>
+  <h1 style="display:flex;align-items:center;justify-content:center;gap:10px;"> GitHub Grass Tower Defense
+    <span id="langButtons" style="display:flex; gap:5px;">
+      <button class="lang-btn" data-lang="ko" title="한국어">🇰🇷</button>
+      <button class="lang-btn" data-lang="en" title="English">🇺🇸</button>
+    </span>
+  </h1>
+  <form id="userForm">
+    <input type="text" id="username" placeholder="GitHub 유저명 입력" required />
+    <button type="submit">게임 시작</button>
+  </form>
+  <div id="info" style="margin-top:10px; font-size:14px; color:#ccc;"></div>
+</header>
+<canvas id="game" width="900" height="250"></canvas>
+
+<footer class="footer" id="about">
+  <div class="about-me" style="margin-bottom:1.5rem;">
+    <img src="/assets/img/about.png" alt="프로필" style="width:60px; border-radius:50%; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-bottom:0.5rem;">
+    <div style="font-weight:bold; font-size:1.1rem;">KANGJUNG</div>
+    <div id="about-en" style="font-size:0.97rem; color:#bbb; display:none;">
+      I have been working as a web developer since 2017,<br>
+      and I have a strong interest in HTML games and pixel art.
+    </div>
+  </div>
+  <div class="social-links">
+    <a href="mailto:aaggf1112@gmail.com" class="social-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+           stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="5" width="18" height="14" rx="2" ry="2"></rect>
+        <polyline points="3 7 12 13 21 7"></polyline>
+      </svg>
+    </a>
+    <a href="https://github.com/kangjung" class="social-link" target="_blank">
+      <img src="../img/github-mark-white.png">
+    </a>
+    <a href="https://kangjung.itch.io" class="social-link" target="_blank" title="itch.io">
+      <img src="../img/itchio-logo-textless-white.png">
+    </a>
+  </div>
+  <p>© 2025 KANGJUNG. All rights reserved</p>
+</footer>
+
+<script>
+  const canvas=document.getElementById('game'), ctx=canvas.getContext('2d');
+  const CELL_SIZE=12,PADDING=2,ROWS=7,COLS=52;
+  const RANGE_LEVELS=[55,65,75,85,100];
+  const POWER_LEVELS=[1.5,2.5,3.5,4.5,6];
+  const COLORS=['#ebedf0','#c6e48b','#7bc96f','#239a3b','#196127'];
+  const OUTER_MARGIN=15;
+  let towers=[], monsters=[], monstersToSpawn=[], attackLines=[];
+  let stage=1, frame=0, gameRunning=false, selectedTowerIndex=null, currentUsername="";
+  let spawnDelay=30, spawnTimer=0;
+  const grassWidth=COLS*(CELL_SIZE+PADDING), grassHeight=ROWS*(CELL_SIZE+PADDING);
+  const offsetX=(canvas.width-grassWidth)/2, offsetY=(canvas.height-grassHeight)/2;
+  const profileImg = new Image();
+
+  const texts={
+    ko:{startGame:'게임 시작',inputPlaceholder:'GitHub 유저명 입력',loading:'데이터 로딩 중...',stageFail:s=>`스테이지 ${s} 실패! 다시 도전합니다.`,savedRecord:s=>`${s} 스테이지부터 시작`},
+    en:{startGame:'Start Game',inputPlaceholder:'Enter GitHub username',loading:'Loading data...',stageFail:s=>`Stage ${s} failed! Try again.`,savedRecord:s=>`Continue from stage ${s}`}
+  };
+  let currentLang='ko';
+  function saveLang(lang){localStorage.setItem('grassDefense_lang',lang);}
+  function loadLang(){return localStorage.getItem('grassDefense_lang')||'ko';}
+  function updateUI(lang){
+    document.getElementById('username').placeholder=texts[lang].inputPlaceholder;
+    document.querySelector('#userForm button').textContent=texts[lang].startGame;
+  }
+  document.querySelectorAll('.lang-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      currentLang=btn.dataset.lang;
+      saveLang(currentLang);
+      updateUI(currentLang);
+    });
+  });
+
+
+  document.getElementById('userForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const username=document.getElementById('username').value.trim();
+    if(username) initGame(username);
+  });
+  canvas.addEventListener('click',e=>{
+    const rect=canvas.getBoundingClientRect(), mx=e.clientX-rect.left, my=e.clientY-rect.top;
+    selectedTowerIndex=null;
+    towers.forEach((t,i)=>{if(mx>=t.x&&mx<=t.x+CELL_SIZE&&my>=t.y&&my<=t.y+CELL_SIZE) selectedTowerIndex=i;});
+  });
+
+  async function fetchContributions(username){
+    const url=`https://github-contributions-api.jogruber.de/v4/${username}?y=last`;
+    profileImg.src = `https://github.com/${username}.png?size=48`;
+    const res=await fetch(url);
+    if(!res.ok) throw new Error('API 실패');
+    return (await res.json()).contributions;
+  }
+  async function initGame(username){
+    currentUsername=username;
+    towers=[]; monsters=[]; monstersToSpawn=[]; attackLines=[]; frame=0;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    document.getElementById('info').textContent=texts[currentLang].loading;
+    try{
+      const contrib=await fetchContributions(username);
+      const arr=contrib.slice().sort((a,b)=>new Date(a.date)-new Date(b.date));
+      const total=ROWS*COLS, allGrid=[];
+      for(let i=0;i<total;i++){
+        const cell=arr[i]||{count:0,level:0};
+        const row=i%ROWS,col=Math.floor(i/ROWS);
+        allGrid.push({col,row,count:cell.count,level:cell.level});
+      }
+      towers=allGrid.filter(c=>c.count>0).map(c=>{
+        const lvl=Math.min(c.level,COLORS.length-1);
+        return {x:offsetX+c.col*(CELL_SIZE+PADDING),y:offsetY+c.row*(CELL_SIZE+PADDING),power:POWER_LEVELS[lvl],range:RANGE_LEVELS[lvl],colorLevel:lvl};
+      });
+      window.allGrid=allGrid;
+      const saved=localStorage.getItem(`grassDefense_${username}`);
+      stage=saved?parseInt(saved):1;
+      spawnMonsters();
+      gameRunning=true;
+      if(saved) alert(texts[currentLang].savedRecord(stage));
+      gameLoop();
+    }catch(e){
+      alert('API 오류'); console.error(e);
+      document.getElementById('info').textContent='';
+    }
+  }
+  function spawnMonsters(){
+    monsters=[]; monstersToSpawn=[];
+    const count=5+stage, speed=0.8;
+    for(let i=0;i<count;i++){
+      monstersToSpawn.push({pos:0,speed,hp:20+stage*5,maxHp:20+stage*5});
+    }
+    spawnTimer=0;
+  }
+  function perLen(){return 2*(grassWidth+grassHeight)+4*OUTER_MARGIN;}
+  function getMonsterXY(pos){
+    const per=perLen(); let p=pos%per;
+    if(p<grassWidth+2*OUTER_MARGIN) return [offsetX-OUTER_MARGIN+p,offsetY-OUTER_MARGIN];
+    p-=grassWidth+2*OUTER_MARGIN;
+    if(p<grassHeight+2*OUTER_MARGIN) return [offsetX+grassWidth+OUTER_MARGIN,offsetY-OUTER_MARGIN+p];
+    p-=grassHeight+2*OUTER_MARGIN;
+    if(p<grassWidth+2*OUTER_MARGIN) return [offsetX+grassWidth+OUTER_MARGIN-p,offsetY+grassHeight+OUTER_MARGIN];
+    p-=grassWidth+2*OUTER_MARGIN;
+    return [offsetX-OUTER_MARGIN,offsetY+grassHeight+OUTER_MARGIN-p];
+  }
+  function spawnHandler(){
+    if(monstersToSpawn.length>0 && spawnTimer<=0){monsters.push(monstersToSpawn.shift()); spawnTimer=spawnDelay;} else spawnTimer--;
+  }
+  function stageFail(){
+    alert(texts[currentLang].stageFail(stage));
+    spawnMonsters();
+  }
+
+  function gameLoop(){
+    if(!gameRunning)return;
+    frame++; ctx.clearRect(0,0,canvas.width,canvas.height);
+    spawnHandler();
+
+    monsters.forEach(m=>{m.pos+=m.speed; if(m.pos>=perLen()){ stageFail(); return;}});
+    window.allGrid.forEach(cell=>{
+      const x=offsetX+cell.col*(CELL_SIZE+PADDING), y=offsetY+cell.row*(CELL_SIZE+PADDING);
+      ctx.fillStyle=COLORS[cell.count>0?cell.level:0]; ctx.fillRect(x,y,CELL_SIZE,CELL_SIZE);
+      ctx.strokeStyle='#222'; ctx.strokeRect(x,y,CELL_SIZE,CELL_SIZE);
+    });
+    towers.forEach((t,i)=>{
+      if(selectedTowerIndex===i){
+        ctx.beginPath(); ctx.fillStyle='rgba(35,154,59,0.15)';
+        ctx.arc(t.x+CELL_SIZE/2,t.y+CELL_SIZE/2,t.range,0,Math.PI*2); ctx.fill();
+      }
+    });
+
+    monsters.forEach(m=>{
+      const [mx,my]=getMonsterXY(m.pos), r=12;
+      ctx.fillStyle='red'; ctx.beginPath(); ctx.arc(mx,my,r,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle='#600'; ctx.stroke();
+      const bw=r*2*0.8,bh=6,hp=Math.max(m.hp,0)/m.maxHp;
+      const bx=mx-bw/2, by=my-r*0.7;
+      ctx.fillStyle='#222'; ctx.fillRect(bx,by,bw,bh);
+      ctx.fillStyle='#0f0'; ctx.fillRect(bx,by,bw*hp,bh);
+      ctx.strokeStyle='#080'; ctx.strokeRect(bx,by,bw,bh);
+    });
+
+    towers.forEach((t,ti)=>{
+      monsters.forEach(m=>{
+        if(m.hp<=0) return;
+        const [mx,my]=getMonsterXY(m.pos);
+        const dx=(t.x+CELL_SIZE/2)-mx, dy=(t.y+CELL_SIZE/2)-my;
+        if(Math.sqrt(dx*dx+dy*dy)<=t.range && frame%15===0 && (ti+frame)%3===0){
+          m.hp-=t.power;
+          const cols=['rgba(198,228,139,0.6)','rgba(123,201,111,0.6)','rgba(35,154,59,0.6)','rgba(25,97,39,0.6)','rgba(17,68,17,0.6)'];
+          attackLines.push({x1:t.x+CELL_SIZE/2,y1:t.y+CELL_SIZE/2,x2:mx,y2:my,color:cols[t.colorLevel]||'#fff',life:3});
+        }
+      });
+    });
+    attackLines.forEach(line=>{
+      ctx.strokeStyle=line.color; ctx.beginPath();
+      ctx.moveTo(line.x1,line.y1); ctx.lineTo(line.x2,line.y2); ctx.stroke(); line.life--;
+    });
+    attackLines=attackLines.filter(l=>l.life>0);
+    monsters=monsters.filter(m=>m.hp>0 && m.pos<perLen());
+
+    document.getElementById('info').textContent=`Stage ${stage} | Towers: ${towers.length} | Monsters: ${monsters.length+monstersToSpawn.length}`;
+    if(monsters.length===0&&monstersToSpawn.length===0){
+      stage++; localStorage.setItem(`grassDefense_${currentUsername}`,stage); spawnMonsters();
+    }
+    requestAnimationFrame(gameLoop);
+
+  }
+
+  // 초기 언어 로드
+  currentLang=loadLang();
+  updateUI(currentLang);
+</script>
+</body>
+</html>
