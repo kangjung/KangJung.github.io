@@ -87,11 +87,12 @@
       "ko": "2025 관광데이터 활용 공모전 참가를 위한 위치기반 관광정보 조회 웹사이트 & 앱 서비스",
       "en": "Location-based tourism information search service for participation in the 2025 tourism data utilization contest"
     },
-    "img": "/assets/img/coming.png",
-    "icon": "/assets/img/coming.png",
-    "status": "developing",
+    "img": "./img/jamggan-trip/jamggan-trip.png",
+    "icon": "./img/jamggan-trip/jamggan-trip-icon.png",
     "tags": ["Vue.js", "Spring boot"],
-    "stores": []
+    "stores": [
+      {"name": "Web Site", "url": "https://jamggan-trip.netlify.app", "icon": "./img/jamggan-trip/ic_link.png"}
+    ]
   },
   {
     "title": { "ko": "뱀서류 게임", "en": "Survivors-Like games" },

@@ -42,9 +42,9 @@
     .game-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.2);}
     .game-media { position: relative; padding-top: 56.25%; overflow: hidden;}
     .game-media img, .game-media iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s;}
-    .game-media iframe { opacity: 0; z-index: 1;}
-    .game-card:hover .game-media iframe { opacity: 1;}
-    .game-card:hover .game-media img { opacity: 0;}
+    .game-media .iframe-div { opacity: 0; z-index: 1;}
+    .game-card:hover .game-media .iframe-div { opacity: 1;}
+    .game-card:hover .game-media .app-cover-img { opacity: 0;}
     .badge-developing {
       position: absolute;
       top: 14px;
@@ -258,8 +258,10 @@
     container.innerHTML = games.map(game => `
       <div class="game-card">
         <div class="game-media">
-          <img src="${game.img}" alt="${game.title[currentLang]}">
-          ${game.video ? `<iframe src="${game.video}" frameborder="0" allow="autoplay"></iframe>` : ""}
+          <img class="app-cover-img" src="${game.img}" alt="${game.title[currentLang]}">
+          <div class="iframe-div">
+            ${game.video ? `<iframe src="${game.video}" frameborder="0" allow="autoplay"></iframe>` : `<img src=\"${game.img}\" alt=\"${game.title[currentLang]}\">`}
+          </div>
           ${game.status === "developing" ? `
             <div class="badge-developing">
               ${currentLang === "ko" ? "작업중" : "Coming Soon"}
