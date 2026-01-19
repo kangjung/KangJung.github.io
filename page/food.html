@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>음식 랜덤 뽑기</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 16px;
+      background: #f4f5fb;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .mode-select {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .mode-btn {
+      flex: 1;
+      min-width: 80px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      background: #fafafa;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all .15s ease;
+      white-space: nowrap;
+    }
+
+    .mode-btn.active {
+      background: #4f46e5;
+      color: #fff;
+      border-color: #4f46e5;
+    }
+
+    .inputs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .inputs input {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    .inputs button {
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: none;
+      background: #10b981;
+      color: #fff;
+      cursor: pointer;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      background: #eef2ff;
+      border-radius: 999px;
+      font-size: 13px;
+      max-width: 100%;
+    }
+
+    .chip span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 150px;
+    }
+
+    .chip button {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: #6b7280;
+      font-size: 12px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .actions button {
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .primary-btn {
+      background: #4f46e5;
+      color: #fff;
+    }
+
+    .secondary-btn {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    .result {
+      font-size: 20px;
+      font-weight: 700;
+      text-align: center;
+      margin-top: 16px;
+      min-height: 26px;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    /* 룰렛 스타일 */
+    #rouletteView {
+      display: flex;
+      justify-content: center;
+    }
+    .roulette-wrapper {
+      margin: 10px auto 0;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      border: 10px solid #4f46e5;
+      position: relative;
+      overflow: visible; /* 텍스트가 잘리지 않도록 */
+      background: #fff;
+    }
+
+    .roulette-svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg); /* 0도 방향을 위쪽으로 */
+    }
+
+    .roulette-label {
+      font-size: 16px;
+      font-weight: 600;
+      fill: #111827;
+      text-anchor: middle;
+      dominant-baseline: middle;
+    }
+
+    /* 룰렛 화살표 */
+    .roulette-arrow {
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 14px solid transparent;
+      border-right: 14px solid transparent;
+      border-bottom: 22px solid #ef4444;
+      z-index: 10;
+    }
+
+    /* 슬롯머신 스타일 */
+    #slotView {
+      margin-top: 10px;
+    }
+
+    .slot-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .slot-center-line {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 0;
+      border-top: 3px solid #f59e0b;
+      transform: translateY(-50%);
+      pointer-events: none;
+      z-index: 10;
+      box-shadow: 0 0 6px rgba(245,158,11,.8);
+    }
+
+    .slot-column {
+      width: 120px;
+      height: 170px;
+      border-radius: 8px;
+      border: 2px solid #4b5563;
+      overflow: hidden;
+      background: #111827;
+      color: #f9fafb;
+      position: relative;
+    }
+
+    .slot-inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      transition: transform 1.5s ease-out;
+    }
+
+    .slot-item {
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid rgba(55,65,81,0.7);
+      font-size: 16px;
+      padding: 0 6px;
+      box-sizing: border-box;
+      text-align: center;
+      word-break: keep-all;
+    }
+    .slot-item.active {
+      color: #facc15;
+      font-weight: 700;
+      text-shadow: 0 0 6px rgba(250, 204, 21, 0.8);
+    }
+
+    /* 사다리 스타일 */
+    #ladderView {
+      margin-top: 10px;
+    }
+
+    .ladder-wrapper {
+      margin-top: 8px;
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      position: relative;
+      padding-bottom: 20px;
+      overflow-x: auto;
+    }
+
+    .ladder-column {
+      width: 4px;
+      background: #4b5563;
+      height: 260px;
+      position: relative;
+    }
+
+    .ladder-horizontal {
+      position: absolute;
+      height: 3px;
+      background: #111827;
+      border-radius: 2px;
+    }
+
+    .ladder-label {
+      text-align: center;
+      margin-top: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      max-width: 100px;
+      word-break: keep-all;
+    }
+
+    .ladder-marker {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: #f97316;
+      left: 50%;
+      transform: translateX(-50%);
+      top: -9px;
+      transition: top .12s linear, left .12s linear;
+      z-index: 5;
+      box-shadow: 0 0 6px rgba(0,0,0,0.4);
+    }
+
+    @media (max-width: 640px) {
+      .roulette-wrapper {
+        width: 280px;
+        height: 280px;
+      }
+      .slot-column {
+        width: 90px;
+      }
+      .ladder-wrapper {
+        gap: 24px;
+      }
+    }
+    .ladder-top {
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      border: 2px solid #4f46e5;
+      background: #fff;
+      cursor: pointer;
+    }
+    .ladder-top:hover {
+      background: #4f46e5;
+    }
+  </style>
+</head>
+<body>
+<h1>직장인 점심 랜덤 뽑기</h1>
+<div class="container">
+  <div class="mode-select">
+    <button class="mode-btn active" data-mode="roulette">룰렛</button>
+    <button class="mode-btn" data-mode="slot">슬롯머신</button>
+    <button class="mode-btn" data-mode="ladder">사다리 타기</button>
+  </div>
+
+  <div class="hint">점심 후보를 입력 후 엔터 또는 “추가”를 누르세요.</div>
+
+  <div class="inputs">
+    <input id="itemInput" type="text" placeholder="예: 김치찌개, 돈까스, 초밥..." />
+    <button id="addItemBtn">추가</button>
+  </div>
+
+  <div class="chips" id="chips"></div>
+  <div class="actions">
+    <div class="preset-group">
+      <button class="secondary-btn preset-btn" data-preset="basic">기본</button>
+      <button class="secondary-btn preset-btn" data-preset="quick">빠른</button>
+      <button class="secondary-btn preset-btn" data-preset="cheap">가성비</button>
+      <button class="secondary-btn preset-btn" data-preset="light">가벼운날</button>
+    </div>
+    <button class="primary-btn" id="startBtn">뽑기 시작</button>
+  </div>
+<!--  <div class="actions">-->
+<!--    <button class="secondary-btn" id="presetBtn">기본 메뉴 세트 넣기</button>-->
+<!--    <button class="primary-btn" id="startBtn">뽑기 시작</button>-->
+<!--  </div>-->
+
+  <!-- 룰렛 -->
+  <div id="rouletteView">
+    <div class="roulette-wrapper">
+      <div class="roulette-arrow"></div>
+      <svg id="rouletteSvg" viewBox="0 0 400 400" class="roulette-svg">
+        <!-- JS에서 path, text를 채워 넣음 -->
+      </svg>
+    </div>
+  </div>
+
+  <!-- 슬롯머신 -->
+  <div id="slotView" style="display:none;">
+    <div class="slot-wrapper">
+      <div class="slot-center-line"></div>
+      <div class="slot-column">
+        <div class="slot-inner" id="slotCol1"></div>
+      </div>
+      <div class="slot-column">
+        <div class="slot-inner" id="slotCol2"></div>
+      </div>
+      <div class="slot-column">
+        <div class="slot-inner" id="slotCol3"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 사다리 -->
+  <div id="ladderView" style="display:none;">
+    <div class="ladder-wrapper" id="ladderWrapper"></div>
+  </div>
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+  const modes = document.querySelectorAll('.mode-btn');
+  const rouletteView = document.getElementById('rouletteView');
+  const slotView = document.getElementById('slotView');
+  const ladderView = document.getElementById('ladderView');
+  const startBtn = document.getElementById('startBtn');
+  const presetBtn = document.getElementById('presetBtn');
+  const input = document.getElementById('itemInput');
+  const addItemBtn = document.getElementById('addItemBtn');
+  const chipsEl = document.getElementById('chips');
+  const resultEl = document.getElementById('result');
+  const topEl = document.querySelectorAll('.ladder-top');
+
+  let currentMode = 'roulette';
+  let items = [];
+
+  document.querySelectorAll('.preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.preset;
+      items = [...presetSets[key].items];
+      renderChips();
+      localStorage.setItem('lastPreset', key);
+      updateView();
+    });
+  });
+
+  // 모드 변경
+  modes.forEach(btn => {
+    btn.addEventListener('click', () => {
+      modes.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentMode = btn.dataset.mode;
+      updateView();
+    });
+  });
+
+  let selectedStartIndex = null;
+  topEl.forEach(btn => {
+    btn.addEventListener('click', () => {
+      selectedStartIndex = index;
+      runLadder(selectedStartIndex);
+    });
+  });
+
+  function updateView() {
+    rouletteView.style.display = currentMode === 'roulette' ? 'flex' : 'none';
+    slotView.style.display = currentMode === 'slot' ? 'block' : 'none';
+    ladderView.style.display = currentMode === 'ladder' ? 'block' : 'none';
+    resultEl.textContent = '';
+    if (currentMode === 'roulette') buildRoulette();
+    if (currentMode === 'slot') buildSlot();
+    if (currentMode === 'ladder') buildLadder();
+  }
+
+  const presetSets = {
+    basic: {
+      label: "기본 점심",
+      items: ["김치찌개","부대찌개","돈까스","초밥","햄버거","파스타","쌀국수","비빔밥"]
+    },
+    quick: {
+      label: "빠른 점심",
+      items: ["김밥","라면","컵밥","편의점 도시락","토스트","샌드위치","햄버거"]
+    },
+    cheap: {
+      label: "가성비",
+      items: ["국밥","제육덮밥","칼국수","분식","김치볶음밥","라면"]
+    },
+    light: {
+      label: "가벼운 날",
+      items: ["샐러드","포케","닭가슴살","샌드위치","두부덮밥"]
+    }
+  };
+
+  // 기본 메뉴 프리셋
+  // const presetMenus = ["김치찌개", "부대찌개", "돈까스", "초밥", "햄버거", "파스타", "쌀국수", "비빔밥"];
+  //
+  // presetBtn.addEventListener('click', () => {
+  //   items = [...presetMenus];
+  //   renderChips();
+  //   updateView();
+  // });
+
+  // 아이템 추가
+  function addItemFromInput() {
+    const value = input.value.trim();
+    if (!value) return;
+    items.push(value);
+    input.value = '';
+    renderChips();
+    updateView();
+  }
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') addItemFromInput();
+  });
+
+  addItemBtn.addEventListener('click', addItemFromInput);
+
+  function renderChips() {
+    chipsEl.innerHTML = '';
+    items.forEach((text, idx) => {
+      const chip = document.createElement('div');
+      chip.className = 'chip';
+      chip.innerHTML = `<span>${text}</span><button data-index="${idx}">✕</button>`;
+      chipsEl.appendChild(chip);
+    });
+
+    chipsEl.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const i = Number(btn.dataset.index);
+        items.splice(i, 1);
+        renderChips();
+        updateView();
+      });
+    });
+  }
+
+  // 공통: 랜덤 선택
+  function pickRandom() {
+    if (!items.length) return null;
+    const index = Math.floor(Math.random() * items.length);
+    return { index, value: items[index] };
+  }
+
+  // 룰렛 구성
+  const rouletteWheel = document.getElementById('rouletteWheel');
+  const rouletteSectors = document.getElementById('rouletteSectors');
+  let rouletteRotation = 0;
+  const rouletteSvg = document.getElementById('rouletteSvg');
+
+  function buildRoulette() {
+    rouletteSvg.innerHTML = '';
+    if (!items.length) return;
+
+    const count = items.length;
+    const angle = 360 / count;
+    const cx = 200;
+    const cy = 200;
+    const rOuter = 190;
+    const rInner = 0;
+
+    for (let i = 0; i < count; i++) {
+      const startAngle = angle * i;
+      const endAngle = angle * (i + 1);
+      const largeArc = angle > 180 ? 1 : 0;
+
+      const startRad = (Math.PI / 180) * startAngle;
+      const endRad   = (Math.PI / 180) * endAngle;
+
+      const x1 = cx + rOuter * Math.cos(startRad);
+      const y1 = cy + rOuter * Math.sin(startRad);
+      const x2 = cx + rOuter * Math.cos(endRad);
+      const y2 = cy + rOuter * Math.sin(endRad);
+
+      const pathData = [
+        `M ${cx} ${cy}`,
+        `L ${x1} ${y1}`,
+        `A ${rOuter} ${rOuter} 0 ${largeArc} 1 ${x2} ${y2}`,
+        'Z'
+      ].join(' ');
+
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', pathData);
+      path.setAttribute('fill', i % 2 === 0 ? '#fee2e2' : '#bfdbfe');
+      rouletteSvg.appendChild(path);
+
+      // 라벨 위치 (부채꼴 중앙 각도 방향으로)
+      const midAngle = (startAngle + endAngle) / 2;
+      const midRad = (Math.PI / 180) * midAngle;
+      const labelRadius = 120;
+      const lx = cx + labelRadius * Math.cos(midRad);
+      const ly = cy + labelRadius * Math.sin(midRad);
+
+      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      text.classList.add('roulette-label');
+      text.setAttribute('x', lx);
+      text.setAttribute('y', ly);
+      text.setAttribute('transform', `rotate(${midAngle}, ${lx}, ${ly})`);
+      text.textContent = items[i];
+      rouletteSvg.appendChild(text);
+    }
+  }
+
+  function spinRoulette() {
+    if (!items.length) {
+      alert('먼저 메뉴를 추가해주세요!');
+      return;
+    }
+
+    const count = items.length;
+    const anglePer = 360 / count;
+
+    // 랜덤 회전 각도
+    const randomAngle = Math.random() * 360;
+    const rounds = 5;
+
+    rouletteRotation += rounds * 360 + randomAngle;
+
+    rouletteSvg.style.transition =
+      'transform 3s cubic-bezier(0.2, 0.8, 0.2, 1)';
+    rouletteSvg.style.transform =
+      `rotate(${rouletteRotation - 90}deg)`; // -90은 SVG 보정
+
+    resultEl.textContent = '';
+
+    setTimeout(() => {
+      /*
+        화살표는 12시(0도)
+        현재 회전값을 0~360으로 정규화 후
+        어떤 섹터가 위에 왔는지 계산
+      */
+      const normalized =
+        (360 - (rouletteRotation % 360)) % 360;
+
+      const index =
+        Math.floor(normalized / anglePer) % count;
+
+      resultEl.textContent =
+        `오늘 점심은 "${items[index]}" !`;
+    }, 3100);
+  }
+
+
+
+  // 슬롯머신 구성
+  const slotCols = [
+    document.getElementById('slotCol1'),
+    document.getElementById('slotCol2'),
+    document.getElementById('slotCol3')
+  ];
+
+  function buildSlot() {
+    slotCols.forEach(col => {
+      col.innerHTML = '';
+      if (!items.length) return;
+
+      const repeatCount = 10;
+      const list = Array.from({ length: repeatCount }, () => items).flat();
+
+      list.forEach(text => {
+        const item = document.createElement('div');
+        item.className = 'slot-item';
+        item.textContent = text;
+        col.appendChild(item);
+      });
+
+      col.style.transition = 'none';
+      col.style.transform = 'translateY(0)';
+    });
+  }
+
+
+  function spinSlot() {
+    if (!items.length) {
+      alert('먼저 메뉴를 추가해주세요!');
+      return;
+    }
+
+    const itemHeight = 50;
+    const visibleOffset = 2; // 슬롯 중앙 위치
+    const rounds = 2;
+
+    // ✅ 슬롯이 멈출 음식 index를 먼저 결정
+    const resultIndex = Math.floor(Math.random() * items.length);
+    const resultValue = items[resultIndex];
+
+    slotCols.forEach((col, colIdx) => {
+      const delay = colIdx * 150;
+
+      const targetIndex =
+        rounds * items.length + resultIndex + visibleOffset;
+
+      const distance = targetIndex * itemHeight;
+
+      setTimeout(() => {
+        col.style.transition = 'transform 1.5s ease-out';
+        col.style.transform = `translateY(-${distance}px)`;
+      }, delay);
+
+      // 🔁 애니메이션 종료 후 위치 정리
+      setTimeout(() => {
+        col.style.transition = 'none';
+        col.style.transform =
+          `translateY(-${(resultIndex + visibleOffset) * itemHeight}px)`;
+      }, 1700 + delay);
+    });
+
+    resultEl.textContent = '';
+
+    setTimeout(() => {
+      const col = slotCols[1]; // 가운데 컬럼 기준
+      const lineY =
+        document.querySelector('.slot-center-line')
+          .getBoundingClientRect().top;
+
+      let selectedItem = null;
+      let minDistance = Infinity;
+
+      Array.from(col.children).forEach(item => {
+        const rect = item.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        const dist = Math.abs(center - lineY);
+
+        if (dist < minDistance) {
+          minDistance = dist;
+          selectedItem = item;
+        }
+      });
+
+      const value = selectedItem?.textContent || '';
+      resultEl.textContent = `오늘 점심은 "${value}" !`;
+    }, 1900);
+
+  }
+
+
+  function buildLadder() {
+    const wrapper = document.getElementById('ladderWrapper');
+    wrapper.innerHTML = '';
+    if (!items.length) return;
+    const count = items.length;
+    const height = 240;
+    const topRow = document.createElement('div');
+    topRow.style.display = 'flex';
+    topRow.style.justifyContent = 'center';
+    topRow.style.gap = '28px';
+    topRow.style.marginBottom = '6px';
+
+
+    wrapper.appendChild(topRow);
+    const marker = document.createElement('div');
+    marker.className = 'ladder-marker';
+    wrapper.appendChild(marker);
+
+    const columns = [];
+    for (let i = 0; i < count; i++) {
+      const colContainer = document.createElement('div');
+      colContainer.style.display = 'flex';
+      colContainer.style.flexDirection = 'column';
+      colContainer.style.alignItems = 'center';
+
+      const top = document.createElement('div');
+      top.className = 'ladder-top';
+      top.dataset.index = i;
+      top.addEventListener('click', () => runLadder(i));
+
+      colContainer.appendChild(top);
+
+      // 🔹 세로줄
+      const col = document.createElement('div');
+      col.className = 'ladder-column';
+      col.dataset.index = i;
+      colContainer.appendChild(col);
+
+      // 🔹 하단 라벨
+      const label = document.createElement('div');
+      label.className = 'ladder-label';
+      label.textContent = items[i];
+      colContainer.appendChild(label);
+
+      wrapper.appendChild(colContainer);
+      columns.push(col);
+    }
+
+
+    const horizontalLines = [];
+    const steps = 9;
+
+    for (let s = 0; s < steps; s++) {
+      const y = (height / (steps + 1)) * (s + 1);
+
+      for (let i = 0; i < count - 1; i++) {
+        if (Math.random() < 0.5) {
+          const h = document.createElement('div');
+          h.className = 'ladder-horizontal';
+          h.style.top = y + 'px';
+
+          const leftCol = columns[i];
+          const rightCol = columns[i + 1];
+
+          const leftX =
+            leftCol.getBoundingClientRect().left -
+            wrapper.getBoundingClientRect().left;
+
+          const rightX =
+            rightCol.getBoundingClientRect().left -
+            wrapper.getBoundingClientRect().left;
+
+          h.style.left = leftX + 'px';
+          h.style.width = (rightX - leftX) + 'px';
+
+          h.dataset.from = i;
+          h.dataset.to = i + 1;
+
+          wrapper.appendChild(h);
+          horizontalLines.push(h);
+        }
+      }
+    }
+
+    wrapper.dataset.markerIndex = 0;
+    wrapper.dataset.height = height;
+
+    wrapper._ladderData = {
+      columns,
+      horizontalLines,
+      marker
+    };
+  }
+
+  function runLadder(startIndex) {
+    let currentIndex = startIndex;
+    const wrapper = document.getElementById('ladderWrapper');
+    if (!items.length) {
+      alert('먼저 메뉴를 추가해주세요!');
+      return;
+    }
+    if (!wrapper._ladderData) {
+      buildLadder();
+    }
+    const { columns, horizontalLines, marker } = wrapper._ladderData;
+    const height = Number(wrapper.dataset.height || 240);
+    let y = 0;
+    const step = 12;
+
+    const wrapRect = wrapper.getBoundingClientRect();
+    marker.style.top = '-9px';
+    marker.style.left =
+      columns[currentIndex].getBoundingClientRect().left - wrapRect.left + 3 + 'px';
+
+    const sortedLines = horizontalLines
+      .map(h => ({
+        y: parseFloat(h.style.top),
+        from: Number(h.dataset.from),
+        to: Number(h.dataset.to),
+        el: h
+      }))
+      .sort((a, b) => a.y - b.y);
+
+    const path = [];
+
+    while (y < height) {
+      const nextLine = sortedLines.find(l =>
+        !l.used &&
+        l.y >= y &&
+        l.y < y + step * 2 &&
+        (l.from === currentIndex || l.to === currentIndex)
+      );
+
+      if (nextLine) {
+        y = nextLine.y;
+        path.push({ x: currentIndex, y });
+        currentIndex = nextLine.from === currentIndex ? nextLine.to : nextLine.from;
+        nextLine.used = true;
+      } else {
+        y += step;
+        path.push({ x: currentIndex, y });
+      }
+    }
+
+    let i = 0;
+    resultEl.textContent = '';
+    const timer = setInterval(() => {
+      if (i >= path.length) {
+        clearInterval(timer);
+        const value = items[currentIndex];
+        resultEl.textContent = `오늘 점심은 "${value}" !`;
+        return;
+      }
+      const p = path[i];
+      const col = columns[p.x];
+      const colRect = col.getBoundingClientRect();
+      const wrapRect2 = wrapper.getBoundingClientRect();
+      marker.style.left = (colRect.left - wrapRect2.left + 3) + 'px';
+      marker.style.top = (p.y - 9) + 'px';
+      i++;
+    }, 60);
+  }
+
+  // 시작 버튼
+  startBtn.addEventListener('click', () => {
+    if (!items.length) {
+      alert('먼저 메뉴를 추가해주세요!');
+      return;
+    }
+    if (currentMode === 'roulette') spinRoulette();
+    if (currentMode === 'slot') spinSlot();
+    if (currentMode === 'ladder') runLadder();
+  });
+
+
+  // 초기 상태: 기본 메뉴 세트
+  items = [...presetMenus];
+  renderChips();
+  updateView();
+</script>
+</body>
+</html>
