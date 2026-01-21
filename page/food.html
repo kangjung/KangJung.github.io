@@ -462,6 +462,7 @@
   const chipsEl = document.getElementById('chips');
   const resultEl = document.getElementById('result');
   const topEl = document.querySelectorAll('.ladder-top');
+  const LAST_SELECTED_PRESET_KEY = 'lastSelectedMenuPreset';
 
   let currentMode = 'roulette';
   let items = [];
@@ -510,9 +511,14 @@
 
     const presets = loadUserPresets();
     items = [...presets[name]];
+
+    // ✅ 마지막 선택 세트 저장
+    localStorage.setItem(LAST_SELECTED_PRESET_KEY, name);
+
     renderChips();
     updateView();
   });
+
   document.getElementById('deletePresetBtn').addEventListener('click', () => {
     const name = userPresetSelect.value;
     if (!name) {
@@ -526,6 +532,14 @@
     delete presets[name];
     saveUserPresets(presets);
     renderUserPresetSelect();
+    if (name === localStorage.getItem(LAST_SELECTED_PRESET_KEY)) {
+      localStorage.removeItem(LAST_SELECTED_PRESET_KEY);
+
+      // 기본 세트로 복귀
+      items = [...presetSets.basic.items];
+      renderChips();
+      updateView();
+    }
   });
   document.querySelectorAll('.preset-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -1011,11 +1025,22 @@
     window.open(kakaoShareUrl, '_blank');
   }
 
-  // 초기 상태: 기본 메뉴 세트
-  items = [...presetSets.basic.items];
+  renderUserPresetSelect();
+
+  const lastPresetName = localStorage.getItem(LAST_SELECTED_PRESET_KEY);
+  const userPresets = loadUserPresets();
+
+  if (lastPresetName && userPresets[lastPresetName]) {
+    // 🔁 마지막에 선택했던 세트 복원
+    items = [...userPresets[lastPresetName]];
+    userPresetSelect.value = lastPresetName;
+  } else {
+    // 기본 세트
+    items = [...presetSets.basic.items];
+  }
+
   renderChips();
   updateView();
-  renderUserPresetSelect();
 </script>
 </body>
 </html>
