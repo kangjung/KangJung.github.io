@@ -443,20 +443,16 @@
   </div>
   <div class="result" id="result"></div>
   <div style="display:flex; gap:8px; justify-content:center; margin-top:10px;">
-    <button class="secondary-btn" id="shareBtn">
-      📤 결과 공유하기
-    </button>
     <button class="secondary-btn" id="copyLinkBtn">
-      🔗 링크 복사
+      📤 결과 복사하기
     </button>
   </div>
-
-  <div class="adsense ads-result">
-    <ins class="adsbygoogle" style="display:inline-block;width:100%;min-width:380px; height:90px" data-ad-client="ca-pub-2007216448786117" data-ad-slot="8678539906" data-auto-ads="false"></ins>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  </div>
+</div>
+<div class="adsense ads-result">
+  <ins class="adsbygoogle" style="display:inline-block;width:100%;min-width:380px; height:90px" data-ad-client="ca-pub-2007216448786117" data-ad-slot="8678539906" data-auto-ads="false"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
 </div>
 
 <script>
@@ -515,23 +511,30 @@
     alert(`"${name}" 세트가 저장되었습니다.`);
   });
 
-  document.getElementById('shareBtn').addEventListener('click', () => {
-    const text = resultEl.textContent;
-    if (!text) {
+  document.getElementById('copyLinkBtn').addEventListener('click', async () => {
+    const result = resultEl.textContent;
+    if (!result) {
       alert('먼저 결과를 뽑아주세요!');
       return;
     }
 
-    shareKakaoWithoutSDK(`🍽 ${text}\n\n👉 오늘 메뉴 고민 해결!`);
-  });
-  document.getElementById('copyLinkBtn').addEventListener('click', async () => {
+    const text =
+      `🍽 오늘 메뉴 랜덤 뽑기 결과!
+
+${result}
+
+🤔 매번 뭐 먹을지 고민된다면?
+👇 여기서 바로 뽑아보세요
+${location.origin}${location.pathname}`;
+
     try {
-      await navigator.clipboard.writeText(location.href);
-      toast('링크가 복사되었습니다!');
+      await navigator.clipboard.writeText(text);
+      toast('결과와 링크가 복사되었습니다!');
     } catch {
       toast('복사에 실패했습니다.');
     }
   });
+
   function toast(msg) {
     const t = document.createElement('div');
     t.textContent = msg;
