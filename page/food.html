@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2007216448786117" crossorigin="anonymous"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NML6BS1JMB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-NML6BS1JMB');
+  </script>
   <title>음식 랜덤 뽑기</title>
   <style>
     body {
@@ -341,7 +350,13 @@
   </style>
 </head>
 <body>
-<h1>직장인 점심 랜덤 뽑기</h1>
+<h1>음식 랜덤 뽑기</h1>
+<div class="adsense ads-top">
+  <ins class="adsbygoogle" style="display:inline-block;width:100%;min-width:380px; height:90px" data-ad-client="ca-pub-2007216448786117" data-ad-slot="8678539906"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
 <div class="container">
   <div class="mode-select">
     <button class="mode-btn active" data-mode="roulette">룰렛</button>
@@ -349,7 +364,7 @@
     <button class="mode-btn" data-mode="ladder">사다리 타기</button>
   </div>
 
-  <div class="hint">점심 후보를 입력 후 엔터 또는 “추가”를 누르세요.</div>
+  <div class="hint">식사 후보를 입력 후 엔터 또는 “추가”를 누르세요.</div>
 
   <div class="inputs">
     <input id="itemInput" type="text" placeholder="예: 김치찌개, 돈까스, 초밥..." />
@@ -357,20 +372,36 @@
   </div>
 
   <div class="chips" id="chips"></div>
-  <div class="actions">
-    <div class="preset-group">
-      <button class="secondary-btn preset-btn" data-preset="basic">기본</button>
-      <button class="secondary-btn preset-btn" data-preset="quick">빠른</button>
-      <button class="secondary-btn preset-btn" data-preset="cheap">가성비</button>
-      <button class="secondary-btn preset-btn" data-preset="light">가벼운날</button>
-    </div>
-    <button class="primary-btn" id="startBtn">뽑기 시작</button>
-  </div>
-<!--  <div class="actions">-->
-<!--    <button class="secondary-btn" id="presetBtn">기본 메뉴 세트 넣기</button>-->
-<!--    <button class="primary-btn" id="startBtn">뽑기 시작</button>-->
-<!--  </div>-->
 
+  <div class="actions" style="align-items:flex-start;">
+    <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+      <select
+        id="userPresetSelect"
+        class="secondary-btn"
+        title="저장해 둔 나만의 메뉴 세트를 불러옵니다"
+      ></select>
+
+      <button
+        class="secondary-btn"
+        id="savePresetBtn"
+        title="현재 메뉴 목록을 새로운 세트로 저장합니다"
+      >
+        💾 세트 저장
+      </button>
+
+      <button
+        class="secondary-btn"
+        id="deletePresetBtn"
+        title="선택한 메뉴 세트를 삭제합니다"
+      >
+        🗑 세트 삭제
+      </button>
+    </div>
+
+    <button class="primary-btn" id="startBtn" title="현재 메뉴로 랜덤 추첨을 시작합니다">
+      🎲 뽑기 시작
+    </button>
+  </div>
   <!-- 룰렛 -->
   <div id="rouletteView">
     <div class="roulette-wrapper">
@@ -402,6 +433,12 @@
     <div class="ladder-wrapper" id="ladderWrapper"></div>
   </div>
   <div class="result" id="result"></div>
+  <div class="adsense ads-result">
+    <ins class="adsbygoogle" style="display:inline-block;width:100%;min-width:380px; height:90px" data-ad-client="ca-pub-2007216448786117" data-ad-slot="8678539906" data-auto-ads="false"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
 </div>
 
 <script>
@@ -420,6 +457,67 @@
   let currentMode = 'roulette';
   let items = [];
 
+  const USER_PRESET_KEY = 'userMenuPresets';
+
+  function loadUserPresets() {
+    return JSON.parse(localStorage.getItem(USER_PRESET_KEY) || '{}');
+  }
+
+  function saveUserPresets(presets) {
+    localStorage.setItem(USER_PRESET_KEY, JSON.stringify(presets));
+  }
+
+  const userPresetSelect = document.getElementById('userPresetSelect');
+
+  function renderUserPresetSelect() {
+    const presets = loadUserPresets();
+    userPresetSelect.innerHTML = '<option value="">내 메뉴세트</option>';
+
+    Object.keys(presets).forEach(name => {
+      const opt = document.createElement('option');
+      opt.value = name;
+      opt.textContent = name;
+      userPresetSelect.appendChild(opt);
+    });
+  }
+  document.getElementById('savePresetBtn').addEventListener('click', () => {
+    if (!items.length) {
+      alert('저장할 메뉴가 없습니다.');
+      return;
+    }
+
+    const name = prompt('메뉴 세트 이름을 입력하세요');
+    if (!name) return;
+
+    const presets = loadUserPresets();
+    presets[name] = [...items];
+    saveUserPresets(presets);
+    renderUserPresetSelect();
+    alert(`"${name}" 세트가 저장되었습니다.`);
+  });
+  userPresetSelect.addEventListener('change', () => {
+    const name = userPresetSelect.value;
+    if (!name) return;
+
+    const presets = loadUserPresets();
+    items = [...presets[name]];
+    renderChips();
+    updateView();
+  });
+  document.getElementById('deletePresetBtn').addEventListener('click', () => {
+    const name = userPresetSelect.value;
+    if (!name) {
+      alert('삭제할 세트를 선택하세요.');
+      return;
+    }
+
+    if (!confirm(`"${name}" 세트를 삭제할까요?`)) return;
+
+    const presets = loadUserPresets();
+    delete presets[name];
+    saveUserPresets(presets);
+    renderUserPresetSelect();
+  });
   document.querySelectorAll('.preset-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const key = btn.dataset.preset;
@@ -449,6 +547,7 @@
   });
 
   function updateView() {
+    startBtn.style.display = currentMode === 'ladder' ? 'none' : 'block';
     rouletteView.style.display = currentMode === 'roulette' ? 'flex' : 'none';
     slotView.style.display = currentMode === 'slot' ? 'block' : 'none';
     ladderView.style.display = currentMode === 'ladder' ? 'block' : 'none';
@@ -622,7 +721,7 @@
         Math.floor(normalized / anglePer) % count;
 
       resultEl.textContent =
-        `오늘 점심은 "${items[index]}" !`;
+        `오늘 밥은 "${items[index]}" !`;
     }, 3100);
   }
 
@@ -893,12 +992,21 @@
     if (currentMode === 'slot') spinSlot();
     if (currentMode === 'ladder') runLadder();
   });
+  function shareKakaoWithoutSDK(text) {
+    const shareText = encodeURIComponent(text);
+    const shareUrl = encodeURIComponent(location.href);
 
+    const kakaoShareUrl =
+      `https://sharer.kakao.com/talk/friends/picker/link?text=${shareText}&url=${shareUrl}`;
+
+    window.open(kakaoShareUrl, '_blank');
+  }
 
   // 초기 상태: 기본 메뉴 세트
-  items = [...presetMenus];
+  items = [...presetSets.basic.items];
   renderChips();
   updateView();
+  renderUserPresetSelect();
 </script>
 </body>
 </html>
