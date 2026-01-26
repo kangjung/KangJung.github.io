@@ -126,6 +126,38 @@
       justify-content: flex-end;
       gap: 8px;
     }
+
+    .list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+
+    .add-list {
+      width: 100%;
+      margin: 8px;
+      padding: 6px;
+      border-radius: 6px;
+      border: 1px dashed var(--border);
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .card {
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+
+    .tag {
+      display: inline-block;
+      background: #334155;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      margin-right: 4px;
+    }
   </style>
 </head>
 <body>
@@ -151,7 +183,12 @@
       <textarea id="modalMemo" rows="5"></textarea>
     </label>
 
+    <label>태그 (쉼표 구분)</label>
+    <input id="modalTags" />
 
+
+    <label>카드 색상</label>
+    <input type="color" id="modalColor" />
     <div class="modal-actions">
       <button id="modalCancel">취소</button>
       <button id="modalSave">저장</button>
