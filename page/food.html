@@ -20,7 +20,6 @@
 
     gtag('config', 'G-NML6BS1JMB');
   </script>
-  <title>음식 랜덤 뽑기</title>
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -284,16 +283,15 @@
     /* 사다리 스타일 */
     #ladderView {
       margin-top: 10px;
+      overflow-x: auto;
     }
 
     .ladder-wrapper {
-      margin-top: 8px;
-      display: flex;
-      justify-content: center;
-      gap: 28px;
       position: relative;
-      padding-bottom: 20px;
-      overflow-x: auto;
+      display: flex;
+      gap: 28px;
+      width: max-content; /* ⭐ 핵심 */
+      padding: 0 16px;
     }
 
     .ladder-column {
@@ -438,7 +436,7 @@
   </div>
 
   <!-- 사다리 -->
-  <div id="ladderView" style="display:none;">
+  <div id="ladderView" style="display:none;" class="ladder-scroll">
     <div class="ladder-wrapper" id="ladderWrapper"></div>
   </div>
   <div class="result" id="result"></div>
@@ -461,12 +459,11 @@
   const slotView = document.getElementById('slotView');
   const ladderView = document.getElementById('ladderView');
   const startBtn = document.getElementById('startBtn');
-  const presetBtn = document.getElementById('presetBtn');
+  // const presetBtn = document.getElementById('presetBtn');
   const input = document.getElementById('itemInput');
   const addItemBtn = document.getElementById('addItemBtn');
   const chipsEl = document.getElementById('chips');
   const resultEl = document.getElementById('result');
-  const topEl = document.querySelectorAll('.ladder-top');
   const LAST_SELECTED_PRESET_KEY = 'lastSelectedMenuPreset';
 
   let currentMode = 'roulette';
@@ -610,12 +607,6 @@ ${location.origin}${location.pathname}`;
   });
 
   let selectedStartIndex = null;
-  topEl.forEach(btn => {
-    btn.addEventListener('click', () => {
-      selectedStartIndex = index;
-      runLadder(selectedStartIndex);
-    });
-  });
 
   function updateView() {
     startBtn.style.display = currentMode === 'ladder' ? 'none' : 'block';
@@ -883,8 +874,7 @@ ${location.origin}${location.pathname}`;
         }
       });
 
-      const value = selectedItem?.textContent || '';
-      resultEl.textContent = `오늘 점심은 "${value}" !`;
+      resultEl.textContent = `오늘 밥은 "${items[resultIndex]}" !`;
     }, 1900);
 
   }
