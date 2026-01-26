@@ -211,9 +211,9 @@
       transform: translateX(-50%);
       width: 0;
       height: 0;
-      border-left: 14px solid transparent;
-      border-right: 14px solid transparent;
-      border-top: 26px solid #ef4444;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-top: 50px solid #ef4444;
       z-index: 10;
     }
 
@@ -705,7 +705,7 @@ ${location.origin}${location.pathname}`;
     const cy = 200;
     const rOuter = 190;
     const rInner = 0;
-
+    const colors = generateDistinctColors(count);
     for (let i = 0; i < count; i++) {
       const startAngle = angle * i;
       const endAngle = angle * (i + 1);
@@ -728,8 +728,15 @@ ${location.origin}${location.pathname}`;
 
       const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
       path.setAttribute('d', pathData);
-      path.setAttribute('fill', i % 2 === 0 ? '#fee2e2' : '#bfdbfe');
+      const bgColor = colors[i];
+      path.setAttribute('fill', bgColor);
+      path.setAttribute('stroke', '#ffffff'); // 흰색 보더
+      path.setAttribute('stroke-width', '2'); // 두께
+      path.setAttribute('stroke-linejoin', 'round'); // 모서리 부드럽게
+
       rouletteSvg.appendChild(path);
+
+      const textColor = getReadableTextColor(bgColor);
 
       // 라벨 위치 (부채꼴 중앙 각도 방향으로)
       const midAngle = (startAngle + endAngle) / 2;
@@ -742,6 +749,7 @@ ${location.origin}${location.pathname}`;
       text.classList.add('roulette-label');
       text.setAttribute('x', lx);
       text.setAttribute('y', ly);
+      text.setAttribute('fill', textColor);
       text.setAttribute('transform', `rotate(${midAngle}, ${lx}, ${ly})`);
       text.textContent = items[i];
       rouletteSvg.appendChild(text);
@@ -1075,6 +1083,36 @@ ${location.origin}${location.pathname}`;
   } else {
     // 기본 세트
     items = [...presetSets.basic.items];
+  }
+
+  // 랜덤 파스텔~선명 중간 톤 색상 생성
+  function randomColor() {
+    const hue = Math.floor(Math.random() * 360);
+    const saturation = 65; // 너무 탁하지 않게
+    const lightness = 70; // 너무 어둡지 않게
+    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+  }
+
+  function getReadableTextColor(bgColor) {
+    const l = Number(bgColor.match(/(\d+)%\)$/)[1]);
+    return l > 65 ? '#111827' : '#ffffff';
+  }
+
+
+  function generateDistinctColors(count) {
+    const colors = [];
+    let lastHue = Math.random() * 360;
+
+
+    for (let i = 0; i < count; i++) {
+      let hue;
+      do {
+        hue = Math.random() * 360;
+      } while (Math.abs(hue - lastHue) < 40);
+      lastHue = hue;
+      colors.push(`hsl(${hue}, 75%, 70%)`);
+    }
+    return colors;
   }
 
   renderChips();
