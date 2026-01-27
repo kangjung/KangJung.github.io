@@ -340,6 +340,10 @@
     /* ===============================
        MOBILE
     ================================ */
+    #board {
+      touch-action: pan-y; /* 세로 스크롤은 가능, 드래그는 가능 */
+    }
+
     @media (max-width: 600px) {
       main#board {
         grid-template-columns: 1fr;

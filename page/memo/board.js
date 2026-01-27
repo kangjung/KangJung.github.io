@@ -266,8 +266,9 @@ ${card.memo ? `<p class="memo">${card.memo}</p>` : ''}
 
   new Sortable(document.getElementById('board'), {
     animation: 200,
-    handle: '.list-header',
     draggable: 'section',
+    fallbackOnBody: true,
+    swapThreshold: 0.65,
     onEnd: () => {
       syncListsFromDOM();
       saveBoard(currentBoard);
