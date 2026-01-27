@@ -1,8 +1,8 @@
 const defaultBoard = {
   lists: [
     { id:'todo', title:'할 일', color:'#3b82f6', collapsed:false, cards:[] },
-    { id: 'doing', title: '진행중', color:'#3a78fc', collapsed:false, cards:[] },
-    { id: 'done', title: '완료', color:'#3b21c6', collapsed:false, cards:[] },
+    { id: 'doing', title: '진행중', color:'#f97316', collapsed:false, cards:[] },
+    { id: 'done', title: '완료', color:'#10b981', collapsed:false, cards:[] },
   ]
 };
 
@@ -12,6 +12,13 @@ let editingList = null;
 
 async function init() {
   currentBoard = await loadBoard();
+
+  // IndexedDB에 데이터가 없으면 기본 보드 사용
+  if (!currentBoard) {
+    currentBoard = defaultBoard;
+    await saveBoard(currentBoard);
+  }
+
   document.getElementById('modalCancel').onclick = () => {
     document.getElementById('cardModal').classList.add('hidden');
     editingCard = null;
@@ -125,7 +132,7 @@ function render(board) {
   el.innerHTML = '';
 
 
-  board.list.forEach(list => {
+  board.lists.forEach(list => {
     const section = document.createElement('section');
     section.dataset.id = list.id;
     section.style.setProperty('--list-color', list.color || 'transparent');
