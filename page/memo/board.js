@@ -55,6 +55,9 @@ async function init() {
         color
       });
     }
+    saveBoard(currentBoard);
+    render(currentBoard);
+    closeModal();
   };
 
 // help 버튼 클릭 → 모달 열기 (hidden 제거)
