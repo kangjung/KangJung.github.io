@@ -125,7 +125,7 @@ function render(board) {
   el.innerHTML = '';
 
 
-  board.lists.forEach(list => {
+  board.list.forEach(list => {
     const section = document.createElement('section');
     section.dataset.id = list.id;
     section.style.setProperty('--list-color', list.color || 'transparent');
