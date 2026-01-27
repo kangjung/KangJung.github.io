@@ -24,6 +24,8 @@ async function init() {
     editingCard = null;
   };
 
+
+
   document.getElementById('modalSave').onclick = () => {
     const title = document.getElementById('modalTitle').value.trim();
     const memo = document.getElementById('modalMemo').value;
@@ -140,18 +142,16 @@ function render(board) {
     section.dataset.id = list.id;
     section.style.setProperty('--list-color', list.color || 'transparent');
 
+
     /* ===== header ===== */
     const header = document.createElement('div');
     header.className = 'list-header';
 
 
-    /* 🔽 접기 버튼 */
     const collapseBtn = document.createElement('button');
     collapseBtn.className = 'collapse-btn';
     collapseBtn.textContent = list.collapsed ? '▸' : '▾';
-
-
-    collapseBtn.onclick = (e) => {
+    collapseBtn.onclick = e => {
       e.stopPropagation();
       list.collapsed = !list.collapsed;
       saveBoard(currentBoard);
@@ -159,67 +159,65 @@ function render(board) {
     };
 
 
-    /* 제목 */
     const titleEl = document.createElement('h3');
     titleEl.textContent = list.title;
+    titleEl.onclick = () => openListModal(list);
 
 
-    titleEl.onclick = (e) => {
-      e.stopPropagation();
-      openListModal(list);
-    };
-
-
-    /* 카드 추가 버튼 */
     const addBtn = document.createElement('button');
     addBtn.textContent = '+ 카드';
-    addBtn.onclick = (e) => {
+    addBtn.onclick = e => {
       e.stopPropagation();
       openNewCardModal(list.id);
     };
 
 
-    /* header에 추가 */
     header.append(collapseBtn, titleEl, addBtn);
 
 
     /* ===== cards ===== */
     const ul = document.createElement('ul');
     ul.className = 'card-list';
+    if (list.collapsed) section.classList.add('collapsed');
 
-    if (list.collapsed) {
-      section.classList.add('collapsed');
-    }
+
     list.cards.forEach(card => {
       const li = document.createElement('li');
       li.className = 'card';
       li.dataset.id = card.id;
+      li.style.borderLeft = card.color ? `6px solid ${card.color}` : '';
 
-      li.style.borderLeft = card.color
-        ? `6px solid ${card.color}`
+
+      const tagsHTML = card.tags?.length
+        ? `<div class="tags">${card.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>`
         : '';
 
 
-      li.innerHTML = `
-<strong>${card.title}</strong>
+      const memoHTML = card.memo
+        ? `<p class="memo">${card.memo}</p><span class="toggle-btn">펼치기</span>`
+        : '';
 
 
-${card.tags?.length
-        ? `<div class="tags">
-${card.tags.map(t => `<span class="tag">${t}</span>`).join('')}
-</div>`
-        : ''}
+      li.innerHTML = `<strong>${card.title}</strong>${tagsHTML}${memoHTML}`;
 
 
-${card.memo ? `<p class="memo">${card.memo}</p>` : ''}
-`;
+      if (card.memo) {
+        const memoEl = li.querySelector('.memo');
+        const toggleBtn = li.querySelector('.toggle-btn');
+
+
+        toggleBtn.onclick = e => {
+          e.stopPropagation();
+          memoEl.classList.toggle('expanded');
+          toggleBtn.textContent = memoEl.classList.contains('expanded') ? '접기' : '펼치기';
+        };
+      }
+
 
       li.onclick = () => openCardModal(card, list.id);
-
-
-      li.oncontextmenu = (e) => {
+      li.oncontextmenu = e => {
         e.preventDefault();
-        if (!confirm('이 카드 삭제할까?')) return;
+        if (!confirm('이 카드 삭제할까요?')) return;
         list.cards = list.cards.filter(c => c.id !== card.id);
         saveBoard(currentBoard);
         render(currentBoard);
@@ -245,7 +243,7 @@ ${card.memo ? `<p class="memo">${card.memo}</p>` : ''}
   });
 
 
-  /* ===== 리스트 추가 버튼 (한 번만) ===== */
+  /* 리스트 추가 버튼 */
   const addListBtn = document.createElement('button');
   addListBtn.className = 'add-list';
   addListBtn.textContent = '+ 리스트 추가';
@@ -263,6 +261,7 @@ ${card.memo ? `<p class="memo">${card.memo}</p>` : ''}
     render(currentBoard);
   };
   el.appendChild(addListBtn);
+
 
   new Sortable(document.getElementById('board'), {
     animation: 200,
@@ -296,22 +295,27 @@ function addCard(listId) {
 }
 
 function syncFromDOM() {
+// 🔒 기존 카드들을 먼저 안전하게 백업
+  const cardMap = new Map();
+
+
+  currentBoard.lists.forEach(list => {
+    list.cards.forEach(card => {
+      cardMap.set(card.id, card);
+    });
+  });
+
+
+// DOM 기준으로 카드 순서만 재구성
   document.querySelectorAll('section').forEach(section => {
     const listId = section.dataset.id;
     const list = currentBoard.lists.find(l => l.id === listId);
+    if (!list) return;
 
 
-    list.cards = [...section.querySelectorAll('.card')].map(cardEl => {
-      const titleEl = cardEl.querySelector('strong');
-      const memoEl = cardEl.querySelector('.memo');
-
-
-      return {
-        id: cardEl.dataset.id,
-        title: titleEl ? titleEl.textContent : '',
-        memo: memoEl ? memoEl.textContent : ''
-      };
-    });
+    list.cards = [...section.querySelectorAll('.card')]
+      .map(cardEl => cardMap.get(cardEl.dataset.id))
+      .filter(Boolean);
   });
 }
 

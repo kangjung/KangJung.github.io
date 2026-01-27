@@ -103,6 +103,9 @@
       font-weight: 600;
       cursor: pointer;
       position: relative;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
 
@@ -132,9 +135,17 @@
     }
 
     section.collapsed {
-      filter: grayscale(0.8);
       padding-bottom: 6px;
     }
+    /* 리스트 헤더만 회색으로 처리 */
+    section.collapsed .list-header {
+      filter: grayscale(0.8);
+    }
+    /* 카드 자체는 필터 없이 원래 색상 유지 */
+    section.collapsed .card-list {
+      display: none; /* 그대로 숨기기 */
+    }
+
     section.collapsed::before {
       opacity: 0.8;
     }
@@ -188,46 +199,68 @@
     }
 
     /* ===============================
-       CARD
-    ================================ */
+  CARD
+  =============================== */
     .card {
       background: var(--card);
-      padding: 12px;
-      margin-bottom: 8px;
-      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 12px;
+      border-radius: 14px;
       font-size: 14px;
       cursor: grab;
-
       box-shadow: 0 1px 3px rgba(0,0,0,.12);
-    }
-
-    .card strong {
-      display: block;
-      font-size: 14px;
-    }
-
-    .memo {
-      font-size: 13px;
-      line-height: 1.4;
-      color: var(--muted);
-      margin-top: 6px;
-    }
-
-    .card {
-      transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      position: relative;
     }
 
 
     .card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(0,0,0,.15);
+      box-shadow: 0 4px 12px rgba(0,0,0,.18);
     }
 
-    .card.sortable-chosen {
-      transform: none !important;
-      box-shadow: 0 2px 6px rgba(0,0,0,.2);
+
+    .card strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+
+    .memo {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--muted);
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3; /* 기본 3줄 */
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-word;
+      margin-bottom: 4px;
+    }
+
+
+    .memo.expanded {
+      display: block;
+      -webkit-line-clamp: unset;
+      white-space: normal; /* 줄바꿈 허용 */
+    }
+
+
+    /* 펼치기 버튼 */
+    .toggle-btn {
+      display: inline-block;
+      font-size: 12px;
+      color: #3b82f6;
+      cursor: pointer;
+      user-select: none;
+    }
+    .toggle-btn:hover {
+      text-decoration: underline;
     }
 
     /* ===============================
@@ -359,11 +392,15 @@
 
 
       .list-header h3 {
-        font-size: 16px;
-      }
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        position: relative;
 
-      .list-header h3 {
-        font-size: 16px;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .list-header button,
       .collapse-btn {
