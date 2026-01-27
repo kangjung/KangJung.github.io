@@ -2,15 +2,19 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Memo Board</title>
   <style>
+    /* ===============================
+       THEME
+    ================================ */
     :root {
       --bg: #f4f5f7;
       --card: #ffffff;
       --text: #172b4d;
       --border: #dfe1e6;
+      --muted: #6b778c;
     }
-
 
     @media (prefers-color-scheme: dark) {
       :root {
@@ -18,9 +22,16 @@
         --card: #2a2a2a;
         --text: #f5f5f5;
         --border: #3a3a3a;
+        --muted: #9ca3af;
       }
     }
 
+    /* ===============================
+       BASE
+    ================================ */
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -29,139 +40,360 @@
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
-
     header {
-      padding: 12px;
-      font-weight: bold;
-      border-bottom: 1px solid var(--border);
-    }
-
-
-    section {
-      padding: 8px;
-    }
-
-
-    h3 {
-      margin: 8px 0;
-      font-size: 14px;
-    }
-
-
-    .card-list {
-      list-style: none;
-      padding: 0;
-    }
-
-
-    .card {
-      background: var(--card);
-      padding: 8px;
-      margin-bottom: 6px;
-      border-radius: 6px;
-      box-shadow: 0 1px 2px rgba(0,0,0,.1);
-      cursor: grab;
-    }
-    .memo {
-      font-size: 12px;
-      opacity: 0.8;
-      margin-top: 4px;
-    }
-
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-    }
-
-
-    .modal.hidden {
-      display: none;
-    }
-
-
-    .modal-content {
-      background: var(--card);
-      color: var(--text);
-      width: 90%;
-      max-width: 320px;
-      padding: 16px;
-      border-radius: 10px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.3);
-    }
-
-
-    .modal-content h2 {
-      margin-top: 0;
+      padding: 14px 18px;
       font-size: 16px;
-    }
-
-
-    .modal-content label {
-      display: block;
-      font-size: 12px;
-      margin-bottom: 10px;
-    }
-
-
-    .modal-content input,
-    .modal-content textarea {
-      width: 100%;
-      margin-top: 4px;
-      padding: 6px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: inherit;
-    }
-
-
-    .modal-actions {
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
       display: flex;
-      justify-content: flex-end;
-      gap: 8px;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .help-btn {
+      border: none;
+      background: transparent;
+      font-size: 18px;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+
+    .help-btn:hover {
+      color: var(--text);
+    }
+
+    /* ===============================
+       BOARD LAYOUT
+    ================================ */
+    main#board {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 16px;
+
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+
+    /* ===============================
+       LIST (SECTION)
+    ================================ */
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      min-width: 260px;
     }
 
     .list-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .list-header h3 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      position: relative;
     }
 
 
-    .add-list {
-      width: 100%;
-      margin: 8px;
-      padding: 6px;
+    .list-header h3:hover::after {
+      content: "⚙";
+      margin-left: 6px;
+      font-size: 12px;
+      opacity: .6;
+    }
+
+    .list-header button {
+      font-size: 12px;
+      padding: 4px 8px;
       border-radius: 6px;
-      border: 1px dashed var(--border);
+      border: 1px solid var(--border);
       background: transparent;
       cursor: pointer;
     }
 
-    .card {
-      border-radius: 8px;
-      padding: 10px;
+    .collapse-btn {
+      border: none;
+      background: transparent;
+      font-size: 14px;
+      cursor: pointer;
+      color: var(--muted);
+      padding: 2px 4px;
+    }
+
+    section.collapsed {
+      filter: grayscale(0.8);
+      padding-bottom: 6px;
+    }
+    section.collapsed::before {
+      opacity: 0.8;
+    }
+    section.collapsed .collapse-btn {
+      transform: rotate(-90deg);
+    }
+
+    /* ===============================
+       CARD LIST
+    ================================ */
+    .card-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* 리스트 색상 변수 */
+    section {
+      --list-color: transparent;
+      border-left: 6px solid var(--list-color);
     }
 
 
+    /* 헤더에도 살짝 컬러 */
+    section .list-header h3 {
+      padding-left: 4px;
+    }
+
+    .list-header {
+      cursor: pointer;
+    }
+
+
+    section.collapsed .card-list {
+      display: none;
+    }
+
+
+    .list-header {
+      position: relative;
+    }
+
+
+    .list-header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 12px;
+      right: 12px;
+      height: 4px;
+    }
+
+    /* ===============================
+       CARD
+    ================================ */
+    .card {
+      background: var(--card);
+      padding: 12px;
+      margin-bottom: 8px;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: grab;
+
+      box-shadow: 0 1px 3px rgba(0,0,0,.12);
+    }
+
+    .card strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .memo {
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .card {
+      transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+    }
+
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,.15);
+    }
+
+    .card.sortable-chosen {
+      transform: none !important;
+      box-shadow: 0 2px 6px rgba(0,0,0,.2);
+    }
+
+    /* ===============================
+       TAG
+    ================================ */
+    .tags {
+      margin-top: 6px;
+    }
+
     .tag {
       display: inline-block;
-      background: #334155;
+      background: rgba(100,116,139,.15);
+      color: var(--text);
       padding: 2px 6px;
       border-radius: 4px;
       font-size: 11px;
       margin-right: 4px;
     }
+
+    /* ===============================
+       ADD LIST BUTTON
+    ================================ */
+    .add-list {
+      min-height: 72px;
+      align-self: start;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+
+      border-radius: 14px;
+      border: 2px dashed var(--border);
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .add-list:hover {
+      background: rgba(0,0,0,.03);
+    }
+
+    /* ===============================
+       MODAL
+    ================================ */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .modal.hidden {
+      display: none;
+    }
+
+    .modal-content {
+      background: var(--card);
+      color: var(--text);
+
+      width: 92%;
+      max-width: 420px;
+      padding: 20px;
+      border-radius: 16px;
+
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    .modal-content h2 {
+      margin: 0 0 12px;
+      font-size: 16px;
+    }
+
+    .modal-content label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .modal-content input,
+    .modal-content textarea {
+      width: 100%;
+      margin-top: 4px;
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: inherit;
+    }
+
+    input[type="color"] {
+      padding: 0;
+      height: 36px;
+      cursor: pointer;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    /* ===============================
+       MOBILE
+    ================================ */
+    @media (max-width: 600px) {
+      main#board {
+        grid-template-columns: 1fr;
+        padding: 14px;
+      }
+
+
+      section {
+        min-width: 0;
+        padding: 16px;
+        border-left-width: 8px;
+      }
+
+
+      .list-header h3 {
+        font-size: 16px;
+      }
+
+      .list-header h3 {
+        font-size: 16px;
+      }
+      .list-header button,
+      .collapse-btn {
+        font-size: 14px;
+        padding: 6px 10px;
+      }
+      .list-header::before {
+        height: 6px;
+      }
+
+      .card {
+        padding: 16px;
+        font-size: 15px;
+        border-radius: 14px;
+      }
+
+
+      .card strong {
+        font-size: 15px;
+      }
+
+      .memo {
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+    }
   </style>
 </head>
 <body>
-<header>📋 My Board</header>
+<header>
+  📋 My Board
+  <button id="helpBtn" class="help-btn">❔</button>
+</header>
 <main id="board"></main>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
@@ -192,6 +424,55 @@
     <div class="modal-actions">
       <button id="modalCancel">취소</button>
       <button id="modalSave">저장</button>
+    </div>
+  </div>
+</div>
+<div id="listModal" class="modal hidden">
+  <div class="modal-content">
+    <h2>리스트 설정</h2>
+
+
+    <label>
+      리스트 이름
+      <input id="listTitle" type="text" />
+    </label>
+
+
+    <label>
+      리스트 색상
+      <input type="color" id="listColor" />
+    </label>
+
+
+    <label style="display:flex; align-items:center; gap:8px;">
+      <input type="checkbox" id="listCollapsed" />
+      접기
+    </label>
+
+
+    <div class="modal-actions">
+      <button id="listDelete">삭제</button>
+      <button id="listCancel">취소</button>
+      <button id="listSave">저장</button>
+    </div>
+  </div>
+</div>
+<div id="helpModal" class="modal hidden">
+  <div class="modal-content">
+    <h2>📘 사용법</h2>
+
+
+    <ul style="font-size:14px; line-height:1.6; padding-left:18px;">
+      <li><b>카드 추가</b>: 리스트의 + 카드 버튼 클릭</li>
+      <li><b>카드 이동</b>: 드래그로 다른 리스트로 이동</li>
+      <li><b>리스트 접기</b>: 리스트 왼쪽 화살표 클릭</li>
+      <li><b>리스트 설정</b>: 제목 클릭 → 색상 / 이름 변경</li>
+      <li><b>카드 편집</b>: 카드 클릭</li>
+    </ul>
+
+
+    <div class="modal-actions">
+      <button id="helpClose">닫기</button>
     </div>
   </div>
 </div>

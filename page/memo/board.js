@@ -1,18 +1,17 @@
 const defaultBoard = {
   lists: [
-    { id: 'todo', title: '할 일', cards: [] },
-    { id: 'doing', title: '진행중', cards: [] },
-    { id: 'done', title: '완료', cards: [] }
+    { id:'todo', title:'할 일', color:'#3b82f6', collapsed:false, cards:[] },
+    { id: 'doing', title: '진행중', color:'#3a78fc', collapsed:false, cards:[] },
+    { id: 'done', title: '완료', color:'#3b21c6', collapsed:false, cards:[] },
   ]
 };
 
 let editingCard = null;
 let editingListId = null;
+let editingList = null;
 
 async function init() {
   currentBoard = await loadBoard();
-  document.querySelector('header').textContent =`📋 ${location.host}`;
-
   document.getElementById('modalCancel').onclick = () => {
     document.getElementById('cardModal').classList.add('hidden');
     editingCard = null;
@@ -49,11 +48,66 @@ async function init() {
         color
       });
     }
+  };
+
+// help 버튼 클릭 → 모달 열기 (hidden 제거)
+  document.getElementById('helpBtn').onclick = function () {
+    document.getElementById("helpModal").classList.remove("hidden");
+  };
+
+// X 버튼 클릭 → 모달 닫기 (hidden 추가)
+  document.getElementById('helpClose').onclick = function () {
+    document.getElementById("helpModal").classList.add("hidden");
+  };
+  saveBoard(currentBoard);
+  render(currentBoard);
+  closeModal();
+  document.getElementById('listCancel').onclick = closeListModal;
+
+
+  document.getElementById('listSave').onclick = () => {
+    if (!editingList) return;
+
+
+    const title = document.getElementById('listTitle').value.trim();
+    if (!title) {
+      alert('리스트 이름은 필수입니다.');
+      return;
+    }
+
+
+    editingList.title = title;
+    editingList.color = document.getElementById('listColor').value;
+    editingList.collapsed =
+      document.getElementById('listCollapsed').checked;
+
+
     saveBoard(currentBoard);
     render(currentBoard);
-    closeModal();
+    closeListModal();
+  };
+
+
+  document.getElementById('listDelete').onclick = () => {
+    if (!editingList) return;
+
+
+    if (
+      editingList.cards.length &&
+      !confirm('카드가 있는 리스트입니다. 삭제할까요?')
+    ) return;
+
+
+    currentBoard.lists =
+      currentBoard.lists.filter(l => l !== editingList);
+
+
+    saveBoard(currentBoard);
+    render(currentBoard);
+    closeListModal();
   };
   document.getElementById('modalCancel').onclick = closeModal;
+
 
   if (!currentBoard) {
     currentBoard = defaultBoard;
@@ -74,48 +128,58 @@ function render(board) {
   board.lists.forEach(list => {
     const section = document.createElement('section');
     section.dataset.id = list.id;
-
+    section.style.setProperty('--list-color', list.color || 'transparent');
 
     /* ===== header ===== */
     const header = document.createElement('div');
     header.className = 'list-header';
 
 
+    /* 🔽 접기 버튼 */
+    const collapseBtn = document.createElement('button');
+    collapseBtn.className = 'collapse-btn';
+    collapseBtn.textContent = list.collapsed ? '▸' : '▾';
+
+
+    collapseBtn.onclick = (e) => {
+      e.stopPropagation();
+      list.collapsed = !list.collapsed;
+      saveBoard(currentBoard);
+      render(currentBoard);
+    };
+
+
+    /* 제목 */
     const titleEl = document.createElement('h3');
     titleEl.textContent = list.title;
 
 
-    titleEl.onclick = () => {
-      const newTitle = prompt('리스트 이름', list.title);
-      if (!newTitle) return;
-      list.title = newTitle;
-      saveBoard(currentBoard);
-      render(currentBoard);
+    titleEl.onclick = (e) => {
+      e.stopPropagation();
+      openListModal(list);
     };
 
 
-    header.oncontextmenu = (e) => {
-      e.preventDefault();
-      if (list.cards.length && !confirm('카드가 있습니다. 삭제할까요?')) return;
-      currentBoard.lists = currentBoard.lists.filter(l => l.id !== list.id);
-      saveBoard(currentBoard);
-      render(currentBoard);
-    };
-
-
+    /* 카드 추가 버튼 */
     const addBtn = document.createElement('button');
     addBtn.textContent = '+ 카드';
-    addBtn.onclick = () => openNewCardModal(list.id);
+    addBtn.onclick = (e) => {
+      e.stopPropagation();
+      openNewCardModal(list.id);
+    };
 
 
-    header.append(titleEl, addBtn);
+    /* header에 추가 */
+    header.append(collapseBtn, titleEl, addBtn);
 
 
     /* ===== cards ===== */
     const ul = document.createElement('ul');
     ul.className = 'card-list';
 
-
+    if (list.collapsed) {
+      section.classList.add('collapsed');
+    }
     list.cards.forEach(card => {
       const li = document.createElement('li');
       li.className = 'card';
@@ -168,16 +232,6 @@ ${card.memo ? `<p class="memo">${card.memo}</p>` : ''}
         saveBoard(currentBoard);
       }
     });
-
-    new Sortable(document.getElementById('board'), {
-      animation: 200,
-      handle: '.list-header', // 제목 잡고 이동
-      draggable: 'section',
-      onEnd: () => {
-        syncListsFromDOM();
-        saveBoard(currentBoard);
-      }
-    });
   });
 
 
@@ -191,12 +245,24 @@ ${card.memo ? `<p class="memo">${card.memo}</p>` : ''}
     currentBoard.lists.push({
       id: Date.now().toString(),
       title,
+      color: '#64748b',
+      collapsed: false,
       cards: []
     });
     saveBoard(currentBoard);
     render(currentBoard);
   };
   el.appendChild(addListBtn);
+
+  new Sortable(document.getElementById('board'), {
+    animation: 200,
+    handle: '.list-header',
+    draggable: 'section',
+    onEnd: () => {
+      syncListsFromDOM();
+      saveBoard(currentBoard);
+    }
+  });
 }
 
 let currentBoard;
@@ -266,6 +332,19 @@ function openNewCardModal(listId) {
 
 
   document.getElementById('cardModal').classList.remove('hidden');
+}
+
+function openListModal(list) {
+  editingList = list;
+  document.getElementById('listTitle').value = list.title;
+  document.getElementById('listColor').value = list.color || '#64748b';
+  document.getElementById('listCollapsed').checked = !!list.collapsed;
+  document.getElementById('listModal').classList.remove('hidden');
+}
+
+function closeListModal() {
+  editingList = null;
+  document.getElementById('listModal').classList.add('hidden');
 }
 
 function getBoardKey() {
