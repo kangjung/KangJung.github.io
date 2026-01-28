@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Memo Board</title>
   <style>
@@ -33,11 +33,92 @@
       box-sizing: border-box;
     }
 
+    /* 강제 라이트 모드 */
+    html.theme-light {
+      --bg: #f4f5f7;
+      --card: #ffffff;
+      --text: #172b4d;
+      --border: #dfe1e6;
+      --muted: #6b778c;
+    }
+
+
+    /* 강제 다크 모드 */
+    html.theme-dark {
+      --bg: #1e1e1e;
+      --card: #2a2a2a;
+      --text: #f5f5f5;
+      --border: #3a3a3a;
+      --muted: #9ca3af;
+    }
+
+    html.theme-dark button {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+
+    html.theme-dark button:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    html.theme-dark .card {
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .6);
+    }
+
+    html:not(.theme-dark) .add-card:hover,
+    html:not(.theme-dark) .add-list:hover {
+      background: rgba(0, 0, 0, .04);
+    }
+
+
+    html.theme-dark .add-card:hover,
+    html.theme-dark .add-list:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
     body {
       margin: 0;
       background: var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+
+    #app {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+
+    /* 보드만 스크롤 */
+    #content {
+      flex: 1;
+      overflow-y: auto;
+      padding-bottom: 56px; /* 광고 높이만큼 */
+    }
+
+
+    /* 하단 고정 광고 */
+    #ad-fixed-bottom {
+      flex-shrink: 0;
+      height: 56px; /* 모바일 배너 높이 */
+      border-top: 1px solid var(--border);
+      background: var(--bg);
+      z-index: 10;
+    }
+
+    #ad-fixed-bottom {
+      pointer-events: auto;
+    }
+
+    #ad-fixed-bottom {
+      min-height: 56px;
     }
 
     header {
@@ -49,6 +130,7 @@
       justify-content: space-between;
       align-items: center;
     }
+
     .help-btn {
       border: none;
       background: transparent;
@@ -108,6 +190,9 @@
       text-overflow: ellipsis;
     }
 
+    .list-header h3:hover {
+      text-decoration: underline;
+    }
 
     .list-header h3:hover::after {
       content: "⚙";
@@ -123,6 +208,7 @@
       border: 1px solid var(--border);
       background: transparent;
       cursor: pointer;
+      white-space: nowrap;
     }
 
     .collapse-btn {
@@ -137,10 +223,12 @@
     section.collapsed {
       padding-bottom: 6px;
     }
+
     /* 리스트 헤더만 회색으로 처리 */
     section.collapsed .list-header {
       filter: grayscale(0.8);
     }
+
     /* 카드 자체는 필터 없이 원래 색상 유지 */
     section.collapsed .card-list {
       display: none; /* 그대로 숨기기 */
@@ -149,6 +237,7 @@
     section.collapsed::before {
       opacity: 0.8;
     }
+
     section.collapsed .collapse-btn {
       transform: rotate(-90deg);
     }
@@ -208,7 +297,7 @@
       border-radius: 14px;
       font-size: 14px;
       cursor: grab;
-      box-shadow: 0 1px 3px rgba(0,0,0,.12);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .12);
       transition: transform 0.15s ease, box-shadow 0.15s ease;
       position: relative;
     }
@@ -216,7 +305,7 @@
 
     .card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,.18);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .18);
     }
 
 
@@ -259,6 +348,7 @@
       cursor: pointer;
       user-select: none;
     }
+
     .toggle-btn:hover {
       text-decoration: underline;
     }
@@ -272,7 +362,7 @@
 
     .tag {
       display: inline-block;
-      background: rgba(100,116,139,.15);
+      background: rgba(100, 116, 139, .15);
       color: var(--text);
       padding: 2px 6px;
       border-radius: 4px;
@@ -302,7 +392,7 @@
     }
 
     .add-list:hover {
-      background: rgba(0,0,0,.03);
+      background: rgba(0, 0, 0, .03);
     }
 
     /* ===============================
@@ -311,7 +401,7 @@
     .modal {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,.45);
+      background: rgba(0, 0, 0, .45);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -331,7 +421,7 @@
       padding: 20px;
       border-radius: 16px;
 
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
     }
 
     .modal-content h2 {
@@ -402,11 +492,13 @@
         overflow: hidden;
         text-overflow: ellipsis;
       }
+
       .list-header button,
       .collapse-btn {
         font-size: 14px;
         padding: 6px 10px;
       }
+
       .list-header::before {
         height: 6px;
       }
@@ -428,93 +520,385 @@
       }
 
     }
+
+    @media (max-height: 400px) {
+      #ad-fixed-bottom {
+        display: none;
+      }
+    }
+
+    mark {
+      background: #fde68a;
+      padding: 0 2px;
+      border-radius: 3px;
+    }
+
+    .loading-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+
+    .loading-modal.hidden {
+      display: none;
+    }
+
+
+    .loading-box {
+      width: 90%;
+      max-width: 320px;
+      background: var(--card);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+
+
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid #ddd;
+      border-top-color: #3b82f6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 10px;
+    }
+
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+
+    .ad-area {
+      margin-top: 12px;
+      min-height: 60px;
+      border-top: 1px solid var(--border);
+    }
+
+    .settings-page {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 5000;
+      display: flex;
+      flex-direction: column;
+    }
+
+
+    .settings-page.hidden {
+      display: none;
+    }
+
+
+    .settings-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+
+    .settings-content {
+      padding: 16px;
+      overflow-y: auto;
+      padding-bottom: 72px; /* 하단 광고 높이 */
+    }
+
+    button {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+
+    button:hover {
+      background: rgba(0, 0, 0, .04);
+    }
+
+    /* ===============================
+EXPORT MODAL
+================================ */
+    .export-modal {
+      text-align: center;
+    }
+
+
+    .export-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--muted);
+      margin: 12px 0 16px;
+    }
+
+
+    .export-actions {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+
+    .export-actions button.primary {
+      background: #3b82f6;
+      color: #fff;
+      border: none;
+    }
+
+
+    .export-actions button.primary:hover {
+      background: #2563eb;
+    }
+
+
+    /* 광고 영역 */
+    .export-ad {
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      min-height: 60px;
+    }
   </style>
 </head>
 <body>
-<header>
-  📋 My Board
-  <button id="helpBtn" class="help-btn">❔</button>
-</header>
-<main id="board"></main>
+<div id="app">
+  <header>
+    📋 My Board
+    <div style="display:flex; gap:8px; align-items:center;">
+      <input id="searchInput" type="search" placeholder="카드 검색..." style="padding:6px 10px; border-radius:8px; border:1px solid var(--border); background:var(--card); color:var(--text); font-size:13px;"/>
+      <button id="helpBtn" class="help-btn">❔</button>
+      <button class="help-btn" onclick="openSettingsPage()">⚙️</button>
+    </div>
+  </header>
+  <div id="content">
+    <main id="board"></main>
 
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-<script src="db.js"></script>
-<script src="board.js"></script>
-<div id="cardModal" class="modal hidden">
-  <div class="modal-content">
-    <h2 id="modalTitleText">카드 편집</h2>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="db.js"></script>
+    <script src="board.js"></script>
+    <div id="cardModal" class="modal hidden">
+      <div class="modal-content">
+        <h2 id="modalTitleText">카드 편집</h2>
+        <label>제목<input id="modalTitle" type="text"/></label>
+        <label>메모<textarea id="modalMemo" rows="5"></textarea></label>
+        <label>태그 (쉼표 구분)</label>
+        <input id="modalTags"/>
+        <label>카드 색상</label>
+        <input type="color" id="modalColor"/>
+        <div class="modal-actions">
+          <button id="modalCancel">취소</button>
+          <button id="modalSave">저장</button>
+        </div>
+      </div>
+    </div>
+    <div id="listModal" class="modal hidden">
+      <div class="modal-content">
+        <h2>리스트 설정</h2>
+        <label>리스트 이름<input id="listTitle" type="text"/></label>
 
 
-    <label>
-      제목
-      <input id="modalTitle" type="text" />
-    </label>
+        <label>리스트 색상<input type="color" id="listColor"/></label>
 
 
-    <label>
-      메모
-      <textarea id="modalMemo" rows="5"></textarea>
-    </label>
+        <label style="display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" id="listCollapsed"/>
+          접기
+        </label>
+        <div class="modal-actions">
+          <button id="listDelete">삭제</button>
+          <button id="listCancel">취소</button>
+          <button id="listSave">저장</button>
+        </div>
+      </div>
+    </div>
+    <div id="settingsPage" class="settings-page hidden">
+      <header class="settings-header">
+        <button onclick="closeSettingsPage()">메인으로</button>
+        <h2>설정</h2>
+      </header>
 
-    <label>태그 (쉼표 구분)</label>
-    <input id="modalTags" />
+
+      <main class="settings-content">
+        <!-- 테마 -->
+        <section>
+          <h3>테마</h3>
+          <label style="display:flex; align-items:center; gap:8px;">
+            <input type="radio" name="theme" value="system" checked>
+            시스템 설정 따르기
+          </label>
+
+          <label style="display:flex; align-items:center; gap:8px;">
+            <input type="radio" name="theme" value="light">
+            라이트 모드
+          </label>
+
+          <label style="display:flex; align-items:center; gap:8px;">
+            <input type="radio" name="theme" value="dark">
+            다크 모드
+          </label>
+        </section>
 
 
-    <label>카드 색상</label>
-    <input type="color" id="modalColor" />
-    <div class="modal-actions">
-      <button id="modalCancel">취소</button>
-      <button id="modalSave">저장</button>
+        <!-- 데이터 -->
+        <section>
+          <h3>데이터</h3>
+          <button onclick="importJSON()" style="color:#ef4444">
+            JSON 반입 (기존 데이터 덮어씀)
+          </button>
+
+          <button onclick="openExportModal()">JSON 반출</button>
+        </section>
+
+
+        <!-- 정보 -->
+        <section>
+          <h3>정보</h3>
+          <small style="color:var(--muted)">
+            저장 위치: 이 브라우저<br>
+            삭제 시 복구 불가
+          </small>
+        </section>
+      </main>
+      <!-- JSON 반출 모달 -->
+      <div id="exportModal" class="modal hidden">
+        <div class="modal-content export-modal">
+          <h2>📦 데이터 내보내기</h2>
+
+
+          <p class="export-desc">
+            현재 보드를 JSON 파일로 저장합니다.<br>
+            다른 기기나 브라우저에서 다시 불러올 수 있어요.
+          </p>
+
+
+          <div class="export-actions">
+            <button class="primary" onclick="downloadJSON()">
+              📥 다운로드
+            </button>
+            <button onclick="closeExportModal()">취소</button>
+          </div>
+
+
+          <!-- 광고 영역 -->
+          <div class="export-ad">
+            <!-- Adsense 코드 위치 -->
+          </div>
+        </div>
+      </div>
+      <!-- JSON IMPORT MODAL -->
+      <div id="importModal" class="modal hidden">
+        <div class="modal-content">
+          <h2>📥 데이터 가져오기</h2>
+
+
+          <p style="font-size:13px; color:var(--muted); line-height:1.5;">
+            JSON 파일을 불러와 보드에 적용합니다.
+          </p>
+
+
+          <!-- 파일 선택 -->
+          <label style="font-size:13px;">
+            JSON 파일 선택
+            <input
+              type="file"
+              id="importFileInput"
+              accept="application/json"
+              style="margin-top:6px;"
+            />
+          </label>
+
+
+          <!-- 적용 방식 -->
+          <div style="margin-top:14px;">
+            <p style="font-size:13px; font-weight:600; margin-bottom:6px;">
+              적용 방식
+            </p>
+            <label style="display:flex; gap:8px; font-size:13px; margin-bottom:6px;">
+              <input type="radio" name="importMode" value="replace" checked/>
+              <span>기존 데이터 덮어쓰기 <b>(권장)</b><br>
+                <small style="color:var(--muted)">
+                  현재 보드를 삭제하고 파일 내용으로 교체합니다
+                </small>
+              </span>
+            </label>
+
+
+            <label style="display:flex; gap:8px; font-size:13px;">
+              <input type="radio" name="importMode" value="append"/>
+              <span> 기존 데이터에 추가<br>
+                <small style="color:var(--muted)">
+                  파일의 리스트와 카드를 현재 보드에 추가합니다
+                </small>
+              </span>
+            </label>
+          </div>
+          <!-- 경고 문구 -->
+          <p id="appendWarning" style="display:none; margin-top:10px; font-size:12px; color:#f59e0b;">
+            ⚠️ 추가 모드는 고급 기능이며 보드가 복잡해질 수 있습니다.
+          </p>
+
+
+          <!-- 액션 -->
+          <div class="modal-actions">
+            <button onclick="closeImportModal()">취소</button>
+            <button onclick="confirmImport()">가져오기</button>
+          </div>
+
+
+          <!-- 광고 영역 -->
+          <div class="ad-area" style="margin-top:16px;">
+            <!-- Adsense 코드 -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="helpModal" class="modal hidden">
+      <div class="modal-content">
+        <h2>📘 사용법</h2>
+
+
+        <ul style="font-size:14px; line-height:1.6; padding-left:18px;">
+          <li><b>카드 추가</b>: 리스트의 + 카드 버튼 클릭</li>
+          <li><b>카드 이동</b>: 드래그로 다른 리스트로 이동</li>
+          <li><b>리스트 접기</b>: 리스트 왼쪽 화살표 클릭</li>
+          <li><b>리스트 설정</b>: 제목 클릭 → 색상 / 이름 변경</li>
+          <li><b>카드 편집</b>: 카드 클릭</li>
+        </ul>
+
+
+        <div class="modal-actions">
+          <button id="helpClose">닫기</button>
+        </div>
+      </div>
+    </div>
+    <div id="loadingModal" class="loading-modal hidden">
+      <div class="loading-box">
+        <div class="spinner"></div>
+        <p id="loadingText">데이터 처리 중…</p>
+
+
+        <!-- 광고 영역 (항상 존재) -->
+        <div class="ad-area">
+          <!-- Adsense 코드 위치 -->
+        </div>
+      </div>
     </div>
   </div>
-</div>
-<div id="listModal" class="modal hidden">
-  <div class="modal-content">
-    <h2>리스트 설정</h2>
-
-
-    <label>
-      리스트 이름
-      <input id="listTitle" type="text" />
-    </label>
-
-
-    <label>
-      리스트 색상
-      <input type="color" id="listColor" />
-    </label>
-
-
-    <label style="display:flex; align-items:center; gap:8px;">
-      <input type="checkbox" id="listCollapsed" />
-      접기
-    </label>
-
-
-    <div class="modal-actions">
-      <button id="listDelete">삭제</button>
-      <button id="listCancel">취소</button>
-      <button id="listSave">저장</button>
-    </div>
-  </div>
-</div>
-<div id="helpModal" class="modal hidden">
-  <div class="modal-content">
-    <h2>📘 사용법</h2>
-
-
-    <ul style="font-size:14px; line-height:1.6; padding-left:18px;">
-      <li><b>카드 추가</b>: 리스트의 + 카드 버튼 클릭</li>
-      <li><b>카드 이동</b>: 드래그로 다른 리스트로 이동</li>
-      <li><b>리스트 접기</b>: 리스트 왼쪽 화살표 클릭</li>
-      <li><b>리스트 설정</b>: 제목 클릭 → 색상 / 이름 변경</li>
-      <li><b>카드 편집</b>: 카드 클릭</li>
-    </ul>
-
-
-    <div class="modal-actions">
-      <button id="helpClose">닫기</button>
-    </div>
+  <div id="ad-fixed-bottom">
+    <!-- 애드센스 -->
   </div>
 </div>
 </body>

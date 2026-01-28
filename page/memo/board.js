@@ -9,10 +9,12 @@ const defaultBoard = {
 let editingCard = null;
 let editingListId = null;
 let editingList = null;
+let searchQuery = '';
 
 async function init() {
   currentBoard = await loadBoard();
-
+  loadTheme();
+  initThemeSettings();
   // IndexedDB에 데이터가 없으면 기본 보드 사용
   if (!currentBoard) {
     currentBoard = defaultBoard;
@@ -24,7 +26,15 @@ async function init() {
     editingCard = null;
   };
 
-
+  document
+    .querySelectorAll('input[name="importMode"]')
+    .forEach(radio => {
+      radio.addEventListener('change', e => {
+        const warning = document.getElementById('appendWarning');
+        warning.style.display =
+          e.target.value === 'append' ? 'block' : 'none';
+      });
+    });
 
   document.getElementById('modalSave').onclick = () => {
     const title = document.getElementById('modalTitle').value.trim();
@@ -76,6 +86,10 @@ async function init() {
   closeModal();
   document.getElementById('listCancel').onclick = closeListModal;
 
+  document.getElementById('searchInput').addEventListener('input', e => {
+    searchQuery = e.target.value.trim().toLowerCase();
+    render(currentBoard);
+  });
 
   document.getElementById('listSave').onclick = () => {
     if (!editingList) return;
@@ -138,6 +152,9 @@ function render(board) {
 
 
   board.lists.forEach(list => {
+    if (searchQuery) {
+      list.collapsed = false;
+    }
     const section = document.createElement('section');
     section.dataset.id = list.id;
     section.style.setProperty('--list-color', list.color || 'transparent');
@@ -180,8 +197,33 @@ function render(board) {
     ul.className = 'card-list';
     if (list.collapsed) section.classList.add('collapsed');
 
+    const matchCard = card => {
+      if (!searchQuery) return true;
 
+
+      const text = [
+        card.title,
+        card.memo,
+        ...(card.tags || [])
+      ].join(' ').toLowerCase();
+
+
+      return text.includes(searchQuery);
+    };
+
+    if (
+      searchQuery &&
+      list.cards.filter(matchCard).length === 0
+    ) {
+      const empty = document.createElement('div');
+      empty.style.fontSize = '12px';
+      empty.style.color = 'var(--muted)';
+      empty.style.padding = '6px';
+      empty.textContent = '검색 결과 없음';
+      ul.appendChild(empty);
+    }
     list.cards.forEach(card => {
+      if (!matchCard(card)) return;
       const li = document.createElement('li');
       li.className = 'card';
       li.dataset.id = card.id;
@@ -198,7 +240,11 @@ function render(board) {
         : '';
 
 
-      li.innerHTML = `<strong>${card.title}</strong>${tagsHTML}${memoHTML}`;
+      li.innerHTML = `
+<strong>${highlight(card.title)}</strong>
+${tagsHTML}
+${memoHTML ? `<p class="memo">${highlight(card.memo)}</p><span class="toggle-btn">펼치기</span>` : ''}
+`;
 
 
       if (card.memo) {
@@ -236,6 +282,7 @@ function render(board) {
       group: 'cards',
       animation: 150,
       onEnd: () => {
+        if (searchQuery) return;
         syncFromDOM();
         saveBoard(currentBoard);
       }
@@ -371,5 +418,140 @@ function syncListsFromDOM() {
   currentBoard.lists = sections.map(section =>
     currentBoard.lists.find(l => l.id === section.dataset.id)
   );
+}
+function highlight(text) {
+  if (!searchQuery) return text;
+  return text.replace(
+    new RegExp(`(${searchQuery})`, 'gi'),
+    '<mark>$1</mark>'
+  );
+}
+
+function showLoading(text) {
+  document.getElementById('loadingText').textContent = text;
+  document.getElementById('loadingModal').classList.remove('hidden');
+}
+
+
+function hideLoading() {
+  document.getElementById('loadingModal').classList.add('hidden');
+}
+
+function exportJSON() {
+  showLoading('보드 데이터 준비 중…');
+
+
+  setTimeout(() => {
+    const data = JSON.stringify(currentBoard, null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+
+
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'board-backup.json';
+    a.click();
+
+
+    hideLoading();
+  }, 400); // UX 안정용
+}
+
+async function importJSON(file) {
+  showLoading('파일 읽는 중…');
+
+
+  try {
+    const text = await file.text();
+
+
+    document.getElementById('loadingText').textContent = '데이터 검증 중…';
+    await new Promise(r => setTimeout(r, 300));
+
+
+    const data = JSON.parse(text);
+
+
+    if (!data.lists) throw new Error('형식 오류');
+
+
+    document.getElementById('loadingText').textContent = '보드 적용 중…';
+    await new Promise(r => setTimeout(r, 300));
+
+
+    currentBoard = data;
+    await saveBoard(currentBoard);
+    render(currentBoard);
+
+
+    hideLoading();
+  } catch (e) {
+    hideLoading();
+    alert('JSON 파일이 올바르지 않습니다.');
+  }
+}
+
+function openSettingsPage() {
+  document.getElementById('settingsPage').classList.remove('hidden');
+  document.getElementById('board').style.display = 'none';
+}
+
+
+function closeSettingsPage() {
+  document.getElementById('settingsPage').classList.add('hidden');
+  document.getElementById('board').style.display = '';
+}
+
+function openExportModal() {
+  document.getElementById('exportModal').classList.remove('hidden');
+}
+
+
+function closeExportModal() {
+  document.getElementById('exportModal').classList.add('hidden');
+}
+
+const THEME_KEY = 'memoBoardTheme';
+
+
+function applyTheme(theme) {
+  const html = document.documentElement;
+
+
+  html.classList.remove('theme-light', 'theme-dark');
+
+
+  if (theme === 'light') {
+    html.classList.add('theme-light');
+  } else if (theme === 'dark') {
+    html.classList.add('theme-dark');
+  }
+// system이면 아무 클래스도 안 붙임
+}
+
+
+function loadTheme() {
+  const saved = localStorage.getItem(THEME_KEY) || 'system';
+  applyTheme(saved);
+
+
+// 라디오 상태 동기화
+  document
+    .querySelectorAll('input[name="theme"]')
+    .forEach(radio => {
+      radio.checked = radio.value === saved;
+    });
+}
+
+
+function initThemeSettings() {
+  document
+    .querySelectorAll('input[name="theme"]')
+    .forEach(radio => {
+      radio.addEventListener('change', e => {
+        const theme = e.target.value;
+        localStorage.setItem(THEME_KEY, theme);
+        applyTheme(theme);
+      });
+    });
 }
 init();
