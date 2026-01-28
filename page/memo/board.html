@@ -107,18 +107,12 @@
     /* 하단 고정 광고 */
     #ad-fixed-bottom {
       flex-shrink: 0;
-      height: 56px; /* 모바일 배너 높이 */
+      height: 56px;
+      min-height: 56px;
       border-top: 1px solid var(--border);
       background: var(--bg);
       z-index: 10;
-    }
-
-    #ad-fixed-bottom {
       pointer-events: auto;
-    }
-
-    #ad-fixed-bottom {
-      min-height: 56px;
     }
 
     header {
@@ -663,7 +657,137 @@ EXPORT MODAL
       background: #2563eb;
     }
 
+    #importModal input[type="radio"] {
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      display: inline-block;
+      position: relative;
+    }
 
+
+    #importModal input[type="radio"]:checked {
+      border-color: var(--primary);
+    }
+
+
+    #importModal input[type="radio"]:checked::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 6px;
+      height: 6px;
+      background: var(--primary);
+      border-radius: 50%;
+    }
+    /* ===== LIST PIN (즐겨찾기) ===== */
+    .pin-btn {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 14px;
+      opacity: 0.4;
+      transition: opacity .15s, transform .15s;
+    }
+
+
+    .pin-btn.active {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+
+    .pin-btn:hover {
+      opacity: 1;
+    }
+    .pinned-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+    }
+
+    .list-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+
+    .list-title {
+      flex: 1;
+      min-width: 0; /* ⭐ 이거 중요 */
+    }
+
+
+    .list-title h3 {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+
+    .list-actions {
+      display: flex;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    /* 기본 */
+    .pin-btn {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 14px;
+      opacity: 0.35;
+      transition: all .15s ease;
+    }
+
+
+    /* 라이트 모드 */
+    html:not(.theme-dark) .pin-btn.active {
+      opacity: 1;
+      color: #f59e0b; /* amber */
+    }
+
+
+    /* 다크 모드 */
+    html.theme-dark .pin-btn {
+      color: #9ca3af; /* gray-400 */
+    }
+
+
+    html.theme-dark .pin-btn.active {
+      opacity: 1;
+      color: #fbbf24; /* 밝은 amber */
+      background: rgba(251, 191, 36, 0.15);
+      border-radius: 6px;
+      box-shadow: 0 0 0 1px rgba(251, 191, 36, 0.25);
+    }
+
+
+    .pin-btn:hover {
+      opacity: 1;
+    }
+
+    html.theme-dark .pin-btn.active {
+      animation: pin-pop .2s ease;
+    }
+
+
+    @keyframes pin-pop {
+      from { transform: scale(0.9); }
+      to { transform: scale(1); }
+    }
     /* 광고 영역 */
     .export-ad {
       margin-top: 16px;
@@ -684,8 +808,8 @@ EXPORT MODAL
     </div>
   </header>
   <div id="content">
+    <div id="pinnedIndicator"></div>
     <main id="board"></main>
-
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script src="db.js"></script>
     <script src="board.js"></script>
@@ -755,11 +879,13 @@ EXPORT MODAL
         <!-- 데이터 -->
         <section>
           <h3>데이터</h3>
-          <button onclick="importJSON()" style="color:#ef4444">
-            JSON 반입 (기존 데이터 덮어씀)
+          <button onclick="openImportModal()">
+            JSON 반입
           </button>
 
           <button onclick="openExportModal()">JSON 반출</button>
+
+          <button onclick="togglePinnedView()">⭐ 즐겨찾기만 보기</button>
         </section>
 
 

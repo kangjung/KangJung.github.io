@@ -1,8 +1,8 @@
 const defaultBoard = {
   lists: [
-    { id:'todo', title:'할 일', color:'#3b82f6', collapsed:false, cards:[] },
-    { id: 'doing', title: '진행중', color:'#f97316', collapsed:false, cards:[] },
-    { id: 'done', title: '완료', color:'#10b981', collapsed:false, cards:[] },
+    { id:'todo', title:'할 일', color:'#3b82f6', collapsed:false, cards:[], pinned: false, },
+    { id: 'doing', title: '진행중', color:'#f97316', collapsed:false, cards:[], pinned: false, },
+    { id: 'done', title: '완료', color:'#10b981', collapsed:false, cards:[], pinned: false, },
   ]
 };
 
@@ -10,6 +10,7 @@ let editingCard = null;
 let editingListId = null;
 let editingList = null;
 let searchQuery = '';
+let showPinnedOnly = false;
 
 async function init() {
   currentBoard = await loadBoard();
@@ -146,25 +147,53 @@ function closeModal() {
   editingCard = null;
   editingListId = null;
 }
+
+
 function render(board) {
   const el = document.getElementById('board');
   el.innerHTML = '';
 
+  /* ===== 즐겨찾기 필터 ===== */
+  const listsToRender =
+    showPinnedOnly && !searchQuery
+      ? board.lists.filter(l => l.pinned)
+      : board.lists;
 
-  board.lists.forEach(list => {
-    if (searchQuery) {
-      list.collapsed = false;
-    }
+  /* ===== 상단 표시 ===== */
+  const indicator = document.getElementById('pinnedIndicator');
+  indicator.innerHTML = '';
+
+  if (showPinnedOnly) {
+    indicator.innerHTML = `
+      <div class="pinned-indicator">
+        ⭐ 즐겨찾기 리스트만 표시 중
+        <button onclick="togglePinnedView()">해제</button>
+      </div>
+    `;
+  }
+
+  if (showPinnedOnly && listsToRender.length === 0) {
+    el.innerHTML = `
+      <p style="font-size:13px; color:var(--muted); padding:16px;">
+        ⭐ 즐겨찾기한 리스트가 없습니다
+      </p>
+    `;
+    return;
+  }
+
+  /* ===== 리스트 렌더 ===== */
+  listsToRender.forEach(list => {
+    if (searchQuery) list.collapsed = false;
+
     const section = document.createElement('section');
     section.dataset.id = list.id;
     section.style.setProperty('--list-color', list.color || 'transparent');
-
 
     /* ===== header ===== */
     const header = document.createElement('div');
     header.className = 'list-header';
 
-
+    /* collapse */
     const collapseBtn = document.createElement('button');
     collapseBtn.className = 'collapse-btn';
     collapseBtn.textContent = list.collapsed ? '▸' : '▾';
@@ -175,12 +204,29 @@ function render(board) {
       render(currentBoard);
     };
 
-
+    /* title */
     const titleEl = document.createElement('h3');
     titleEl.textContent = list.title;
+    titleEl.title = list.title;
     titleEl.onclick = () => openListModal(list);
 
+    const titleWrap = document.createElement('div');
+    titleWrap.className = 'list-title';
+    titleWrap.appendChild(titleEl);
 
+    /* pin */
+    const pinBtn = document.createElement('button');
+    pinBtn.className = 'pin-btn' + (list.pinned ? ' active' : '');
+    pinBtn.textContent = '⭐';
+    pinBtn.title = '즐겨찾기';
+    pinBtn.onclick = e => {
+      e.stopPropagation();
+      list.pinned = !list.pinned;
+      saveBoard(currentBoard);
+      render(currentBoard);
+    };
+
+    /* add card */
     const addBtn = document.createElement('button');
     addBtn.textContent = '+ 카드';
     addBtn.onclick = e => {
@@ -188,9 +234,11 @@ function render(board) {
       openNewCardModal(list.id);
     };
 
+    const actions = document.createElement('div');
+    actions.className = 'list-actions';
+    actions.append(pinBtn, collapseBtn, addBtn);
 
-    header.append(collapseBtn, titleEl, addBtn);
-
+    header.append(titleWrap, actions);
 
     /* ===== cards ===== */
     const ul = document.createElement('ul');
@@ -199,22 +247,15 @@ function render(board) {
 
     const matchCard = card => {
       if (!searchQuery) return true;
-
-
       const text = [
         card.title,
         card.memo,
         ...(card.tags || [])
       ].join(' ').toLowerCase();
-
-
       return text.includes(searchQuery);
     };
 
-    if (
-      searchQuery &&
-      list.cards.filter(matchCard).length === 0
-    ) {
+    if (searchQuery && list.cards.filter(matchCard).length === 0) {
       const empty = document.createElement('div');
       empty.style.fontSize = '12px';
       empty.style.color = 'var(--muted)';
@@ -222,43 +263,38 @@ function render(board) {
       empty.textContent = '검색 결과 없음';
       ul.appendChild(empty);
     }
+
     list.cards.forEach(card => {
       if (!matchCard(card)) return;
+
       const li = document.createElement('li');
       li.className = 'card';
       li.dataset.id = card.id;
       li.style.borderLeft = card.color ? `6px solid ${card.color}` : '';
 
-
-      const tagsHTML = card.tags?.length
-        ? `<div class="tags">${card.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>`
-        : '';
-
-
-      const memoHTML = card.memo
-        ? `<p class="memo">${card.memo}</p><span class="toggle-btn">펼치기</span>`
-        : '';
-
-
       li.innerHTML = `
-<strong>${highlight(card.title)}</strong>
-${tagsHTML}
-${memoHTML ? `<p class="memo">${highlight(card.memo)}</p><span class="toggle-btn">펼치기</span>` : ''}
-`;
-
+        <strong>${highlight(card.title)}</strong>
+        ${
+        card.tags?.length
+          ? `<div class="tags">${card.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>`
+          : ''
+      }
+        ${
+        card.memo
+          ? `<p class="memo">${highlight(card.memo)}</p><span class="toggle-btn">펼치기</span>`
+          : ''
+      }
+      `;
 
       if (card.memo) {
         const memoEl = li.querySelector('.memo');
         const toggleBtn = li.querySelector('.toggle-btn');
-
-
         toggleBtn.onclick = e => {
           e.stopPropagation();
           memoEl.classList.toggle('expanded');
           toggleBtn.textContent = memoEl.classList.contains('expanded') ? '접기' : '펼치기';
         };
       }
-
 
       li.onclick = () => openCardModal(card, list.id);
       li.oncontextmenu = e => {
@@ -269,14 +305,11 @@ ${memoHTML ? `<p class="memo">${highlight(card.memo)}</p><span class="toggle-btn
         render(currentBoard);
       };
 
-
       ul.appendChild(li);
     });
 
-
     section.append(header, ul);
     el.appendChild(section);
-
 
     new Sortable(ul, {
       group: 'cards',
@@ -289,8 +322,7 @@ ${memoHTML ? `<p class="memo">${highlight(card.memo)}</p><span class="toggle-btn
     });
   });
 
-
-  /* 리스트 추가 버튼 */
+  /* ===== 리스트 추가 ===== */
   const addListBtn = document.createElement('button');
   addListBtn.className = 'add-list';
   addListBtn.textContent = '+ 리스트 추가';
@@ -302,6 +334,7 @@ ${memoHTML ? `<p class="memo">${highlight(card.memo)}</p><span class="toggle-btn
       title,
       color: '#64748b',
       collapsed: false,
+      pinned: false,
       cards: []
     });
     saveBoard(currentBoard);
@@ -309,8 +342,7 @@ ${memoHTML ? `<p class="memo">${highlight(card.memo)}</p><span class="toggle-btn
   };
   el.appendChild(addListBtn);
 
-
-  new Sortable(document.getElementById('board'), {
+  new Sortable(el, {
     animation: 200,
     draggable: 'section',
     fallbackOnBody: true,
@@ -321,6 +353,7 @@ ${memoHTML ? `<p class="memo">${highlight(card.memo)}</p><span class="toggle-btn
     }
   });
 }
+
 
 let currentBoard;
 
@@ -456,40 +489,6 @@ function exportJSON() {
   }, 400); // UX 안정용
 }
 
-async function importJSON(file) {
-  showLoading('파일 읽는 중…');
-
-
-  try {
-    const text = await file.text();
-
-
-    document.getElementById('loadingText').textContent = '데이터 검증 중…';
-    await new Promise(r => setTimeout(r, 300));
-
-
-    const data = JSON.parse(text);
-
-
-    if (!data.lists) throw new Error('형식 오류');
-
-
-    document.getElementById('loadingText').textContent = '보드 적용 중…';
-    await new Promise(r => setTimeout(r, 300));
-
-
-    currentBoard = data;
-    await saveBoard(currentBoard);
-    render(currentBoard);
-
-
-    hideLoading();
-  } catch (e) {
-    hideLoading();
-    alert('JSON 파일이 올바르지 않습니다.');
-  }
-}
-
 function openSettingsPage() {
   document.getElementById('settingsPage').classList.remove('hidden');
   document.getElementById('board').style.display = 'none';
@@ -510,6 +509,96 @@ function closeExportModal() {
   document.getElementById('exportModal').classList.add('hidden');
 }
 
+function openImportModal() {
+  document.getElementById('importModal').classList.remove('hidden');
+}
+
+
+function closeImportModal() {
+  document.getElementById('importModal').classList.add('hidden');
+  document.getElementById('importFileInput').value = '';
+}
+
+
+async function confirmImport() {
+  const fileInput = document.getElementById('importFileInput');
+  const file = fileInput.files[0];
+
+
+  if (!file) {
+    alert('JSON 파일을 선택해 주세요.');
+    return;
+  }
+
+
+  const mode = document.querySelector(
+    'input[name="importMode"]:checked'
+  ).value;
+
+
+  showLoading('파일 읽는 중…');
+
+
+  try {
+    const text = await file.text();
+
+
+    document.getElementById('loadingText').textContent = '데이터 검증 중…';
+    await new Promise(r => setTimeout(r, 300));
+
+
+    const data = JSON.parse(text);
+
+
+    if (!data || !Array.isArray(data.lists)) {
+      throw new Error('형식 오류');
+    }
+
+
+    document.getElementById('loadingText').textContent = '보드 적용 중…';
+    await new Promise(r => setTimeout(r, 300));
+
+
+    if (mode === 'replace') {
+      currentBoard = data;
+    } else {
+      currentBoard = mergeBoard(currentBoard, data);
+    }
+
+
+    await saveBoard(currentBoard);
+    render(currentBoard);
+
+
+    closeImportModal();
+    closeSettingsPage();
+  } catch (e) {
+    alert('JSON 파일이 올바르지 않습니다.');
+  } finally {
+    hideLoading();
+  }
+}
+function mergeBoard(current, imported) {
+  const result = structuredClone(current);
+
+
+  imported.lists.forEach(list => {
+    const newListId = list.id + '-' + Date.now();
+
+
+    result.lists.push({
+      ...list,
+      id: newListId,
+      cards: list.cards.map(card => ({
+        ...card,
+        id: card.id + '-' + Math.random().toString(36).slice(2, 6)
+      }))
+    });
+  });
+
+
+  return result;
+}
 const THEME_KEY = 'memoBoardTheme';
 
 
@@ -553,5 +642,10 @@ function initThemeSettings() {
         applyTheme(theme);
       });
     });
+}
+
+function togglePinnedView() {
+  showPinnedOnly = !showPinnedOnly;
+  render(currentBoard);
 }
 init();
