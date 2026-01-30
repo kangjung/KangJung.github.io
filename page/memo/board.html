@@ -811,6 +811,91 @@ EXPORT MODAL
       border-top: 1px solid var(--border);
       min-height: 60px;
     }
+
+    .app-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .brand img {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .brand-ko {
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .brand-en {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .actions input {
+      width: 120px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    .icon-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+    }
+    @media (max-width: 420px) {
+      .brand-en {
+        display: none;
+      }
+    }
+    @media (max-width: 360px) {
+      .brand-text {
+        display: none;
+      }
+
+      .actions input {
+        width: 90px;
+      }
+    }
+    @media (max-width: 300px) {
+      .actions input {
+        display: none;
+      }
+    }
   </style>
 
   <script>
@@ -823,15 +908,19 @@ EXPORT MODAL
 </head>
 <body>
 <div id="app">
-  <header>
-    <div style="display:flex; align-items:center; gap:8px;">
-      <img src="./icon.png" alt="Memo Board" style="width:33px; height:33px; border-radius:6px;">
-      <span>My Board</span>
+  <header class="app-header">
+    <div class="brand">
+      <img src="./icon.png" alt="SideNote" title="곁에 두는 메모 · SideNote" />
+      <div class="brand-text">
+        <span class="brand-ko">곁에 두는 메모</span>
+        <span class="brand-en">SideNote</span>
+      </div>
     </div>
-    <div style="display:flex; gap:8px; align-items:center;">
-      <input id="searchInput" type="search" placeholder="카드 검색..." style="padding:6px 10px; border-radius:8px; border:1px solid var(--border); background:var(--card); color:var(--text); font-size:13px;"/>
-      <button id="helpBtn" class="help-btn">❔</button>
-      <button class="help-btn" onclick="openSettingsPage()">⚙️</button>
+
+    <div class="actions">
+      <input id="searchInput" type="search" placeholder="검색" />
+      <button class="icon-btn" id="helpBtn">❔</button>
+      <button class="icon-btn" onclick="openSettingsPage()">⚙️</button>
     </div>
   </header>
   <div id="content">
