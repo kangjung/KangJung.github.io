@@ -37,6 +37,16 @@ async function init() {
     await saveBoard(currentBoard);
   }
 
+  document.getElementById('modalDelete').onclick = () => {
+    if (!confirm('이 카드 삭제할까요?')) return;
+    const list = currentBoard.lists.find(l => l.id === editingListId);
+    list.cards = list.cards.filter(c => c.id !== editingCard.id);
+    saveBoard(currentBoard);
+    render(currentBoard);
+    document.getElementById('cardModal').classList.add('hidden');
+    editingCard = null;
+  };
+
   document.getElementById('modalCancel').onclick = () => {
     document.getElementById('cardModal').classList.add('hidden');
     editingCard = null;
@@ -425,30 +435,24 @@ function syncFromDOM() {
 function openCardModal(card, listId) {
   editingCard = card;
   editingListId = listId;
+  document.getElementById('modalDelete').style.display = 'inline-block';
   document.getElementById('modalTitleText').textContent = '카드 편집';
   document.getElementById('modalTitle').value = card.title;
   document.getElementById('modalMemo').value = card.memo || '';
-  document.getElementById('modalTags').value =
-    card.tags?.join(', ') || '';
-
-
-  document.getElementById('modalColor').value =
-    card.color || '#1e293b';
-
-
+  document.getElementById('modalTags').value = card.tags?.join(', ') || '';
+  document.getElementById('modalColor').value = card.color || '#1e293b';
   document.getElementById('cardModal').classList.remove('hidden');
 }
 
 function openNewCardModal(listId) {
   editingCard = null;
   editingListId = listId;
+  document.getElementById('modalDelete').style.display =  'none';
   document.getElementById('modalTitleText').textContent = '카드 추가';
   document.getElementById('modalTitle').value = '';
   document.getElementById('modalMemo').value = '';
   document.getElementById('modalTags').value = '';
   document.getElementById('modalColor').value = '#1e293b';
-
-
   document.getElementById('cardModal').classList.remove('hidden');
 }
 
@@ -467,7 +471,6 @@ function openListModal(list) {
 
 function openCreateListModal() {
   editingList = null;
-
   document.getElementById('listDelete').style.display =  'none';
   document.getElementById('listTitle').value = '';
   document.getElementById('listColor').value = getRandomListColor();
