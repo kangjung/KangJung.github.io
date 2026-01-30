@@ -689,6 +689,9 @@ function initThemeSettings() {
 
 function togglePinnedView() {
   showPinnedOnly = !showPinnedOnly;
+  document.querySelectorAll(".pinToggleBtn").forEach(btn => {
+    btn.classList.toggle("active", showPinnedOnly);
+  });
   render(currentBoard);
 }
 init();

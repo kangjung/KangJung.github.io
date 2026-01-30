@@ -1004,6 +1004,10 @@ EXPORT MODAL
     .primary-btn:hover {
       background: #2563eb !important;
     }
+    .pinToggleBtn.active {
+      color: #f59e0b;
+      background: rgba(245, 158, 11, 0.15);
+    }
   </style>
 
   <script>
@@ -1027,6 +1031,7 @@ EXPORT MODAL
 
     <div class="actions">
       <input id="searchInput" type="search" placeholder="검색" />
+      <button onclick="togglePinnedView()"title="즐겨찾기만 보기" class="pinToggleBtn">⭐</button>
       <button class="icon-btn" id="helpBtn">❔</button>
       <button class="icon-btn" onclick="openSettingsPage()">⚙️</button>
     </div>
@@ -1109,7 +1114,7 @@ EXPORT MODAL
 
           <button onclick="openExportModal()">JSON 반출</button>
 
-          <button onclick="togglePinnedView()">⭐ 즐겨찾기만 보기</button>
+          <button onclick="togglePinnedView()" class="pinToggleBtn">⭐ 즐겨찾기만 보기</button>
         </section>
 
 
