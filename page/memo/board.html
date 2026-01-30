@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2007216448786117" crossorigin="anonymous"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-NML6BS1JMB"></script>
+  <!-- 기본 파비콘 -->
+  <link rel="icon" href="./icon.png" type="image/png">
+
+  <!-- 고해상도 파비콘 (크롬/엣지) -->
+  <link rel="icon" sizes="192x192" href="./icon.png">
+
+  <!-- iOS 홈화면 아이콘 -->
+  <link rel="apple-touch-icon" href="./icon.png">
+
+  <!-- 안드로이드 / PWA용 -->
+  <link rel="apple-touch-icon" sizes="180x180" href="./icon.png">
+  <link rel="icon" sizes="512x512" href="./icon.png">
   <title>Memo Board</title>
   <style>
     /* ===============================
@@ -812,7 +824,10 @@ EXPORT MODAL
 <body>
 <div id="app">
   <header>
-    📋 My Board
+    <div style="display:flex; align-items:center; gap:8px;">
+      <img src="./icon.png" alt="Memo Board" style="width:22px; height:22px; border-radius:6px;">
+      <span>My Board</span>
+    </div>
     <div style="display:flex; gap:8px; align-items:center;">
       <input id="searchInput" type="search" placeholder="카드 검색..." style="padding:6px 10px; border-radius:8px; border:1px solid var(--border); background:var(--card); color:var(--text); font-size:13px;"/>
       <button id="helpBtn" class="help-btn">❔</button>
