@@ -3,8 +3,37 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="서버 저장 없는 100% 프라이빗 칸반 메모장, SideNote. 웨일 사이드바에서 가장 빠르게 아이디어를 기록하세요.">
+  <meta name="keywords" content="메모장, 칸반보드, 사이드바메모, 개인메모, 프라이버시, 웨일확장프로그램, SideNote, 곁에두는메모">
+  <meta name="author" content="SideNote">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="곁에 두는 메모 · SideNote">
+  <meta property="og:description" content="내 브라우저에만 저장되는 안전하고 편리한 칸반 스타일 메모 보드">
+  <meta property="og:image" content="./icon.png"> <meta property="og:url" content="https://sidenote.me"> <meta property="og:site_name" content="SideNote">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="곁에 두는 메모 · SideNote">
+  <meta name="twitter:description" content="웨일 사이드바 최적화! 나만의 프라이빗 아이디어 보드">
+  <meta name="twitter:image" content="./icon.png">
+
+  <meta name="theme-color" content="#f4f5f7"> <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="SideNote">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2007216448786117" crossorigin="anonymous"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-NML6BS1JMB"></script>
+  <!-- 기본 파비콘 -->
+  <link rel="icon" href="./icon.png" type="image/png">
+
+  <!-- 고해상도 파비콘 (크롬/엣지) -->
+  <link rel="icon" sizes="192x192" href="./icon.png">
+
+  <!-- iOS 홈화면 아이콘 -->
+  <link rel="apple-touch-icon" href="./icon.png">
+
+  <!-- 안드로이드 / PWA용 -->
+  <link rel="apple-touch-icon" sizes="180x180" href="./icon.png">
+  <link rel="icon" sizes="512x512" href="./icon.png">
   <title>Memo Board</title>
   <style>
     /* ===============================
@@ -403,7 +432,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 999;
+      z-index: 99999;
     }
 
     .modal.hidden {
@@ -799,6 +828,203 @@ EXPORT MODAL
       border-top: 1px solid var(--border);
       min-height: 60px;
     }
+
+    .app-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .brand img {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .brand-ko {
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .brand-en {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .actions input {
+      width: 120px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    .icon-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+    }
+    @media (max-width: 420px) {
+      .brand-en {
+        display: none;
+      }
+    }
+    @media (max-width: 360px) {
+      .brand-text {
+        display: none;
+      }
+
+      .actions input {
+        width: 90px;
+      }
+    }
+    @media (max-width: 300px) {
+      .actions input {
+        display: none;
+      }
+    }
+
+    /* 도움말 모달 커스텀 스타일 */
+    .help-modal-custom {
+      max-width: 450px !important;
+      text-align: left;
+    }
+
+    .help-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .help-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+    }
+
+    .help-header h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .help-header p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .privacy-box {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    .privacy-box h4 {
+      margin: 0 0 6px;
+      font-size: 14px;
+      color: #059669;
+    }
+
+    .privacy-box p {
+      margin: 0;
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .help-section h3 {
+      font-size: 15px;
+      margin-bottom: 12px;
+      border-left: 3px solid var(--muted);
+      padding-left: 8px;
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .guide-item {
+      background: var(--bg);
+      padding: 10px;
+      border-radius: 10px;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .guide-icon {
+      font-size: 16px;
+    }
+
+    .guide-item p {
+      margin: 0;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .tips ul {
+      padding-left: 20px;
+      margin: 0;
+    }
+
+    .tips li {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .primary-btn {
+      width: 100%;
+      background: #3b82f6 !important;
+      color: white !important;
+      padding: 12px !important;
+      font-weight: 600;
+      border: none !important;
+    }
+
+    .primary-btn:hover {
+      background: #2563eb !important;
+    }
+    .pinToggleBtn.active {
+      color: #f59e0b;
+      background: rgba(245, 158, 11, 0.15);
+    }
   </style>
 
   <script>
@@ -811,12 +1037,20 @@ EXPORT MODAL
 </head>
 <body>
 <div id="app">
-  <header>
-    📋 My Board
-    <div style="display:flex; gap:8px; align-items:center;">
-      <input id="searchInput" type="search" placeholder="카드 검색..." style="padding:6px 10px; border-radius:8px; border:1px solid var(--border); background:var(--card); color:var(--text); font-size:13px;"/>
-      <button id="helpBtn" class="help-btn">❔</button>
-      <button class="help-btn" onclick="openSettingsPage()">⚙️</button>
+  <header class="app-header">
+    <div class="brand">
+      <img src="./icon.png" alt="SideNote" title="곁에 두는 메모 · SideNote" />
+      <div class="brand-text">
+        <span class="brand-ko">곁에 두는 메모</span>
+        <span class="brand-en">SideNote</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <input id="searchInput" type="search" placeholder="검색" />
+      <button onclick="togglePinnedView()"title="즐겨찾기만 보기" class="pinToggleBtn">⭐</button>
+      <button class="icon-btn" id="helpBtn">❔</button>
+      <button class="icon-btn" onclick="openSettingsPage()">⚙️</button>
     </div>
   </header>
   <div id="content">
@@ -835,6 +1069,7 @@ EXPORT MODAL
         <label>카드 색상</label>
         <input type="color" id="modalColor"/>
         <div class="modal-actions">
+          <button id="modalDelete">삭제</button>
           <button id="modalCancel">취소</button>
           <button id="modalSave">저장</button>
         </div>
@@ -897,7 +1132,7 @@ EXPORT MODAL
 
           <button onclick="openExportModal()">JSON 반출</button>
 
-          <button onclick="togglePinnedView()">⭐ 즐겨찾기만 보기</button>
+          <button onclick="togglePinnedView()" class="pinToggleBtn">⭐ 즐겨찾기만 보기</button>
         </section>
 
 
@@ -1002,30 +1237,62 @@ EXPORT MODAL
       </div>
     </div>
     <div id="helpModal" class="modal hidden">
-      <div class="modal-content">
-        <h2>📘 사용법</h2>
+      <div class="modal-content help-modal-custom">
+        <div class="help-header">
+          <img src="./icon.png" alt="logo" class="help-logo">
+          <div>
+            <h2>SideNote</h2>
+            <p>곁에 두는 메모</p>
+          </div>
+        </div>
 
+        <div class="privacy-box">
+          <h4>🔒 100% 프라이빗 메모</h4>
+          <p>작성하신 내용은 서버로 전송되지 않으며, 오직 사용자의 <b>브라우저 내부</b>에만 저장됩니다. 개발자를 포함한 누구도 사용자의 메모를 수집하거나 열람할 수 없습니다.</p>
+        </div>
 
-        <ul style="font-size:14px; line-height:1.6; padding-left:18px;">
-          <li><b>카드 추가</b>: 리스트의 + 카드 버튼 클릭</li>
-          <li><b>카드 이동</b>: 드래그로 다른 리스트로 이동</li>
-          <li><b>리스트 접기</b>: 리스트 왼쪽 화살표 클릭</li>
-          <li><b>리스트 설정</b>: 제목 클릭 → 색상 / 이름 변경</li>
-          <li><b>카드 편집</b>: 카드 클릭</li>
-        </ul>
+        <div class="help-section">
+          <h3>✨ 주요 기능</h3>
+          <div class="guide-grid">
+            <div class="guide-item">
+              <span class="guide-icon">➕</span>
+              <p><b>카드 추가</b><br>리스트 상단 버튼 클릭</p>
+            </div>
+            <div class="guide-item">
+              <span class="guide-icon">🖐️</span>
+              <p><b>드래그 이동</b><br>자유롭게 순서 변경</p>
+            </div>
+            <div class="guide-item">
+              <span class="guide-icon">⚙️</span>
+              <p><b>리스트 설정</b><br>제목 클릭 시 색상 변경</p>
+            </div>
+            <div class="guide-item">
+              <span class="guide-icon">⭐</span>
+              <p><b>즐겨찾기</b><br>중요한 리스트 고정</p>
+            </div>
+          </div>
+        </div>
 
+        <div class="help-section tips">
+          <h3>💡 알아두면 좋은 팁</h3>
+          <ul>
+            <li>
+              메모는 <b>IndexedDB</b>를 이용해 이 브라우저에만 저장됩니다.
+              <br><small style="color:var(--muted)">
+              (웹앱에서 사용하는 안전한 로컬 저장 공간입니다)
+            </small>
+            </li>
+            <li>
+              브라우저의 <b>사이트 데이터</b>를 삭제하면 메모도 함께 삭제될 수 있습니다.
+            </li>
+            <li>
+              <b>설정 &gt; 데이터 반출</b>을 통해 메모를 JSON 파일로 백업할 수 있습니다.
+            </li>
+          </ul>
+        </div>
 
         <div class="modal-actions">
-          <button id="helpClose">닫기</button>
-        </div>
-      </div>
-    </div>
-    <div id="loadingModal" class="loading-modal hidden">
-      <div class="loading-box">
-        <div class="spinner"></div>
-        <p id="loadingText">데이터 처리 중…</p>
-        <!-- 광고 영역 (항상 존재) -->
-        <div class="ad-area">
+          <button id="helpClose" class="primary-btn">확인했습니다</button>
         </div>
       </div>
     </div>

@@ -12,6 +12,21 @@ let editingList = null;
 let searchQuery = '';
 let showPinnedOnly = false;
 
+const LIST_COLORS = [
+  '#3b82f6', // blue
+  '#10b981', // emerald
+  '#f59e0b', // amber
+  '#ef4444', // red
+  '#8b5cf6', // violet
+  '#06b6d4', // cyan
+  '#f97316', // orange
+  '#22c55e'  // green
+];
+
+function getRandomListColor() {
+  return LIST_COLORS[Math.floor(Math.random() * LIST_COLORS.length)];
+}
+
 async function init() {
   currentBoard = await loadBoard();
   loadTheme();
@@ -21,6 +36,16 @@ async function init() {
     currentBoard = defaultBoard;
     await saveBoard(currentBoard);
   }
+
+  document.getElementById('modalDelete').onclick = () => {
+    if (!confirm('이 카드 삭제할까요?')) return;
+    const list = currentBoard.lists.find(l => l.id === editingListId);
+    list.cards = list.cards.filter(c => c.id !== editingCard.id);
+    saveBoard(currentBoard);
+    render(currentBoard);
+    document.getElementById('cardModal').classList.add('hidden');
+    editingCard = null;
+  };
 
   document.getElementById('modalCancel').onclick = () => {
     document.getElementById('cardModal').classList.add('hidden');
@@ -92,28 +117,36 @@ async function init() {
     render(currentBoard);
   });
 
+
+
   document.getElementById('listSave').onclick = () => {
-    if (!editingList) return;
-
-
     const title = document.getElementById('listTitle').value.trim();
     if (!title) {
       alert('리스트 이름은 필수입니다.');
       return;
     }
 
+    const color = document.getElementById('listColor').value;
+    const collapsed = document.getElementById('listCollapsed').checked;
 
-    editingList.title = title;
-    editingList.color = document.getElementById('listColor').value;
-    editingList.collapsed =
-      document.getElementById('listCollapsed').checked;
-
+    if (editingList) {
+      editingList.title = title;
+      editingList.color = color;
+      editingList.collapsed = collapsed;
+    } else {
+      currentBoard.lists.push({
+        id: crypto.randomUUID(),
+        title,
+        color,
+        collapsed,
+        cards: []
+      });
+    }
 
     saveBoard(currentBoard);
     render(currentBoard);
     closeListModal();
   };
-
 
   document.getElementById('listDelete').onclick = () => {
     if (!editingList) return;
@@ -327,18 +360,19 @@ function render(board) {
   addListBtn.className = 'add-list';
   addListBtn.textContent = '+ 리스트 추가';
   addListBtn.onclick = () => {
-    const title = prompt('리스트 이름');
-    if (!title) return;
-    currentBoard.lists.push({
-      id: Date.now().toString(),
-      title,
-      color: '#64748b',
-      collapsed: false,
-      pinned: false,
-      cards: []
-    });
-    saveBoard(currentBoard);
-    render(currentBoard);
+    openCreateListModal();
+    // const title = prompt('리스트 이름');
+    // if (!title) return;
+    // currentBoard.lists.push({
+    //   id: Date.now().toString(),
+    //   title,
+    //   color: '#64748b',
+    //   collapsed: false,
+    //   pinned: false,
+    //   cards: []
+    // });
+    // saveBoard(currentBoard);
+    // render(currentBoard);
   };
   el.appendChild(addListBtn);
 
@@ -353,7 +387,6 @@ function render(board) {
     }
   });
 }
-
 
 let currentBoard;
 
@@ -402,40 +435,53 @@ function syncFromDOM() {
 function openCardModal(card, listId) {
   editingCard = card;
   editingListId = listId;
+  document.getElementById('modalDelete').style.display = 'inline-block';
   document.getElementById('modalTitleText').textContent = '카드 편집';
   document.getElementById('modalTitle').value = card.title;
   document.getElementById('modalMemo').value = card.memo || '';
-  document.getElementById('modalTags').value =
-    card.tags?.join(', ') || '';
-
-
-  document.getElementById('modalColor').value =
-    card.color || '#1e293b';
-
-
+  document.getElementById('modalTags').value = card.tags?.join(', ') || '';
+  document.getElementById('modalColor').value = card.color || '#1e293b';
   document.getElementById('cardModal').classList.remove('hidden');
 }
 
 function openNewCardModal(listId) {
   editingCard = null;
   editingListId = listId;
+  document.getElementById('modalDelete').style.display =  'none';
   document.getElementById('modalTitleText').textContent = '카드 추가';
   document.getElementById('modalTitle').value = '';
   document.getElementById('modalMemo').value = '';
   document.getElementById('modalTags').value = '';
   document.getElementById('modalColor').value = '#1e293b';
-
-
   document.getElementById('cardModal').classList.remove('hidden');
 }
 
 function openListModal(list) {
   editingList = list;
+
+
+  document.getElementById('listDelete').style.display = 'inline-block';
   document.getElementById('listTitle').value = list.title;
   document.getElementById('listColor').value = list.color || '#64748b';
   document.getElementById('listCollapsed').checked = !!list.collapsed;
   document.getElementById('listModal').classList.remove('hidden');
+
+  document.querySelector('#listModal h2').textContent = '리스트 설정';
 }
+
+function openCreateListModal() {
+  editingList = null;
+  document.getElementById('listDelete').style.display =  'none';
+  document.getElementById('listTitle').value = '';
+  document.getElementById('listColor').value = getRandomListColor();
+  document.getElementById('listCollapsed').checked = false;
+  document.getElementById('listModal').classList.remove('hidden');
+
+  document.querySelector('#listModal h2').textContent = '리스트 추가';
+
+  openModal('listModal');
+}
+
 
 function closeListModal() {
   editingList = null;
@@ -646,6 +692,9 @@ function initThemeSettings() {
 
 function togglePinnedView() {
   showPinnedOnly = !showPinnedOnly;
+  document.querySelectorAll(".pinToggleBtn").forEach(btn => {
+    btn.classList.toggle("active", showPinnedOnly);
+  });
   render(currentBoard);
 }
 init();
