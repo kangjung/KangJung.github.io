@@ -282,6 +282,10 @@
     section {
       --list-color: transparent;
       border-left: 6px solid var(--list-color);
+      /* section 전체 touch-action은 해제하거나 pan-y로 변경 */
+      touch-action: pan-y;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
 
@@ -291,7 +295,9 @@
     }
 
     .list-header {
-      cursor: pointer;
+      cursor: move; /* 마우스 커서 변경 */
+      touch-action: none; /* 헤더를 만졌을 때는 페이지 스크롤 방지 (드래그 우선) */
+      position: relative;
     }
 
 
@@ -299,10 +305,6 @@
       display: none;
     }
 
-
-    .list-header {
-      position: relative;
-    }
 
 
     .list-header::before {
@@ -490,9 +492,7 @@
     /* ===============================
        MOBILE
     ================================ */
-    #board {
-      touch-action: pan-y; /* 세로 스크롤은 가능, 드래그는 가능 */
-    }
+
 
     @media (max-width: 600px) {
       main#board {

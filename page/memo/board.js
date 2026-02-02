@@ -376,14 +376,21 @@ function render(board) {
   };
   el.appendChild(addListBtn);
 
-  new Sortable(el, {
+// 기존 인스턴스가 있다면 파괴하고 새로 생성 (중복 방지)
+  if (window.listSortableInstance) {
+    window.listSortableInstance.destroy();
+  }
+
+  window.listSortableInstance = new Sortable(el, {
     animation: 200,
-    draggable: 'section',
-    fallbackOnBody: true,
-    swapThreshold: 0.65,
+    draggable: 'section', // section 태그만 드래그 가능
+    handle: '.list-header', // 반드시 헤더를 잡아야 함
+    delay: 100, // 터치 오작동 방지
+    delayOnTouchOnly: true,
+    forceFallback: true, // 사이드바 UI 버그 방지
     onEnd: () => {
-      syncListsFromDOM();
-      saveBoard(currentBoard);
+      syncListsFromDOM(); // DOM 순서대로 데이터 동기화
+      saveBoard(currentBoard); // 저장
     }
   });
 }
