@@ -383,14 +383,44 @@ function render(board) {
 
   window.listSortableInstance = new Sortable(el, {
     animation: 200,
-    draggable: 'section', // section 태그만 드래그 가능
-    handle: '.list-header', // 반드시 헤더를 잡아야 함
-    delay: 100, // 터치 오작동 방지
+    draggable: 'section',
+    handle: '.list-header',
+    delay: 100,
     delayOnTouchOnly: true,
-    forceFallback: true, // 사이드바 UI 버그 방지
+    forceFallback: true,
+
+    // ⭐ 핵심: 이동 자체 차단
+    onMove: () => {
+      const isFiltered =
+        showPinnedOnly ||
+        (document.getElementById('searchInput').value.trim() !== "");
+
+      if (isFiltered) {
+        return false; // 👉 이게 진짜 핵심
+      }
+    },
+
+    // ⭐ 드래그 시작 시 안내만
+    onStart: () => {
+      const isFiltered =
+        showPinnedOnly ||
+        (document.getElementById('searchInput').value.trim() !== "");
+
+      if (isFiltered) {
+        alert("💡 필터 상태에서는 순서를 변경할 수 없습니다.");
+      }
+    },
+
+    // ⭐ 정상 상태에서만 저장
     onEnd: () => {
-      syncListsFromDOM(); // DOM 순서대로 데이터 동기화
-      saveBoard(currentBoard); // 저장
+      const isFiltered =
+        showPinnedOnly ||
+        (document.getElementById('searchInput').value.trim() !== "");
+
+      if (isFiltered) return;
+
+      syncListsFromDOM();
+      saveBoard(currentBoard);
     }
   });
 }
