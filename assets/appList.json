@@ -95,6 +95,32 @@
     ]
   },
   {
+    "title": { "ko": "D-Day Lite", "en": "D-Day Lite" },
+    "desc": {
+      "ko": "중요한 날짜와 디데이를 간편하게 관리하는 앱",
+      "en": "An app for easily managing important dates and D-Day countdowns."
+    },
+    "img": "./img/dday-lite/cover.png",
+    "icon": "./img/dday-lite/icon.png",
+    "tags": ["Android"],
+    "stores": [
+      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.ddaylite", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" }
+    ]
+  },
+  {
+    "title": { "ko": "Why Am I Paying?", "en": "Why Am I Paying?" },
+    "desc": {
+      "ko": "정기 결제와 지출을 확인하고 관리하는 앱",
+      "en": "An app for checking and managing recurring payments and expenses."
+    },
+    "img": "./img/subscription-manager/cover.png",
+    "icon": "./img/subscription-manager/icon.png",
+    "tags": ["Android"],
+    "stores": [
+      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.whyamipaying", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" }
+    ]
+  },
+  {
     "title": { "ko": "뱀서류 게임", "en": "Survivors-Like games" },
     "desc": {
       "ko": "뱀서류 탑뷰 게임 개발중",
