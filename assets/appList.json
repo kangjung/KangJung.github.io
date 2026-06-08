@@ -121,6 +121,19 @@
     ]
   },
   {
+    "title": { "ko": "감정 달력", "en": "Emotion Calendar" },
+    "desc": {
+      "ko": "매일의 감정과 일기를 기록하고 달력으로 돌아보는 앱",
+      "en": "An app for recording daily emotions and journals and reviewing them on a calendar."
+    },
+    "img": "./img/emotion-calendar/cover.png",
+    "icon": "./img/emotion-calendar/icon.png",
+    "tags": ["Android"],
+    "stores": [
+      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.EmotionCalendar", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" }
+    ]
+  },
+  {
     "title": { "ko": "뱀서류 게임", "en": "Survivors-Like games" },
     "desc": {
       "ko": "뱀서류 탑뷰 게임 개발중",
