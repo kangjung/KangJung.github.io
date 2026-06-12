@@ -134,6 +134,19 @@
     ]
   },
   {
+    "title": { "ko": "잊기전에", "en": "Before Forget" },
+    "desc": {
+      "ko": "생각난 일정을 빠르게 기록하고 원하는 시간에 알림받는 앱",
+      "en": "An app for quickly recording schedules and receiving reminders at the right time."
+    },
+    "img": "./img/before-forget/cover.png",
+    "icon": "./img/before-forget/icon.png",
+    "tags": ["Android"],
+    "stores": [
+      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.before_forget", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" }
+    ]
+  },
+  {
     "title": { "ko": "뱀서류 게임", "en": "Survivors-Like games" },
     "desc": {
       "ko": "뱀서류 탑뷰 게임 개발중",
