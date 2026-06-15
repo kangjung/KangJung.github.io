@@ -5,7 +5,7 @@ title: Unity Education Day 2023
 
 # post specific
 # if not specified, .name will be used from _data/owner/[language].yml
-#author: ""
+#author: "KangJung"
 # multiple category is not supported
 category: auto generated
 # multiple tag entries are possible
@@ -45,5 +45,53 @@ date: 2023-09-16 19:00:00 +0900
 
 <!-- outline-start -->
 ## Unity Education Day 2023
+2023년 9월 15일에 강남의 Maru 180 이벤트홀에서 진행된 Unity Education Day에 다녀왔습니다.
+
+## XR과 A.I를 통해 만들어지는 메타버스의 현실적 형태
+
+## Game 과 Game Engine 그리고 Gamification
+
+## 디지털 인플루언서
+
+## Generative AI를 활용하여 Unity Asset 만들기
+
+## Unity Mars
+시뮬레이션 환경, Image Marker 등에대한 설명을 해주시고 직접 만든 데모를 보여주면서 발표를 진행하셨다.
+
+## ProBuilder
+프로빌더 기초설명 및 모델 제작
+프로빌더 소개 - 유니티에서 3D 모델링을 직접 할수 있는 저작툴
+기초 모델링 및 기능 설명
+UV Mapping, Vertex, Smoothibng group
+공장을 프로빌더로 만드는 영상을 보여주면서 과정을 설명해주는 식으로 진행을 하셨다.,
+
+
+## ChatGPT와 Unity 게임 개발
+
+
+유니티에서도 GPT와 유사한 뮤즈챗을 준비하고 있다고 한다.
+
+## Unity를 이용한 Industry 적용 기술 및 사례
+참석자들이 게임쪽이 많은건지 이 세션이 시작하기 직전에 많이 빠져나가는 느낌이였다.
+이번 세션은 디지털 트윈에 대한 설명이 주였다.
+디지털 트윈의 Maturity Model 같은 것부터 시작해서
+RT3D Pipeline 게임과 달리 산업 분야에선 캐드 정보를 pixtz같은걸 활용해서 가상환경에 쓸수 있도록 한다고 한다.
+이런 식으로 만든걸 로봇이나 자동차 시뮬레이션 같은 곳에서 활용 할수 있다고 한다.
+가상환경에서 로봇의 움직임을 통신을 통해 현실 로봇에 동일하게 움직이게게하는등 여러 활용법이 있다고 한다
+Hitchless Towing, Robotic Teleop & Sim, Simulation to Reality 등 신기한 사례가 많았다.
+HMI, Digital Human등의 설명과 유니티에서 작년에 공개한 에너미스를 에셋스토어에서 받아서 표정을 바꾸는 데모거나 ZIVA의 올해 발표 내용을 보여주면서 설명을 해주셨다.
+
+역시 웹개발자인 나에겐 너무 어려운 내용 그냥 신기한 기술이구나… 라는 생각만 하면서 멍하게 들었다,.
+마지막으로Eigital Twin의 사례로 Sitowise, 벤쿠버 공항등을 소개하면서 세션이 마무리 됬다.
+
+## Unity education material deep dive
+유니티 교육팀이 이런걸 하고 있다는 내용이였다. 한국이 유니티 교육 2등이라고 한다. 내 생각보다 높아서 신기했다.
+Unity Edu-verse Package는 학생들이 유니티를 처음 접할때 너무 어렵게 느낄것 같아서 ui를 보다 간단하게 구성해서  3D 공간을 체험을 할수 있게 나온 교육 프로그램이라고 한다.
+
+다양한 유니티 트레이닝 프로그램을 제공하고 있다.
+
+유니티 배워서 사학과 출신이 박물관 프로잭트 총괄로 취업했다는가 디자이너 출신 경력단절인원이 네이버에 취업을 했다던가 유니티를 그냥 취미로만 하는 나에겐 별로 와닿는 이야기는 아니였다.
+
+교육청에서 진행한 USG 공유대학 혁신 교육 사업은 건축이 디자인학과 학생의 포트폴리오를 가상에서 한번에 다 볼수 있다는 점은 신기했다. 유니런은 코로나때 부터 유료였던 교육이 무료로 풀리며 한글 번역된 교육들을 한눈에 보고 배울수 잇다고 한다.
 
 <!-- outline-end -->
