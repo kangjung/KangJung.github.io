@@ -4,8 +4,9 @@ layout: hub-base
 ---
 {%- include multi_lng/get-lng-by-url.liquid -%}
 {%- assign lng = get_lng -%}
+{%- assign lp = '' -%}{%- if lng == 'en' -%}{%- assign lp = '/en' -%}{%- endif -%}
 <article class="post-wrap">
-  <a class="post-back" href="{{ site.baseurl }}/tabs/blog/">← 개발 기록</a>
+  <a class="post-back" href="{{ site.baseurl }}{{ lp }}/tabs/blog/">← {% if lng == 'en' %}Dev Notes{% else %}개발 기록{% endif %}</a>
   <header class="post-head">
     <div class="post-meta">
       <span class="date">{{ page.date | date: "%Y.%m.%d" }}</span>
@@ -26,10 +27,10 @@ layout: hub-base
   {%- if page.previous or page.next %}
   <nav class="post-nav">
     {%- if page.previous %}
-    <a href="{{ site.baseurl }}{{ page.previous.url }}"><span class="pn-dir">← 이전 글</span><span class="pn-title">{{ page.previous.title }}</span></a>
+    <a href="{{ site.baseurl }}{{ page.previous.url }}"><span class="pn-dir">← {% if lng == 'en' %}Older{% else %}이전 글{% endif %}</span><span class="pn-title">{{ page.previous.title }}</span></a>
     {%- else %}<span></span>{% endif -%}
     {%- if page.next %}
-    <a href="{{ site.baseurl }}{{ page.next.url }}" style="text-align:right"><span class="pn-dir">다음 글 →</span><span class="pn-title">{{ page.next.title }}</span></a>
+    <a href="{{ site.baseurl }}{{ page.next.url }}" style="text-align:right"><span class="pn-dir">{% if lng == 'en' %}Newer{% else %}다음 글{% endif %} →</span><span class="pn-title">{{ page.next.title }}</span></a>
     {%- else %}<span></span>{% endif -%}
   </nav>
   {%- endif %}

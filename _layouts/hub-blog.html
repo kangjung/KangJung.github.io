@@ -1,16 +1,32 @@
 ---
-# Blog list, hub-styled. Uses jekyll-paginate's `paginator`.
+# Blog list, hub-styled. Korean blog uses jekyll-paginate's `paginator`;
+# other languages (no paginate_path) fall back to a full language-filtered list.
 layout: hub-base
 ---
+{%- include multi_lng/get-lng-by-url.liquid -%}
+{%- assign lng = get_lng -%}
 <header class="page-head wrap">
+  {%- if lng == 'en' -%}
+  <span class="eyebrow">Writing</span>
+  <h1>Dev Notes</h1>
+  <p>Conferences, game jams, and things learned while building.</p>
+  {%- else -%}
   <span class="eyebrow">Writing</span>
   <h1>개발 기록</h1>
   <p>컨퍼런스, 게임잼, 그리고 만들면서 배운 것들.</p>
+  {%- endif -%}
 </header>
 
 <main class="wrap">
+  {%- if paginator -%}
+    {%- assign post_list = paginator.posts -%}
+  {%- else -%}
+    {%- include multi_lng/get-pages-by-lng.liquid pages = site.posts -%}
+    {%- assign post_list = lng_pages -%}
+  {%- endif -%}
+
   <div class="post-list-wrap">
-    {%- for post in paginator.posts -%}
+    {%- for post in post_list -%}
       <a class="post-card" href="{{ site.baseurl }}{{ post.url }}">
         {%- if post.img -%}
           <div class="post-thumb" style="background-image:url('{{ post.img }}')"></div>
@@ -27,18 +43,18 @@ layout: hub-base
     {%- endfor -%}
   </div>
 
-  {%- if paginator.total_pages > 1 -%}
+  {%- if paginator and paginator.total_pages > 1 -%}
   <nav class="pager">
     {%- if paginator.previous_page -%}
-      <a class="pg-btn" href="{{ site.baseurl }}{{ paginator.previous_page_path }}">← 이전</a>
+      <a class="pg-btn" href="{{ site.baseurl }}{{ paginator.previous_page_path }}">← {% if lng == 'en' %}Prev{% else %}이전{% endif %}</a>
     {%- else -%}
-      <span class="pg-btn disabled">← 이전</span>
+      <span class="pg-btn disabled">← {% if lng == 'en' %}Prev{% else %}이전{% endif %}</span>
     {%- endif -%}
     <span class="pg-now">{{ paginator.page }} / {{ paginator.total_pages }}</span>
     {%- if paginator.next_page -%}
-      <a class="pg-btn" href="{{ site.baseurl }}{{ paginator.next_page_path }}">다음 →</a>
+      <a class="pg-btn" href="{{ site.baseurl }}{{ paginator.next_page_path }}">{% if lng == 'en' %}Next{% else %}다음{% endif %} →</a>
     {%- else -%}
-      <span class="pg-btn disabled">다음 →</span>
+      <span class="pg-btn disabled">{% if lng == 'en' %}Next{% else %}다음{% endif %} →</span>
     {%- endif -%}
   </nav>
   {%- endif -%}

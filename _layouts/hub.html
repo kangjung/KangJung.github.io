@@ -6,8 +6,10 @@ layout: hub-base
 ---
 {{ content }}
 
+{%- include multi_lng/get-lng-by-url.liquid -%}{%- assign lng = get_lng -%}
 <script>
 (function () {
+  var LANG = '{{ lng }}';
   // ---- render games & apps from the single source of truth: appList.json ----
   var EMOJI = { 'game': '🎮', 'app': '📱' };
   function iconUrl(p) {
@@ -22,8 +24,8 @@ layout: hub-base
     return null;
   }
   function cardHTML(item) {
-    var t = (item.title && (item.title.ko || item.title.en)) || '';
-    var d = (item.desc && (item.desc.ko || item.desc.en)) || '';
+    var t = (item.title && (item.title[LANG] || item.title.ko || item.title.en)) || '';
+    var d = (item.desc && (item.desc[LANG] || item.desc.ko || item.desc.en)) || '';
     var tag = (item.tags && item.tags[0]) ? item.tags[0].toUpperCase() : '';
     var soon = item.status === 'developing';
     var icon = iconUrl(item.icon);

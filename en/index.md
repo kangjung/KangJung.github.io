@@ -1,45 +1,121 @@
 ---
-layout: home
-# multilingual page pair id, this must pair with translations of this page. (This name must be unique)
+layout: hub
 lng_pair: id_home
-
-# image for page specific usage
+title: "Maker of games, apps & web tools"
 img: ":banner.png"
-# publish date (used for seo)
-# if not specified, site.time will be used.
-#date: 2022-03-03 12:32:00 +0000
-
-# for override items in _data/lang/[language].yml
-#title: My title
-#button_name: "My button"
-# for override side_and_top_nav_buttons in _data/conf/main.yml
-#icon: "fa fa-bath"
-
-# seo
-# if not specified, date will be used.
-#meta_modify_date: 2022-03-03 12:32:00 +0000
-# check the meta_common_description in _data/owner/[language].yml
-#meta_description: ""
-
-# optional
-# please use the "image_viewer_on" below to enable image viewer for individual pages or posts (_posts/ or [language]/_posts folders).
-# image viewer can be enabled or disabled for all posts using the "image_viewer_posts: true" setting in _data/conf/main.yml.
-#image_viewer_on: true
-# please use the "image_lazy_loader_on" below to enable image lazy loader for individual pages or posts (_posts/ or [language]/_posts folders).
-# image lazy loader can be enabled or disabled for all posts using the "image_lazy_loader_posts: true" setting in _data/conf/main.yml.
-#image_lazy_loader_on: true
-# exclude from on site search
-#on_site_search_exclude: true
-# exclude from search engines
-#search_engine_exclude: true
-# to disable this page, simply set published: false or delete this file
-# don't forget that this is root index.html. If you disable this, there will be no index.html page to open
-#published: false
 ---
 
-{%- comment -%} Please delete below and place your page content here {%- endcomment -%}
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow reveal">Indie Maker · Seoul</span>
+      <h1 class="reveal" style="animation-delay:.05s">Games and apps,<br>built and<br><span class="accent">shipped solo.</span></h1>
+      <p class="hero-sub reveal" style="animation-delay:.12s">
+        I build Unity &amp; HTML5 games, Android apps, and browser tools on my own and
+        ship them to <strong>Google Play · ONE store · Whale · itch.io</strong>.
+        I write down what I learn along the way.
+      </p>
+      <div class="stats reveal" style="animation-delay:.18s">
+        <div class="stat"><div class="num">6</div><div class="lab">Games</div></div>
+        <div class="stat"><div class="num">5</div><div class="lab">Apps · Service</div></div>
+        <div class="stat"><div class="num">2</div><div class="lab">Web tools</div></div>
+      </div>
+      <div class="cta-row reveal" style="animation-delay:.24s">
+        <a class="btn btn-primary" href="#games">See the games →</a>
+        <a class="btn btn-ghost" href="#apps">Browse apps</a>
+      </div>
+    </div>
+    <div class="arcade reveal" style="animation-delay:.3s" aria-hidden="true">
+      <div class="tile" style="background:linear-gradient(145deg,#ff7a6b,#ff5a5a)">🐰</div>
+      <div class="tile" style="background:linear-gradient(145deg,#6172ff,#3d5afe)">🪐</div>
+      <div class="tile" style="background:linear-gradient(145deg,#3fb5ff,#2e8bff)">🟦</div>
+      <div class="tile" style="background:linear-gradient(145deg,#ffb23e,#ff8a3e)">🔤</div>
+      <div class="tile" style="background:linear-gradient(145deg,#ff6fa5,#ff4f93)">🥪</div>
+      <div class="tile" style="background:linear-gradient(145deg,#15c9a0,#0fae9a)">⚔️</div>
+      <div class="tile" style="background:linear-gradient(145deg,#ffb23e,#ff7a6b)">📅</div>
+      <div class="tile" style="background:linear-gradient(145deg,#3fb5ff,#6172ff)">⏳</div>
+      <div class="tile" style="background:linear-gradient(145deg,#15c9a0,#3fb5ff)">🔔</div>
+    </div>
+  </div>
+</header>
 
-{%- include util/auto-content-generator.liquid -%}
-{{ website_info_text_first }}
+<main>
+  <section id="games" class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Games</span>
+      <h2>Games I made</h2>
+      <p>Built with Unity and HTML5, shipped across several stores.</p>
+    </div>
+    <div class="grid games" id="games-grid"></div>
+  </section>
 
-{{ website_info_text_second }}
+  <section id="apps" class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Apps &amp; Service</span>
+      <h2>Apps &amp; a service</h2>
+      <p>Small, useful tools for everyday life — and a contest web service.</p>
+    </div>
+    <div class="grid apps" id="apps-grid"></div>
+  </section>
+
+  <section id="tools" class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Tools</span>
+      <h2>Tools you run in the browser</h2>
+      <p>No install — just open them. Each runs as its own web app.</p>
+    </div>
+    <div class="grid apps">
+      <a class="card" href="{{ site.baseurl }}/remove-background/">
+        <div class="card-art emoji" style="background:linear-gradient(145deg,#9b7bff,#3d5afe);color:#fff">🪄</div>
+        <div class="card-body"><div class="card-title"><h3>Background Remover</h3></div>
+          <p>Removes image backgrounds into transparent PNGs. Runs fully in your browser via WebAssembly — nothing is uploaded. Batch up to 20 images.</p>
+          <div class="meta-row"><span class="tag">WEBASSEMBLY</span><span class="stores"><span class="store-chip">Open ↗</span></span></div></div></a>
+
+      <a class="card" href="{{ site.baseurl }}/tool/">
+        <div class="card-art emoji" style="background:linear-gradient(145deg,#3fb5ff,#15c9a0);color:#fff">🧰</div>
+        <div class="card-body"><div class="card-title"><h3>DevBox</h3></div>
+          <p>A set of handy browser developer tools. No install needed.</p>
+          <div class="meta-row"><span class="tag">WEB</span><span class="stores"><span class="store-chip">Open ↗</span></span></div></div></a>
+    </div>
+  </section>
+
+  <section class="wrap lower">
+    <div id="notes">
+      <div class="sec-head">
+        <span class="eyebrow">Field Notes</span>
+        <h2>Dev Notes</h2>
+        <p>Conferences, game jams, and things learned while building.</p>
+      </div>
+      {%- include multi_lng/get-pages-by-lng.liquid pages = site.posts -%}
+      {%- if lng_pages.size > 0 -%}
+        {%- for _post in lng_pages limit: 6 -%}
+          {%- assign _cat = _post.categories[0] | default: _post.tags[0] -%}
+          <a class="note" href="{{ site.baseurl }}{{ _post.url }}">
+            <span class="date">{{ _post.date | date: "%Y.%m" }}</span>
+            <h3>{{ _post.title }}</h3>
+            {%- if _cat %}<span class="cat">{{ _cat }}</span>{%- endif -%}
+          </a>
+        {%- endfor -%}
+      {%- else -%}
+        <p style="color:var(--muted)">No posts yet.</p>
+      {%- endif -%}
+    </div>
+
+    <div id="elsewhere">
+      <div class="sec-head">
+        <span class="eyebrow">Elsewhere</span>
+        <h2>Writing elsewhere</h2>
+      </div>
+      <div class="rss-card">
+        <div class="rss-top">
+          <strong style="font-size:14.5px">📡 My blog feed</strong>
+          <span class="rss-badge">● RSS</span>
+        </div>
+        <div id="rss-items">
+          <a class="rss-item" href="#"><h4>Latest posts from my blog show up here</h4><p>Waiting for RSS</p></a>
+        </div>
+        <p class="rss-note">↳ Pulls the latest posts from an external blog via RSS.<br>Set <code>FEED_URL</code> in <code>_layouts/hub.html</code> to enable.</p>
+      </div>
+    </div>
+  </section>
+</main>

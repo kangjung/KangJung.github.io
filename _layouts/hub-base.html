@@ -7,6 +7,9 @@
 {%- include multi_lng/get-lng-by-url.liquid -%}
 {%- assign lng = get_lng -%}
 {%- include multi_lng/get-lng-code.liquid lng = lng -%}
+{%- comment -%} language path prefix: en pages live under /en {%- endcomment -%}
+{%- assign lp = '' -%}
+{%- if lng == 'en' -%}{%- assign lp = '/en' -%}{%- endif -%}
 {%- assign default_dark = nil -%}
 {% if site.data.conf.main.color_scheme_default_dark
   and site.data.conf.main.color_scheme_switch_side_nav != true
@@ -56,6 +59,7 @@
     .nav-links{display:flex;align-items:center;gap:4px;}
     .nav-links a{font-size:14.5px;color:var(--muted);padding:8px 13px;border-radius:9px;transition:color .2s,background .2s;}
     .nav-links a:hover,.nav-links a.active{color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent);}
+    .nav-lang{font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--hairline);}
     .icon-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--hairline);background:var(--surface);
       color:var(--muted);cursor:pointer;font-size:16px;display:inline-flex;align-items:center;justify-content:center;transition:all .2s;}
     .icon-btn:hover{color:var(--ink);border-color:var(--muted);}
@@ -227,16 +231,19 @@
   <script src="{{ site.baseurl }}/assets/js/color-scheme-attr-init.js" data-mode="{{ site.data.conf.main.color_scheme_default_dark }}"></script>
   {%- endif %}
 
+  {%- assign t_games = '게임' -%}{%- assign t_apps = '앱' -%}{%- assign t_tools = '도구' -%}{%- assign t_blog = '글' -%}{%- assign t_about = '소개' -%}{%- assign t_other = 'EN' -%}{%- assign other_home = '/en/' -%}
+  {%- if lng == 'en' -%}{%- assign t_games = 'Games' -%}{%- assign t_apps = 'Apps' -%}{%- assign t_tools = 'Tools' -%}{%- assign t_blog = 'Writing' -%}{%- assign t_about = 'About' -%}{%- assign t_other = 'KO' -%}{%- assign other_home = '/' -%}{%- endif -%}
   <nav class="hub-nav" id="hubNav">
     <div class="wrap hub-nav-inner">
-      <a class="brand" href="{{ site.baseurl }}/"><span class="dot"></span> kangjung</a>
+      <a class="brand" href="{{ site.baseurl }}{{ lp }}/"><span class="dot"></span> kangjung</a>
       <div class="nav-links">
-        <a href="{{ site.baseurl }}/#games" class="keep">게임</a>
-        <a href="{{ site.baseurl }}/#apps">앱</a>
-        <a href="{{ site.baseurl }}/#tools">도구</a>
-        <a href="{{ site.baseurl }}/tabs/blog/"{% if page.layout == 'hub-blog' %} class="active"{% endif %}>글</a>
-        <a href="{{ site.baseurl }}/tabs/about"{% if page.layout == 'hub-about' %} class="active"{% endif %}>소개</a>
-        <button class="icon-btn" id="themeBtn" title="다크/라이트 전환" aria-label="테마 전환">🌙</button>
+        <a href="{{ site.baseurl }}{{ lp }}/#games" class="keep">{{ t_games }}</a>
+        <a href="{{ site.baseurl }}{{ lp }}/#apps">{{ t_apps }}</a>
+        <a href="{{ site.baseurl }}{{ lp }}/#tools">{{ t_tools }}</a>
+        <a href="{{ site.baseurl }}{{ lp }}/tabs/blog/"{% if page.layout == 'hub-blog' %} class="active"{% endif %}>{{ t_blog }}</a>
+        <a href="{{ site.baseurl }}{{ lp }}/tabs/about"{% if page.layout == 'hub-about' %} class="active"{% endif %}>{{ t_about }}</a>
+        <a href="{{ site.baseurl }}{{ other_home }}" class="nav-lang keep">{{ t_other }}</a>
+        <button class="icon-btn" id="themeBtn" title="theme" aria-label="theme">🌙</button>
       </div>
     </div>
   </nav>
@@ -247,7 +254,7 @@
     <div class="wrap foot-inner">
       <div>
         <div class="foot-brand">kangjung</div>
-        <div class="foot-tag">계속 뭔가 만드는 중 — 게임 · 앱 · 가끔 글</div>
+        <div class="foot-tag">{% if lng == 'en' %}Always making something — games · apps · the occasional post{% else %}계속 뭔가 만드는 중 — 게임 · 앱 · 가끔 글{% endif %}</div>
       </div>
       <div class="foot-links">
         <a href="https://github.com/kangjung" target="_blank" rel="noopener">GitHub</a>
