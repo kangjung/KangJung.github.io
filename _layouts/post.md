@@ -1,27 +1,36 @@
 ---
-# Mr. Green Jekyll Theme (https://github.com/MrGreensWorkshop/MrGreen-JekyllTheme)
-# Copyright (c) 2022 Mr. Green's Workshop https://www.MrGreensWorkshop.com
-# Licensed under MIT
-
-layout: default
+# Post (article) layout, hub-styled. Shares chrome via hub-base.
+layout: hub-base
 ---
 {%- include multi_lng/get-lng-by-url.liquid -%}
 {%- assign lng = get_lng -%}
-{%- include post_common/post-main.html post = page -%}
+<article class="post-wrap">
+  <a class="post-back" href="{{ site.baseurl }}/tabs/blog/">← 개발 기록</a>
+  <header class="post-head">
+    <div class="post-meta">
+      <span class="date">{{ page.date | date: "%Y.%m.%d" }}</span>
+      {%- if page.category %}<span class="cat">{{ page.category }}</span>{%- endif -%}
+    </div>
+    <h1>{{ page.title }}</h1>
+    {%- if page.tags.size > 0 %}
+    <div class="post-tags">
+      {%- for t in page.tags %}<span class="tag">{{ t }}</span>{% endfor -%}
+    </div>
+    {%- endif %}
+  </header>
 
-{%-comment-%} Pagination {%-endcomment-%}
-{% if site.posts.size > 1 -%}
-  {% include multi_lng/get-pages-by-lng.liquid pages = site.posts -%}
-  {% if site.data.conf.posts.pager_navigation_post == 'prev_next_buttons' -%}
-    {%- include post_common/pager-prev-next-buttons.html pages = lng_pages current_page_url = page.url side_aligned = site.data.conf.posts.pager_prev_next_buttons_side_aligned -%}
-  {% elsif site.data.conf.posts.pager_navigation_post == 'page_numbers' %}
-    {% include post_common/pager-page-numbers.html pages = lng_pages current_page_url = page.url -%}
-  {% endif -%}
-{% endif -%}
+  <div class="prose markdown-style">
+    {{ content }}
+  </div>
 
-{% if site.data.conf.posts.comments.engine != empty
-  and site.data.conf.posts.comments.engine != nil
-  and page.comments_disable != true
-%}
-  {% include post/comments.html %}
-{% endif %}
+  {%- if page.previous or page.next %}
+  <nav class="post-nav">
+    {%- if page.previous %}
+    <a href="{{ site.baseurl }}{{ page.previous.url }}"><span class="pn-dir">← 이전 글</span><span class="pn-title">{{ page.previous.title }}</span></a>
+    {%- else %}<span></span>{% endif -%}
+    {%- if page.next %}
+    <a href="{{ site.baseurl }}{{ page.next.url }}" style="text-align:right"><span class="pn-dir">다음 글 →</span><span class="pn-title">{{ page.next.title }}</span></a>
+    {%- else %}<span></span>{% endif -%}
+  </nav>
+  {%- endif %}
+</article>
