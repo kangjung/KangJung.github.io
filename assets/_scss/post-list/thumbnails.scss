@@ -8,10 +8,10 @@
   position: relative;
   display: flex;
   flex-direction: row;
-  border-radius: 10px;
+  border-radius: 14px;
   margin-bottom: 15px; /* space between thumbnails */
   box-shadow: var(--thumbnail-shadow);
-  transition: all 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   background-color: var(--thumbnail-background-color);
 }
 
@@ -26,7 +26,7 @@
 }
 
 .thumbnails:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   box-shadow: var(--thumbnail-hover-shadow);
 }
 
@@ -36,7 +36,7 @@
   min-width: 150px;
   /* column view picture height */
   min-height: 120px;
-  border-radius: 10px;
+  border-radius: 14px;
   background-size: cover;
   background-position: 50% 50%;
   border: none;
