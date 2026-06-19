@@ -1,0 +1,45 @@
+---
+# Blog list, hub-styled. Uses jekyll-paginate's `paginator`.
+layout: hub-base
+---
+<header class="page-head wrap">
+  <span class="eyebrow">Writing</span>
+  <h1>개발 기록</h1>
+  <p>컨퍼런스, 게임잼, 그리고 만들면서 배운 것들.</p>
+</header>
+
+<main class="wrap">
+  <div class="post-list-wrap">
+    {%- for post in paginator.posts -%}
+      <a class="post-card" href="{{ site.baseurl }}{{ post.url }}">
+        {%- if post.img -%}
+          <div class="post-thumb" style="background-image:url('{{ post.img }}')"></div>
+        {%- endif -%}
+        <div class="post-card-body">
+          <div class="post-meta">
+            <span class="date">{{ post.date | date: "%Y.%m.%d" }}</span>
+            {%- if post.category %}<span class="cat">{{ post.category }}</span>{%- endif -%}
+          </div>
+          <h3>{{ post.title }}</h3>
+          <p>{{ post.excerpt | strip_html | strip_newlines | truncate: 110 }}</p>
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+
+  {%- if paginator.total_pages > 1 -%}
+  <nav class="pager">
+    {%- if paginator.previous_page -%}
+      <a class="pg-btn" href="{{ site.baseurl }}{{ paginator.previous_page_path }}">← 이전</a>
+    {%- else -%}
+      <span class="pg-btn disabled">← 이전</span>
+    {%- endif -%}
+    <span class="pg-now">{{ paginator.page }} / {{ paginator.total_pages }}</span>
+    {%- if paginator.next_page -%}
+      <a class="pg-btn" href="{{ site.baseurl }}{{ paginator.next_page_path }}">다음 →</a>
+    {%- else -%}
+      <span class="pg-btn disabled">다음 →</span>
+    {%- endif -%}
+  </nav>
+  {%- endif -%}
+</main>

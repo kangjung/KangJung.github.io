@@ -1,0 +1,27 @@
+---
+# About page, hub-styled. Profile card + prose content.
+layout: hub-base
+---
+{%- include multi_lng/get-lng-by-url.liquid -%}
+{%- assign lng = get_lng -%}
+<header class="page-head wrap">
+  <span class="eyebrow">About</span>
+  <h1>소개</h1>
+</header>
+
+<main class="wrap about-wrap">
+  <aside class="about-card">
+    <div class="about-avatar"><img src="{{ site.baseurl }}/assets/img/about.png" alt="{{ site.data.owner[lng].brand }}"></div>
+    <h2 translate="no">{{ site.data.owner[lng].brand }}</h2>
+    <p class="about-sub">게임 · 앱 · 웹을 만드는 개발자</p>
+    <div class="about-contacts">
+      <a href="https://github.com/kangjung" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://kangjung.itch.io" target="_blank" rel="noopener">itch.io</a>
+      <a href="mailto:aaggf1112@gmail.com">Email</a>
+    </div>
+  </aside>
+
+  <article class="about-body prose markdown-style">
+    {{ content }}
+  </article>
+</main>
