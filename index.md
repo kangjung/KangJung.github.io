@@ -85,8 +85,8 @@ img: ":banner.png"
   <section class="wrap lower">
     <div id="notes">
       <div class="sec-head">
-        <span class="eyebrow">Field Notes</span>
-        <h2>개발 기록</h2>
+        <span class="eyebrow">Writing</span>
+        <h2>블로그</h2>
         <p>컨퍼런스, 게임잼, 만들면서 배운 것들.</p>
       </div>
       {%- if lng_pages.size > 0 -%}

@@ -22,4 +22,4 @@ and out there.
 I'm also really into **pixel art** these days, poking at it bit by bit.
 
 I join **js13kGames** every year and write up what I learn at dev conferences and events
-in my [dev notes]({{ site.baseurl }}/en/tabs/blog/).
+on my [blog]({{ site.baseurl }}/en/tabs/blog/).

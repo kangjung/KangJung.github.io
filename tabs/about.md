@@ -23,4 +23,4 @@ on_site_search_exclude: true
 개인적으로 **픽셀 아트**에도 관심이 많아 조금씩 그려보고 있어요.
 
 매년 **js13kGames** 게임잼에 참가하고, 개발 컨퍼런스와 행사를 다니며 배운 것들을
-[개발 기록]({{ site.baseurl }}/tabs/blog/)에 정리해 둡니다.
+[블로그]({{ site.baseurl }}/tabs/blog/)에 정리해 둡니다.

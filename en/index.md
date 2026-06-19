@@ -82,8 +82,8 @@ img: ":banner.png"
   <section class="wrap lower">
     <div id="notes">
       <div class="sec-head">
-        <span class="eyebrow">Field Notes</span>
-        <h2>Dev Notes</h2>
+        <span class="eyebrow">Writing</span>
+        <h2>Blog</h2>
         <p>Conferences, game jams, and things learned while building.</p>
       </div>
       {%- include multi_lng/get-pages-by-lng.liquid pages = site.posts -%}

@@ -6,7 +6,7 @@ layout: hub-base
 {%- assign lng = get_lng -%}
 {%- assign lp = '' -%}{%- if lng == 'en' -%}{%- assign lp = '/en' -%}{%- endif -%}
 <article class="post-wrap">
-  <a class="post-back" href="{{ site.baseurl }}{{ lp }}/tabs/blog/">← {% if lng == 'en' %}Dev Notes{% else %}개발 기록{% endif %}</a>
+  <a class="post-back" href="{{ site.baseurl }}{{ lp }}/tabs/blog/">← {% if lng == 'en' %}Blog{% else %}블로그{% endif %}</a>
   <header class="post-head">
     <div class="post-meta">
       <span class="date">{{ page.date | date: "%Y.%m.%d" }}</span>
