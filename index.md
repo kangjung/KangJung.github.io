@@ -11,12 +11,11 @@ img: ":banner.png"
 <header class="hero">
   <div class="wrap hero-grid">
     <div>
-      <span class="eyebrow reveal">Indie Maker · Seoul</span>
-      <h1 class="reveal" style="animation-delay:.05s">게임도 앱도,<br>직접 만들어<br><span class="accent">세상에 내놓습니다.</span></h1>
+      <span class="eyebrow reveal">Just Making Things</span>
+      <h1 class="reveal" style="animation-delay:.05s">이것저것,<br>만들어 보고 싶은<br><span class="accent">간단한 것들.</span></h1>
       <p class="hero-sub reveal" style="animation-delay:.12s">
-        Unity·HTML5 게임, Android 앱, 브라우저에서 바로 쓰는 웹 도구까지 혼자 만들어
-        <strong>Google Play · 원스토어 · Whale · itch.io</strong>에 내놓아요.
-        만들면서 배운 것들은 기록으로 남깁니다.
+        거창한 목표는 없어요. 그냥 만들어 보고 싶은 게임·앱·웹 도구를
+        그때그때 가볍게 만듭니다. 본업은 웹 개발이고, 이건 취미예요.
       </p>
       <div class="stats reveal" style="animation-delay:.18s">
         <div class="stat"><div class="num">6</div><div class="lab">게임</div></div>

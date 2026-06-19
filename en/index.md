@@ -8,12 +8,11 @@ img: ":banner.png"
 <header class="hero">
   <div class="wrap hero-grid">
     <div>
-      <span class="eyebrow reveal">Indie Maker · Seoul</span>
-      <h1 class="reveal" style="animation-delay:.05s">Games and apps,<br>built and<br><span class="accent">shipped solo.</span></h1>
+      <span class="eyebrow reveal">Just Making Things</span>
+      <h1 class="reveal" style="animation-delay:.05s">Just little<br>things I felt<br><span class="accent">like making.</span></h1>
       <p class="hero-sub reveal" style="animation-delay:.12s">
-        I build Unity &amp; HTML5 games, Android apps, and browser tools on my own and
-        ship them to <strong>Google Play · ONE store · Whale · itch.io</strong>.
-        I write down what I learn along the way.
+        No grand plan — just simple games, apps, and web tools I felt like building,
+        made whenever I feel like it. Web dev by day; this is the hobby.
       </p>
       <div class="stats reveal" style="animation-delay:.18s">
         <div class="stat"><div class="num">6</div><div class="lab">Games</div></div>
