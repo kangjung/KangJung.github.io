@@ -1,44 +1,26 @@
 ---
-layout: about
+layout: hub-about
+title: "소개"
 # multilingual page pair id, this must pair with translations of this page. (This name must be unique)
 lng_pair: id_about
-
-# image for page specific usage
 img: ":about.jpg"
-# publish date (used for seo)
-# if not specified, site.time will be used.
-#date: 2022-03-03 12:32:00 +0000
-
-# for override items in _data/lang/[language].yml
-#title: My title
-#button_name: "My button"
-# for override side_and_top_nav_buttons in _data/conf/main.yml
-#icon: "fa fa-bath"
-
-# seo
-# if not specified, date will be used.
-#meta_modify_date: 2022-03-03 12:32:00 +0000
-# check the meta_common_description in _data/owner/[language].yml
-#meta_description: ""
-
-# optional
-# please use the "image_viewer_on" below to enable image viewer for individual pages or posts (_posts/ or [language]/_posts folders).
-# image viewer can be enabled or disabled for all posts using the "image_viewer_posts: true" setting in _data/conf/main.yml.
-#image_viewer_on: true
-# please use the "image_lazy_loader_on" below to enable image lazy loader for individual pages or posts (_posts/ or [language]/_posts folders).
-# image lazy loader can be enabled or disabled for all posts using the "image_lazy_loader_posts: true" setting in _data/conf/main.yml.
-#image_lazy_loader_on: true
-# exclude from on site search
-#on_site_search_exclude: true
-# exclude from search engines
-#search_engine_exclude: true
-# to disable this page, simply set published: false or delete this file
-#published: false
+on_site_search_exclude: true
 ---
 
-{%- comment -%} Please delete below and place your page content here {%- endcomment -%}
+안녕하세요, **뭔가 자꾸 만드는** 강정입니다.
 
-{%- include util/auto-content-generator.liquid -%}
-{{ website_info_text_first }}
+**2017년 2월부터 웹 개발자로 일하고 있어요.** 여기 올라온 게임·앱·도구들은
+본업과는 별개로 **순전히 취미로** 만든 것들이에요.
+거창한 목표보다는 그냥 **이것저것 만들어 보고 싶은, 간단한 것들** 위주로 만듭니다.
+완성도보다 "일단 만들어서 내놓아 보는 것"을 좋아해요.
 
-{{ website_info_text_second }}
+## 주로 이런 걸 만들어요
+
+- **게임** — Unity와 HTML5로 만든 캐주얼·퍼즐 게임들 (지그재그 래빗, 행성 수박 게임, 1010! 등)
+- **앱** — 감정 달력, D-Day, 메모처럼 작고 실용적인 Android 앱
+- **웹 도구** — 브라우저에서 바로 쓰는 도구 (배경 제거, DevBox 등)
+
+개인적으로 **픽셀 아트**에도 관심이 많아 조금씩 그려보고 있어요.
+
+개발 컨퍼런스나 행사에 다녀온 기록, 만들면서 배운 것들은
+[블로그]({{ site.baseurl }}/tabs/blog/)에 정리해 둡니다.

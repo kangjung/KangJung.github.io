@@ -7,21 +7,21 @@
 // otherwise it will be added to all output css files
 
 // light color scheme definitions
-$brand-color-light: #416289;
-$main-background-light: #efefef;
-$button-color-light: #a19e9e;
-$menu-background-light: #f9f9f9;
-$header-color-light: #5f5e5e;
-$container-background-light: #fff;
-$hr-color-light: #eee;
-$anchor-text-color-light: #3389de;
+$brand-color-light: #3182f6;
+$main-background-light: #f6f7f9;
+$button-color-light: #8b909a;
+$menu-background-light: #ffffff;
+$header-color-light: #16181d;
+$container-background-light: #ffffff;
+$hr-color-light: #ececf1;
+$anchor-text-color-light: #3182f6;
 
 // layout: default
 // default/body-main-styles
 %body-main-styles-colors-light {
   --body-anchor-text-color: #{$anchor-text-color-light};
-  --body-anchor-hover-text-color: #2f6597;
-  --body-text-color: #6a6a6a;
+  --body-anchor-hover-text-color: #1b64da;
+  --body-text-color: #454b54;
   --body-header-text-color: #{$header-color-light};
   --body-background-color: #{$main-background-light};
   --body-hr-color: #{$hr-color-light};
@@ -47,7 +47,7 @@ $anchor-text-color-light: #3389de;
 // default/default
 %default-colors-light {
   --multipurpose-container-background-color: #{$container-background-light};
-  --multipurpose-container-shadow: 1px 1px 0 1px #e5e2e2fb;
+  --multipurpose-container-shadow: 0 0 0 1px #11182708, 0 4px 16px -4px #1118270f;
 }
 // default/footer
 %footer-colors-light {
@@ -125,16 +125,16 @@ $anchor-text-color-light: #3389de;
 }
 // common/button
 %button-colors-light {
-  --button-text-color: #777;
-  --button-border-color: #ccc;
+  --button-text-color: #4b515b;
+  --button-border-color: #e3e6eb;
   --button-background-color: #fff;
-  --button-shadow-color: #77747455;
+  --button-shadow-color: #1118270d;
   --button-hover-text-color: #{$header-color-light};
-  --button-hover-border-color: #adadad;
-  --button-hover-background-color: #eee;
-  --button-active-shadow-color: #00000020;
-  --button-priority-color: #000;
-  --button-priority-background-color: #5ac0c57d;
+  --button-hover-border-color: #cfd4db;
+  --button-hover-background-color: #f4f6f9;
+  --button-active-shadow-color: #00000012;
+  --button-priority-color: #fff;
+  --button-priority-background-color: #{$brand-color-light};
 }
 // common/slide-switch
 %slide-switch-colors-light {
@@ -152,15 +152,15 @@ $anchor-text-color-light: #3389de;
 // common/markdown-style
 %markdown-style-colors-light {
   --markdown-styles-header-text-color: #{$header-color-light};
-  --markdown-styles-table-border-color: #ddd;
-  --markdown-styles-blockquote-background-color: #eee;
+  --markdown-styles-table-border-color: #e6e8ec;
+  --markdown-styles-blockquote-background-color: #f4f6f9;
   --markdown-styles-blockquote-side-color: #{$brand-color-light};
-  --markdown-styles-kbd-background-color: #888;
-  --markdown-styles-kbd-text-color: #eee;
-  --markdown-styles-code-background-color: #eee;
-  --markdown-styles-code-text-color: #333;
-  --markdown-styles-quote-background-color: #eee;
-  --markdown-styles-quote-text-color: #{$header-color-light};
+  --markdown-styles-kbd-background-color: #3a3f47;
+  --markdown-styles-kbd-text-color: #f5f5f5;
+  --markdown-styles-code-background-color: #f3f4f6;
+  --markdown-styles-code-text-color: #2b2f36;
+  --markdown-styles-quote-background-color: #eef2ff;
+  --markdown-styles-quote-text-color: #1b64da;
 }
 // layout: post, post-list
 // common/post-info
@@ -187,9 +187,9 @@ $anchor-text-color-light: #3389de;
 // post-list/thumbnails
 %thumbnails-colors-light {
   --thumbnail-background-color: #{$container-background-light};
-  --thumbnail-excerpt-text-color: #555;
-  --thumbnail-shadow: 0 1px 2px 0 #0102031a;
-  --thumbnail-hover-shadow: 0 7px 30px -8px #0102034d;
+  --thumbnail-excerpt-text-color: #5a616b;
+  --thumbnail-shadow: 0 0 0 1px #1118270a, 0 1px 3px #11182710;
+  --thumbnail-hover-shadow: 0 0 0 1px #3182f640, 0 10px 28px -10px #11182733;
 }
 // post-list/upside-down-tabs
 %upside-down-tabs-colors-light {

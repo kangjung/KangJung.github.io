@@ -22,7 +22,10 @@ install_if -> { RUBY_PLATFORM =~ %r!mingw|mswin|java! } do
 end
 
 # Performance-booster for watching directories on Windows
-gem "wdm", "~> 0.1.0", :install_if => Gem.win_platform?
+# NOTE: wdm 0.1.x fails to build on Ruby 3.2+ and is optional (listen handles
+# Windows file-watching fine without it). Re-enable with a compatible version
+# if you downgrade Ruby.
+# gem "wdm", "~> 0.1.0", :install_if => Gem.win_platform?
 
 # HTTP server for local tests
 gem "webrick", "~> 1.7"

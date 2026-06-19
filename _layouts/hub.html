@@ -1,0 +1,72 @@
+---
+# Home layout: shares the hub chrome via hub-base and adds the home-only
+# scripts that render games/apps from appList.json and (optionally) an
+# external blog RSS feed.
+layout: hub-base
+---
+{{ content }}
+
+{%- include multi_lng/get-lng-by-url.liquid -%}{%- assign lng = get_lng -%}
+<script>
+(function () {
+  var LANG = '{{ lng }}';
+  // ---- render games & apps from the single source of truth: appList.json ----
+  var EMOJI = { 'game': '🎮', 'app': '📱' };
+  function iconUrl(p) {
+    if (!p) return null;
+    if (p.indexOf('http') === 0 || p.charAt(0) === '/') return p;            // absolute
+    if (p.indexOf('./') === 0) return '{{ site.baseurl }}/game' + p.slice(1); // ./img/.. -> /game/img/..
+    return p;
+  }
+  function linkFor(item) {
+    if (item.landingUrl) return '{{ site.baseurl }}' + item.landingUrl;
+    if (item.stores && item.stores.length) return item.stores[0].url;
+    return null;
+  }
+  function cardHTML(item) {
+    var t = (item.title && (item.title[LANG] || item.title.ko || item.title.en)) || '';
+    var d = (item.desc && (item.desc[LANG] || item.desc.ko || item.desc.en)) || '';
+    var tag = (item.tags && item.tags[0]) ? item.tags[0].toUpperCase() : '';
+    var soon = item.status === 'developing';
+    var icon = iconUrl(item.icon);
+    var art = icon
+      ? '<div class="card-art"><img src="' + icon + '" alt="' + t + '" loading="lazy"></div>'
+      : '<div class="card-art emoji">' + (EMOJI[item.type] || '🎲') + '</div>';
+    var stores = soon
+      ? '<span class="store-chip">Coming soon</span>'
+      : (item.stores || []).map(function (s) { return '<span class="store-chip">' + s.name + '</span>'; }).join('');
+    var href = linkFor(item);
+    var body = '<div class="card-body"><div class="card-title"><h3>' + t + '</h3>' +
+      (soon ? '<span class="badge-soon">개발 중</span>' : '') + '</div>' +
+      '<p>' + d + '</p><div class="meta-row">' +
+      (tag ? '<span class="tag">' + tag + '</span>' : '<span></span>') +
+      '<span class="stores">' + stores + '</span></div></div>';
+    var openAttr = (href && href.indexOf('http') === 0) ? ' target="_blank" rel="noopener"' : '';
+    return '<a class="card' + (soon ? ' soon' : '') + '"' + (href ? ' href="' + href + '"' : '') + openAttr + '>' + art + body + '</a>';
+  }
+  fetch('{{ site.baseurl }}/assets/appList.json').then(function (r) { return r.json(); }).then(function (data) {
+    var games = data.filter(function (x) { return x.type === 'game'; });
+    var apps = data.filter(function (x) { return x.type === 'app'; });
+    var g = document.getElementById('games-grid'); if (g) g.innerHTML = games.map(cardHTML).join('');
+    var a = document.getElementById('apps-grid'); if (a) a.innerHTML = apps.map(cardHTML).join('');
+  }).catch(function (e) { console.warn('appList load failed', e); });
+
+  // ---- external blog RSS (optional) ----
+  // External personal blog (Naver) — food, reviews, and the occasional dev post.
+  var FEED_URL = 'https://rss.blog.naver.com/chicken_kangjung.xml';
+  var box = document.getElementById('rss-items');
+  if (FEED_URL && box) {
+    fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(FEED_URL))
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (!j.items || !j.items.length) return;
+        box.innerHTML = j.items.slice(0, 3).map(function (it) {
+          var date = new Date(it.pubDate);
+          var ds = isNaN(date) ? '' : (date.getFullYear() + '.' + ('0' + (date.getMonth() + 1)).slice(-2) + '.' + ('0' + date.getDate()).slice(-2));
+          return '<a class="rss-item" href="' + it.link + '" target="_blank" rel="noopener"><h4>' + it.title + '</h4><p>' + ds + '</p></a>';
+        }).join('');
+      })
+      .catch(function (e) { console.warn('rss load failed', e); });
+  }
+})();
+</script>
