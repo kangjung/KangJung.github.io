@@ -108,13 +108,13 @@ img: ":banner.png"
       </div>
       <div class="rss-card">
         <div class="rss-top">
-          <strong style="font-size:14.5px">📡 My blog feed</strong>
+          <strong style="font-size:14.5px">📡 My Naver blog</strong>
           <span class="rss-badge">● RSS</span>
         </div>
         <div id="rss-items">
-          <a class="rss-item" href="#"><h4>Latest posts from my blog show up here</h4><p>Waiting for RSS</p></a>
+          <a class="rss-item" href="https://blog.naver.com/chicken_kangjung" target="_blank" rel="noopener"><h4>Visit my Naver blog</h4><p>Food · reviews · the occasional dev post</p></a>
         </div>
-        <p class="rss-note">↳ Pulls the latest posts from an external blog via RSS.<br>Set <code>FEED_URL</code> in <code>_layouts/hub.html</code> to enable.</p>
+        <p class="rss-note">↳ Latest posts pulled from my Naver blog — food, reviews, and dev, not just code.</p>
       </div>
     </div>
   </section>

@@ -110,13 +110,13 @@ img: ":banner.png"
       </div>
       <div class="rss-card">
         <div class="rss-top">
-          <strong style="font-size:14.5px">📡 내 블로그 피드</strong>
+          <strong style="font-size:14.5px">📡 먹는거, 간간히 다른거</strong>
           <span class="rss-badge">● RSS</span>
         </div>
         <div id="rss-items">
-          <a class="rss-item" href="#"><h4>여기에 외부 블로그 최신 글이 표시돼요</h4><p>RSS 연동 대기 중</p></a>
+          <a class="rss-item" href="https://blog.naver.com/chicken_kangjung" target="_blank" rel="noopener"><h4>네이버 블로그 바로가기</h4><p>먹은 거 · 리뷰 · 가끔 개발 이야기</p></a>
         </div>
-        <p class="rss-note">↳ 외부 블로그(velog · 티스토리 등) RSS 주소를 알려주시면 최신 글이 자동으로 채워집니다.<br><code>_layouts/hub.html</code>의 <code>FEED_URL</code>에 주소만 넣으면 동작해요.</p>
+        <p class="rss-note">↳ 네이버 블로그 최신 글을 자동으로 불러와요. 개발뿐 아니라 먹은 거·리뷰 같은 일상 글도 씁니다.</p>
       </div>
     </div>
   </section>

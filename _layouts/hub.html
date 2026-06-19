@@ -52,8 +52,8 @@ layout: hub-base
   }).catch(function (e) { console.warn('appList load failed', e); });
 
   // ---- external blog RSS (optional) ----
-  // To enable: set FEED_URL to your blog's RSS/Atom feed URL.
-  var FEED_URL = '';
+  // External personal blog (Naver) — food, reviews, and the occasional dev post.
+  var FEED_URL = 'https://rss.blog.naver.com/chicken_kangjung.xml';
   var box = document.getElementById('rss-items');
   if (FEED_URL && box) {
     fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(FEED_URL))
