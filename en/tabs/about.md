@@ -21,5 +21,5 @@ and out there.
 
 I'm also really into **pixel art** these days, poking at it bit by bit.
 
-I join **js13kGames** every year and write up what I learn at dev conferences and events
+I write up what I learn at dev conferences and events
 on my [blog]({{ site.baseurl }}/en/tabs/blog/).
