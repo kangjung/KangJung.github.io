@@ -117,8 +117,7 @@
     "img": "./img/jamggan-trip/jamggan-trip.png",
     "icon": "./img/jamggan-trip/jamggan-trip-icon.png",
     "tags": ["Vue.js", "Spring boot"],
-    "stores": [
-    ]
+    "stores": []
   },
   {
     "type": "app",
@@ -137,7 +136,7 @@
     "tags": ["Flutter"],
     "stores": [
       { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.ddaylite", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
-      { "name": "원스토어", "url": "https://m.onestore.co.kr/v2/ko-kr/app/0001006001", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" },
+      { "name": "원스토어", "url": "https://m.onestore.co.kr/v2/ko-kr/app/0001006001", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" }
     ]
   },
   {
@@ -157,7 +156,7 @@
     "tags": ["Flutter"],
     "stores": [
       { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.whyamipaying", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
-      { "name": "원스토어", "url": "https://m.onestore.co.kr/v2/ko-kr/app/0001006602", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" },
+      { "name": "원스토어", "url": "https://m.onestore.co.kr/v2/ko-kr/app/0001006602", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" }
     ]
   },
   {
@@ -177,7 +176,7 @@
     "tags": ["Flutter"],
     "stores": [
       { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.EmotionCalendar", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
-      { "name": "원스토어", "url": "https://m.onestore.co.kr/v2/ko-kr/app/0001006603", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" },
+      { "name": "원스토어", "url": "https://m.onestore.co.kr/v2/ko-kr/app/0001006603", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" }
     ]
   },
   {
@@ -197,7 +196,7 @@
     "tags": ["Flutter"],
     "stores": [
       { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.before_forget", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
-      { "name": "원스토어", "url": "https://m.onestore.co.kr/v2/ko-kr/app/0001006601", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" },
+      { "name": "원스토어", "url": "https://m.onestore.co.kr/v2/ko-kr/app/0001006601", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" }
     ]
   }
 ]
