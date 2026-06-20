@@ -63,13 +63,37 @@ layout: hub-base
 
   // ---- detail modal -----------------------------------------------------------
   var BY_SLUG = {};
-  var modalRoot, mediaEl, bodyEl;
+  var modalRoot, mediaEl, bodyEl, triggerEl = null;
+  function isOpen() { return modalRoot && modalRoot.classList.contains('open'); }
+  function focusables() {
+    return Array.prototype.slice.call(
+      modalRoot.querySelectorAll('a[href],button:not([disabled]),iframe,[tabindex]:not([tabindex="-1"])'));
+  }
+  function setBackgroundInert(on) {
+    Array.prototype.forEach.call(document.body.children, function (el) {
+      if (el === modalRoot) return;
+      if (on) { el.setAttribute('inert', ''); el.setAttribute('aria-hidden', 'true'); }
+      else { el.removeAttribute('inert'); el.removeAttribute('aria-hidden'); }
+    });
+  }
+  function onKeydown(e) {
+    if (!isOpen()) return;
+    if (e.key === 'Escape') { goClose(); return; }
+    if (e.key === 'Tab') {                          // keep focus inside the dialog
+      var f = focusables();
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  }
   function ensureModal() {
     if (modalRoot) return;
     modalRoot = document.createElement('div');
     modalRoot.className = 'modal-root';
     modalRoot.setAttribute('role', 'dialog');
     modalRoot.setAttribute('aria-modal', 'true');
+    modalRoot.setAttribute('aria-labelledby', 'modal-title');
     modalRoot.innerHTML =
       '<div class="modal-backdrop" data-close></div>' +
       '<div class="modal-scroll" data-close><div class="modal">' +
@@ -81,7 +105,7 @@ layout: hub-base
     mediaEl = modalRoot.querySelector('.modal-media');
     bodyEl = modalRoot.querySelector('.modal-body');
     modalRoot.addEventListener('click', function (e) { if (e.target.hasAttribute('data-close')) goClose(); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modalRoot.classList.contains('open')) goClose(); });
+    document.addEventListener('keydown', onKeydown);
   }
 
   function mediaHTML(item) {
@@ -102,7 +126,7 @@ layout: hub-base
     var soon = item.status === 'developing';
     var html = '<div class="modal-head">' +
       (icon ? '<img src="' + icon + '" alt="' + t + '">' : '') +
-      '<h2>' + t + '</h2></div>';
+      '<h2 id="modal-title">' + t + '</h2></div>';
     if (item.tags && item.tags.length) {
       html += '<div class="modal-tags">' + item.tags.map(function (x) { return '<span class="tag">' + esc(x) + '</span>'; }).join('') + '</div>';
     }
@@ -140,15 +164,21 @@ layout: hub-base
     ensureModal();
     mediaEl.innerHTML = mediaHTML(item);
     bodyEl.innerHTML = buildBody(item);
-    bodyEl.parentNode.scrollTop = 0;
+    bodyEl.scrollTop = 0;                    // start the scrollable body at the top
     modalRoot.classList.add('open');
     document.documentElement.style.overflow = 'hidden';
+    setBackgroundInert(true);
+    var closeBtn = modalRoot.querySelector('.modal-close');
+    if (closeBtn) closeBtn.focus();         // move focus into the dialog
   }
   function closeUI() {
-    if (!modalRoot || !modalRoot.classList.contains('open')) return;
+    if (!isOpen()) return;
     modalRoot.classList.remove('open');
     mediaEl.innerHTML = '';                 // stop any playing video
     document.documentElement.style.overflow = '';
+    setBackgroundInert(false);
+    if (triggerEl && typeof triggerEl.focus === 'function') triggerEl.focus(); // return focus to the card
+    triggerEl = null;
   }
   function goClose() {
     // strip the slug from the URL without adding history; back button still closes
@@ -158,8 +188,15 @@ layout: hub-base
   function route() {
     var slug = (location.hash || '').replace(/^#/, '');
     var item = BY_SLUG[slug];
-    if (item) openModal(item); else closeUI();
+    if (item) {
+      if (!isOpen()) triggerEl = document.activeElement;  // remember the card to restore focus to
+      openModal(item);
+    } else {
+      closeUI();
+    }
   }
+
+  function setNum(id, n) { var el = document.getElementById(id); if (el) el.textContent = n; }
 
   fetch('{{ site.baseurl }}/assets/appList.json').then(function (r) { return r.json(); }).then(function (data) {
     var games = data.filter(function (x) { return x.type === 'game'; });
@@ -167,6 +204,10 @@ layout: hub-base
     data.forEach(function (x) { if (x.slug) BY_SLUG[x.slug] = x; });
     var g = document.getElementById('games-grid'); if (g) g.innerHTML = games.map(cardHTML).join('');
     var a = document.getElementById('apps-grid'); if (a) a.innerHTML = apps.map(cardHTML).join('');
+    // keep the hero stats in sync with the data (tools are static cards in the DOM)
+    setNum('stat-games', games.length);
+    setNum('stat-apps', apps.length);
+    setNum('stat-tools', document.querySelectorAll('#tools .card').length);
     window.addEventListener('hashchange', route);
     route(); // open straight away if the page was loaded with #slug
   }).catch(function (e) { console.warn('appList load failed', e); });

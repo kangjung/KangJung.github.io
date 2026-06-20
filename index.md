@@ -18,9 +18,9 @@ img: ":banner.png"
         그때그때 가볍게 만듭니다. 본업은 웹 개발이고, 이건 취미예요.
       </p>
       <div class="stats reveal" style="animation-delay:.18s">
-        <div class="stat"><div class="num">6</div><div class="lab">게임</div></div>
-        <div class="stat"><div class="num">5</div><div class="lab">앱 · 서비스</div></div>
-        <div class="stat"><div class="num">2</div><div class="lab">웹 도구</div></div>
+        <div class="stat"><div class="num" id="stat-games">6</div><div class="lab">게임</div></div>
+        <div class="stat"><div class="num" id="stat-apps">5</div><div class="lab">앱 · 서비스</div></div>
+        <div class="stat"><div class="num" id="stat-tools">2</div><div class="lab">웹 도구</div></div>
       </div>
       <div class="cta-row reveal" style="animation-delay:.24s">
         <a class="btn btn-primary" href="#games">만든 게임 보기 →</a>
@@ -109,7 +109,13 @@ img: ":banner.png"
       </div>
       <div class="rss-card">
         <div class="rss-top">
-          <strong style="font-size:14.5px">📡 먹는거, 간간히 다른거</strong>
+          <strong style="font-size:14.5px;display:inline-flex;align-items:center;gap:8px">
+            <svg viewBox="0 0 40 40" width="22" height="22" role="img" aria-label="네이버 블로그" style="flex-shrink:0">
+              <rect width="40" height="40" rx="11" fill="#03C75A"/>
+              <text x="20" y="27" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#fff">blog</text>
+            </svg>
+            먹는거, 간간히 다른거
+          </strong>
           <span class="rss-badge">● RSS</span>
         </div>
         <div id="rss-items">

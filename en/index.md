@@ -15,9 +15,9 @@ img: ":banner.png"
         made whenever I feel like it. Web dev by day; this is the hobby.
       </p>
       <div class="stats reveal" style="animation-delay:.18s">
-        <div class="stat"><div class="num">6</div><div class="lab">Games</div></div>
-        <div class="stat"><div class="num">5</div><div class="lab">Apps · Service</div></div>
-        <div class="stat"><div class="num">2</div><div class="lab">Web tools</div></div>
+        <div class="stat"><div class="num" id="stat-games">6</div><div class="lab">Games</div></div>
+        <div class="stat"><div class="num" id="stat-apps">5</div><div class="lab">Apps · Service</div></div>
+        <div class="stat"><div class="num" id="stat-tools">2</div><div class="lab">Web tools</div></div>
       </div>
       <div class="cta-row reveal" style="animation-delay:.24s">
         <a class="btn btn-primary" href="#games">See the games →</a>
@@ -107,7 +107,13 @@ img: ":banner.png"
       </div>
       <div class="rss-card">
         <div class="rss-top">
-          <strong style="font-size:14.5px">📡 My Naver blog</strong>
+          <strong style="font-size:14.5px;display:inline-flex;align-items:center;gap:8px">
+            <svg viewBox="0 0 40 40" width="22" height="22" role="img" aria-label="Naver blog" style="flex-shrink:0">
+              <rect width="40" height="40" rx="11" fill="#03C75A"/>
+              <text x="20" y="27" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#fff">blog</text>
+            </svg>
+            My Naver blog
+          </strong>
           <span class="rss-badge">● RSS</span>
         </div>
         <div id="rss-items">
