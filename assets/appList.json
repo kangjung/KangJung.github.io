@@ -118,7 +118,6 @@
     "icon": "./img/jamggan-trip/jamggan-trip-icon.png",
     "tags": ["Vue.js", "Spring boot"],
     "stores": [
-      {"name": "Web Site", "url": "https://jamggan-trip.netlify.app", "icon": "./img/jamggan-trip/ic_link.png"}
     ]
   },
   {
@@ -135,9 +134,10 @@
     },
     "img": "./img/dday-lite/cover.png",
     "icon": "./img/dday-lite/icon.png",
-    "tags": ["Android"],
+    "tags": ["Flutter"],
     "stores": [
-      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.ddaylite", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" }
+      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.ddaylite", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
+      { "name": "원스토어", "url": "https://m.onestore.co.kr/v2/ko-kr/app/0001006001", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" },
     ]
   },
   {
@@ -147,16 +147,17 @@
       "ko": "이거 왜 결제돼? - 구독관리는 매달 자동으로 빠져나가는 구독료와 고정 지출을 간단하게 기록하고 관리하는 앱입니다.\n\n넷플릭스, 유튜브 프리미엄, 멜론, iCloud, ChatGPT Plus, 개발 도구, 디자인 툴처럼 매달 또는 매년 결제되는 서비스를 직접 등록해두면 이번 달에 얼마가 나가는지, 다음 결제일이 언제인지 한눈에 확인할 수 있습니다.\n\n복잡한 가계부 입력 없이 서비스명, 금액, 결제일만 빠르게 등록하세요. 월간/연간 구독을 구분해서 관리할 수 있고, 결제 캘린더와 카테고리별 분석으로 지출 흐름을 쉽게 파악할 수 있습니다.\n\n주요 기능\n- 구독 및 고정 지출 빠른 등록\n- 월간/연간 결제 주기 관리\n- 이번 달 총 구독 지출 확인\n- 결제일 D-day 표시\n- 결제 캘린더로 날짜별 결제 확인\n- 카테고리별 지출 분석\n- 결제 당일, 전날, 3일 전 알림 설정\n- 모든 데이터는 내 기기에만 저장\n\n이런 분께 추천해요\n- 매달 어떤 구독이 결제되는지 헷갈리는 분\n- 안 쓰는 구독을 정리하고 싶은 분\n- 복잡한 가계부보다 가벼운 지출 관리가 필요한 분\n- 월간 구독과 연간 구독을 한눈에 보고 싶은 분\n- 결제일을 놓치지 않고 미리 확인하고 싶은 분\n\n이거 왜 결제됐지? 라는 생각이 든 적 있다면, 이제 결제 전에 먼저 확인하세요.",
       "en": "Subly is a lightweight subscription and recurring expense tracker built for quick manual entry.\n\nAdd your subscriptions in seconds, check upcoming payment dates, view monthly and yearly spending, and see how much you have paid over time. Subly does not connect to your bank, card, or any external server. Your data stays on your device.\n\nKey features:\n\nAdd subscriptions quickly with category, amount, billing cycle, and billing date\nTrack monthly and yearly subscriptions\nView upcoming payments with D-day labels\nCheck spending by category with simple charts\nBrowse payment dates in a calendar\nSet local reminders before billing dates\nEdit start dates for more accurate cumulative statistics\nExport and import backup files manually\nDark mode support\nSubly is designed for people who want a simple way to answer one question: “Why am I paying for this?”"
     },
-    "title": { "ko": "Why Am I Paying?", "en": "Why Am I Paying?" },
+    "title": { "ko": "구독관리 - 이거 왜 결제돼?", "en": "Why Am I Paying?" },
     "desc": {
       "ko": "정기 결제와 지출을 확인하고 관리하는 앱",
       "en": "An app for checking and managing recurring payments and expenses."
     },
     "img": "./img/subscription-manager/cover.png",
     "icon": "./img/subscription-manager/icon.png",
-    "tags": ["Android"],
+    "tags": ["Flutter"],
     "stores": [
-      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.whyamipaying", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" }
+      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.whyamipaying", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
+      { "name": "원스토어", "url": "https://m.onestore.co.kr/v2/ko-kr/app/0001006602", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" },
     ]
   },
   {
@@ -173,9 +174,10 @@
     },
     "img": "./img/emotion-calendar/cover.png",
     "icon": "./img/emotion-calendar/icon.png",
-    "tags": ["Android"],
+    "tags": ["Flutter"],
     "stores": [
-      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.EmotionCalendar", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" }
+      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.EmotionCalendar", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
+      { "name": "원스토어", "url": "https://m.onestore.co.kr/v2/ko-kr/app/0001006603", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" },
     ]
   },
   {
@@ -192,23 +194,10 @@
     },
     "img": "./img/before-forget/cover.png",
     "icon": "./img/before-forget/icon.png",
-    "tags": ["Android"],
+    "tags": ["Flutter"],
     "stores": [
-      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.before_forget", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" }
+      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.before_forget", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
+      { "name": "원스토어", "url": "https://m.onestore.co.kr/v2/ko-kr/app/0001006601", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" },
     ]
-  },
-  {
-    "type": "game",
-    "slug": "survivors-like",
-    "title": { "ko": "뱀서류 게임", "en": "Survivors-Like games" },
-    "desc": {
-      "ko": "뱀서류 탑뷰 게임 개발중",
-      "en": "We're developing Survivors-Like games"
-    },
-    "img": "/assets/img/coming.png",
-    "icon": "/assets/img/coming.png",
-    "status": "developing",
-    "tags": ["Unity"],
-    "stores": []
   }
 ]
