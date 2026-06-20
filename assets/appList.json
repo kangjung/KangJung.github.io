@@ -29,6 +29,10 @@
   {
     "type": "game",
     "slug": "planet-game",
+    "longDesc": {
+      "ko": "행성 게임은 수박 게임의 행성 버전입니다.\n\n행성을 충돌시켜 더 큰 행성을 만드세요.",
+      "en": "The planet game is a planet version of the watermelon game.\n\nCrash planets to make larger planets."
+    },
     "title": { "ko": "행성 수박 게임", "en": "Planet Game" },
     "desc": {
       "ko": "수박 게임의 행성 버전. 행성을 충돌시켜 더 큰 행성을 만드는 게임",
@@ -48,6 +52,10 @@
   {
     "type": "game",
     "slug": "1010",
+    "longDesc": {
+      "ko": "1010! 게임을 10 x 10 공간에 블록을 배치하여 가로 세로로 줄을 완성해서 파괴하는 게임입니다.\n\n*폰트는 빙그레의 빙그레 싸만코체 Bold를 사용했습니다.",
+      "en": "1010! The game is about placing blocks in a 10 x 10 space and destroying them by completing rows horizontally and vertically.\n\n*The font used is Binggrae’s Binggrae Samanko font Bold(빙그레의 빙그레 싸만코체 Bold)."
+    },
     "title": { "ko": "1010!", "en": "1010!" },
     "desc": {
       "ko": "10 x 10 공간에 블록을 배치하여 가로 세로로 줄을 완성해서 파괴하는 게임",
@@ -116,6 +124,10 @@
   {
     "type": "app",
     "slug": "dday-lite",
+    "longDesc": {
+      "ko": "D-Day Lite는 소중한 날을 잊지 않도록 도와주는 감성 D-Day 및 기념일 관리 앱입니다.\n\n기념일, 생일, 여행, 목표일, 추모일처럼 기억하고 싶은 순간을 카드로 저장하고, 남은 날이나 지나온 날을 한눈에 확인할 수 있습니다. 부드러운 그라데이션 배경, 사진 배경, 메모, 알림, 위젯을 통해 나만의 방식으로 중요한 날을 간직하세요.\n\n주요 기능\n\n- D-Day 및 D+ 자동 계산\n- 기념일, 생일, 목표, 여행, 추모일 카테고리 지원\n- 매년 반복되는 생일과 기념일 관리\n- 사진 또는 그라데이션 배경 카드\n- 홈 화면 위젯으로 대표 D-Day 확인\n- 잠금화면 D-Day 알림 지원\n- 로컬 알림 리마인더\n- 기기 내 로컬 저장\n- 백업 및 복원 지원\n- 라이트/다크 테마\n- 한국어와 영어 지원\n\nD-Day Lite는 별도의 서버나 계정 없이 기기 안에 데이터를 저장합니다. 일상의 작은 약속부터 평생 간직하고 싶은 순간까지, 나에게 중요한 날을 더 따뜻하게 기억해보세요.",
+      "en": "D-Day Lite is a warm and simple D-Day and anniversary tracker that helps you remember the days that matter.\n\nSave anniversaries, birthdays, trips, goals, memorial days, and personal milestones as beautiful cards. See how many days are left until an event or how many days have passed since a meaningful moment.\n\nCustomize each memory with soft gradients, photo backgrounds, categories, notes, reminders, and home screen widgets. D-Day Lite keeps everything on your device, with no account or external server required.\n\nKey Features\n\n- Automatic D-Day and D+ day counting\n- Categories for love, birthdays, goals, travel, memorial days, and custom events\n- Yearly repeat support for anniversaries and birthdays\n- Gradient and photo backgrounds\n- Notes and personal memos\n- Local reminder notifications\n- Home screen widgets\n- Lock screen D-Day notification\n- Light and dark themes\n- Backup and restore\n- Korean and English language support\n- Offline-first local storage\n\nFrom everyday goals to once-in-a-lifetime memories, D-Day Lite helps you keep your meaningful days close."
+    },
     "title": { "ko": "D-Day Lite", "en": "D-Day Lite" },
     "desc": {
       "ko": "중요한 날짜와 디데이를 간편하게 관리하는 앱",
@@ -131,6 +143,10 @@
   {
     "type": "app",
     "slug": "why-am-i-paying",
+    "longDesc": {
+      "ko": "이거 왜 결제돼? - 구독관리는 매달 자동으로 빠져나가는 구독료와 고정 지출을 간단하게 기록하고 관리하는 앱입니다.\n\n넷플릭스, 유튜브 프리미엄, 멜론, iCloud, ChatGPT Plus, 개발 도구, 디자인 툴처럼 매달 또는 매년 결제되는 서비스를 직접 등록해두면 이번 달에 얼마가 나가는지, 다음 결제일이 언제인지 한눈에 확인할 수 있습니다.\n\n복잡한 가계부 입력 없이 서비스명, 금액, 결제일만 빠르게 등록하세요. 월간/연간 구독을 구분해서 관리할 수 있고, 결제 캘린더와 카테고리별 분석으로 지출 흐름을 쉽게 파악할 수 있습니다.\n\n주요 기능\n- 구독 및 고정 지출 빠른 등록\n- 월간/연간 결제 주기 관리\n- 이번 달 총 구독 지출 확인\n- 결제일 D-day 표시\n- 결제 캘린더로 날짜별 결제 확인\n- 카테고리별 지출 분석\n- 결제 당일, 전날, 3일 전 알림 설정\n- 모든 데이터는 내 기기에만 저장\n\n이런 분께 추천해요\n- 매달 어떤 구독이 결제되는지 헷갈리는 분\n- 안 쓰는 구독을 정리하고 싶은 분\n- 복잡한 가계부보다 가벼운 지출 관리가 필요한 분\n- 월간 구독과 연간 구독을 한눈에 보고 싶은 분\n- 결제일을 놓치지 않고 미리 확인하고 싶은 분\n\n이거 왜 결제됐지? 라는 생각이 든 적 있다면, 이제 결제 전에 먼저 확인하세요.",
+      "en": "Subly is a lightweight subscription and recurring expense tracker built for quick manual entry.\n\nAdd your subscriptions in seconds, check upcoming payment dates, view monthly and yearly spending, and see how much you have paid over time. Subly does not connect to your bank, card, or any external server. Your data stays on your device.\n\nKey features:\n\nAdd subscriptions quickly with category, amount, billing cycle, and billing date\nTrack monthly and yearly subscriptions\nView upcoming payments with D-day labels\nCheck spending by category with simple charts\nBrowse payment dates in a calendar\nSet local reminders before billing dates\nEdit start dates for more accurate cumulative statistics\nExport and import backup files manually\nDark mode support\nSubly is designed for people who want a simple way to answer one question: “Why am I paying for this?”"
+    },
     "title": { "ko": "Why Am I Paying?", "en": "Why Am I Paying?" },
     "desc": {
       "ko": "정기 결제와 지출을 확인하고 관리하는 앱",
@@ -146,6 +162,10 @@
   {
     "type": "app",
     "slug": "emotion-calendar",
+    "longDesc": {
+      "ko": "감정 달력은 하루의 마음을 부담 없이 기록하는 감성 감정 일기 앱입니다.\n\n오늘 느낀 감정을 고르고, 짧은 메모를 남기고, 필요할 때만 긴 일기를 작성해보세요. 기록한 감정은 달력 위에 차곡차곡 쌓여 한눈에 돌아볼 수 있습니다.\n\n주요 기능:\n - 하루 한 번 감정 기록\n - 감정 강도, 메모, 일기, 태그 기록\n - 달력으로 보는 감정 흐름\n - 연간 감정 기록 보기\n - 감정별 통계와 순위\n - 감정 캐릭터 커스텀\n - 직접 그리기 및 이미지 설정\n - 알림 설정\n - ZIP 백업 및 복원\n - 서버 없는 로컬 저장\n\n모든 데이터는 기기 안에만 저장됩니다.\n회원가입, 로그인, 클라우드 동기화 없이 조용히 사용할 수 있어요.\n\n기록은 길지 않아도 괜찮습니다.\n오늘의 마음을 작은 표시 하나로 남겨보세요.",
+      "en": "Emotion Calendar is a gentle mood diary app that helps you record and look back on your feelings, one day at a time.\n\nChoose today’s emotion, add an intensity level, write a short memo, and add a longer diary entry only when you want to. Your records are collected in a soft calendar view, making it easy to see how your emotions change over time.\n\nKey Features:\n - Record one mood per day\n - Add mood intensity, memo, diary, and tags\n - View your emotions on a monthly calendar\n - Look back on yearly mood history\n - Check simple mood statistics and rankings\n - Customize mood characters\n - Draw your own mood icons or use images\n - Set daily reminder notifications\n - Export and restore ZIP backups\n - Local-only storage on your device\n\nNo sign-up is required. Your records are stored only on your device, without server sync or cloud storage.\n\nYour diary does not have to be long.\nStart with one small mood record today."
+    },
     "title": { "ko": "감정 달력", "en": "Emotion Calendar" },
     "desc": {
       "ko": "매일의 감정과 일기를 기록하고 달력으로 돌아보는 앱",
@@ -161,6 +181,10 @@
   {
     "type": "app",
     "slug": "before-forget",
+    "longDesc": {
+      "ko": "잊기전에 - 빠른 일정 알림은 갑자기 떠오른 일정이나 할 일을 빠르게 기록하고, 놓치지 않도록 알림으로 알려주는 일정 관리 앱입니다.\n\n복잡한 입력 없이 날짜, 시간, 장소, 일정명을 간단히 선택해 바로 저장할 수 있습니다. 기본 알림 시간을 설정하면 모든 일정에 자동으로 적용되고, 필요할 때 알림 시간이나 진동 횟수도 조정할 수 있습니다.\n\n오늘 일정, 다가오는 일정, 주간 일정, 월간 일정을 한눈에 확인할 수 있으며 홈 화면 위젯을 통해 앱을 열지 않아도 중요한 일정을 빠르게 볼 수 있습니다.\n\n주요 기능:\n - 빠른 일정 등록\n - 기본 알림 시간 설정\n - 알림 진동 횟수 설정\n - 오늘/주간/월간 일정 확인\n - 홈 화면 위젯 지원\n - 일정 백업 및 복원\n - 알림 진단 기능\n\n생각났을 때 바로 적고, 잊기 전에 알림 받으세요.",
+      "en": "Before Forget - Quick Schedule Alerts helps you quickly save appointments, tasks, and plans the moment they come to mind, then reminds you before you forget.\n\nYou can add a schedule with simple inputs such as date, time, place, and title. Set a default reminder time and it will be applied automatically to your schedules. You can also adjust notification vibration count to fit your preference.\n\nView today’s plans, upcoming schedules, weekly boards, and monthly calendars at a glance. Home screen widgets let you check important schedules without opening the app.\n\nKey features:\n - Quick schedule creation\n - Default reminder time settings\n - Notification vibration count settings\n - Today, weekly, and monthly schedule views\n - Home screen widgets\n - Backup and restore\n - Notification diagnostics\n\nSave it when you think of it, and get reminded before you forget."
+    },
     "title": { "ko": "잊기전에", "en": "Before Forget" },
     "desc": {
       "ko": "생각난 일정을 빠르게 기록하고 원하는 시간에 알림받는 앱",
