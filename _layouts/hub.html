@@ -10,45 +10,165 @@ layout: hub-base
 <script>
 (function () {
   var LANG = '{{ lng }}';
-  // ---- render games & apps from the single source of truth: appList.json ----
+  var T = LANG === 'en'
+    ? { soon: 'In development', comingSoon: 'Coming soon', features: 'Features', shots: 'Screenshots', get: 'Get it', close: 'Close' }
+    : { soon: '개발 중', comingSoon: 'Coming soon', features: '주요 특징', shots: '스크린샷', get: '받을 수 있는 곳', close: '닫기' };
   var EMOJI = { 'game': '🎮', 'app': '📱' };
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function pick(o) { return o ? (o[LANG] || o.ko || o.en || '') : ''; }
   function iconUrl(p) {
     if (!p) return null;
     if (p.indexOf('http') === 0 || p.charAt(0) === '/') return p;            // absolute
     if (p.indexOf('./') === 0) return '{{ site.baseurl }}/game' + p.slice(1); // ./img/.. -> /game/img/..
     return p;
   }
-  function linkFor(item) {
-    if (item.landingUrl) return '{{ site.baseurl }}' + item.landingUrl;
-    if (item.stores && item.stores.length) return item.stores[0].url;
-    return null;
+
+  // Screenshots auto-discovered at build time from game/img/shots/<slug>/*.
+  // Drop images into that folder (named so they sort, e.g. 01.png) and they
+  // show up in the matching item's modal — no JSON edit needed. A manual
+  // "screenshots" array on an item overrides this.
+  var SHOTS_FLAT = [
+  {%- assign shot_files = site.static_files | where_exp: "f", "f.path contains '/game/img/shots/'" | sort: "path" -%}
+  {%- for f in shot_files -%}{% unless forloop.first %},{% endunless %}"{{ f.path | relative_url }}"{%- endfor -%}
+  ];
+  var SHOTS = {};
+  SHOTS_FLAT.forEach(function (p) {
+    var m = p.match(/\/game\/img\/shots\/([^\/]+)\//);
+    if (m) { (SHOTS[m[1]] = SHOTS[m[1]] || []).push(p); }
+  });
+  function resolvedShots(item) {
+    if (item.screenshots && item.screenshots.length) return item.screenshots.map(iconUrl);
+    return (SHOTS[item.slug] || []).slice();   // already site-absolute urls
   }
+
+  // ---- render cards -----------------------------------------------------------
   function cardHTML(item) {
-    var t = (item.title && (item.title[LANG] || item.title.ko || item.title.en)) || '';
-    var d = (item.desc && (item.desc[LANG] || item.desc.ko || item.desc.en)) || '';
+    var t = pick(item.title), d = pick(item.desc);
     var tag = (item.tags && item.tags[0]) ? item.tags[0].toUpperCase() : '';
     var soon = item.status === 'developing';
     var icon = iconUrl(item.icon);
     var art = icon
-      ? '<div class="card-art"><img src="' + icon + '" alt="' + t + '" loading="lazy"></div>'
+      ? '<div class="card-art"><img src="' + icon + '" alt="' + esc(t) + '" loading="lazy"></div>'
       : '<div class="card-art emoji">' + (EMOJI[item.type] || '🎲') + '</div>';
     var stores = soon
-      ? '<span class="store-chip">Coming soon</span>'
-      : (item.stores || []).map(function (s) { return '<span class="store-chip">' + s.name + '</span>'; }).join('');
-    var href = linkFor(item);
-    var body = '<div class="card-body"><div class="card-title"><h3>' + t + '</h3>' +
-      (soon ? '<span class="badge-soon">개발 중</span>' : '') + '</div>' +
-      '<p>' + d + '</p><div class="meta-row">' +
-      (tag ? '<span class="tag">' + tag + '</span>' : '<span></span>') +
+      ? '<span class="store-chip">' + T.comingSoon + '</span>'
+      : (item.stores || []).map(function (s) { return '<span class="store-chip">' + esc(s.name) + '</span>'; }).join('');
+    var body = '<div class="card-body"><div class="card-title"><h3>' + esc(t) + '</h3>' +
+      (soon ? '<span class="badge-soon">' + T.soon + '</span>' : '') + '</div>' +
+      '<p>' + esc(d) + '</p><div class="meta-row">' +
+      (tag ? '<span class="tag">' + esc(tag) + '</span>' : '<span></span>') +
       '<span class="stores">' + stores + '</span></div></div>';
-    var openAttr = (href && href.indexOf('http') === 0) ? ' target="_blank" rel="noopener"' : '';
-    return '<a class="card' + (soon ? ' soon' : '') + '"' + (href ? ' href="' + href + '"' : '') + openAttr + '>' + art + body + '</a>';
+    return '<a class="card' + (soon ? ' soon' : '') + '" href="#' + esc(item.slug) + '">' + art + body + '</a>';
   }
+
+  // ---- detail modal -----------------------------------------------------------
+  var BY_SLUG = {};
+  var modalRoot, mediaEl, bodyEl;
+  function ensureModal() {
+    if (modalRoot) return;
+    modalRoot = document.createElement('div');
+    modalRoot.className = 'modal-root';
+    modalRoot.setAttribute('role', 'dialog');
+    modalRoot.setAttribute('aria-modal', 'true');
+    modalRoot.innerHTML =
+      '<div class="modal-backdrop" data-close></div>' +
+      '<div class="modal-scroll" data-close><div class="modal">' +
+        '<button class="modal-close" data-close aria-label="' + T.close + '">✕</button>' +
+        '<div class="modal-media"></div>' +
+        '<div class="modal-body"></div>' +
+      '</div></div>';
+    document.body.appendChild(modalRoot);
+    mediaEl = modalRoot.querySelector('.modal-media');
+    bodyEl = modalRoot.querySelector('.modal-body');
+    modalRoot.addEventListener('click', function (e) { if (e.target.hasAttribute('data-close')) goClose(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modalRoot.classList.contains('open')) goClose(); });
+  }
+
+  function mediaHTML(item) {
+    var t = esc(pick(item.title));
+    if (item.video) {
+      var src = item.video.replace('controls=0', 'controls=1').replace('autoplay=1', 'autoplay=0');
+      return '<iframe src="' + src + '" title="' + t + '" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+    }
+    var hero = iconUrl(item.img) || resolvedShots(item)[0] || iconUrl(item.icon);
+    if (hero) return '<img src="' + hero + '" alt="' + t + '">';
+    return '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:64px">' + (EMOJI[item.type] || '🎲') + '</div>';
+  }
+
+  function buildBody(item) {
+    var t = esc(pick(item.title));
+    var desc = esc(pick(item.longDesc) || pick(item.desc));
+    var icon = iconUrl(item.icon);
+    var soon = item.status === 'developing';
+    var html = '<div class="modal-head">' +
+      (icon ? '<img src="' + icon + '" alt="' + t + '">' : '') +
+      '<h2>' + t + '</h2></div>';
+    if (item.tags && item.tags.length) {
+      html += '<div class="modal-tags">' + item.tags.map(function (x) { return '<span class="tag">' + esc(x) + '</span>'; }).join('') + '</div>';
+    }
+    if (desc) html += '<p class="modal-desc">' + desc + '</p>';
+
+    var feats = item.features ? (item.features[LANG] || item.features.ko || item.features.en) : null;
+    if (feats && feats.length) {
+      html += '<div class="modal-sec"><h4>' + T.features + '</h4><ul class="modal-feats">' +
+        feats.map(function (f) { return '<li>' + esc(f) + '</li>'; }).join('') + '</ul></div>';
+    }
+
+    // gallery: every screenshot except the one already used as the hero image
+    var shots = resolvedShots(item);
+    var heroImg = item.video ? null : (iconUrl(item.img) || shots[0]);
+    var gallery = shots.filter(function (s) { return s !== heroImg; });
+    if (gallery.length) {
+      html += '<div class="modal-sec"><h4>' + T.shots + '</h4><div class="shots">' +
+        gallery.map(function (u) { return '<img src="' + u + '" alt="' + t + '" loading="lazy">'; }).join('') + '</div></div>';
+    }
+
+    if (soon) {
+      html += '<div class="modal-sec"><span class="modal-soon">' + T.soon + '</span></div>';
+    } else if (item.stores && item.stores.length) {
+      html += '<div class="modal-sec"><h4>' + T.get + '</h4><div class="store-badges">' +
+        item.stores.map(function (s) {
+          var ic = iconUrl(s.icon);
+          return '<a class="store-badge" href="' + esc(s.url) + '" target="_blank" rel="noopener">' +
+            (ic ? '<img src="' + ic + '" alt="">' : '') + esc(s.name) + '</a>';
+        }).join('') + '</div></div>';
+    }
+    return html;
+  }
+
+  function openModal(item) {
+    ensureModal();
+    mediaEl.innerHTML = mediaHTML(item);
+    bodyEl.innerHTML = buildBody(item);
+    bodyEl.parentNode.scrollTop = 0;
+    modalRoot.classList.add('open');
+    document.documentElement.style.overflow = 'hidden';
+  }
+  function closeUI() {
+    if (!modalRoot || !modalRoot.classList.contains('open')) return;
+    modalRoot.classList.remove('open');
+    mediaEl.innerHTML = '';                 // stop any playing video
+    document.documentElement.style.overflow = '';
+  }
+  function goClose() {
+    // strip the slug from the URL without adding history; back button still closes
+    if (history.replaceState) history.replaceState(null, '', location.pathname + location.search);
+    closeUI();
+  }
+  function route() {
+    var slug = (location.hash || '').replace(/^#/, '');
+    var item = BY_SLUG[slug];
+    if (item) openModal(item); else closeUI();
+  }
+
   fetch('{{ site.baseurl }}/assets/appList.json').then(function (r) { return r.json(); }).then(function (data) {
     var games = data.filter(function (x) { return x.type === 'game'; });
     var apps = data.filter(function (x) { return x.type === 'app'; });
+    data.forEach(function (x) { if (x.slug) BY_SLUG[x.slug] = x; });
     var g = document.getElementById('games-grid'); if (g) g.innerHTML = games.map(cardHTML).join('');
     var a = document.getElementById('apps-grid'); if (a) a.innerHTML = apps.map(cardHTML).join('');
+    window.addEventListener('hashchange', route);
+    route(); // open straight away if the page was loaded with #slug
   }).catch(function (e) { console.warn('appList load failed', e); });
 
   // ---- external blog RSS (optional) ----
