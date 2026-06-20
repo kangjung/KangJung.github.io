@@ -130,6 +130,19 @@ layout: hub-base
     if (item.tags && item.tags.length) {
       html += '<div class="modal-tags">' + item.tags.map(function (x) { return '<span class="tag">' + esc(x) + '</span>'; }).join('') + '</div>';
     }
+
+    // download / stores — placed up top as the primary call to action
+    if (soon) {
+      html += '<div class="modal-sec"><span class="modal-soon">' + T.soon + '</span></div>';
+    } else if (item.stores && item.stores.length) {
+      html += '<div class="modal-sec"><h4>' + T.get + '</h4><div class="store-badges">' +
+        item.stores.map(function (s) {
+          var ic = iconUrl(s.icon);
+          return '<a class="store-badge" href="' + esc(s.url) + '" target="_blank" rel="noopener">' +
+            (ic ? '<img src="' + ic + '" alt="">' : '') + esc(s.name) + '</a>';
+        }).join('') + '</div></div>';
+    }
+
     if (desc) html += '<p class="modal-desc">' + desc + '</p>';
 
     var feats = item.features ? (item.features[LANG] || item.features.ko || item.features.en) : null;
@@ -145,17 +158,6 @@ layout: hub-base
     if (gallery.length) {
       html += '<div class="modal-sec"><h4>' + T.shots + '</h4><div class="shots">' +
         gallery.map(function (u) { return '<img src="' + u + '" alt="' + t + '" loading="lazy">'; }).join('') + '</div></div>';
-    }
-
-    if (soon) {
-      html += '<div class="modal-sec"><span class="modal-soon">' + T.soon + '</span></div>';
-    } else if (item.stores && item.stores.length) {
-      html += '<div class="modal-sec"><h4>' + T.get + '</h4><div class="store-badges">' +
-        item.stores.map(function (s) {
-          var ic = iconUrl(s.icon);
-          return '<a class="store-badge" href="' + esc(s.url) + '" target="_blank" rel="noopener">' +
-            (ic ? '<img src="' + ic + '" alt="">' : '') + esc(s.name) + '</a>';
-        }).join('') + '</div></div>';
     }
     return html;
   }
