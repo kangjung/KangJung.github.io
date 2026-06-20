@@ -107,7 +107,13 @@ img: ":banner.png"
       </div>
       <div class="rss-card">
         <div class="rss-top">
-          <strong style="font-size:14.5px">📡 My Naver blog</strong>
+          <strong style="font-size:14.5px;display:inline-flex;align-items:center;gap:8px">
+            <svg viewBox="0 0 40 40" width="22" height="22" role="img" aria-label="Naver blog" style="flex-shrink:0">
+              <rect width="40" height="40" rx="11" fill="#03C75A"/>
+              <text x="20" y="27" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#fff">blog</text>
+            </svg>
+            My Naver blog
+          </strong>
           <span class="rss-badge">● RSS</span>
         </div>
         <div id="rss-items">
