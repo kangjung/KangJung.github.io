@@ -18,9 +18,9 @@ img: ":banner.png"
         그때그때 가볍게 만듭니다. 본업은 웹 개발이고, 이건 취미예요.
       </p>
       <div class="stats reveal" style="animation-delay:.18s">
-        <div class="stat"><div class="num">6</div><div class="lab">게임</div></div>
-        <div class="stat"><div class="num">5</div><div class="lab">앱 · 서비스</div></div>
-        <div class="stat"><div class="num">2</div><div class="lab">웹 도구</div></div>
+        <div class="stat"><div class="num" id="stat-games">6</div><div class="lab">게임</div></div>
+        <div class="stat"><div class="num" id="stat-apps">5</div><div class="lab">앱 · 서비스</div></div>
+        <div class="stat"><div class="num" id="stat-tools">2</div><div class="lab">웹 도구</div></div>
       </div>
       <div class="cta-row reveal" style="animation-delay:.24s">
         <a class="btn btn-primary" href="#games">만든 게임 보기 →</a>

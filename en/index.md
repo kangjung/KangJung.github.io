@@ -15,9 +15,9 @@ img: ":banner.png"
         made whenever I feel like it. Web dev by day; this is the hobby.
       </p>
       <div class="stats reveal" style="animation-delay:.18s">
-        <div class="stat"><div class="num">6</div><div class="lab">Games</div></div>
-        <div class="stat"><div class="num">5</div><div class="lab">Apps · Service</div></div>
-        <div class="stat"><div class="num">2</div><div class="lab">Web tools</div></div>
+        <div class="stat"><div class="num" id="stat-games">6</div><div class="lab">Games</div></div>
+        <div class="stat"><div class="num" id="stat-apps">5</div><div class="lab">Apps · Service</div></div>
+        <div class="stat"><div class="num" id="stat-tools">2</div><div class="lab">Web tools</div></div>
       </div>
       <div class="cta-row reveal" style="animation-delay:.24s">
         <a class="btn btn-primary" href="#games">See the games →</a>
