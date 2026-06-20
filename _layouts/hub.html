@@ -33,7 +33,7 @@ layout: hub-base
   ];
   var SHOTS = {};
   SHOTS_FLAT.forEach(function (p) {
-    var m = p.match(/\/game\/img\/shots\/([^\/]+)\//);
+    var m = p.match(/\/game\/img\/shots\/([^\/]+)\/[^\/]+\.(?:png|jpe?g|webp|gif|avif)$/i); // images only (skips .gitkeep, README)
     if (m) { (SHOTS[m[1]] = SHOTS[m[1]] || []).push(p); }
   });
   function resolvedShots(item) {
