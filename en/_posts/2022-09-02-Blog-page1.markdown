@@ -9,7 +9,7 @@ title: 2022 e-Government Standard Framework Contribution Review
 # multiple category is not supported
 category: Contribution
 # multiple tag entries are possible
-tags: [eGovFrame, Contribution]
+tags: [eGovFrame, OpenSource, Contribution]
 # thumbnail image for post
 img: "https://img1.daumcdn.net/thumb/R1280x0/?fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FXfkLQ%2FbtrLawGAupU%2FtPATa9kc46bN6lYCo8h210%2Fimg.png"
 # disable comments on this page

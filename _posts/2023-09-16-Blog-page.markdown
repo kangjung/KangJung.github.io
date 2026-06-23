@@ -7,9 +7,9 @@ title: Unity Education Day 2023
 # if not specified, .name will be used from _data/owner/[language].yml
 #author: "KangJung"
 # multiple category is not supported
-category: auto generated
+category: Conference
 # multiple tag entries are possible
-tags: [Unity, Unity Education Day]
+tags: [Unity, Conference, Education, XR, AI]
 # thumbnail image for post
 img: "https://kangjung.github.io/assets/img/default/profile_pic.png"
 # disable comments on this page

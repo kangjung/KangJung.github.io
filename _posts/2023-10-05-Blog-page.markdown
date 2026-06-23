@@ -7,9 +7,9 @@ title: APAC INDUSTRY SUMMIT 2023
 # if not specified, .name will be used from _data/owner/[language].yml
 #author: "KangJung"
 # multiple category is not supported
-category: auto generated
+category: Conference
 # multiple tag entries are possible
-tags: [Unity, Unity Education Day]
+tags: [Unity, Conference, DigitalTwin, Metaverse, AI, HDRP]
 # thumbnail image for post
 img: "https://kangjung.github.io/assets/img/default/profile_pic.png"
 # disable comments on this page

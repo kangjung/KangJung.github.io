@@ -20,7 +20,7 @@ img: ":banner.png"
       <div class="stats reveal" style="animation-delay:.18s">
         <div class="stat"><div class="num" id="stat-games">6</div><div class="lab">게임</div></div>
         <div class="stat"><div class="num" id="stat-apps">5</div><div class="lab">앱 · 서비스</div></div>
-        <div class="stat"><div class="num" id="stat-tools">2</div><div class="lab">웹 도구</div></div>
+        <div class="stat"><div class="num" id="stat-tools">4</div><div class="lab">웹 도구</div></div>
       </div>
       <div class="cta-row reveal" style="animation-delay:.24s">
         <a class="btn btn-primary" href="#games">만든 게임 보기 →</a>
@@ -78,6 +78,18 @@ img: ":banner.png"
         <div class="card-body"><div class="card-title"><h3>DevBox</h3></div>
           <p>자주 쓰는 브라우저 개발자 도구 모음. 설치 없이 바로.</p>
           <div class="meta-row"><span class="tag">WEB</span><span class="stores"><span class="store-chip">바로 사용 ↗</span></span></div></div></a>
+
+      <a class="card" href="{{ site.baseurl }}/js-edge-cases/">
+        <div class="card-art emoji" style="background:linear-gradient(145deg,#111827,#00d4ff);color:#fff">JS</div>
+        <div class="card-body"><div class="card-title"><h3>JavaScript Edge Cases</h3></div>
+          <p>자바스크립트의 헷갈리는 형변환, 비교, 정렬 같은 엣지 케이스를 퀴즈처럼 살펴보는 인터랙티브 페이지.</p>
+          <div class="meta-row"><span class="tag">JAVASCRIPT</span><span class="stores"><span class="store-chip">바로 보기 ↗</span></span></div></div></a>
+
+      <a class="card" href="https://github.com/kangjung/kakaowork-backup" target="_blank" rel="noopener">
+        <div class="card-art emoji" style="background:linear-gradient(145deg,#ffe45c,#ff9f1c);color:#14151a">💬</div>
+        <div class="card-body"><div class="card-title"><h3>KakaoWork Backup</h3></div>
+          <p>카카오워크 대화와 자료를 보관하기 위한 백업 도구. 공개 GitHub 저장소에서 코드와 사용 방법을 확인할 수 있어요.</p>
+          <div class="meta-row"><span class="tag">BACKUP</span><span class="stores"><span class="store-chip">GitHub ↗</span></span></div></div></a>
     </div>
   </section>
 

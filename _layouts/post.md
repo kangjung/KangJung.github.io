@@ -5,6 +5,26 @@ layout: hub-base
 {%- include multi_lng/get-lng-by-url.liquid -%}
 {%- assign lng = get_lng -%}
 {%- assign lp = '' -%}{%- if lng == 'en' -%}{%- assign lp = '/en' -%}{%- endif -%}
+{%- include multi_lng/get-pages-by-lng.liquid pages = site.posts -%}
+{%- assign lng_posts = lng_pages | sort: 'date' | reverse -%}
+{%- assign current_index = nil -%}
+{%- for post in lng_posts -%}
+  {%- if post.url == page.url -%}
+    {%- assign current_index = forloop.index0 -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- assign older_post = nil -%}
+{%- assign newer_post = nil -%}
+{%- if current_index != nil -%}
+  {%- assign older_index = current_index | plus: 1 -%}
+  {%- assign newer_index = current_index | minus: 1 -%}
+  {%- if older_index < lng_posts.size -%}
+    {%- assign older_post = lng_posts[older_index] -%}
+  {%- endif -%}
+  {%- if current_index > 0 -%}
+    {%- assign newer_post = lng_posts[newer_index] -%}
+  {%- endif -%}
+{%- endif -%}
 <article class="post-wrap">
   <a class="post-back" href="{{ site.baseurl }}{{ lp }}/tabs/blog/">← {% if lng == 'en' %}Blog{% else %}블로그{% endif %}</a>
   <header class="post-head">
@@ -24,13 +44,13 @@ layout: hub-base
     {{ content }}
   </div>
 
-  {%- if page.previous or page.next %}
+  {%- if older_post or newer_post %}
   <nav class="post-nav">
-    {%- if page.previous %}
-    <a href="{{ site.baseurl }}{{ page.previous.url }}"><span class="pn-dir">← {% if lng == 'en' %}Older{% else %}이전 글{% endif %}</span><span class="pn-title">{{ page.previous.title }}</span></a>
+    {%- if older_post %}
+    <a href="{{ site.baseurl }}{{ older_post.url }}"><span class="pn-dir">← {% if lng == 'en' %}Older{% else %}이전 글{% endif %}</span><span class="pn-title">{{ older_post.title }}</span></a>
     {%- else %}<span></span>{% endif -%}
-    {%- if page.next %}
-    <a href="{{ site.baseurl }}{{ page.next.url }}" style="text-align:right"><span class="pn-dir">{% if lng == 'en' %}Newer{% else %}다음 글{% endif %} →</span><span class="pn-title">{{ page.next.title }}</span></a>
+    {%- if newer_post %}
+    <a href="{{ site.baseurl }}{{ newer_post.url }}" style="text-align:right"><span class="pn-dir">{% if lng == 'en' %}Newer{% else %}다음 글{% endif %} →</span><span class="pn-title">{{ newer_post.title }}</span></a>
     {%- else %}<span></span>{% endif -%}
   </nav>
   {%- endif %}

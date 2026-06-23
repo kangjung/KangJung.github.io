@@ -7,9 +7,9 @@ title: 상품 나열 글에도 검색 유입이 생길까
 # if not specified, .name will be used from _data/owner/[language].yml
 #author: "KangJung"
 # multiple category is not supported
-category: auto generated
+category: Automation
 # multiple tag entries are possible
-tags: [Blog, Automation, CoupangPartners, TypeScript, GitHubActions]
+tags: [Automation, CoupangPartners, Blogger, TypeScript, GitHubActions, Gemini]
 # thumbnail image for post
 img: "https://kangjung.github.io/assets/img/posts/20260623/auto-posting-flow.png"
 # disable comments on this page

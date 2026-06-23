@@ -17,7 +17,7 @@ img: ":banner.png"
       <div class="stats reveal" style="animation-delay:.18s">
         <div class="stat"><div class="num" id="stat-games">6</div><div class="lab">Games</div></div>
         <div class="stat"><div class="num" id="stat-apps">5</div><div class="lab">Apps · Service</div></div>
-        <div class="stat"><div class="num" id="stat-tools">2</div><div class="lab">Web tools</div></div>
+        <div class="stat"><div class="num" id="stat-tools">4</div><div class="lab">Web tools</div></div>
       </div>
       <div class="cta-row reveal" style="animation-delay:.24s">
         <a class="btn btn-primary" href="#games">See the games →</a>
@@ -75,6 +75,18 @@ img: ":banner.png"
         <div class="card-body"><div class="card-title"><h3>DevBox</h3></div>
           <p>A set of handy browser developer tools. No install needed.</p>
           <div class="meta-row"><span class="tag">WEB</span><span class="stores"><span class="store-chip">Open ↗</span></span></div></div></a>
+
+      <a class="card" href="{{ site.baseurl }}/js-edge-cases/">
+        <div class="card-art emoji" style="background:linear-gradient(145deg,#111827,#00d4ff);color:#fff">JS</div>
+        <div class="card-body"><div class="card-title"><h3>JavaScript Edge Cases</h3></div>
+          <p>An interactive page for exploring odd JavaScript coercion, comparison, sorting, and other edge cases like small quizzes.</p>
+          <div class="meta-row"><span class="tag">JAVASCRIPT</span><span class="stores"><span class="store-chip">Open ↗</span></span></div></div></a>
+
+      <a class="card" href="https://github.com/kangjung/kakaowork-backup" target="_blank" rel="noopener">
+        <div class="card-art emoji" style="background:linear-gradient(145deg,#ffe45c,#ff9f1c);color:#14151a">💬</div>
+        <div class="card-body"><div class="card-title"><h3>KakaoWork Backup</h3></div>
+          <p>A backup utility for keeping KakaoWork conversations and files. Code and usage notes are available in the public GitHub repo.</p>
+          <div class="meta-row"><span class="tag">BACKUP</span><span class="stores"><span class="store-chip">GitHub ↗</span></span></div></div></a>
     </div>
   </section>
 

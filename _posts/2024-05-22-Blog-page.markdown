@@ -9,7 +9,7 @@ title: U Day Seoul 후기
 # multiple category is not supported
 category: Conference
 # multiple tag entries are possible
-tags: [Unity, Conference]
+tags: [Unity, Conference, Unity6, Sentis, ShaderGraph, XR]
 # thumbnail image for post
 img: "https://kangjung.github.io/assets/img/posts/20240522/240522_06.png"
 # disable comments on this page
