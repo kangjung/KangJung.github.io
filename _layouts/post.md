@@ -25,6 +25,7 @@ layout: hub-base
     {%- assign newer_post = lng_posts[newer_index] -%}
   {%- endif -%}
 {%- endif -%}
+<main class="post-page-grid wrap">
 <article class="post-wrap">
   <a class="post-back" href="{{ site.baseurl }}{{ lp }}/tabs/blog/">← {% if lng == 'en' %}Blog{% else %}블로그{% endif %}</a>
   <header class="post-head">
@@ -55,3 +56,7 @@ layout: hub-base
   </nav>
   {%- endif %}
 </article>
+  <aside class="post-sidebar" aria-label="Advertisement">
+    {% include default/adsense-block.html slot="7654258229" class="post-sidebar-ad" %}
+  </aside>
+</main>
