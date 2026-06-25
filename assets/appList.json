@@ -107,6 +107,82 @@
     ]
   },
   {
+    "type": "game",
+    "slug": "death-scythe",
+    "title": { "ko": "Death-Scythe", "en": "Death-Scythe" },
+    "desc": {
+      "ko": "로프를 걸어 앞으로 이동하는 HTML5 횡스크롤 러닝 게임",
+      "en": "HTML5 side-scrolling runner where you move forward by hanging a rope."
+    },
+    "longDesc": {
+      "ko": "js13kGames 2022 출품작입니다. 영혼을 사용해 로프를 걸고, 떨어지지 않도록 앞으로 이동하는 횡스크롤 러닝 게임입니다. 마우스 클릭만으로 플레이할 수 있습니다.",
+      "en": "An entry for js13kGames 2022. Use souls to hang a rope and move forward without falling in this side-scrolling runner. It can be played with mouse clicks."
+    },
+    "img": "https://github.com/kangjung/Death-Scythe/blob/master/playGif.gif?raw=true",
+    "tags": ["HTML5", "JavaScript"],
+    "stores": [
+      { "name": "js13kGames", "url": "https://js13kgames.com/entries/death-scythe" },
+      { "name": "itch.io", "url": "https://kangjung.itch.io/death-scythe", "icon": "./img/itchio-textless-black.svg" },
+      { "name": "GitHub", "url": "https://github.com/kangjung/Death-Scythe" }
+    ]
+  },
+  {
+    "type": "game",
+    "slug": "grass-tower-defense",
+    "title": { "ko": "Grass Tower Defense", "en": "Grass Tower Defense" },
+    "desc": {
+      "ko": "GitHub 잔디밭에서 영감을 받은 HTML5 타워 디펜스 게임",
+      "en": "HTML5 tower defense game inspired by GitHub's contribution graph."
+    },
+    "longDesc": {
+      "ko": "js13kGames 2025 출품작입니다. GitHub 기여 그래프의 잔디밭에서 영감을 받은 타워 디펜스 게임으로, 기여 포인트를 모아 타워를 세우고 필드를 몰려오는 적으로부터 지켜야 합니다.",
+      "en": "An entry for js13kGames 2025. Inspired by GitHub's contribution graph, this tower defense game has you earn contribution points, build towers, and defend the field from incoming enemies."
+    },
+    "img": "https://github.com/user-attachments/assets/d93e911b-85bc-4a50-9223-9352a2c62a92",
+    "tags": ["HTML5", "JavaScript"],
+    "stores": [
+      { "name": "js13kGames", "url": "https://js13kgames.com/2025/games/grass-tower-defense" },
+      { "name": "GitHub", "url": "https://github.com/kangjung/Grass-Tower-Defense" }
+    ]
+  },
+  {
+    "type": "game",
+    "slug": "13-maze",
+    "title": { "ko": "13-Maze", "en": "13-Maze" },
+    "desc": {
+      "ko": "점수를 13 안팎으로 관리하며 출구를 찾는 HTML5 미로 게임",
+      "en": "HTML5 maze game where you manage your score around 13 and find the exit."
+    },
+    "longDesc": {
+      "ko": "js13kGames 2024 출품작입니다. 타일을 클릭해 이동하고, 타일에 따라 오르내리는 점수를 관리하며 출구를 찾아야 합니다. 점수가 13 이상 또는 -13 이하가 되면 게임이 끝납니다.",
+      "en": "An entry for js13kGames 2024. Click tiles to move, manage the score changes caused by each tile, and find the exit. The game ends when the score reaches 13 or higher, or -13 or lower."
+    },
+    "img": "https://github.com/user-attachments/assets/7b8b07de-8908-46e7-a6b1-645d906f75fc",
+    "tags": ["HTML5", "JavaScript"],
+    "stores": [
+      { "name": "GitHub", "url": "https://github.com/kangjung/13-Maze" }
+    ]
+  },
+  {
+    "type": "game",
+    "slug": "13c-defense",
+    "title": { "ko": "13C-Defense", "en": "13C-Defense" },
+    "desc": {
+      "ko": "13세기 전투에서 영감을 받은 HTML5 디펜스 게임",
+      "en": "HTML5 defense game inspired by 13th-century battles."
+    },
+    "longDesc": {
+      "ko": "js13kGames 2023 출품작입니다. 13세기 전투에서 영감을 받은 디펜스 게임으로, 정해진 경로를 따라 접근하는 적을 성문에 도달하기 전에 막아야 합니다.",
+      "en": "An entry for js13kGames 2023. A defense game inspired by 13th-century battles, where enemies move along a set path and must be stopped before they reach the gate."
+    },
+    "img": "https://github.com/kangjung/13C-Defense/blob/main/400x250.png?raw=true",
+    "tags": ["HTML5", "JavaScript"],
+    "stores": [
+      { "name": "js13kGames", "url": "https://js13kgames.com/entries/13c-defense" },
+      { "name": "GitHub", "url": "https://github.com/kangjung/13C-Defense" }
+    ]
+  },
+  {
     "type": "app",
     "slug": "wait-travel",
     "title": { "ko": "잠깐, 여행", "en": "wait, travel" },

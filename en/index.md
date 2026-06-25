@@ -15,9 +15,9 @@ img: ":banner.png"
         made whenever I feel like it. Web dev by day; this is the hobby.
       </p>
       <div class="stats reveal" style="animation-delay:.18s">
-        <div class="stat"><div class="num" id="stat-games">6</div><div class="lab">Games</div></div>
+        <div class="stat"><div class="num" id="stat-games">9</div><div class="lab">Games</div></div>
         <div class="stat"><div class="num" id="stat-apps">5</div><div class="lab">Apps · Service</div></div>
-        <div class="stat"><div class="num" id="stat-tools">4</div><div class="lab">Web tools</div></div>
+        <div class="stat"><div class="num" id="stat-tools">5</div><div class="lab">Web tools</div></div>
       </div>
       <div class="cta-row reveal" style="animation-delay:.24s">
         <a class="btn btn-primary" href="#games">See the games →</a>
@@ -60,8 +60,8 @@ img: ":banner.png"
   <section id="tools" class="wrap">
     <div class="sec-head">
       <span class="eyebrow">Tools</span>
-      <h2>Tools you run in the browser</h2>
-      <p>No install — just open them. Each runs as its own web app.</p>
+      <h2>Tools &amp; public repositories</h2>
+      <p>A mix of browser-based tools and small utilities you can find on GitHub.</p>
     </div>
     <div class="grid apps">
       <a class="card" href="{{ site.baseurl }}/remove-background/">
@@ -87,6 +87,12 @@ img: ":banner.png"
         <div class="card-body"><div class="card-title"><h3>KakaoWork Backup</h3></div>
           <p>A backup utility for keeping KakaoWork conversations and files. Code and usage notes are available in the public GitHub repo.</p>
           <div class="meta-row"><span class="tag">BACKUP</span><span class="stores"><span class="store-chip">GitHub ↗</span></span></div></div></a>
+
+      <a class="card" href="https://github.com/kangjung/Disable-CSP" target="_blank" rel="noopener">
+        <div class="card-art emoji" style="background:linear-gradient(145deg,#ef4444,#111827);color:#fff">CSP</div>
+        <div class="card-body"><div class="card-title"><h3>Disable-CSP</h3></div>
+          <p>A browser extension for disabling the current page's Content Security Policy, built for testing and debugging workflows.</p>
+          <div class="meta-row"><span class="tag">EXTENSION</span><span class="stores"><span class="store-chip">GitHub ↗</span></span></div></div></a>
     </div>
   </section>
 
