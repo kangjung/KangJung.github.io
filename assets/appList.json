@@ -108,26 +108,6 @@
   },
   {
     "type": "game",
-    "slug": "death-scythe",
-    "title": { "ko": "Death-Scythe", "en": "Death-Scythe" },
-    "desc": {
-      "ko": "로프를 걸어 앞으로 이동하는 HTML5 횡스크롤 러닝 게임",
-      "en": "HTML5 side-scrolling runner where you move forward by hanging a rope."
-    },
-    "longDesc": {
-      "ko": "js13kGames 2022 출품작입니다. 영혼을 사용해 로프를 걸고, 떨어지지 않도록 앞으로 이동하는 횡스크롤 러닝 게임입니다. 마우스 클릭만으로 플레이할 수 있습니다.",
-      "en": "An entry for js13kGames 2022. Use souls to hang a rope and move forward without falling in this side-scrolling runner. It can be played with mouse clicks."
-    },
-    "img": "https://github.com/kangjung/Death-Scythe/blob/master/playGif.gif?raw=true",
-    "tags": ["HTML5", "JavaScript"],
-    "stores": [
-      { "name": "js13kGames", "url": "https://js13kgames.com/entries/death-scythe" },
-      { "name": "itch.io", "url": "https://kangjung.itch.io/death-scythe", "icon": "./img/itchio-textless-black.svg" },
-      { "name": "GitHub", "url": "https://github.com/kangjung/Death-Scythe" }
-    ]
-  },
-  {
-    "type": "game",
     "slug": "grass-tower-defense",
     "title": { "ko": "Grass Tower Defense", "en": "Grass Tower Defense" },
     "desc": {
@@ -160,6 +140,7 @@
     "img": "https://github.com/user-attachments/assets/7b8b07de-8908-46e7-a6b1-645d906f75fc",
     "tags": ["HTML5", "JavaScript"],
     "stores": [
+      { "name": "js13kGames", "url": "https://js13kgames.com/2024/games/13-maze" },
       { "name": "GitHub", "url": "https://github.com/kangjung/13-Maze" }
     ]
   },
@@ -183,17 +164,24 @@
     ]
   },
   {
-    "type": "app",
-    "slug": "wait-travel",
-    "title": { "ko": "잠깐, 여행", "en": "wait, travel" },
+    "type": "game",
+    "slug": "death-scythe",
+    "title": { "ko": "Death-Scythe", "en": "Death-Scythe" },
     "desc": {
-      "ko": "2025 관광데이터 활용 공모전 참가를 위한 위치기반 관광정보 조회 웹사이트 & 앱 서비스",
-      "en": "Location-based tourism information search service for participation in the 2025 tourism data utilization contest"
+      "ko": "로프를 걸어 앞으로 이동하는 HTML5 횡스크롤 러닝 게임",
+      "en": "HTML5 side-scrolling runner where you move forward by hanging a rope."
     },
-    "img": "./img/jamggan-trip/jamggan-trip.png",
-    "icon": "./img/jamggan-trip/jamggan-trip-icon.png",
-    "tags": ["Vue.js", "Spring boot"],
-    "stores": []
+    "longDesc": {
+      "ko": "js13kGames 2022 출품작입니다. 영혼을 사용해 로프를 걸고, 떨어지지 않도록 앞으로 이동하는 횡스크롤 러닝 게임입니다. 마우스 클릭만으로 플레이할 수 있습니다.",
+      "en": "An entry for js13kGames 2022. Use souls to hang a rope and move forward without falling in this side-scrolling runner. It can be played with mouse clicks."
+    },
+    "img": "https://github.com/kangjung/Death-Scythe/blob/master/playGif.gif?raw=true",
+    "tags": ["HTML5", "JavaScript"],
+    "stores": [
+      { "name": "js13kGames", "url": "https://js13kgames.com/entries/death-scythe" },
+      { "name": "itch.io", "url": "https://kangjung.itch.io/death-scythe", "icon": "./img/itchio-textless-black.svg" },
+      { "name": "GitHub", "url": "https://github.com/kangjung/Death-Scythe" }
+    ]
   },
   {
     "type": "app",
