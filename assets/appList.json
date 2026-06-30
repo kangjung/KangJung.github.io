@@ -262,5 +262,24 @@
       { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.before_forget", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
       { "name": "원스토어", "url": "https://m.onestore.co.kr/v2/ko-kr/app/0001006601", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" }
     ]
+  },
+  {
+    "type": "app",
+    "slug": "learnquest-jlpt",
+    "title": { "ko": "요괴 일본어: JLPT 퀘스트", "en": "Yokai Japanese: JLPT Quest" },
+    "desc": {
+      "ko": "퀴즈 전투로 배우는 JLPT 일본어 학습 앱",
+      "en": "A JLPT Japanese study app built around quiz battles and review."
+    },
+    "longDesc": {
+      "ko": "요괴 일본어: JLPT 퀘스트는 N5부터 N1까지 단계별 퀴즈 전투로 일본어를 학습하는 앱입니다. 한자, 어휘, 문법 문제를 풀고 정답과 해설을 바로 확인하며, 틀린 문제와 몬스터 도감을 통해 반복 복습할 수 있습니다.",
+      "en": "Yokai Japanese: JLPT Quest helps you study Japanese from N5 to N1 through quiz battles. Practice kanji, vocabulary, and grammar, check answers and explanations right away, and review missed questions through the monster archive."
+    },
+    "img": "./img/learnquest-jlpt/cover.png",
+    "icon": "./img/learnquest-jlpt/icon.png",
+    "tags": ["React Native"],
+    "stores": [
+      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.learnquestjlpt", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" }
+    ]
   }
 ]
