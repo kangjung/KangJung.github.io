@@ -14,12 +14,12 @@ img: ":banner.png"
       <span class="eyebrow reveal">Just Making Things</span>
       <h1 class="reveal" style="animation-delay:.05s">이것저것,<br>만들어 보고 싶은<br><span class="accent">간단한 것들.</span></h1>
       <p class="hero-sub reveal" style="animation-delay:.12s">
-        거창한 목표는 없어요. 그냥 만들어 보고 싶은 게임·앱·웹 도구를
+        거창한 목표는 없어요. 그냥 만들어 보고 싶은 게임·앱 등을
         그때그때 가볍게 만듭니다. 본업은 웹 개발이고, 이건 취미예요.
       </p>
       <div class="stats reveal" style="animation-delay:.18s">
         <div class="stat"><div class="num" id="stat-games">9</div><div class="lab">게임</div></div>
-        <div class="stat"><div class="num" id="stat-apps">5</div><div class="lab">앱 · 서비스</div></div>
+        <div class="stat"><div class="num" id="stat-apps">5</div><div class="lab">앱과 서비스</div></div>
         <div class="stat"><div class="num" id="stat-tools">5</div><div class="lab">웹 도구</div></div>
       </div>
       <div class="cta-row reveal" style="animation-delay:.24s">
@@ -45,7 +45,7 @@ img: ":banner.png"
   <section id="games" class="wrap">
     <div class="sec-head">
       <span class="eyebrow">Games</span>
-      <h2>직접 만든 게임</h2>
+      <h2>게임</h2>
       <p>Unity와 HTML5로 만들어 여러 스토어에 출시했어요.</p>
     </div>
     <div class="grid games" id="games-grid"></div>
@@ -53,18 +53,18 @@ img: ":banner.png"
 
   <section id="apps" class="wrap">
     <div class="sec-head">
-      <span class="eyebrow">Apps &amp; Service</span>
-      <h2>만든 앱과 서비스</h2>
-      <p>일상에서 쓸 만한 작은 도구들, 그리고 공모전 출품 웹서비스.</p>
+      <span class="eyebrow">Apps &amp; Services</span>
+      <h2>앱과 서비스</h2>
+      <p>일상에서 쓸 만한 작은 앱과 서비스.</p>
     </div>
     <div class="grid apps" id="apps-grid"></div>
   </section>
 
   <section id="tools" class="wrap">
     <div class="sec-head">
-      <span class="eyebrow">Tools</span>
-      <h2>직접 만든 도구와 공개 저장소</h2>
-      <p>브라우저에서 바로 쓰는 웹 도구부터 GitHub에서 확인할 수 있는 작은 유틸리티까지 모아뒀어요.</p>
+      <span class="eyebrow">Other</span>
+      <h2>기타</h2>
+      <p>브라우저에서 바로 쓰는 것부터 작은 유틸리티까지 모아뒀어요.</p>
     </div>
     <div class="grid apps">
       <a class="card" href="{{ site.baseurl }}/remove-background/">
@@ -76,7 +76,7 @@ img: ":banner.png"
       <a class="card" href="{{ site.baseurl }}/tool/">
         <div class="card-art emoji" style="background:linear-gradient(145deg,#3fb5ff,#15c9a0);color:#fff">🧰</div>
         <div class="card-body"><div class="card-title"><h3>DevBox</h3></div>
-          <p>자주 쓰는 브라우저 개발자 도구 모음. 설치 없이 바로.</p>
+          <p>자주 쓰는 브라우저 개발자 기능 모음. 설치 없이 바로.</p>
           <div class="meta-row"><span class="tag">WEB</span><span class="stores"><span class="store-chip">바로 사용 ↗</span></span></div></div></a>
 
       <a class="card" href="{{ site.baseurl }}/js-edge-cases/">
@@ -88,13 +88,13 @@ img: ":banner.png"
       <a class="card" href="https://github.com/kangjung/kakaowork-backup" target="_blank" rel="noopener">
         <div class="card-art emoji" style="background:linear-gradient(145deg,#ffe45c,#ff9f1c);color:#14151a">💬</div>
         <div class="card-body"><div class="card-title"><h3>KakaoWork Backup</h3></div>
-          <p>카카오워크 대화와 자료를 보관하기 위한 백업 도구. 공개 GitHub 저장소에서 코드와 사용 방법을 확인할 수 있어요.</p>
+          <p>카카오워크 대화와 자료를 보관하기 위한 백업 유틸리티. GitHub에서 코드와 사용 방법을 확인할 수 있어요.</p>
           <div class="meta-row"><span class="tag">BACKUP</span><span class="stores"><span class="store-chip">GitHub ↗</span></span></div></div></a>
 
       <a class="card" href="https://github.com/kangjung/Disable-CSP" target="_blank" rel="noopener">
         <div class="card-art emoji" style="background:linear-gradient(145deg,#ef4444,#111827);color:#fff">CSP</div>
         <div class="card-body"><div class="card-title"><h3>Disable-CSP</h3></div>
-          <p>현재 페이지의 Content Security Policy를 비활성화하는 브라우저 확장 프로그램. 테스트와 디버깅 용도로 만든 도구입니다.</p>
+          <p>현재 페이지의 Content Security Policy를 비활성화하는 브라우저 확장 프로그램. 테스트와 디버깅용입니다.</p>
           <div class="meta-row"><span class="tag">EXTENSION</span><span class="stores"><span class="store-chip">GitHub ↗</span></span></div></div></a>
     </div>
   </section>

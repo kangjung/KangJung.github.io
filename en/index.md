@@ -42,7 +42,7 @@ img: ":banner.png"
   <section id="games" class="wrap">
     <div class="sec-head">
       <span class="eyebrow">Games</span>
-      <h2>Games I made</h2>
+      <h2>Games</h2>
       <p>Built with Unity and HTML5, shipped across several stores.</p>
     </div>
     <div class="grid games" id="games-grid"></div>
@@ -50,9 +50,9 @@ img: ":banner.png"
 
   <section id="apps" class="wrap">
     <div class="sec-head">
-      <span class="eyebrow">Apps &amp; Service</span>
-      <h2>Apps &amp; a service</h2>
-      <p>Small, useful tools for everyday life — and a contest web service.</p>
+      <span class="eyebrow">Apps &amp; Services</span>
+      <h2>Apps &amp; Services</h2>
+      <p>Small, useful apps and services for everyday life.</p>
     </div>
     <div class="grid apps" id="apps-grid"></div>
   </section>
@@ -60,8 +60,8 @@ img: ":banner.png"
   <section id="tools" class="wrap">
     <div class="sec-head">
       <span class="eyebrow">Tools</span>
-      <h2>Tools &amp; public repositories</h2>
-      <p>A mix of browser-based tools and small utilities you can find on GitHub.</p>
+      <h2>Tools</h2>
+      <p>A mix of browser-based pages and small utilities.</p>
     </div>
     <div class="grid apps">
       <a class="card" href="{{ site.baseurl }}/remove-background/">
