@@ -265,6 +265,26 @@
   },
   {
     "type": "app",
+    "slug": "reptile-note",
+    "title": { "ko": "랩타일노트", "en": "Reptile Note" },
+    "desc": {
+      "ko": "파충류와 양서류 사육 기록을 한눈에 관리하는 앱",
+      "en": "An app for tracking reptile and amphibian care records in one place."
+    },
+    "longDesc": {
+      "ko": "랩타일노트는 파충류와 양서류를 키우는 보호자를 위한 사육 기록 관리 앱입니다.\n\n급여, 분무, 온도, 습도, 체중, 청소, 탈피, 산란, 투약, 병원 기록처럼 자주 쓰는 관리 항목을 빠르게 남기고, 캘린더와 타임라인에서 날짜별 기록을 한눈에 확인할 수 있습니다.\n\n동물과 사육장을 등록해 기록을 분류하고, 상세 필터로 필요한 기록만 빠르게 찾을 수 있습니다. 통계 화면에서는 최근 활동, 급여 간격, 체중 변화, 기록 분포를 확인해 사육 패턴을 더 쉽게 파악할 수 있습니다.\n\n주요 기능:\n - 동물 및 사육장 관리\n - 급여, 분무, 온습도, 체중 등 사육 기록\n - 캘린더와 타임라인 보기\n - 기록 종류, 동물, 사육장별 상세 필터\n - 최근 활동 및 기록 통계\n - 동물 카드 공유\n\n작은 기록을 모아 반려 파충류와 양서류의 컨디션을 더 꼼꼼하게 살펴보세요.",
+      "en": "Reptile Note is a care record app for reptile and amphibian keepers.\n\nQuickly log feeding, misting, temperature, humidity, weight, cleaning, shedding, egg laying, medication, and vet records, then review everything by date through calendar and timeline views.\n\nYou can organize records by animal and enclosure, find specific logs with detailed filters, and use statistics to understand recent activity, feeding intervals, weight changes, and care patterns.\n\nKey features:\n - Animal and enclosure management\n - Feeding, misting, temperature, humidity, weight, and care logs\n - Calendar and timeline views\n - Detailed filters by record type, animal, and enclosure\n - Recent activity and record statistics\n - Shareable animal cards\n\nKeep small care details organized so it is easier to notice how your reptiles and amphibians are doing."
+    },
+    "img": "./img/reptile-note/cover.png",
+    "icon": "./img/reptile-note/icon.png",
+    "tags": ["Flutter"],
+    "stores": [
+      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.reptilenote", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
+      { "name": "원스토어", "url": "https://m.onestore.co.kr/v2/ko-kr/app/0001007192", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" }
+    ]
+  },
+  {
+    "type": "app",
     "slug": "learnquest-jlpt",
     "title": { "ko": "요괴 일본어: JLPT 퀘스트", "en": "Yokai Japanese: JLPT Quest" },
     "desc": {
