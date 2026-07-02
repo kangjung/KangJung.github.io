@@ -1,0 +1,385 @@
+---
+# multilingual page pair id, this must pair with translations of this page. (This name must be unique)
+lng_pair: id_git_bad_signature_index_corrupt_20260702
+title: Recovering from Git bad signature 0x00000000 After an Unexpected Shutdown
+
+# post specific
+# if not specified, .name will be used from _data/owner/[language].yml
+#author: "KangJung"
+# multiple category is not supported
+category: Git
+# multiple tag entries are possible
+tags: [Git, IntelliJ, PowerShell, Recovery]
+# thumbnail image for post
+img: "https://kangjung.github.io/assets/img/posts/20260702/git-bad-signature-index-corrupt.png"
+# disable comments on this page
+comments_disable: true
+
+# publish date
+date: 2026-07-02 10:30:00 +0900
+
+# seo
+# if not specified, date will be used.
+#meta_modify_date: 2026-07-02 10:30:00 +0900
+# check the meta_common_description in _data/owner/[language].yml
+meta_description: "How I recovered a Git repository after bad signature 0x00000000 and index file corrupt errors caused by an unexpected shutdown"
+
+# optional
+# please use the "image_viewer_on" below to enable image viewer for individual pages or posts (_posts/ or [language]/_posts folders).
+# image viewer can be enabled or disabled for all posts using the "image_viewer_posts: true" setting in _data/conf/main.yml.
+image_viewer_on: true
+# please use the "image_lazy_loader_on" below to enable image lazy loader for individual pages or posts (_posts/ or [language]/_posts folders).
+# image lazy loader can be enabled or disabled for all posts using the "image_lazy_loader_posts: true" setting in _data/conf/main.yml.
+#image_lazy_loader_on: true
+# exclude from on site search
+#on_site_search_exclude: true
+# exclude from search engines
+#search_engine_exclude: true
+# to disable this page, simply set published: false or delete this file
+#published: false
+---
+
+<!-- outline-start -->
+
+## Recovering from Git bad signature 0x00000000 After an Unexpected Shutdown
+
+My laptop suddenly powered off while I was working. When I reopened the project in IntelliJ IDEA, I encountered the following error:
+
+```text
+bad signature 0x00000000
+index file corrupt
+```
+
+![Git index corruption error](https://kangjung.github.io/assets/img/posts/20260702/git-bad-signature-index-corrupt.png){:data-align="center"}
+
+At first, I assumed that IntelliJ IDEA's internal cache or index had been corrupted.
+
+When something goes wrong in IntelliJ, `Invalidate Caches` is often the first solution that comes to mind. However, the index mentioned in this error was not an IntelliJ index. It was Git's `.git/index` file.
+
+The laptop likely shut down while Git was writing to one or more internal files, leaving them in a corrupted state.
+
+## Rebuilding the Git Index
+
+I opened PowerShell in the project directory and renamed the existing Git index file.
+
+```powershell
+Rename-Item .git\index index.corrupt
+git reset
+git status
+```
+
+In a typical index corruption case, Git recreates the index and correctly identifies the files that were modified locally.
+
+However, the result was different from what I expected.
+
+```text
+No commits yet
+
+Untracked files:
+  .gitignore
+  README.md
+  build.gradle
+  src/
+  ...
+```
+
+Every file that had previously been tracked by Git was now shown as untracked.
+
+For a moment, it looked as though the entire commit history had disappeared. However, running `git reset` without `--hard` does not delete existing commits.
+
+This suggested that the problem was not limited to `.git/index`. The Git reference that pointed to the current branch may also have been corrupted.
+
+## Inspecting the Repository State
+
+I checked which repository and branch Git was currently using.
+
+```powershell
+git rev-parse --show-toplevel
+git rev-parse --git-dir
+git remote -v
+git branch -a
+git log --all --oneline --decorate -n 20
+Get-Content .git\HEAD
+```
+
+Git was still able to identify the project directory and the `.git` directory.
+
+The remote repository information was also still present.
+
+However, the branch and log commands returned errors similar to the following:
+
+```text
+fatal: Failed to resolve HEAD as a valid ref.
+```
+
+```text
+fatal: bad object refs/heads/<branch-name>
+```
+
+The `.git\HEAD` file still contained a reference to the original branch.
+
+```text
+ref: refs/heads/<branch-name>
+```
+
+This meant that `HEAD` still pointed to the correct branch name, but the branch reference itself contained an invalid or corrupted commit hash.
+
+The repository had not completely disappeared. Git simply could not determine which commit the current branch was supposed to point to.
+
+## Moving the Corrupted Branch Reference
+
+I attempted to preserve the damaged reference by renaming it.
+
+There is an important detail to be aware of here.
+
+Do not leave the backup file inside `.git\refs\heads`, even if you give it a different extension.
+
+For example, the following location is still interpreted by Git as a branch reference:
+
+```text
+.git\refs\heads\<branch-name>.corrupt
+```
+
+Git does not ignore a file simply because it ends with `.corrupt`. Any file under `refs/heads` can be interpreted as a branch reference.
+
+When I ran `git fetch` with the backup file still in that directory, Git returned another error:
+
+```text
+fatal: bad object refs/heads/<branch-name>.corrupt
+error: remote repository did not send all necessary objects
+```
+
+Git treated the backup file as another corrupted branch.
+
+The damaged reference therefore needed to be moved outside the `.git\refs` directory.
+
+```powershell
+New-Item -ItemType Directory -Force .git\recovery | Out-Null
+
+Move-Item `
+  .git\refs\heads\<branch-name>.corrupt `
+  .git\recovery\<branch-name>.corrupt
+```
+
+When the original reference has not yet been renamed, it can be moved directly:
+
+```powershell
+New-Item -ItemType Directory -Force .git\recovery | Out-Null
+
+Move-Item `
+  .git\refs\heads\<branch-name> `
+  .git\recovery\<branch-name>.corrupt
+```
+
+## Restoring the Local Branch from the Remote Branch
+
+After removing the corrupted reference from `.git\refs`, I fetched the branch information from the remote repository again.
+
+```powershell
+git fetch origin --prune
+git branch -r
+```
+
+I then confirmed that the original branch still existed on the remote repository.
+
+```text
+origin/<branch-name>
+```
+
+Because the remote branch was intact, I recreated the local branch reference using the commit pointed to by the remote branch.
+
+```powershell
+git update-ref `
+  refs/heads/<branch-name> `
+  refs/remotes/origin/<branch-name>
+
+git symbolic-ref HEAD refs/heads/<branch-name>
+git reset
+```
+
+The command used here was `git reset`, not `git reset --hard`.
+
+The purpose was to rebuild the Git index from the restored commit without deleting the files in the working directory.
+
+I then checked the repository state again.
+
+```powershell
+git branch --show-current
+git log --oneline -5
+git status
+```
+
+The current branch name was displayed correctly, and the commit history was available again.
+
+The local branch and the corresponding remote branch were also pointing to the same latest commit.
+
+## The Uncommitted Changes Were Still There
+
+The part I was most concerned about was the work I had been doing immediately before the laptop shut down.
+
+After the recovery, `git status` showed the files I had modified before the shutdown.
+
+```text
+Changes not staged for commit:
+  modified: path/to/modified-file
+  modified: path/to/config-file
+```
+
+These were files that had been edited but not committed.
+
+Although the Git index and branch reference had been corrupted, the actual files in the working directory had survived.
+
+When all files initially appeared as untracked, it looked as though both the commit history and the local changes had been lost.
+
+After reconnecting the local branch to the correct commit and rebuilding the index, Git was able to distinguish between previously tracked files and locally modified files again.
+
+## Recovery Steps
+
+When the following error appears:
+
+```text
+bad signature 0x00000000
+index file corrupt
+```
+
+the first step is to back up the existing index and rebuild it.
+
+```powershell
+Rename-Item .git\index index.corrupt
+git reset
+git status
+```
+
+When Git correctly displays only the locally modified files, the recovery is complete.
+
+However, when the result includes the following:
+
+```text
+No commits yet
+```
+
+and every project file is shown as untracked, the branch reference may also be corrupted.
+
+Check the current `HEAD` and branch state.
+
+```powershell
+Get-Content .git\HEAD
+git branch -a
+git log --all --oneline -n 20
+```
+
+When Git returns an error similar to the following, the local branch reference may be invalid:
+
+```text
+fatal: bad object refs/heads/<branch-name>
+```
+
+Move the corrupted reference outside `.git\refs`.
+
+```powershell
+New-Item -ItemType Directory -Force .git\recovery | Out-Null
+
+Move-Item `
+  .git\refs\heads\<branch-name> `
+  .git\recovery\<branch-name>.corrupt
+```
+
+Fetch the remote references again.
+
+```powershell
+git fetch origin --prune
+git branch -r
+```
+
+When the corresponding remote branch exists, recreate the local branch reference.
+
+```powershell
+git update-ref `
+  refs/heads/<branch-name> `
+  refs/remotes/origin/<branch-name>
+
+git symbolic-ref HEAD refs/heads/<branch-name>
+git reset
+```
+
+Finally, verify the result.
+
+```powershell
+git branch --show-current
+git log --oneline -5
+git status
+```
+
+## Commands I Avoided During Recovery
+
+I did not run the following commands during the recovery process:
+
+```powershell
+git reset --hard
+git clean -fd
+git restore .
+```
+
+Depending on the repository state, these commands can remove uncommitted local changes.
+
+When the computer shuts down while files are being edited, protecting the working directory should come before repairing the Git metadata.
+
+Before attempting recovery, it is also safer to preserve the existing project directory by renaming or copying it.
+
+```powershell
+Rename-Item project project_backup
+```
+
+Cloning the repository again is another option, but the existing project should not be deleted immediately.
+
+It may still contain uncommitted changes, local configuration files, or other files that do not exist in the remote repository.
+
+## Decide Whether Recovery Is Worth the Effort
+
+In this case, I repaired the Git metadata because there were uncommitted changes that I wanted to preserve.
+
+However, when there are no meaningful local changes, or the changes can easily be recreated, going through the entire recovery process may not be necessary.
+
+Determining which Git files were damaged and reconstructing the branch references took longer than simply cloning the repository again would have.
+
+Honestly, if there had been no important uncommitted work, cloning a fresh copy from the remote repository would probably have been the faster solution.
+
+Even in that case, I would not recommend deleting the original project immediately.
+
+A safer approach is:
+
+* Rename or copy the damaged project directory.
+* Clone a fresh copy from the remote repository.
+* Confirm that the new project builds and runs correctly.
+* Compare the two directories for local configuration files or uncommitted changes.
+* Delete the damaged copy only after confirming that nothing important is missing.
+
+In summary:
+
+* Repair the Git metadata when important local changes need to be preserved.
+* Clone a fresh copy when there are no meaningful local changes.
+* Keep the original project directory as a backup until the new copy has been verified.
+
+## Conclusion
+
+At first, I thought this was a simple case of a corrupted Git index.
+
+However, after rebuilding the index, Git reported `No commits yet`, which showed that the problem was more extensive.
+
+The unexpected shutdown appears to have corrupted not only `.git/index`, but also the local branch reference containing the commit hash.
+
+Fortunately, the remote repository still contained the original branch and commit history.
+
+After recreating the local branch reference from the remote branch and rebuilding the index, the commit history returned. The files I had modified but not committed were also still present.
+
+The main lesson was not to immediately delete the project or run destructive commands such as `git reset --hard`.
+
+Even when every file appears as untracked, the source files and Git objects may still be recoverable.
+
+Preserving the current project directory and checking what `HEAD` and the branch references point to should come first.
+
+At the same time, recovery is not always the most efficient option.
+
+When there is no important local work to preserve, keeping the damaged directory as a temporary backup and cloning the repository again may be the quickest and most practical solution.
+
+<!-- outline-end -->
