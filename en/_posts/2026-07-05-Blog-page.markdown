@@ -1,0 +1,207 @@
+---
+# multilingual page pair id, this must pair with translations of this page. (This name must be unique)
+lng_pair: id_tistory_dev_daily_auto_posting_20260705
+title: Auto-Publishing AI-Written Posts to Tistory, Which Has No Official API
+
+# post specific
+# if not specified, .name will be used from _data/owner/[language].yml
+#author: "KangJung"
+# multiple category is not supported
+category: Automation
+# multiple tag entries are possible
+tags: [Automation, Tistory, GitHubActions, Gemini, TypeScript, Playwright]
+# thumbnail image for post
+img: "https://kangjung.github.io/assets/img/posts/20260705/tistory-auto-posting.png"
+# disable comments on this page
+comments_disable: true
+
+# publish date
+date: 2026-07-05 00:00:00 +0900
+
+# seo
+# if not specified, date will be used.
+#meta_modify_date: 2026-07-05 00:00:00 +0900
+# check the meta_common_description in _data/owner/[language].yml
+meta_description: "How I built a system that publishes AI-written developer posts to Tistory every day, even though Tistory has no official publishing API. Cookie sessions, session_expired, SVG thumbnails, and the internal upload API."
+
+# optional
+# please use the "image_viewer_on" below to enable image viewer for individual pages or posts (_posts/ or [language]/_posts folders).
+# image viewer can be enabled or disabled for all posts using the "image_viewer_posts: true" setting in _data/conf/main.yml.
+image_viewer_on: true
+# please use the "image_lazy_loader_on" below to enable image lazy loader for individual pages or posts (_posts/ or [language]/_posts folders).
+# image lazy loader can be enabled or disabled for all posts using the "image_lazy_loader_posts: true" setting in _data/conf/main.yml.
+#image_lazy_loader_on: true
+# exclude from on site search
+#on_site_search_exclude: true
+# exclude from search engines
+#search_engine_exclude: true
+# to disable this page, simply set published: false or delete this file
+#published: false
+---
+
+<!-- outline-start -->
+
+## Auto-Publishing AI-Written Posts to Tistory, Which Has No Official API
+
+![Tistory auto-posting flow](https://kangjung.github.io/assets/img/posts/20260705/tistory-auto-posting.png){:data-align="center"}
+
+Last time, I built a system that automatically publishes posts to Blogger.
+
+This time I moved to Tistory, and I hit a wall almost immediately: Tistory no longer has a usable official publishing API.
+
+Blogger let me publish cleanly through Blogger API v3 and Google OAuth. Tistory used to have an Open API too, but new app registration is effectively closed now, so I couldn't take the same route.
+
+As a result, half of this project ended up being not about "how to write the post" but about "how to safely publish to a service that has no official channel."
+
+## Project setup
+
+I built this in TypeScript again.
+
+There is no long-running server. It runs once at a scheduled time each day and then exits — a batch job. I left the scheduling to a GitHub Actions cron.
+
+The main tools I used:
+
+- TypeScript
+- Node.js
+- GitHub Actions
+- Google Gemini API
+- Playwright
+- Zod
+- Vitest
+
+Gemini handles the writing, and publishing works by faithfully imitating the requests that the Tistory admin editor actually sends.
+
+## The pipeline that runs every day
+
+When it runs once a day (now twice), it goes through these steps:
+
+- Topic selection: it looks at recent posts and category distribution and picks a topic that doesn't overlap.
+- Research: it gathers reference material for the chosen topic.
+- Draft: Gemini writes the post in Markdown.
+- AI review: it re-evaluates the draft, and if it doesn't clear a threshold score, it revises once.
+- Publish: only posts that pass review get published to Tistory.
+
+There's one principle I held onto here. The pipeline itself almost never fails the process; instead it records the outcome as a single status value, and only that status is checked at the very end to decide success or failure.
+
+That separation let me distinguish situations like "generated the post but skipped publishing" and "couldn't publish because the session expired" as distinct states.
+
+## Tistory has no official publishing API
+
+Without an official API, the only option left was to reproduce what a logged-in browser does.
+
+I stored the session cookies issued by Kakao login, then rebuilt and sent the exact request the admin editor uses to save a post.
+
+```text
+POST /manage/post.json
+X-XSRF-TOKEN: (the XSRF value from the cookies)
+{ "id": "0", "title": "...", "content": "...(HTML)", "category": ..., ... }
+```
+
+This approach depends on the admin screen's structure, so it can break if Tistory changes that screen. To contain that risk, I kept the internal request URLs and body structure inside a single file, and made sure no other code knows anything about those internal details.
+
+## The error I hit the most: session_expired
+
+The biggest weakness of this approach was the session.
+
+Kakao sessions expire over time. When that happens, the publish request gets bounced to the login page, and the system records it as `session_expired`. GitHub Actions sees that status and turns red.
+
+The tricky part is that this isn't a code bug. The system is built correctly, yet from the moment the session expires, failures pile up every day until a human logs in again and refreshes the cookies.
+
+I considered refreshing the cookies automatically in CI, but I gave up on it. Automating a Kakao login unattended means entering an ID and password from a data-center IP, which easily runs into captchas or device verification, and it would require putting full account credentials into CI — too much risk.
+
+So I left session refresh as something a human does, and compromised by making sure that when it expires, that fact is surfaced clearly through a distinct status.
+
+## I missed having a thumbnail
+
+After running it for a while, the posts published fine, but the empty thumbnail in the list view bothered me.
+
+Generating an image with AI every time felt costly and excessive. Instead, I figured a rectangular card image with the post title in large text would be more than enough to feel like a thumbnail — the same approach used by dev.to cover images and OG cards for social sharing.
+
+So I chose to build an SVG card from the title and category, then convert it to PNG with Playwright. No external image-generation API, no separate design tool — the card is produced from code alone.
+
+The problem was the next part: how to register that image as Tistory's representative thumbnail. At first I thought I could host the image externally and just link it at the top of the body, but an image kept in a private repository isn't accessible from outside, so it would show up as a broken image to visitors.
+
+In the end I had to upload it directly to Tistory. While logged in, I dragged an image into the editor and inspected exactly what request was made using the browser dev tools.
+
+The upload request looked like this:
+
+```text
+POST /manage/post/attach.json   (multipart/form-data, field name: file)
+```
+
+The response returned the stored location of the uploaded image and a signed URL.
+
+```json
+{ "url": "https://blog.kakaocdn.net/.../img.png?credential=...&signature=...",
+  "key": "...", "filename": "img.png" }
+```
+
+That wasn't the end. Putting this URL directly into the body could break later once the signature expired. Instead, the Tistory editor embeds a token like the one below into the body, and expands it into a permanent image tag at publish time.
+
+```text
+[##_Image|kage@{key}/{filename}?{query}|CDM|1.3|{"originWidth":...,"style":"alignCenter",...}_##]
+```
+
+So I assembled the upload response into this token form and placed it at the very top of the body.
+
+## But it wasn't picked as the representative image
+
+At first I assumed the first image in the body would automatically become the representative image, since I'd read that Tistory uses the top image when no representative image is set.
+
+In practice, though, the thumbnail didn't show up in the list view. The image was visible inside the post body, but the post list was still empty.
+
+So once again I inspected the requests the browser sends. When I marked an image as the representative one in the editor and saved, a field I hadn't seen before was attached to the request body.
+
+```json
+{ "content": "...", "thumbnail": "kage@{key}/{filename}", ... }
+```
+
+It was a `thumbnail` field, and its value was the `kage@{key}/{filename}` form returned by the upload response. Interestingly, unlike the `[##_Image]` token embedded in the body, here the trailing signed query string is dropped and only the bare image path is used.
+
+So I sent this `thumbnail` field along with the publish request to set the representative image explicitly, and the thumbnail finally appeared in the list.
+
+## The slight cropping in the list view
+
+The representative image was set, but the sides of the card looked slightly cut off in the list.
+
+The first card I made was 1200×630. Its aspect ratio was about 1.9:1 — a bit wide — while the Tistory list crops images to 16:9 to display them. In that process the left and right edges, especially the ends of the title, got trimmed.
+
+So I kept the height and only reduced the width to 1120×630, exactly 16:9. After that the title showed in full without being cropped in the list.
+
+By the way, the card image at the very top of this post was made with the very thumbnail generator of that Tistory auto-posting system I've been describing. In other words, the representative image of this blog post was created by the automation tool the post itself is about.
+
+## It was clearly green, but the post didn't go up
+
+After I increased the publishing frequency from once a day to twice, something strange happened. GitHub Actions was green (success), but no new post appeared on the blog.
+
+Looking at the logs, the status was `duplicate_skipped`, with the reason "already published on the same date."
+
+The cause was two things tangled together.
+
+First, the duplicate-publish check had a rule that said "skip if there's already a publish record for today." As a safeguard for one post per day it made sense, but the moment I switched to twice a day, the second run always got caught by it.
+
+Second, there was a quieter problem. The point at which topic history was recorded came *before* the publish decision, regardless of whether publishing succeeded. So topics that never actually went up — because of session expiry or duplication — were still being consumed as "already written." An unwritten post was treated as a written one, so that topic never came back as a candidate.
+
+I fixed both. I changed the rule so that sharing the same date isn't treated as a duplicate, leaving only real duplicates (same topic, same slug, same content) blocked, and I moved topic-history recording so it only happens when publishing actually succeeds.
+
+After that, a topic that failed to publish gets retried on the next run, and two different posts go up properly twice a day.
+
+## An honest look at the limits
+
+Honestly, I don't think a post written by AI every day can replace one a person wrote with real care.
+
+That's why I always add a notice at the bottom of each post stating that it was written automatically by generative AI. I added it simply because I think it's right to disclose that a post was written by AI.
+
+For frequency, I initially considered four times a day, every six hours, but topics would deplete quickly and shallow posts would pile up, so I dialed it back to twice a day. Just because it's automated doesn't mean churning out as much as possible is a good thing.
+
+## Wrapping up
+
+The part I spent the most time on in this project wasn't the generation side, but safely publishing to a service with no official channel.
+
+With no official API, I had to inspect the requests the browser makes directly, surface session expiry clearly when it happened, and even trace the internal upload request and token format just to attach a single thumbnail.
+
+Along the way, I was reminded again that "a success signal" and "the thing I actually wanted actually happened" are not the same. A green light can still mean the post didn't go up, and a post that never went up can still be recorded as if it did.
+
+When building automation, this project taught me that leaving behind a clear record of what actually happened matters more than the action itself.
+
+<!-- outline-end -->
