@@ -204,4 +204,6 @@ Along the way, I was reminded again that "a success signal" and "the thing I act
 
 When building automation, this project taught me that leaving behind a clear record of what actually happened matters more than the action itself.
 
+You can see the blog this system posts to every day here: [kangjung.tistory.com](https://kangjung.tistory.com/)
+
 <!-- outline-end -->

@@ -204,4 +204,6 @@ POST /manage/post/attach.json   (multipart/form-data, 필드명 file)
 
 자동화를 만들 때는 동작 자체보다, 지금 무슨 일이 일어났는지 나중에 정확히 알 수 있게 상태를 남기는 것이 더 중요하다는 걸 배운 프로젝트였습니다.
 
+실제로 이 시스템이 매일 글을 올리고 있는 블로그는 여기서 볼 수 있습니다: [kangjung.tistory.com](https://kangjung.tistory.com/)
+
 <!-- outline-end -->

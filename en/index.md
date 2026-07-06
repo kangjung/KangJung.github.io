@@ -126,6 +126,22 @@ img: ":banner.png"
       <div class="rss-card">
         <div class="rss-top">
           <strong style="font-size:14.5px;display:inline-flex;align-items:center;gap:8px">
+            <svg viewBox="0 0 40 40" width="22" height="22" role="img" aria-label="Tistory blog" style="flex-shrink:0">
+              <rect width="40" height="40" rx="11" fill="#EB531D"/>
+              <text x="20" y="28" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="20" font-weight="700" fill="#fff">T</text>
+            </svg>
+            Dev blog (auto-published by AI)
+          </strong>
+          <span class="rss-badge">● RSS</span>
+        </div>
+        <div id="rss-items-tistory">
+          <a class="rss-item" href="https://kangjung.tistory.com/" target="_blank" rel="noopener"><h4>Visit my Tistory blog</h4><p>Dev posts auto-published daily to Tistory — no official API</p></a>
+        </div>
+        <p class="rss-note">↳ Latest posts pulled from my Tistory blog — dev writing that an AI drafts, reviews, and publishes daily.</p>
+      </div>
+      <div class="rss-card">
+        <div class="rss-top">
+          <strong style="font-size:14.5px;display:inline-flex;align-items:center;gap:8px">
             <svg viewBox="0 0 40 40" width="22" height="22" role="img" aria-label="Naver blog" style="flex-shrink:0">
               <rect width="40" height="40" rx="11" fill="#03C75A"/>
               <text x="20" y="27" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#fff">blog</text>

@@ -128,6 +128,22 @@ img: ":banner.png"
       <div class="rss-card">
         <div class="rss-top">
           <strong style="font-size:14.5px;display:inline-flex;align-items:center;gap:8px">
+            <svg viewBox="0 0 40 40" width="22" height="22" role="img" aria-label="티스토리 블로그" style="flex-shrink:0">
+              <rect width="40" height="40" rx="11" fill="#EB531D"/>
+              <text x="20" y="28" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="20" font-weight="700" fill="#fff">T</text>
+            </svg>
+            개발 이야기 (AI 자동 발행)
+          </strong>
+          <span class="rss-badge">● RSS</span>
+        </div>
+        <div id="rss-items-tistory">
+          <a class="rss-item" href="https://kangjung.tistory.com/" target="_blank" rel="noopener"><h4>티스토리 블로그 바로가기</h4><p>공식 API 없는 티스토리에 매일 자동 발행하는 개발 글</p></a>
+        </div>
+        <p class="rss-note">↳ 티스토리 최신 글을 자동으로 불러와요. AI가 매일 작성·검수해 발행하는 개발 글입니다.</p>
+      </div>
+      <div class="rss-card">
+        <div class="rss-top">
+          <strong style="font-size:14.5px;display:inline-flex;align-items:center;gap:8px">
             <svg viewBox="0 0 40 40" width="22" height="22" role="img" aria-label="네이버 블로그" style="flex-shrink:0">
               <rect width="40" height="40" rx="11" fill="#03C75A"/>
               <text x="20" y="27" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#fff">blog</text>

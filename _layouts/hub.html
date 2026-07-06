@@ -274,22 +274,27 @@ layout: hub-base
     route(); // open straight away if the page was loaded with #slug
   }).catch(function (e) { console.warn('appList load failed', e); });
 
-  // ---- external blog RSS (optional) ----
-  // External personal blog (Naver) — food, reviews, and the occasional dev post.
-  var FEED_URL = 'https://rss.blog.naver.com/chicken_kangjung.xml';
-  var box = document.getElementById('rss-items');
-  if (FEED_URL && box) {
-    fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(FEED_URL))
+  // ---- external blog feeds (optional) ----
+  // Each card starts with a static fallback link in the DOM; if the feed loads,
+  // we replace it with the latest posts. On failure the fallback link stays.
+  function loadFeed(feedUrl, boxId, count) {
+    var box = document.getElementById(boxId);
+    if (!feedUrl || !box) return;
+    fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feedUrl))
       .then(function (r) { return r.json(); })
       .then(function (j) {
         if (!j.items || !j.items.length) return;
-        box.innerHTML = j.items.slice(0, 3).map(function (it) {
+        box.innerHTML = j.items.slice(0, count).map(function (it) {
           var date = new Date(it.pubDate);
           var ds = isNaN(date) ? '' : (date.getFullYear() + '.' + ('0' + (date.getMonth() + 1)).slice(-2) + '.' + ('0' + date.getDate()).slice(-2));
-          return '<a class="rss-item" href="' + it.link + '" target="_blank" rel="noopener"><h4>' + it.title + '</h4><p>' + ds + '</p></a>';
+          return '<a class="rss-item" href="' + it.link + '" target="_blank" rel="noopener"><h4>' + esc(it.title) + '</h4><p>' + ds + '</p></a>';
         }).join('');
       })
       .catch(function (e) { console.warn('rss load failed', e); });
   }
+  // Tistory — dev posts an AI drafts, reviews, and publishes daily (no official API).
+  loadFeed('https://kangjung.tistory.com/rss', 'rss-items-tistory', 3);
+  // Naver — food, reviews, and the occasional dev post.
+  loadFeed('https://rss.blog.naver.com/chicken_kangjung.xml', 'rss-items', 3);
 })();
 </script>
