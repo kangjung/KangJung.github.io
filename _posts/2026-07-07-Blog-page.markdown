@@ -1,0 +1,183 @@
+---
+# multilingual page pair id, this must pair with translations of this page. (This name must be unique)
+lng_pair: id_tistory_session_cookie_rotation_20260707
+title: GitHub Actions에서 티스토리 세션이 12시간마다 풀리던 문제 해결 (쿠키 회전 이어받기)
+
+# post specific
+# if not specified, .name will be used from _data/owner/[language].yml
+#author: "KangJung"
+# multiple category is not supported
+category: Automation
+# multiple tag entries are possible
+tags: [GitHubActions, Tistory, Automation, Cookie, Session, TypeScript]
+# thumbnail image for post
+img: "https://kangjung.github.io/assets/img/posts/20260707/secret-updated-log.png"
+# disable comments on this page
+comments_disable: true
+
+# publish date
+date: 2026-07-07 00:00:00 +0900
+
+# seo
+# if not specified, date will be used.
+#meta_modify_date: 2026-07-07 00:00:00 +0900
+# check the meta_common_description in _data/owner/[language].yml
+meta_description: "티스토리 자동 발행이 약 12시간마다 session_expired로 실패하던 원인과 해결 과정. 카카오 로그인을 자동화하지 않고, 요청마다 회전하는 세션 토큰을 캡처해 다음 실행에 넘기는 방식으로 세션을 유지했습니다."
+
+# optional
+image_viewer_on: true
+#image_lazy_loader_on: true
+#on_site_search_exclude: true
+#search_engine_exclude: true
+# 다음 실행이 재로그인 없이 published 되는 것을 확인한 뒤 이 줄을 지워 발행하세요.
+published: false
+---
+
+<!-- outline-start -->
+
+## GitHub Actions에서 티스토리 세션이 12시간마다 풀리던 문제 해결 (쿠키 회전 이어받기)
+
+지난번 [티스토리 자동 발행 글](https://kangjung.github.io/posts/2026-07-05-Blog-page.html)에서, 저는 세션 만료 문제를 이렇게 마무리했습니다. "카카오 로그인을 무인으로 자동화하는 건 위험하니, 세션 갱신은 사람이 하는 것으로 남겨두자."
+
+그런데 그 뒤로 며칠간, 자동 발행은 하루가 멀다 하고 빨간불을 띄웠습니다. 결론부터 말하면 그때의 판단은 절반만 맞았습니다. 로그인을 자동화할 필요는 없었지만, 세션은 사람이 매번 다시 넣어주지 않아도 살릴 수 있었습니다.
+
+## 다시 나타난 session_expired
+
+증상은 규칙적이었습니다. 재로그인해서 쿠키를 갱신하면 그날은 잘 올라갑니다. 그런데 약 12시간 뒤, 정확히는 다음 스케줄 실행에서 어김없이 `session_expired`가 떴습니다.
+
+실행 기록을 시각순으로 늘어놓으니 패턴이 선명했습니다.
+
+```text
+07-05 10:58 published  →  07-05 22:01 session_expired   (약 11시간 뒤)
+07-06 00:58 published  →  07-06 12:35 session_expired   (약 11.5시간 뒤)
+```
+
+발행에 성공한 실행 다음, 딱 한 사이클(하루 두 번, 12시간 간격)만 버티고 그다음 실행에서 죽는 것이었습니다. 코드가 바뀐 것도 아닌데 말입니다.
+
+## 진짜 원인: 세션을 "재생"만 하고 "이어받지" 않았다
+
+티스토리에는 공식 발행 API가 없어서, 이 시스템은 로그인한 브라우저의 쿠키를 저장해 두고 그 쿠키로 관리 화면 요청을 흉내 냅니다. 그 쿠키는 `TISTORY_COOKIES_B64`라는 GitHub Actions Secret에 base64로 넣어두고, 매 실행이 그것을 꺼내 씁니다.
+
+문제는 여기 있었습니다. 카카오/티스토리 세션 토큰은 **요청을 보낼 때마다 응답의 `Set-Cookie`로 조금씩 회전(rotation)합니다.** 브라우저라면 그 갱신분을 자동으로 저장해 다음 요청에 쓰기 때문에 세션이 계속 살아있습니다.
+
+그런데 제 코드는 응답의 `Set-Cookie`를 전혀 읽지 않았습니다. 매 실행이 시크릿에 박제된 **똑같은 스냅샷을 재생만** 하고 있었던 것입니다. 게다가 발행에 성공한 실행은 서버 쪽 토큰을 회전시키는데, 그 후속 토큰을 버리면 저장된 예전 토큰은 유예 기간이 지나는 순간 거부됩니다. 그게 바로 "성공 다음 실행에서 죽는" 12시간 패턴의 정체였습니다.
+
+즉 이건 로그인이 진짜로 풀린 게 아니라, **살아있는 세션을 이어받지 못해 스냅샷이 삭아버린** 문제였습니다.
+
+## 접근을 바꾸다: 로그인 자동화 대신 세션 이어받기
+
+지난 글에서 제가 접었던 건 "무인 카카오 **로그인** 자동화"였습니다. 데이터센터 IP에서 아이디·비밀번호를 넣는 방식은 캡차나 기기 인증에 막히기 쉽고, 자격증명을 CI에 통째로 넣어야 해서 위험했습니다. 그 판단 자체는 지금도 옳다고 생각합니다.
+
+하지만 이번 문제를 풀기 위해 필요한 건 로그인 자동화가 아니었습니다. **이미 사람이 로그인해 둔, 살아있는 세션을 그대로 이어받기만 하면** 됐습니다. 자격증명은 CI에 넣지 않습니다. 브라우저가 하던 일 — 회전한 쿠키를 저장해 다음 요청에 쓰는 것 — 을 코드로 재현하는 것뿐입니다.
+
+정리하면 필요한 조각은 세 가지였습니다.
+
+```text
+1. 응답의 Set-Cookie(회전분)를 실행 중 쿠키에 반영한다.
+2. 실행이 끝나면 갱신된 쿠키를 파일에 저장한다.
+3. 그 쿠키를 다시 Secret에 써서, 다음 실행이 최신 상태로 시작하게 한다.
+```
+
+## 코드: 회전 토큰을 저장하고 넘기기
+
+먼저 응답의 `Set-Cookie` 여러 줄을 기존 쿠키에 병합하는 함수를 만들었습니다. 같은 이름이면 값 갱신, 새 쿠키면 추가, 삭제 지시(만료·Max-Age=0)면 제거합니다.
+
+```ts
+// 응답의 Set-Cookie(회전분)를 쿠키 잼에 병합
+const { cookies, changed } = applySetCookies(this.cookies ?? [], setCookies);
+if (changed) {
+  this.cookies = cookies;
+  this.cookiesDirty = true;
+}
+```
+
+클라이언트는 매 응답에서 이 회전분을 캡처하고, 실행이 끝날 때 파일로 저장합니다. 중요한 건 **세션이 만료된 실행에서는 저장하지 않는다**는 점입니다. 죽은 토큰을 멀쩡한 스냅샷 위에 덮어쓰면 상황이 더 나빠지니까요.
+
+```ts
+// 세션 만료가 아닐 때만 회전분을 저장한다 (죽은 토큰 덮어쓰기 방지)
+if (!sessionExpired) {
+  await client.flushCookies?.();
+}
+```
+
+## GitHub Actions: 갱신된 쿠키를 Secret에 되쓰기
+
+로컬이라면 파일 저장으로 끝이지만, GitHub Actions 러너는 매번 새로 뜨고 실행이 끝나면 사라집니다. 그래서 갱신된 쿠키를 다시 `TISTORY_COOKIES_B64` Secret에 써 넣어야 다음 실행이 이어받을 수 있습니다.
+
+workflow 마지막에 스텝을 하나 추가했습니다. 쿠키 파일을 base64로 만들어 원래 Secret 값과 비교하고, 달라졌을 때만 `gh secret set`으로 갱신합니다.
+
+```yaml
+- name: 쿠키 회전분 시크릿 반영
+  env:
+    GH_TOKEN: ${{ secrets.GH_PAT }}
+    ORIGINAL_B64: ${{ secrets.TISTORY_COOKIES_B64 }}
+  run: |
+    NEW_B64=$(base64 -w0 .runtime/tistory-cookies.json)
+    if [ "$NEW_B64" = "$ORIGINAL_B64" ]; then
+      echo "쿠키 변화 없음 — 시크릿 갱신 불필요."
+      exit 0
+    fi
+    printf '%s' "$NEW_B64" | gh secret set TISTORY_COOKIES_B64
+```
+
+여기서 걸린 부분이 하나 있었습니다. **기본 `GITHUB_TOKEN`으로는 Secret을 쓸 수 없습니다.** 별도의 PAT(Personal Access Token)가 필요합니다.
+
+Fine-grained 토큰으로 만들었습니다. 대상 저장소만 지정하고, 권한은 **Secrets: Read and write** 하나만 주면 됩니다. (Metadata Read-only는 필수라 자동으로 포함됩니다.)
+
+![Fine-grained PAT 생성 — 대상 저장소 지정, Secrets 읽기·쓰기 권한](https://kangjung.github.io/assets/img/posts/20260707/fine-grained-pat-create.png){:data-align="center"}
+
+토큰을 발급하면 값은 이 화면에서만 볼 수 있으니 바로 복사해 둡니다.
+
+![발급된 토큰은 이 화면에서만 확인 가능](https://kangjung.github.io/assets/img/posts/20260707/pat-generated-copy.png){:data-align="center"}
+
+복사한 토큰은 저장소의 Actions Secret에 `GH_PAT`라는 이름으로 등록했습니다. workflow가 참조하는 이름과 정확히 같아야 합니다.
+
+![GH_PAT 이름으로 Actions Secret 등록](https://kangjung.github.io/assets/img/posts/20260707/gh-pat-secret-add.png){:data-align="center"}
+
+참고로 이렇게 갱신한 Secret은 **현재 실행이 아니라 다음 실행부터** 적용됩니다. Secret은 job 시작 시점에 한 번 읽히기 때문입니다. 이 workflow는 동시 실행을 막는 concurrency 설정이 있어서, Secret을 되쓰는 실행끼리 겹칠 걱정도 없었습니다.
+
+## 검증
+
+수동 실행 로그에서 스텝이 의도대로 동작하는지 확인했습니다.
+
+![워크플로우 로그 — 시크릿을 갱신했습니다](https://kangjung.github.io/assets/img/posts/20260707/secret-updated-log.png){:data-align="center"}
+
+`TISTORY_COOKIES_B64 시크릿을 갱신했습니다`가 떴다는 건 두 가지를 동시에 뜻합니다. 하나는 PAT 권한이 정상이라는 것, 다른 하나는 이번 실행이 살아있는 토큰으로 시작해 회전분을 캡처하고 그것을 Secret에 넘겼다는 것입니다. 만약 세션이 만료된 실행이었다면 쿠키를 저장하지 않으므로 이 문구는 뜨지 않습니다.
+
+코드 변경 후 타입 체크·린트·테스트도 모두 통과했습니다. 회전 병합 로직에는 값 갱신, 새 쿠키 추가, 삭제 지시, 원본 불변성 같은 케이스별 테스트를 붙였습니다.
+
+```bash
+npm run check
+```
+
+```text
+typecheck 통과
+lint 통과
+133개 테스트 통과
+```
+
+그리고 진짜 판정선은 하나였습니다. **재로그인하지 않은 다음 사이클 실행이 발행에 성공하는가.** 지금까지 세션은 항상 그 지점에서 죽었기 때문입니다. 그 실행이 사람 개입 없이 published 되면서, 회전 이어받기가 실제로 세션을 유지한다는 걸 확인했습니다.
+
+## 한 가지 전제: 죽은 세션은 되살리지 못한다
+
+이 방식에는 명확한 한계가 있습니다. **이미 만료된 토큰은 코드로 되살릴 수 없습니다.** Secret에 든 토큰이 이미 죽어 있으면, 새 코드로 돌려도 첫 실행은 그대로 만료로 나옵니다. 그래서 이 구조를 처음 켤 때는 한 번은 사람이 재로그인해서 살아있는 토큰을 심어줘야 합니다. 그 뒤부터 회전 이어받기가 세션을 계속 살려둡니다.
+
+또 하나. 만약 카카오 세션에 활동과 무관한 하드 만료(절대 TTL)가 걸려 있었다면, 회전을 이어받아도 그 시각에 세션이 죽었을 것입니다. 다행히 이 경우는 발행할 때마다 토큰이 회전하고, 그 회전분을 넘기면 다음 사이클을 넘긴다는 관찰과 맞아떨어졌습니다. 슬라이딩 세션이었던 셈입니다.
+
+## 정리
+
+이번 문제의 핵심은 인증 정보가 틀렸다거나 코드에 버그가 있어서가 아니었습니다. **살아있는 세션의 회전분을 버리고 옛 스냅샷만 재생하고 있었던 것**이 원인이었습니다.
+
+이번에 적용한 최종 조치는 다음과 같습니다.
+
+```text
+1. 응답 Set-Cookie(회전분)를 실행 중 쿠키에 병합
+2. 세션 만료가 아닐 때만 갱신된 쿠키를 파일로 저장
+3. workflow에서 base64로 비교 후 변화가 있으면 Secret에 되쓰기
+4. Secret 쓰기용 PAT(GH_PAT, Secrets read/write)를 별도 등록
+5. 최초 1회는 재로그인으로 살아있는 토큰을 심어 시드
+```
+
+지난 글에서 "세션 갱신은 사람 몫"이라고 접었던 지점을, 로그인을 자동화하지 않고도 넘어설 수 있었습니다.
+
+<!-- outline-end -->
