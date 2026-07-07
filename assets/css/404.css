@@ -1,0 +1,401 @@
+/* =========================================================================
+   Lost Canvas — 인터랙티브 404 전용 스타일
+   이 파일은 404 페이지(lost-canvas 레이아웃)에서만 로드되며,
+   전역 리셋을 body 하위로 한정해 다른 페이지에 영향을 주지 않는다.
+   ========================================================================= */
+
+/* ---- 색상 토큰 (라이트 기본) ---- */
+:root {
+  --lc-bg: #F8F8F6;
+  --lc-grid: rgba(30, 30, 30, 0.10);
+  --lc-text: #222222;
+  --lc-text-sub: #737373;
+  --lc-card: #FFFFFF;
+  --lc-border: #DADADA;
+  --lc-shadow: 0 6px 24px rgba(0, 0, 0, 0.10);
+  /* 포인트 컬러 */
+  --lc-purple: #8B7CF6;
+  --lc-blue:   #5B8FF9;
+  --lc-mint:   #52C7A5;
+  --lc-yellow: #F6C85F;
+  --lc-coral:  #F28B82;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --lc-bg: #171719;
+    --lc-grid: rgba(255, 255, 255, 0.10);
+    --lc-text: #F3F3F3;
+    --lc-text-sub: #A5A5A5;
+    --lc-card: #242428;
+    --lc-border: #3A3A40;
+    --lc-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+    --lc-purple: #7A6BE0;
+    --lc-blue:   #4E7FE0;
+    --lc-mint:   #47B292;
+    --lc-yellow: #E0B54E;
+    --lc-coral:  #DB7C73;
+  }
+}
+
+/* 전역 요소를 404 페이지에서만 초기화 */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;               /* 스크롤바 방지 */
+  background: var(--lc-bg);
+  color: var(--lc-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+               "Helvetica Neue", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;      /* 당겨서 새로고침 등 방지 */
+}
+
+/* ---- 뷰포트 ---- */
+.lc-viewport {
+  position: fixed;
+  inset: 0;
+  height: 100vh;
+  height: 100dvh;                 /* 모바일 주소창 대응, vh 는 fallback */
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;             /* 브라우저 기본 팬/줌과 충돌 방지 */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.lc-viewport.is-panning { cursor: grabbing; }
+
+/* ---- 배경 점 그리드 ---- */
+/* JS 가 background-size / background-position 을 갱신해 캔버스와 함께 움직이게 한다. */
+.lc-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--lc-grid) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+  pointer-events: none;
+}
+
+/* ---- 월드 ---- */
+/* 크기 0 의 기준점. transform-origin 을 0,0 으로 두고 translate+scale 을 적용한다. */
+.lc-world {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+/* ---- 오브젝트 공통 ---- */
+/* 각 오브젝트는 월드 좌표(data-x/data-y)에 놓이며, 자기 중심으로 정렬된다. */
+.lc-obj {
+  position: absolute;
+  left: 0;
+  top: 0;
+  /* translate 는 JS 가 world 좌표로 채운다: translate(x, y) 후 -50% 로 중심 정렬 */
+}
+
+/* 드래그 가능한 오브젝트 공통: 잡는 커서 + 던지는 동안의 살짝 뜬 느낌 */
+.lc-draggable { cursor: grab; }
+.lc-draggable.is-dragging {
+  cursor: grabbing;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.22));
+}
+
+/* 중심 404 — 숫자 한 글자 = 오브젝트 하나 (드래그/던지기) */
+.lc-digit {
+  font-size: clamp(120px, 20vw, 280px);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  line-height: 0.9;
+  color: var(--lc-text);
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* 이미지 타일 (폴라로이드 느낌). 실제 사진으로 교체 시 .lc-photo 내부만 바꾸면 된다. */
+.lc-tile {
+  padding: 10px 10px 24px;
+  background: var(--lc-card);
+  border: 1px solid var(--lc-border);
+  border-radius: 8px;
+  box-shadow: var(--lc-shadow);
+}
+.lc-photo {
+  width: 168px;
+  height: 116px;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lc-photo svg { width: 62%; height: 62%; }
+@media (max-width: 600px) {
+  .lc-photo { width: 132px; height: 92px; }
+}
+
+/* 단순 도형 */
+.lc-shape {
+  border-radius: 4px;
+}
+.lc-shape.circle {
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  background: var(--lc-mint);
+  opacity: 0.85;
+}
+.lc-shape.square {
+  width: 76px; height: 76px;
+  background: var(--lc-blue);
+  opacity: 0.85;
+}
+.lc-shape.triangle {
+  width: 0; height: 0;
+  border-left: 48px solid transparent;
+  border-right: 48px solid transparent;
+  border-bottom: 84px solid var(--lc-yellow);
+  opacity: 0.9;
+}
+.lc-shape.ring {
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  border: 10px solid var(--lc-purple);
+  opacity: 0.8;
+}
+
+/* 화살표 (SVG 대체용 CSS) */
+.lc-arrow {
+  width: 120px;
+  height: 24px;
+  color: var(--lc-coral);
+}
+.lc-arrow svg { display: block; width: 100%; height: 100%; }
+
+/* 홈 오브젝트 */
+.lc-home-obj {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+.lc-home-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 26px;
+  background: var(--lc-card);
+  border: 1px solid var(--lc-border);
+  border-radius: 16px;
+  box-shadow: var(--lc-shadow);
+  font-weight: 700;
+  font-size: 18px;
+  transition: transform 0.18s ease;
+}
+.lc-home-obj:hover .lc-home-card,
+.lc-home-obj:focus-visible .lc-home-card { transform: translateY(-3px) scale(1.04); }
+.lc-home-icon { width: 26px; height: 26px; color: var(--lc-mint); }
+.lc-home-label { font-size: 13px; color: var(--lc-text-sub); font-weight: 500; }
+
+/* 멀리 숨겨둔 GitHub 오브젝트 */
+.lc-github-obj { text-decoration: none; color: inherit; }
+.lc-github-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  background: var(--lc-card);
+  border: 1px solid var(--lc-border);
+  border-radius: 14px;
+  box-shadow: var(--lc-shadow);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--lc-text);
+  transition: transform 0.18s ease;
+}
+.lc-github-obj:hover .lc-github-card,
+.lc-github-obj:focus-visible .lc-github-card { transform: translateY(-3px) scale(1.04); }
+
+/* 홈 방향 도로 안내 표지판 (초록 보드 + 기둥, 화살표가 홈을 향해 회전) */
+.lc-signpost {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none; /* 클릭 대상 아님 — 방향 안내 전용 */
+}
+.lc-sign-board {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  background: #1f8a5b;                          /* 도로 안내 표지판 그린 */
+  color: #ffffff;
+  border: 3px solid rgba(255, 255, 255, 0.92);  /* 표지판 흰 테두리 */
+  border-radius: 10px;
+  box-shadow: var(--lc-shadow);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.lc-sign-text { line-height: 1; }
+.lc-signpost-arrow {
+  width: 24px;
+  height: 24px;
+  color: #ffffff;
+  transform-origin: 50% 50%;
+  transition: transform 0.2s ease;
+}
+.lc-sign-post {
+  width: 8px;
+  height: 46px;
+  background: var(--lc-text-sub);
+  opacity: 0.55;
+  border-radius: 0 0 3px 3px;
+}
+
+/* ---- 고정 컨트롤 바 ---- */
+.lc-controls {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: var(--lc-card);
+  border: 1px solid var(--lc-border);
+  border-radius: 14px;
+  box-shadow: var(--lc-shadow);
+  z-index: 10;
+}
+.lc-btn {
+  appearance: none;
+  border: 1px solid var(--lc-border);
+  background: transparent;
+  color: var(--lc-text);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 14px;
+  min-height: 44px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.lc-btn:hover { background: var(--lc-bg); }
+.lc-btn-primary {
+  background: var(--lc-purple);
+  border-color: var(--lc-purple);
+  color: #fff;
+}
+.lc-btn-primary:hover { filter: brightness(1.05); background: var(--lc-purple); }
+
+.lc-zoom-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding-left: 4px;
+}
+.lc-icon-btn {
+  appearance: none;
+  border: 1px solid var(--lc-border);
+  background: transparent;
+  color: var(--lc-text);
+  font-size: 18px;
+  line-height: 1;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.lc-icon-btn:hover { background: var(--lc-bg); }
+.lc-zoom-val {
+  min-width: 52px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--lc-text-sub);
+}
+
+/* ---- 도움말 ---- */
+.lc-help-wrap {
+  position: fixed;
+  left: max(16px, env(safe-area-inset-left));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  z-index: 10;
+}
+.lc-help {
+  position: absolute;
+  left: 0;
+  bottom: 52px;
+  min-width: 200px;
+  padding: 14px 16px;
+  background: var(--lc-card);
+  border: 1px solid var(--lc-border);
+  border-radius: 12px;
+  box-shadow: var(--lc-shadow);
+  font-size: 13px;
+}
+.lc-help ul { margin: 8px 0 0; padding-left: 16px; color: var(--lc-text-sub); }
+.lc-help li { margin: 4px 0; }
+
+/* ---- 자동 안내 힌트 ---- */
+.lc-hint {
+  position: fixed;
+  left: 50%;
+  bottom: 84px;
+  transform: translateX(-50%);
+  max-width: min(90vw, 420px);
+  text-align: center;
+  padding: 8px 16px;
+  background: var(--lc-text);
+  color: var(--lc-bg);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 9;
+}
+.lc-hint.show { opacity: 0.92; animation: lc-nudge 1.4s ease; }
+@keyframes lc-nudge {
+  0%, 100% { transform: translateX(-50%); }
+  25% { transform: translateX(calc(-50% - 8px)); }
+  75% { transform: translateX(calc(-50% + 8px)); }
+}
+
+/* 홈으로 이동 시 페이드아웃 */
+.lc-viewport.is-leaving { transition: opacity 0.4s ease, transform 0.4s ease; opacity: 0; transform: scale(0.96); }
+
+/* ---- 반응형 ---- */
+@media (max-width: 600px) {
+  .lc-note { max-width: 200px; font-size: 14px; }
+  .lc-btn { padding: 10px 12px; font-size: 13px; }
+  .lc-controls { gap: 6px; padding: 6px; }
+  .lc-hint { bottom: 78px; font-size: 12px; }
+}
+
+/* ---- 모션 감소 ---- */
+@media (prefers-reduced-motion: reduce) {
+  .lc-world { transition: none !important; }
+  .lc-hint.show { animation: none; }
+  .lc-home-obj:hover .lc-home-card { transform: none; }
+  .lc-signpost-arrow { transition: none; }
+  .lc-viewport.is-leaving { transition: opacity 0.2s ease; transform: none; }
+  * { scroll-behavior: auto !important; }
+}

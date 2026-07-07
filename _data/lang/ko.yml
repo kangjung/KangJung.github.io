@@ -29,6 +29,34 @@ not_found:
   header: 페이지를 찾을 수 없습니다
   line1: 요청하신 페이지를 찾을 수 없습니다.
   line2: 메뉴를 사용하거나, 가능한 경우 사이트 검색을 시도해 보세요.
+  # Lost Canvas (interactive 404) 전용 문구
+  canvas:
+    doc_title: "404 · 길을 잃은 캔버스"
+    lead: 페이지가 이 캔버스 어딘가로 사라졌어요.
+    sub: 화면을 움직이거나 축소해 보세요.
+    home_label: 돌아가는 길
+    home_badge: HOME
+    hidden_404: 숫자는 찾았지만 페이지는 찾지 못했어요.
+    reset: 처음 위치
+    home: 홈으로
+    zoom_in: 확대
+    zoom_out: 축소
+    help: 도움말
+    help_title: 키보드 조작
+    help_lines:
+      - "방향키 · 캔버스 이동"
+      - "+ / − · 확대 / 축소"
+      - "0 · 처음 위치"
+      - "H · 홈으로"
+    hint_drag: 숫자와 이미지를 잡아서 던져 보세요. 빈 곳을 끌면 캔버스가 움직여요.
+    notes:
+      - 이쪽에는 아무것도 없어요.
+      - 조금 더 축소해 보세요.
+      - 길을 잃은 김에 잠깐 둘러보세요.
+      - 여기까지 오셨네요.
+      - 홈은 생각보다 가까운 곳에 있어요.
+      - 이 화살표가 맞는 방향인지는 모르겠어요.
+    egg_far: 여기까지 찾아올 줄은 몰랐어요.
 
 no_translation_tooltip: 번역 없음
 

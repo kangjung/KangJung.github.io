@@ -29,6 +29,34 @@ not_found:
   header: Page not found
   line1: The page you requested could not be found.
   line2: Try menu, or site search if available.
+  # Lost Canvas (interactive 404) strings
+  canvas:
+    doc_title: "404 · Lost Canvas"
+    lead: The page wandered off somewhere on this canvas.
+    sub: Try moving or zooming out.
+    home_label: The way back
+    home_badge: HOME
+    hidden_404: You found the number, but not the page.
+    reset: Start here
+    home: Home
+    zoom_in: Zoom in
+    zoom_out: Zoom out
+    help: Help
+    help_title: Keyboard controls
+    help_lines:
+      - "Arrows · move canvas"
+      - "+ / − · zoom in / out"
+      - "0 · reset view"
+      - "H · go home"
+    hint_drag: Grab the numbers and images and toss them. Drag empty space to move the canvas.
+    notes:
+      - Nothing to see over here.
+      - Try zooming out a bit more.
+      - Since you're lost, feel free to look around.
+      - You made it all the way here.
+      - Home is closer than you think.
+      - Not sure this arrow points the right way.
+    egg_far: Didn't expect anyone to come this far.
 
 no_translation_tooltip: No Translation
 
