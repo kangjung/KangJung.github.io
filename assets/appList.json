@@ -285,6 +285,25 @@
   },
   {
     "type": "app",
+    "slug": "secret-shelf",
+    "title": { "ko": "비밀 서재", "en": "Secret Shelf" },
+    "desc": {
+      "ko": "읽은 책과 마음에 남은 문장을 조용히 기록하는 독서 기록 앱",
+      "en": "A quiet reading log app for recording books and memorable sentences."
+    },
+    "longDesc": {
+      "ko": "비밀 서재는 읽은 책과 마음에 남은 문장을 차곡차곡 기록하며 나만의 책장을 완성하는 독서 기록 앱입니다.\n\n책 제목, 읽은 날짜, 별점, 감상, 한 줄 평, 서평 위치를 정리하고, 표지 보기와 책등 보기로 내 독서 기록을 책장처럼 돌아볼 수 있습니다. 월간 독서 엽서와 연간 통계로 읽은 책의 흐름, 분야, 별점도 한눈에 확인할 수 있어요.\n\n주요 기능:\n - 읽은 책 기록\n - 별점, 감상, 한 줄 평, 서평 위치 정리\n - 표지 보기와 책등 보기\n - 월간 독서 엽서 생성\n - 연간 독서 통계\n - 로그인 없는 로컬 기록\n\n복잡한 가입 없이, 조용히 나만의 독서 기록을 쌓아보세요.",
+      "en": "Secret Shelf is a personal reading log app for quietly collecting the books you have read and the sentences that stayed with you.\n\nRecord book titles, reading dates, ratings, thoughts, short reviews, and review links. Browse your library as covers or book spines, then look back on your reading flow through monthly reading postcards and yearly statistics.\n\nKey features:\n - Reading log for completed books\n - Ratings, notes, short reviews, and review locations\n - Cover view and bookshelf spine view\n - Monthly reading postcard\n - Yearly reading statistics\n - No sign-up required\n\nBuild your own calm bookshelf, one book at a time."
+    },
+    "img": "./img/secret-shelf/cover.png",
+    "icon": "./img/secret-shelf/icon.png",
+    "tags": ["Flutter"],
+    "stores": [
+      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.secret_shelf", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" }
+    ]
+  },
+  {
+    "type": "app",
     "slug": "learnquest-jlpt",
     "title": { "ko": "요괴 일본어: JLPT 퀘스트", "en": "Yokai Japanese: JLPT Quest" },
     "desc": {
