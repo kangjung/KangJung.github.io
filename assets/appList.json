@@ -321,5 +321,24 @@
       { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.learnquestjlpt", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" },
       { "name": "원스토어", "url": "https://m.onestore.co.kr/v2/ko-kr/app/0001007174", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/one_icon.png?raw=true" }
     ]
+  },
+  {
+    "type": "app",
+    "slug": "gongbok-switch",
+    "title": { "ko": "공복 스위치", "en": "Fasting Switch" },
+    "desc": {
+      "ko": "공복 타이머와 루틴 체크로 가볍게 공복 습관을 이어가는 앱",
+      "en": "A fasting timer and routine tracker for building lighter daily habits."
+    },
+    "longDesc": {
+      "ko": "공복 스위치는 공복 타이머, 오늘의 미션, 하루 기록, 주간 통계를 한곳에서 관리하는 공복 루틴 앱입니다.\n\n목표 공복 시간을 설정하고 진행 상황과 남은 시간을 확인하세요. 필요한 루틴만 골라 체크하고, 체중과 근육량 같은 몸의 변화도 주간 흐름으로 돌아볼 수 있습니다. 홈 화면 위젯과 기록 공유 카드로 오늘의 루틴을 더 가볍게 이어갈 수 있어요.\n\n주요 기능:\n - 공복 타이머와 목표 시간 관리\n - 오늘의 루틴 체크리스트\n - 하루 평가, 태그, 메모 기록\n - 달력으로 보는 하루 기록\n - 평균 공복, 루틴 달성률, 체중 변화 주간 통계\n - 체중과 근육량 변화 기록\n - 홈 화면 위젯\n - 인증 카드 공유",
+      "en": "Fasting Switch helps you manage fasting time, daily missions, body records, and weekly trends in one place.\n\nSet a fasting goal, check progress and remaining time, choose only the routines you need, and review changes in weight and muscle mass by week. Home screen widgets and share cards make it easier to keep your daily rhythm going.\n\nKey features:\n - Fasting timer and goal time tracking\n - Daily routine checklist\n - Daily mood, tags, and memo records\n - Calendar-based record review\n - Weekly stats for average fasting, routine completion, and weight changes\n - Weight and muscle mass trend records\n - Home screen widget\n - Shareable record card"
+    },
+    "img": "./img/gongbok-switch/cover.png",
+    "icon": "./img/gongbok-switch/icon.png",
+    "tags": ["Flutter"],
+    "stores": [
+      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.gongbok_switch", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" }
+    ]
   }
 ]
