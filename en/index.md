@@ -17,7 +17,7 @@ img: ":banner.png"
       <div class="stats reveal" style="animation-delay:.18s">
         <div class="stat"><div class="num" id="stat-games">9</div><div class="lab">Games</div></div>
         <div class="stat"><div class="num" id="stat-apps">5</div><div class="lab">Apps · Service</div></div>
-        <div class="stat"><div class="num" id="stat-tools">5</div><div class="lab">Web tools</div></div>
+        <div class="stat"><div class="num" id="stat-tools">6</div><div class="lab">Web tools</div></div>
       </div>
       <div class="cta-row reveal" style="animation-delay:.24s">
         <a class="btn btn-primary" href="#games">See the games →</a>
@@ -64,6 +64,12 @@ img: ":banner.png"
       <p>A mix of browser-based pages and small utilities.</p>
     </div>
     <div class="grid apps">
+      <a class="card" href="{{ site.baseurl }}/page/eml-viewer/">
+        <div class="card-art emoji" style="background:linear-gradient(145deg,#03c75a,#0fae9a);color:#fff">✉️</div>
+        <div class="card-body"><div class="card-title"><h3>EML File Viewer</h3></div>
+          <p>Open saved .eml email files right in your browser to read messages and download attachments. Processed only on your device — nothing is uploaded.</p>
+          <div class="meta-row"><span class="tag">WEB</span><span class="stores"><span class="store-chip">Open ↗</span></span></div></div></a>
+
       <a class="card" href="{{ site.baseurl }}/remove-background/">
         <div class="card-art emoji" style="background:linear-gradient(145deg,#9b7bff,#3d5afe);color:#fff">🪄</div>
         <div class="card-body"><div class="card-title"><h3>Background Remover</h3></div>

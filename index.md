@@ -20,7 +20,7 @@ img: ":banner.png"
       <div class="stats reveal" style="animation-delay:.18s">
         <div class="stat"><div class="num" id="stat-games">9</div><div class="lab">게임</div></div>
         <div class="stat"><div class="num" id="stat-apps">5</div><div class="lab">앱과 서비스</div></div>
-        <div class="stat"><div class="num" id="stat-tools">5</div><div class="lab">웹 도구</div></div>
+        <div class="stat"><div class="num" id="stat-tools">6</div><div class="lab">웹 도구</div></div>
       </div>
       <div class="cta-row reveal" style="animation-delay:.24s">
         <a class="btn btn-primary" href="#games">만든 게임 보기 →</a>
@@ -67,6 +67,12 @@ img: ":banner.png"
       <p>브라우저에서 바로 쓰는 것부터 작은 유틸리티까지 모아뒀어요.</p>
     </div>
     <div class="grid apps">
+      <a class="card" href="{{ site.baseurl }}/page/eml-viewer/">
+        <div class="card-art emoji" style="background:linear-gradient(145deg,#03c75a,#0fae9a);color:#fff">✉️</div>
+        <div class="card-body"><div class="card-title"><h3>EML 파일 뷰어</h3></div>
+          <p>저장된 .eml 이메일 파일을 브라우저에서 바로 열어 본문과 첨부파일을 확인. 업로드 없이 내 기기에서만 처리해요.</p>
+          <div class="meta-row"><span class="tag">WEB</span><span class="stores"><span class="store-chip">바로 사용 ↗</span></span></div></div></a>
+
       <a class="card" href="{{ site.baseurl }}/remove-background/">
         <div class="card-art emoji" style="background:linear-gradient(145deg,#9b7bff,#3d5afe);color:#fff">🪄</div>
         <div class="card-body"><div class="card-title"><h3>배경 제거 · AI 누끼</h3></div>
