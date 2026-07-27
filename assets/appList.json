@@ -340,5 +340,27 @@
     "stores": [
       { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.gongbok_switch", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" }
     ]
+  },
+  {
+    "type": "app",
+    "slug": "my-travel-pins",
+    "title": { "ko": "My Travel Pins – 여행 지도", "en": "My Travel Pins" },
+    "desc": {
+      "ko": "방문한 나라와 여행을 나만의 세계 지도에 기록하는 앱",
+      "en": "Track countries and trips on your personal world map."
+    },
+    "longDesc": {
+      "ko": "My Travel Pins는 다녀온 나라와 도시를 세계 지도 위에 핀으로 남기는 개인 여행 기록 앱입니다.\n\n방문한 나라와 지역을 색으로 채우고, 여행별 방문지와 이동 경로를 기록해 보세요. 방문 국가·도시·대륙 통계와 홈 화면 위젯을 제공하며, 완성한 여행 지도는 이미지로 공유할 수 있습니다.\n\n계정이나 로그인 없이 오프라인으로 사용할 수 있고, 모든 여행 데이터는 기기에만 저장됩니다. JSON 백업과 CSV 가져오기·내보내기도 지원합니다.",
+      "en": "My Travel Pins is a private travel tracker for marking every country and city you have visited on your own world map.\n\nColor visited countries and regions, group places into trips, and draw travel routes on the map. Review country, city, and continent statistics, add your map to a home screen widget, and share it as an image.\n\nThe app works offline with no account or sign-in, and all travel data stays on your device. JSON backup and CSV import/export are also supported."
+    },
+    "img": {
+      "ko": "./img/my-travel-pins/cover-ko.png",
+      "en": "./img/my-travel-pins/cover-en.png"
+    },
+    "icon": "./img/my-travel-pins/icon.png",
+    "tags": ["Flutter"],
+    "stores": [
+      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.mytravelpins", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" }
+    ]
   }
 ]

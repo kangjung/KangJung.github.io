@@ -22,6 +22,9 @@ layout: hub-base
     if (p.indexOf('./') === 0) return '{{ site.baseurl }}/game' + p.slice(1); // ./img/.. -> /game/img/..
     return p;
   }
+  function imageUrl(p) {
+    return iconUrl(typeof p === 'object' ? pick(p) : p);
+  }
 
   // Screenshots auto-discovered at build time from game/img/shots/<slug>/*.
   // Drop images into that folder (named so they sort, e.g. 01.png) and they
@@ -173,7 +176,7 @@ layout: hub-base
       var src = item.video.replace('controls=0', 'controls=1').replace('autoplay=1', 'autoplay=0');
       return '<iframe src="' + src + '" title="' + t + '" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
     }
-    var hero = iconUrl(item.img) || resolvedShots(item)[0] || iconUrl(item.icon);
+    var hero = imageUrl(item.img) || resolvedShots(item)[0] || iconUrl(item.icon);
     if (hero) return '<img src="' + hero + '" alt="' + t + '">';
     return '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:64px">' + (EMOJI[item.type] || '🎲') + '</div>';
   }
@@ -204,7 +207,7 @@ layout: hub-base
 
     // screenshots — right below download; click a shot to enlarge (lightbox)
     var shots = resolvedShots(item);
-    var heroImg = item.video ? null : (iconUrl(item.img) || shots[0]);
+    var heroImg = item.video ? null : (imageUrl(item.img) || shots[0]);
     var gallery = shots.filter(function (s) { return s !== heroImg; });
     if (gallery.length) {
       html += '<div class="modal-sec"><h4>' + T.shots + '</h4><div class="shots">' +
