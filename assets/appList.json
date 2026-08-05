@@ -364,5 +364,58 @@
     "stores": [
       { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.mytravelpins", "icon": "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true" }
     ]
+  },
+  {
+      "type":  "app",
+      "slug":  "gym-again-today",
+      "title":  {
+                    "ko":  "오늘도 헬스장에 왔다",
+                    "en":  "Back at the Gym Today"
+                },
+      "desc":  {
+                   "ko":  "세트 버튼만 눌러 빠르게 기록하는 오프라인 운동 일지",
+                   "en":  "An offline workout log with quick set tracking, routines, timers, and stats."
+               },
+      "longDesc":  {
+                       "ko":  "오늘도 헬스장에 왔다는 기록하는 시간을 최대한 짧게 만든 운동 일지입니다. 회원가입이나 인터넷 연결 없이 앱을 열고 세트 버튼만 누르면 운동을 기록할 수 있습니다.\n\n세트 완료와 함께 자동으로 시작되는 휴식 타이머, 나만의 운동 루틴, 55종의 기본 운동과 직접 추가하는 종목, 주별 볼륨·부위별 비중·추정 1RM 통계, 체중·골격근량·체지방률 기록을 지원합니다. 홈 화면 위젯과 운동 완료 공유 카드도 사용할 수 있습니다.\n\n모든 운동 기록은 기기에 저장되며 JSON 파일로 백업하고 다른 기기에서 복원할 수 있습니다. 한국어와 영어, 라이트·다크·시스템 테마를 지원합니다.",
+                       "en":  "Back at the Gym Today is a workout log designed to make tracking take almost no time. No account or internet connection is required—open the app and tap the set button.\n\nIt includes an automatic rest timer, custom workout routines, 55 built-in exercises plus your own, weekly volume and body-part statistics, estimated one-rep max tracking, and body measurements for weight, muscle mass, and body fat. Home screen widgets and shareable workout cards are included.\n\nEvery workout stays on your device and can be exported as a JSON backup for restoration on another device. The app supports English and Korean, with light, dark, and system themes."
+                   },
+      "img":  {
+                  "ko":  "./img/gym-again-today/cover-ko.png",
+                  "en":  "./img/gym-again-today/cover-en.png"
+              },
+      "icon":  "./img/gym-again-today/icon.png",
+      "screenshots":  {
+                          "ko":  [
+                                     "./img/shots/gym-again-today/ko-01-home.png",
+                                     "./img/shots/gym-again-today/ko-02-history.png",
+                                     "./img/shots/gym-again-today/ko-03-workout-detail.png",
+                                     "./img/shots/gym-again-today/ko-04-statistics.png",
+                                     "./img/shots/gym-again-today/ko-05-body.png",
+                                     "./img/shots/gym-again-today/ko-06-routines.png",
+                                     "./img/shots/gym-again-today/ko-07-exercises.png",
+                                     "./img/shots/gym-again-today/ko-08-workout.png"
+                                 ],
+                          "en":  [
+                                     "./img/shots/gym-again-today/en-01-home.png",
+                                     "./img/shots/gym-again-today/en-02-history.png",
+                                     "./img/shots/gym-again-today/en-03-workout-detail.png",
+                                     "./img/shots/gym-again-today/en-04-statistics.png",
+                                     "./img/shots/gym-again-today/en-05-body.png",
+                                     "./img/shots/gym-again-today/en-06-routines.png",
+                                     "./img/shots/gym-again-today/en-07-exercises.png",
+                                     "./img/shots/gym-again-today/en-08-workout.png"
+                                 ]
+                      },
+      "tags":  [
+                   "Flutter"
+               ],
+      "stores":  [
+                     {
+                         "name":  "Google Play",
+                         "url":  "https://play.google.com/store/apps/details?id=com.KangJung.gymagaintoday",
+                         "icon":  "https://github.com/kangjung/KangJung.github.io/blob/master/game/img/google_icon.png?raw=true"
+                     }
+                 ]
   }
 ]

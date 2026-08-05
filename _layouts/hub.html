@@ -40,7 +40,9 @@ layout: hub-base
     if (m) { (SHOTS[m[1]] = SHOTS[m[1]] || []).push(p); }
   });
   function resolvedShots(item) {
-    if (item.screenshots && item.screenshots.length) return item.screenshots.map(iconUrl);
+    var manual = item.screenshots;
+    if (manual && !Array.isArray(manual)) manual = manual[LANG] || manual.ko || manual.en;
+    if (manual && manual.length) return manual.map(iconUrl);
     return (SHOTS[item.slug] || []).slice();   // already site-absolute urls
   }
 
