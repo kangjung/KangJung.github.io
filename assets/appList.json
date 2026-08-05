@@ -1,6 +1,40 @@
 [
   {
     "type": "game",
+    "slug": "worldcup-if-coach",
+    "title": { "ko": "WorldCup IF Coach", "en": "WorldCup IF Coach" },
+    "desc": {
+      "ko": "선수 선발, 포메이션과 전술을 결정해 월드컵 경기를 지휘하는 감독 시뮬레이션",
+      "en": "An interactive football manager simulation where you select players, formations, and tactics."
+    },
+    "longDesc": {
+      "ko": "해커톤에서 바이브 코딩으로 제작한 인터랙티브 월드컵 감독 시뮬레이션입니다. 2026 월드컵 참가국 중 한 팀을 선택해 선발 명단과 포메이션, 공격·수비 전술을 정하고 경기 중 교체와 전술 변경으로 흐름에 개입할 수 있습니다. 경기 종료 후에는 선택을 바탕으로 감독 판단 리포트와 개선 제안을 확인할 수 있습니다.\n\n선수 능력치와 경기 결과는 체험을 위해 구성한 자체 시뮬레이션 데이터이며, 실제 경기 예측 서비스가 아닙니다.",
+      "en": "An interactive World Cup manager simulation built with vibe coding for a hackathon. Choose a 2026 World Cup team, select the lineup, formation, and attacking and defensive tactics, then influence the match through substitutions and tactical changes. After the final whistle, review a manager report based on your decisions.\n\nPlayer ratings and match results use custom simulation data for the experience and are not real-world predictions."
+    },
+    "icon": "https://worldcup-if-coach.netlify.app/favicon.svg",
+    "video": "https://www.youtube.com/embed/emd5swP52Rw?autoplay=1&mute=1&loop=1&playlist=emd5swP52Rw&controls=0&modestbranding=1&rel=0",
+    "features": {
+      "ko": [
+        "2026 월드컵 48개국과 대표 선수 선택",
+        "드래그앤드롭 전술 보드와 포메이션 배치",
+        "전술 기반 경기 시뮬레이션과 실시간 감독 개입",
+        "경기 종료 후 감독 판단 리포트와 하이라이트"
+      ],
+      "en": [
+        "Choose from 48 teams and their national-team players",
+        "Drag-and-drop tactical board and formation setup",
+        "Tactics-driven match simulation with live manager interventions",
+        "Post-match manager report and highlights"
+      ]
+    },
+    "tags": ["React", "TypeScript", "Hackathon"],
+    "stores": [
+      { "name": "Play", "url": "https://worldcup-if-coach.netlify.app/" },
+      { "name": "GitHub", "url": "https://github.com/kangjung/worldcup-if-coach" }
+    ]
+  },
+  {
+    "type": "game",
     "slug": "zigzag-rabbit",
     "title": { "ko": "지그재그 래빗", "en": "ZigZag RABBIT" },
     "desc": {
