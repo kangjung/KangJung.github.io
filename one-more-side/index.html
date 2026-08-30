@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#efe6d2" />
+    <meta
+      name="description"
+      content="A hand-drawn arcade survival game where every side is a life and a weapon."
+    />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <title>ONE MORE SIDE</title>
+    <style>
+      #sound-toggle {
+        position: fixed;
+        top: max(12px, env(safe-area-inset-top));
+        right: max(12px, env(safe-area-inset-right));
+        z-index: 50;
+        padding: 7px 10px 6px;
+        border: 1px solid rgba(48, 45, 41, 0.62);
+        border-radius: 2px;
+        background: rgba(239, 230, 210, 0.9);
+        color: #302d29;
+        font: 700 11px/1.1 "Courier New", Consolas, monospace;
+        letter-spacing: 0.06em;
+        box-shadow: 1px 1px 0 rgba(48, 45, 41, 0.12);
+        cursor: pointer;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      #sound-toggle::before {
+        content: "◖";
+        margin-right: 5px;
+        font-size: 12px;
+      }
+
+      #sound-toggle[data-level="low"] {
+        opacity: 0.72;
+      }
+
+      #sound-toggle[data-level="off"] {
+        opacity: 0.5;
+        text-decoration: line-through;
+      }
+
+      @media (max-width: 640px) {
+        #sound-toggle {
+          top: max(8px, env(safe-area-inset-top));
+          right: max(8px, env(safe-area-inset-right));
+          padding: 6px 8px 5px;
+          font-size: 10px;
+        }
+      }
+    </style>
+    <script>
+      (() => {
+        const LEVEL_KEY = 'oneMoreSideSoundLevel';
+        const LEGACY_MUTE_KEY = 'oneMoreSideMuted';
+        const LEVELS = ['high', 'low', 'off'];
+        const LEVEL_SCALE = { high: 1, low: 0.42, off: 0 };
+        const BGM_LEVEL_SCALE = { high: 0.16, low: 0.075, off: 0 };
+
+        let audioContext = null;
+        let bgmGain = null;
+        let bgmTimer = null;
+        let bgmNextNoteAt = 0;
+        let bgmStep = 0;
+        let lastScore = null;
+        let lastKillAt = -1000;
+        let lastHitAt = -1000;
+        let lastShotAt = -1000;
+        let gameOverActive = false;
+        let frameHasTime = false;
+        let frameBlocked = false;
+        let frameProbeQueued = false;
+        let syncingLegacyMute = false;
+
+        const loadLevel = () => {
+          try {
+            const stored = window.localStorage.getItem(LEVEL_KEY);
+            if (LEVELS.includes(stored)) return stored;
+            return window.localStorage.getItem(LEGACY_MUTE_KEY) === 'true' ? 'off' : 'high';
+          } catch {
+            return 'high';
+          }
+        };
+
+        let soundLevel = loadLevel();
+
+        const syncSoundButton = () => {
+          const button = document.getElementById('sound-toggle');
+          if (!button) return;
+          button.dataset.level = soundLevel;
+          button.textContent = `SOUND ${soundLevel.toUpperCase()}`;
+          button.setAttribute('aria-label', `Sound ${soundLevel}. Activate to change volume.`);
+        };
+
+        const updateBgmVolume = () => {
+          if (!audioContext || !bgmGain) return;
+          const now = audioContext.currentTime;
+          const target = BGM_LEVEL_SCALE[soundLevel] ?? BGM_LEVEL_SCALE.high;
+          bgmGain.gain.cancelScheduledValues(now);
+          bgmGain.gain.setTargetAtTime(Math.max(0.0001, target), now, 0.08);
+        };
+
+        const saveLevel = (level) => {
+          soundLevel = level;
+          try {
+            window.localStorage.setItem(LEVEL_KEY, level);
+            window.localStorage.setItem(LEGACY_MUTE_KEY, String(level === 'off'));
+          } catch {
+            // Sound still works for the current session when storage is unavailable.
+          }
+          syncSoundButton();
+          updateBgmVolume();
+        };
+
+        const syncGameMute = (shouldBeMuted) => {
+          let currentMuted = false;
+          try {
+            currentMuted = window.localStorage.getItem(LEGACY_MUTE_KEY) === 'true';
+          } catch {
+            currentMuted = false;
+          }
+          if (currentMuted === shouldBeMuted) return;
+          syncingLegacyMute = true;
+          window.dispatchEvent(new KeyboardEvent('keydown', { key: 'm', bubbles: true }));
+          window.dispatchEvent(new KeyboardEvent('keyup', { key: 'm', bubbles: true }));
+          syncingLegacyMute = false;
+        };
+
+        const applyLevel = (level) => {
+          const wasOff = soundLevel === 'off';
+          const willBeOff = level === 'off';
+          saveLevel(level);
+          if (wasOff !== willBeOff) {
+            syncGameMute(willBeOff);
+            try {
+              window.localStorage.setItem(LEGACY_MUTE_KEY, String(willBeOff));
+            } catch {
+              // Ignore storage failures.
+            }
+          }
+        };
+
+        const soundScale = () => LEVEL_SCALE[soundLevel] ?? 1;
+
+        const ensureAudio = () => {
+          if (!audioContext) {
+            const AudioCtor = window.AudioContext || window.webkitAudioContext;
+            if (!AudioCtor) return null;
+            audioContext = new AudioCtor();
+            bgmGain = audioContext.createGain();
+            bgmGain.gain.value = Math.max(0.0001, BGM_LEVEL_SCALE[soundLevel]);
+            bgmGain.connect(audioContext.destination);
+          }
+          if (audioContext.state === 'suspended') {
+            audioContext.resume().catch(() => undefined);
+          }
+          startBgm();
+          return audioContext;
+        };
+
+        const noiseTick = (duration, frequency, volume, type = 'bandpass', q = 1.1) => {
+          const scale = soundScale();
+          if (scale <= 0) return;
+          const context = ensureAudio();
+          if (!context || context.state !== 'running') return;
+          const length = Math.max(1, Math.floor(context.sampleRate * duration));
+          const buffer = context.createBuffer(1, length, context.sampleRate);
+          const data = buffer.getChannelData(0);
+          for (let index = 0; index < length; index += 1) {
+            const progress = index / length;
+            const grain = 0.45 + Math.pow(Math.sin(index * 0.083), 2) * 0.55;
+            data[index] = (Math.random() * 2 - 1) * grain * Math.pow(1 - progress, 0.72);
+          }
+          const source = context.createBufferSource();
+          const filter = context.createBiquadFilter();
+          const gain = context.createGain();
+          filter.type = type;
+          filter.frequency.value = frequency;
+          filter.Q.value = q;
+          const now = context.currentTime;
+          gain.gain.setValueAtTime(Math.max(0.0001, volume * scale), now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+          source.buffer = buffer;
+          source.connect(filter);
+          filter.connect(gain);
+          gain.connect(context.destination);
+          source.start(now);
+        };
+
+        const toneTick = (startFrequency, endFrequency, duration, volume, type = 'triangle', delay = 0) => {
+          const scale = soundScale();
+          if (scale <= 0) return;
+          const context = ensureAudio();
+          if (!context || context.state !== 'running') return;
+          const oscillator = context.createOscillator();
+          const gain = context.createGain();
+          const now = context.currentTime + delay;
+          oscillator.type = type;
+          oscillator.frequency.setValueAtTime(Math.max(30, startFrequency), now);
+          oscillator.frequency.exponentialRampToValueAtTime(Math.max(30, endFrequency), now + duration);
+          gain.gain.setValueAtTime(Math.max(0.0001, volume * scale), now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+          oscillator.connect(gain);
+          gain.connect(context.destination);
+          oscillator.start(now);
+          oscillator.stop(now + duration + 0.02);
+        };
+
+        const playShot = () => {
+          noiseTick(0.022, 2350, 0.06, 'highpass', 0.55);
+          toneTick(520, 310, 0.024, 0.018, 'sine');
+        };
+
+        const playKill = () => {
+          noiseTick(0.046, 1450, 0.13, 'bandpass', 1.45);
+          noiseTick(0.024, 3400, 0.06, 'highpass', 0.5);
+          toneTick(215, 125, 0.05, 0.04, 'triangle');
+        };
+
+        const playHit = () => {
+          noiseTick(0.13, 190, 0.22, 'lowpass', 0.55);
+          noiseTick(0.055, 820, 0.12, 'bandpass', 0.78);
+          toneTick(135, 58, 0.125, 0.075, 'sine');
+        };
+
+        const playGameOver = () => {
+          // One restrained final snap only. No looping tail.
+          noiseTick(0.045, 3200, 0.13, 'highpass', 0.58);
+          toneTick(132, 54, 0.24, 0.065, 'triangle');
+        };
+
+        const bgmPattern = [196, null, 246.94, null, 293.66, 246.94, 220, null];
+        const bgmBass = [98, null, null, null, 110, null, null, null];
+        const bgmBeat = 60 / 72;
+
+        const scheduleBgmVoice = (frequency, when, duration, volume, type = 'triangle') => {
+          if (!audioContext || !bgmGain || !frequency) return;
+          const oscillator = audioContext.createOscillator();
+          const filter = audioContext.createBiquadFilter();
+          const gain = audioContext.createGain();
+          oscillator.type = type;
+          oscillator.frequency.setValueAtTime(frequency, when);
+          oscillator.detune.setValueAtTime((Math.random() - 0.5) * 5, when);
+          filter.type = 'lowpass';
+          filter.frequency.value = 1200;
+          filter.Q.value = 0.45;
+          gain.gain.setValueAtTime(0.0001, when);
+          gain.gain.linearRampToValueAtTime(volume, when + 0.035);
+          gain.gain.exponentialRampToValueAtTime(0.0001, when + duration);
+          oscillator.connect(filter);
+          filter.connect(gain);
+          gain.connect(bgmGain);
+          oscillator.start(when);
+          oscillator.stop(when + duration + 0.03);
+        };
+
+        const scheduleBgmStep = (step, when) => {
+          const note = bgmPattern[step % bgmPattern.length];
+          const bass = bgmBass[step % bgmBass.length];
+          if (note) scheduleBgmVoice(note, when, bgmBeat * 0.72, 0.085, 'triangle');
+          if (bass) scheduleBgmVoice(bass, when, bgmBeat * 1.45, 0.055, 'sine');
+          if (step % 4 === 2) {
+            scheduleBgmVoice(392, when + bgmBeat * 0.5, bgmBeat * 0.35, 0.028, 'sine');
+          }
+        };
+
+        function startBgm() {
+          if (!audioContext || !bgmGain || bgmTimer !== null) return;
+          bgmNextNoteAt = audioContext.currentTime + 0.08;
+          bgmTimer = window.setInterval(() => {
+            if (!audioContext || audioContext.state !== 'running') return;
+            while (bgmNextNoteAt < audioContext.currentTime + 0.28) {
+              scheduleBgmStep(bgmStep, bgmNextNoteAt);
+              bgmStep = (bgmStep + 1) % bgmPattern.length;
+              bgmNextNoteAt += bgmBeat;
+            }
+          }, 120);
+        }
+
+        const probeFrame = () => {
+          if (frameProbeQueued) return;
+          frameProbeQueued = true;
+          queueMicrotask(() => {
+            frameProbeQueued = false;
+            const now = performance.now();
+            if (frameHasTime && !frameBlocked && now - lastShotAt >= 410) {
+              lastShotAt = now;
+              playShot();
+            }
+            frameHasTime = false;
+            frameBlocked = false;
+          });
+        };
+
+        const originalFillText = CanvasRenderingContext2D.prototype.fillText;
+        CanvasRenderingContext2D.prototype.fillText = function (text, ...args) {
+          const value = String(text);
+
+          if (value.startsWith('TIME ')) {
+            frameHasTime = true;
+            probeFrame();
+          } else if (value === 'PENCIL DOWN' || value === 'NO SIDES LEFT') {
+            frameBlocked = true;
+            probeFrame();
+          }
+
+          if (value === 'PRESS ANY KEY' || value === 'TAP TO DRAW') {
+            gameOverActive = false;
+            lastScore = null;
+          }
+
+          if (value.startsWith('SCORE ')) {
+            const score = Number.parseInt(value.slice(6).trim(), 10);
+            if (Number.isFinite(score)) {
+              if (lastScore !== null && score < lastScore) gameOverActive = false;
+              if (lastScore !== null && score > lastScore && !gameOverActive) {
+                const now = performance.now();
+                if (now - lastKillAt >= 55) {
+                  lastKillAt = now;
+                  playKill();
+                }
+              }
+              lastScore = score;
+            }
+          }
+
+          if (value === '− ONE SIDE' && !gameOverActive) {
+            const now = performance.now();
+            if (now - lastHitAt >= 180) {
+              lastHitAt = now;
+              playHit();
+            }
+          }
+
+          if (value === 'NO SIDES LEFT' && !gameOverActive) {
+            gameOverActive = true;
+            playGameOver();
+          }
+
+          return originalFillText.call(this, text, ...args);
+        };
+
+        window.addEventListener('pointerdown', ensureAudio, { passive: true });
+        window.addEventListener('keydown', (event) => {
+          ensureAudio();
+          if (syncingLegacyMute) return;
+          if (event.key && event.key.toLowerCase() === 'm') {
+            const next = LEVELS[(LEVELS.indexOf(soundLevel) + 1) % LEVELS.length];
+            applyLevel(next);
+            event.preventDefault();
+            event.stopImmediatePropagation();
+          }
+        }, { passive: false, capture: true });
+
+        window.addEventListener('storage', (event) => {
+          if (event.key === LEVEL_KEY) {
+            soundLevel = loadLevel();
+            syncSoundButton();
+            updateBgmVolume();
+          }
+        });
+
+        document.addEventListener('visibilitychange', () => {
+          if (!document.hidden) ensureAudio();
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+          const button = document.getElementById('sound-toggle');
+          if (!button) return;
+          syncSoundButton();
+          button.addEventListener('pointerdown', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            ensureAudio();
+          });
+          button.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            const next = LEVELS[(LEVELS.indexOf(soundLevel) + 1) % LEVELS.length];
+            applyLevel(next);
+          });
+        });
+      })();
+    </script>
+    <script type="module" crossorigin src="./assets/main-CLTC9Dmy.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/modulepreload-polyfill-P2Xu9kJm.js">
+    <link rel="stylesheet" crossorigin href="./assets/main-CzDU7XbZ.css">
+  </head>
+  <body>
+    <button id="sound-toggle" type="button" data-level="high">SOUND HIGH</button>
+    <div id="root"></div>
+  </body>
+</html>
