@@ -311,6 +311,7 @@
           if (value === 'PRESS ANY KEY' || value === 'TAP TO DRAW') {
             gameOverActive = false;
             lastScore = null;
+            if (window.parent !== window) window.parent.postMessage({ source: 'one-more-side', type: 'game-active' }, window.location.origin);
           }
 
           if (value.startsWith('SCORE ')) {
@@ -339,6 +340,7 @@
           if (value === 'NO SIDES LEFT' && !gameOverActive) {
             gameOverActive = true;
             playGameOver();
+            if (window.parent !== window) window.parent.postMessage({ source: 'one-more-side', type: 'game-over' }, window.location.origin);
           }
 
           return originalFillText.call(this, text, ...args);
