@@ -16,7 +16,6 @@ image_viewer_on: true
 <!--
 제출 후 추가할 것
 - 대표 이미지 img 항목
-- js13kGames 제출 페이지 링크
 - 직접 플레이 링크
 - 최종 제출 ZIP 용량
 - 순위와 피드백
@@ -47,7 +46,7 @@ That game became **PRISM HORN**.
 
 The unicorn at the bottom of the screen does not move. You change the direction of the horn and the color of the laser to stop the enemies coming down from above. You have to hit an enemy with a matching color, and if an enemy reaches the defense line at the bottom, your shield drops.
 
-I will add the game link and the submission page once I have submitted.
+The submission page is [js13kGames - PRISM HORN](https://js13kgames.com/games/prism-horn).
 
 ## The first version was not fun
 

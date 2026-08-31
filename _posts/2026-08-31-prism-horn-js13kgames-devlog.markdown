@@ -16,7 +16,6 @@ image_viewer_on: true
 <!--
 제출 후 추가할 것
 - 대표 이미지 img 항목
-- js13kGames 제출 페이지 링크
 - 직접 플레이 링크
 - 최종 제출 ZIP 용량
 - 순위와 피드백
@@ -48,7 +47,7 @@ js13kGames는 HTML, CSS, JavaScript로 만든 게임을 ZIP 파일 기준 13KiB 
 
 화면 아래에 있는 유니콘은 움직이지 않고, 뿔의 방향과 레이저 색을 바꿔서 위에서 내려오는 적을 막는 게임입니다. 적과 같은 색으로 공격해야 하고 적이 아래 방어선까지 내려오면 실드가 줄어듭니다.
 
-게임 주소와 제출 페이지는 제출이 끝나면 추가할 예정입니다.
+제출 페이지는 [js13kGames - PRISM HORN](https://js13kgames.com/games/prism-horn)입니다.
 
 ## 처음 만든 건 별로 재미가 없었다
 
