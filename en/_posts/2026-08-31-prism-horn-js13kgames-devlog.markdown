@@ -9,7 +9,6 @@ comments_disable: true
 date: 2026-08-31 00:00:00 +0900
 meta_description: "Notes on making PRISM HORN, my js13kGames 2026 entry"
 image_viewer_on: true
-published: false
 ---
 
 {%- include util/auto-content-generator.liquid -%}
@@ -49,8 +48,6 @@ That game became **PRISM HORN**.
 The unicorn at the bottom of the screen does not move. You change the direction of the horn and the color of the laser to stop the enemies coming down from above. You have to hit an enemy with a matching color, and if an enemy reaches the defense line at the bottom, your shield drops.
 
 I will add the game link and the submission page once I have submitted.
-
-> TODO: js13kGames submission link
 
 ## The first version was not fun
 

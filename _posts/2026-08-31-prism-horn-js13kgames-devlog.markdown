@@ -9,7 +9,6 @@ comments_disable: true
 date: 2026-08-31 00:00:00 +0900
 meta_description: "js13kGames 2026 참가작 PRISM HORN을 만든 후기"
 image_viewer_on: true
-published: false
 ---
 
 {%- include util/auto-content-generator.liquid -%}
@@ -50,8 +49,6 @@ js13kGames는 HTML, CSS, JavaScript로 만든 게임을 ZIP 파일 기준 13KiB 
 화면 아래에 있는 유니콘은 움직이지 않고, 뿔의 방향과 레이저 색을 바꿔서 위에서 내려오는 적을 막는 게임입니다. 적과 같은 색으로 공격해야 하고 적이 아래 방어선까지 내려오면 실드가 줄어듭니다.
 
 게임 주소와 제출 페이지는 제출이 끝나면 추가할 예정입니다.
-
-> TODO: js13kGames 제출 링크
 
 ## 처음 만든 건 별로 재미가 없었다
 
