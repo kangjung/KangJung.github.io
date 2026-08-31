@@ -1,1 +1,0 @@
-import"./modulepreload-polyfill-P2Xu9kJm.js";var e=`ca-pub-2007216448786117`,t=document.createElement(`script`);t.async=!0,t.crossOrigin=`anonymous`,t.src=`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${e}`,t.addEventListener(`load`,()=>(window.adsbygoogle||=[]).push({}),{once:!0}),document.head.append(t);
