@@ -142,6 +142,28 @@
   },
   {
     "type": "game",
+    "slug": "prism-horn",
+    "title": { "ko": "PRISM HORN", "en": "PRISM HORN" },
+    "desc": {
+      "ko": "색과 모양을 맞춰 무지개 레이저로 적을 막는 HTML5 디펜스 게임",
+      "en": "An HTML5 defense game where you match colors and shapes to stop enemies with rainbow lasers."
+    },
+    "longDesc": {
+      "ko": "js13kGames 2026 출품작입니다. 화면 아래의 유니콘은 움직이지 않으며, 뿔의 방향과 레이저 색상을 바꿔 위에서 내려오는 적을 막아야 합니다. 적의 색과 모양에 맞춰 공격하고, 레벨업 때마다 세 가지 강화 중 하나를 골라 포털과 다중 레이저, 혼합 색상 같은 능력으로 빌드를 완성할 수 있습니다.",
+      "en": "An entry for js13kGames 2026. The unicorn stays fixed at the bottom of the screen while you aim its horn and switch laser colors to stop incoming enemies. Match enemy colors and shapes, then choose one of three upgrades on each level-up to build abilities such as color portals, split beams, and mixed-color lasers."
+    },
+    "img": "./img/prism-horn/cover.png",
+    "icon": "./img/prism-horn/icon.png",
+    "tags": ["HTML5", "JavaScript", "Canvas", "js13kGames"],
+    "stores": [
+      { "name": "js13kGames", "url": "https://js13kgames.com/games/prism-horn" },
+      { "name": "GitHub", "url": "https://github.com/kangjung/prism_horn" },
+      { "name": "개발 후기", "url": "https://kangjung.github.io/posts/2026-08-31-prism-horn-js13kgames-devlog" },
+      { "name": "Devlog (EN)", "url": "https://kangjung.github.io/posts/en/2026-08-31-prism-horn-js13kgames-devlog" }
+    ]
+  },
+  {
+    "type": "game",
     "slug": "grass-tower-defense",
     "title": { "ko": "Grass Tower Defense", "en": "Grass Tower Defense" },
     "desc": {
