@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101319">
+  <meta name="description" content="City Heist. A small single-player stealth-and-escape game in development for Windows PC. Plan the route. Take the objective. Get out.">
+  <title>City Heist — A game by KangJung</title>
+  <link rel="preload" href="./fonts/Anton-Regular.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <a class="skip-link" href="#game">Skip to game</a>
+  <header class="navigation frame">
+    <a class="wordmark" href="/">← KANGJUNG</a>
+    <nav aria-label="Main navigation">
+      <a href="#game">GAME</a>
+      <a href="#about">ABOUT</a>
+    </nav>
+  </header>
+
+  <main id="game">
+    <section class="hero frame" aria-labelledby="title">
+      <div class="hero-topline"><span>A GAME BY KANGJUNG</span><span>STEALTH / ESCAPE</span></div>
+      <h1 id="title">CITY HEIST</h1>
+      <div class="hero-copy">
+        <p class="hero-manifesto">PLAN THE ROUTE.<br>TAKE THE OBJECTIVE.<br><span>GET OUT.</span></p>
+        <div class="hero-description">
+          <p>A small single-player <br>stealth-and-escape game.</p>
+          <p class="status">IN DEVELOPMENT · WINDOWS PC · UNITY</p>
+        </div>
+      </div>
+      <figure class="hero-image image">
+        <img src="./images/05-night-lighting.png" width="1920" height="1080" fetchpriority="high" alt="An illuminated office surrounded by dark streets in City Heist's night mission.">
+        <figcaption><span>CITY BLOCK A — AFTER DARK</span><span>DEVELOPMENT SCREENSHOT</span></figcaption>
+      </figure>
+    </section>
+
+    <section class="job frame section" aria-labelledby="job-title">
+      <div class="section-label"><span>01 / THE JOB</span><span>ONE BLOCK. DIFFERENT WAYS IN.</span></div>
+      <div class="job-layout">
+        <div class="job-copy">
+          <h2 id="job-title">A WAY IN.<br>A WAY OUT.</h2>
+          <p class="job-lines">Read the room.<br>Choose an entry route.<br>Steal the objective.<br>Escape after security changes.</p>
+          <p class="muted">A jewelry store. An office. The alleys between them. Three missions share one city block, changing the target, security and route home.</p>
+        </div>
+        <figure class="image">
+          <img src="./images/01-city-block-overview.png" width="1920" height="1080" loading="lazy" alt="An overview of the city block, showing the jewelry store, west office, streets and parking area.">
+          <figcaption>THE LAYOUT / FOG AND GUARDS HIDDEN FOR THIS OVERVIEW</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="stealth frame section" aria-labelledby="stealth-title">
+      <div class="section-label"><span>02 / STEALTH</span><span>WATCH. WAIT. MOVE.</span></div>
+      <div class="stealth-layout">
+        <h2 class="display-heading" id="stealth-title">DON’T<br>BE<br><span>SEEN.</span></h2>
+        <div class="stealth-content">
+          <figure class="image">
+            <img src="./images/02-guard-stealth.png" width="1920" height="1080" loading="lazy" alt="A crouching player uses a display case as cover while a guard looks the other way.">
+            <figcaption>A MOMENT BETWEEN PATROLS</figcaption>
+          </figure>
+          <div class="stealth-notes">
+            <p>Watch the patrol.<br>Move when there’s an opening.</p>
+            <p class="muted">Guards grow suspicious, chase when they spot you, and search your last known position when you break sight. You can’t fight your way through. Find cover and make another plan.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="security frame section" aria-labelledby="security-title">
+      <div class="section-label"><span>03 / SECURITY</span><span>INFORMATION IS NEVER FREE.</span></div>
+      <div class="security-heading">
+        <p class="muted">A camera covers the doorway.<br>A wall hides what comes next.<br>You have to get close enough to know.</p>
+        <h2 id="security-title">CAMERAS<br>DON’T<br><span>BLINK.</span></h2>
+      </div>
+      <div class="security-images">
+        <figure class="image camera-image">
+          <img src="./images/03-cctv-detection.png" width="1920" height="1080" loading="lazy" alt="An amber CCTV detection cone covers the player near the jewelry store entrance.">
+          <figcaption>01 / CCTV — EXPOSURE HAS CONSEQUENCES</figcaption>
+        </figure>
+        <div class="visibility">
+          <figure class="image">
+            <img src="./images/04-fog-of-war.png" width="1920" height="1080" loading="lazy" alt="Player visibility reveals part of a street while unexplored areas remain dark.">
+            <figcaption>02 / VISIBILITY — ONLY WHAT YOU CAN SEE</figcaption>
+          </figure>
+          <p class="muted">Explored streets leave a dark memory. Unseen guards stay hidden. A camera you’ve discovered does not reveal its live sweep once it leaves your sight.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="tools frame section" aria-labelledby="tools-title">
+      <div class="section-label"><span>04 / TOOLS</span><span>CHOOSE TWO. MAKE THEM COUNT.</span></div>
+      <h2 id="tools-title">TRAVEL LIGHT.</h2>
+      <div class="tools-layout">
+        <figure class="image tool-image">
+          <img src="./images/06-tools.png" width="1920" height="1080" loading="lazy" alt="An EMP pulse disables a nearby CCTV camera, with the current prototype tool interface visible.">
+          <figcaption>EMP / A TEMPORARY OPENING</figcaption>
+        </figure>
+        <ol class="tool-list">
+          <li><span class="tool-number" aria-hidden="true">01</span><div><h3>EMP</h3><p>Disable nearby CCTV for a short window. Cross before it comes back.</p></div></li>
+          <li><span class="tool-number" aria-hidden="true">02</span><div><h3>LOCKPICK</h3><p>A locked door can be a shortcut. Opening it takes time — and a place to stay still.</p></div></li>
+          <li><span class="tool-number" aria-hidden="true">03</span><div><h3>DISTRACTION</h3><p>Draw a nearby guard toward a sound. Use the space they leave behind.</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="escape section" aria-labelledby="escape-title">
+      <div class="frame">
+        <div class="section-label"><span>05 / THE ESCAPE</span><span>THE JOB ISN’T OVER.</span></div>
+        <div class="escape-heading">
+          <h2 id="escape-title">NOW GET OUT.</h2>
+          <p>Take the objective.<br>Security changes.<br>Find your way out.</p>
+        </div>
+      </div>
+      <figure class="escape-image image">
+        <img src="./images/07-objective-escape.png" width="1920" height="1080" loading="lazy" alt="The jewelry objective and green escape marker in the current City Heist prototype, before the target is collected.">
+        <figcaption class="frame"><span>THE TARGET AND THE EXIT / BEFORE THE THEFT</span><span>CITY HEIST</span></figcaption>
+      </figure>
+      <p class="escape-note frame">An alarm changes the patrol. Reaching the exit isn’t enough while you’re still being watched. Break sight, then get clear.</p>
+    </section>
+
+    <section id="about" class="build frame section" aria-labelledby="build-title">
+      <div class="section-label"><span>06 / CURRENT BUILD</span><span>A WORK IN PROGRESS</span></div>
+      <div class="build-layout">
+        <div>
+          <h2 id="build-title">STILL<br>ON THE JOB.</h2>
+          <p class="muted build-description">City Heist is a playable prototype in development. The core loop is in place; the UI, art, sound and balance are still being worked on.</p>
+          <p class="availability">No public playable build yet.</p>
+        </div>
+        <ul class="build-facts">
+          <li>Single-player</li>
+          <li>Windows PC target</li>
+          <li>3D quarter-view / top-down</li>
+          <li>Guards and CCTV</li>
+          <li>Three missions</li>
+          <li>EMP / Lockpick / Distraction</li>
+          <li>No combat in the MVP</li>
+        </ul>
+      </div>
+      <p class="capture-note">Screenshots are staged captures from the actual Unity prototype, with camera and character positions arranged for clarity. Detail shots retain player visibility; most HUD elements are hidden. Human playtesting and balance review are ongoing.</p>
+    </section>
+  </main>
+
+  <footer class="footer frame">
+    <div><a class="footer-title" href="#game">CITY HEIST</a><p>A game project by KangJung</p></div>
+    <a class="back-link" href="/">Back to KangJung.github.io <span aria-hidden="true">↗</span></a>
+  </footer>
+</body>
+</html>
