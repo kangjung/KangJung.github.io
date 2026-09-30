@@ -15,6 +15,20 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
 xmlns:xhtml="http://www.w3.org/1999/xhtml"
 {{ xml_image_prop }}>
 
+{%- comment %} Static standalone pages without Jekyll front matter are not in site.html_pages. {% endcomment -%}
+{%- assign pickip_urls = '/apps/pickip/|ko,/apps/pickip/en/|en,/apps/pickip/ja/|ja' | split: ',' -%}
+{%- for pickip_entry in pickip_urls -%}
+  {%- assign pickip_parts = pickip_entry | split: '|' -%}
+  <url>
+    <loc>{{ pickip_parts[0] | absolute_url }}</loc>
+    <lastmod>2026-09-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="{{ '/apps/pickip/' | absolute_url }}" />
+    <xhtml:link rel="alternate" hreflang="en" href="{{ '/apps/pickip/en/' | absolute_url }}" />
+    <xhtml:link rel="alternate" hreflang="ja" href="{{ '/apps/pickip/ja/' | absolute_url }}" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="{{ '/apps/pickip/' | absolute_url }}" />
+  </url>
+{%- endfor -%}
+
 {%- comment %} create an empty array {% endcomment -%}
 {%- assign all_pages = '' | split: '' -%}
 {%- assign all_pages = all_pages | push: site.posts | push: site.html_pages -%}
