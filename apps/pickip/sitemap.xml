@@ -35,4 +35,28 @@
     <image:image><image:loc>https://kangjung.github.io/apps/pickip/assets/swipe.webp</image:loc></image:image>
     <image:image><image:loc>https://kangjung.github.io/apps/pickip/assets/compare.webp</image:loc></image:image>
   </url>
+  <url>
+    <loc>https://kangjung.github.io/apps/pickip/privacy/</loc>
+    <lastmod>2026-09-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://kangjung.github.io/apps/pickip/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kangjung.github.io/apps/pickip/privacy/en/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kangjung.github.io/apps/pickip/privacy/ja/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kangjung.github.io/apps/pickip/privacy/"/>
+  </url>
+  <url>
+    <loc>https://kangjung.github.io/apps/pickip/privacy/en/</loc>
+    <lastmod>2026-09-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://kangjung.github.io/apps/pickip/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kangjung.github.io/apps/pickip/privacy/en/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kangjung.github.io/apps/pickip/privacy/ja/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kangjung.github.io/apps/pickip/privacy/"/>
+  </url>
+  <url>
+    <loc>https://kangjung.github.io/apps/pickip/privacy/ja/</loc>
+    <lastmod>2026-09-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://kangjung.github.io/apps/pickip/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kangjung.github.io/apps/pickip/privacy/en/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kangjung.github.io/apps/pickip/privacy/ja/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kangjung.github.io/apps/pickip/privacy/"/>
+  </url>
 </urlset>
