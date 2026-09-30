@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://kangjung.github.io/apps/pickip/</loc></url>
-<url><loc>https://kangjung.github.io/apps/pickip/en/</loc></url>
-<url><loc>https://kangjung.github.io/apps/pickip/ja/</loc></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://kangjung.github.io/apps/pickip/</loc>
+    <lastmod>2026-09-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://kangjung.github.io/apps/pickip/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kangjung.github.io/apps/pickip/en/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kangjung.github.io/apps/pickip/ja/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kangjung.github.io/apps/pickip/"/>
+    <image:image><image:loc>https://kangjung.github.io/apps/pickip/assets/icon.png</image:loc></image:image>
+    <image:image><image:loc>https://kangjung.github.io/apps/pickip/assets/swipe.webp</image:loc></image:image>
+    <image:image><image:loc>https://kangjung.github.io/apps/pickip/assets/compare.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://kangjung.github.io/apps/pickip/en/</loc>
+    <lastmod>2026-09-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://kangjung.github.io/apps/pickip/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kangjung.github.io/apps/pickip/en/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kangjung.github.io/apps/pickip/ja/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kangjung.github.io/apps/pickip/"/>
+    <image:image><image:loc>https://kangjung.github.io/apps/pickip/assets/icon.png</image:loc></image:image>
+    <image:image><image:loc>https://kangjung.github.io/apps/pickip/assets/swipe.webp</image:loc></image:image>
+    <image:image><image:loc>https://kangjung.github.io/apps/pickip/assets/compare.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://kangjung.github.io/apps/pickip/ja/</loc>
+    <lastmod>2026-09-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://kangjung.github.io/apps/pickip/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kangjung.github.io/apps/pickip/en/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kangjung.github.io/apps/pickip/ja/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kangjung.github.io/apps/pickip/"/>
+    <image:image><image:loc>https://kangjung.github.io/apps/pickip/assets/icon.png</image:loc></image:image>
+    <image:image><image:loc>https://kangjung.github.io/apps/pickip/assets/swipe.webp</image:loc></image:image>
+    <image:image><image:loc>https://kangjung.github.io/apps/pickip/assets/compare.webp</image:loc></image:image>
+  </url>
 </urlset>
