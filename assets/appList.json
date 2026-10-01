@@ -241,6 +241,27 @@
   },
   {
     "type": "app",
+    "slug": "pickip",
+    "landingMode": "manual",
+    "title": { "ko": "PicKip", "en": "PicKip" },
+    "desc": {
+      "ko": "사진을 한 장씩 넘기고 비슷한 사진을 비교하며, 남길 사진을 직접 고르는 사진 정리 앱",
+      "en": "Organize photos one at a time, compare similar shots, and choose what to keep."
+    },
+    "longDesc": {
+      "ko": "PicKip은 사진을 20장·50장·100장씩 확인하며 정리하는 Android 앱입니다. 비슷한 사진과 같은 파일명 사진을 찾아 비교하고, 삭제 전 마지막 확인 화면에서 직접 결정할 수 있습니다. 사진 정리는 업로드 없이 기기 안에서 처리합니다.",
+      "en": "PicKip is an Android photo organizer for reviewing 20, 50, or 100 photos at a time. Compare similar photos and exact filename matches, then review your choices before deleting. Photos are processed on your device without uploads."
+    },
+    "icon": "/apps/pickip/assets/icon.png",
+    "img": "/apps/pickip/assets/swipe.webp",
+    "screenshots": ["/apps/pickip/assets/swipe.webp", "/apps/pickip/assets/compare.webp"],
+    "tags": ["Android"],
+    "stores": [
+      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.pickip" }
+    ]
+  },
+  {
+    "type": "app",
     "slug": "dday-lite",
     "longDesc": {
       "ko": "D-Day Lite는 소중한 날을 잊지 않도록 도와주는 감성 D-Day 및 기념일 관리 앱입니다.\n\n기념일, 생일, 여행, 목표일, 추모일처럼 기억하고 싶은 순간을 카드로 저장하고, 남은 날이나 지나온 날을 한눈에 확인할 수 있습니다. 부드러운 그라데이션 배경, 사진 배경, 메모, 알림, 위젯을 통해 나만의 방식으로 중요한 날을 간직하세요.\n\n주요 기능\n\n- D-Day 및 D+ 자동 계산\n- 기념일, 생일, 목표, 여행, 추모일 카테고리 지원\n- 매년 반복되는 생일과 기념일 관리\n- 사진 또는 그라데이션 배경 카드\n- 홈 화면 위젯으로 대표 D-Day 확인\n- 잠금화면 D-Day 알림 지원\n- 로컬 알림 리마인더\n- 기기 내 로컬 저장\n- 백업 및 복원 지원\n- 라이트/다크 테마\n- 한국어와 영어 지원\n\nD-Day Lite는 별도의 서버나 계정 없이 기기 안에 데이터를 저장합니다. 일상의 작은 약속부터 평생 간직하고 싶은 순간까지, 나에게 중요한 날을 더 따뜻하게 기억해보세요.",

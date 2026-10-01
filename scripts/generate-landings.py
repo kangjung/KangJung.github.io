@@ -16,7 +16,10 @@ from landing_profiles import PROFILES
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "https://kangjung.github.io"
-ITEMS = json.loads((ROOT / "assets/appList.json").read_text(encoding="utf-8"))
+ITEMS = [
+    item for item in json.loads((ROOT / "assets/appList.json").read_text(encoding="utf-8"))
+    if item.get("landingMode") != "manual"
+]
 COPY = {
     "ko": {
         "home": "KangJung 홈", "games": "게임", "apps": "앱",
