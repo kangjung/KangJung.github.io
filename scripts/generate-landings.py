@@ -11,6 +11,7 @@ import json
 import re
 from pathlib import Path
 from urllib.parse import urlparse, parse_qs
+from landing_profiles import PROFILES
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -91,6 +92,12 @@ def render(item: dict, lang: str) -> str:
     slug, kind = item["slug"], item["type"]
     group = "games" if kind == "game" else "apps"
     c = COPY[lang]
+    variant, accent, paper, ink, headline_ko, headline_en, highlights = PROFILES[slug]
+    headline = headline_ko if lang == "ko" else headline_en
+    highlight_html = "".join(
+        f'<div><span class="highlight-number">0{i}</span><p>{esc(pair[0 if lang == "ko" else 1])}</p></div>'
+        for i, pair in enumerate(highlights, 1)
+    )
     title = localized(item.get("title"), lang)
     desc = localized(item.get("desc"), lang)
     long_desc = localized(item.get("longDesc"), lang) or desc
@@ -123,6 +130,13 @@ def render(item: dict, lang: str) -> str:
         if cover else f'<span class="cover-fallback">{esc(title)}</span>'
     )
     body = "".join(f"<p>{esc(p)}</p>" for p in paragraphs)
+    if kind == "app" and shots:
+        cover_html = (
+            '<div class="screen-composition">'
+            f'<img class="screen-primary" src="{esc(shots[0])}" alt="{esc(title)} — {"앱 화면" if lang == "ko" else "app screen"}" fetchpriority="high">'
+            + (f'<img class="screen-secondary" src="{esc(shots[1])}" alt="{esc(title)} — {"다른 화면" if lang == "ko" else "another screen"}" loading="eager">' if len(shots) > 1 else "")
+            + '</div>'
+        )
     feature_html = (
         f'<section class="section"><h2>{c["features"]}</h2><ul class="features">'
         + "".join(f"<li>{esc(f)}</li>" for f in bullets) + "</ul></section>"
@@ -158,7 +172,7 @@ def render(item: dict, lang: str) -> str:
         "@context": "https://schema.org",
         "@type": "MobileApplication" if kind == "app" else "VideoGame",
         "name": title, "description": lead, "url": url,
-        "image": cover or icon, "inLanguage": lang,
+        "image": BASE + cover if cover.startswith("/") else cover, "inLanguage": lang,
         "author": {"@type": "Person", "name": "KangJung", "url": BASE + "/"},
     }
     if kind == "app":
@@ -171,7 +185,7 @@ def render(item: dict, lang: str) -> str:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f8faf9">
+  <meta name="theme-color" content="{paper}">
   <title>{esc(page_title)}</title>
   <meta name="description" content="{esc(lead)}">
   <link rel="canonical" href="{esc(url)}">
@@ -182,15 +196,15 @@ def render(item: dict, lang: str) -> str:
   <meta property="og:title" content="{esc(page_title)}">
   <meta property="og:description" content="{esc(lead)}">
   <meta property="og:url" content="{esc(url)}">
-  <meta property="og:image" content="{esc(cover or icon)}">
+  <meta property="og:image" content="{esc(BASE + cover if cover.startswith('/') else cover)}">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="/assets/landing.css">
   <script type="application/ld+json">{schema_json}</script>
 </head>
-<body>
+<body class="product-{kind} design-{variant}" style="--accent:{accent};--paper:{paper};--ink:{ink}">
   <a class="skip" href="#main">{"본문으로" if lang == "ko" else "Skip to content"}</a>
   <header class="site-header"><div class="wrap header-inner">
-    <a class="brand" href="/{'' if lang == 'ko' else 'en/'}">kangjung<span>.</span></a>
+    <a class="brand product-brand" href="./">{icon_html}<span>{esc(title)}</span></a>
     <nav aria-label="{"페이지 이동" if lang == "ko" else "Page navigation"}">
       <a href="/{'' if lang == 'ko' else 'en/'}#{group}">{c["games"] if kind == "game" else c["apps"]}</a>
       <a href="{other}" lang="{"ko" if lang == "en" else "en"}" hreflang="{"ko" if lang == "en" else "en"}">{other_lang}</a>
@@ -199,21 +213,21 @@ def render(item: dict, lang: str) -> str:
   <main id="main">
     <section class="hero wrap">
       <div class="hero-copy">
-        <p class="eyebrow">{c["eyebrow_game"] if kind == "game" else c["eyebrow_app"]} <span>·</span> KANGJUNG</p>
-        {icon_html}
-        <h1>{esc(title)}</h1>
+        <p class="eyebrow">{esc(title)} <span>·</span> {"ANDROID" if kind == "app" else "PLAY BY KANGJUNG"}</p>
+        <h1>{'<br>'.join(esc(line) for line in headline.splitlines())}</h1>
         <p class="lead">{esc(lead)}</p>
-        <div class="tags">{''.join(f'<span>{esc(tag)}</span>' for tag in item.get("tags", []))}</div>
         <div class="actions">{store_links}</div>
       </div>
       <div class="hero-media">{cover_html}</div>
     </section>
+    <section class="highlights wrap" aria-label="{c["features"]}">{highlight_html}</section>
     <div class="content wrap">
       <section class="section intro"><h2>{c["about"]}</h2>{body}</section>
       {feature_html}
       {gallery_html}
       {video_html}
-      <section class="closing"><h2>{c["more"]}</h2><p>{esc(c["note"])}</p>
+      <section class="closing"><p class="eyebrow">{esc(title)}</p><h2>{"지금 시작해 보세요." if lang == "ko" else "Make it yours."}</h2>
+        <div class="actions">{store_links}</div>
         <a class="back-link" href="/{'' if lang == 'ko' else 'en/'}#{group}">{c["home"]} <span aria-hidden="true">↗</span></a>
       </section>
     </div>

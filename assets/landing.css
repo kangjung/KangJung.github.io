@@ -50,3 +50,149 @@ h1{font-size:clamp(40px,5vw,68px);letter-spacing:-.07em;line-height:1.12;margin-
 .site-footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-size:13px}
 @media(max-width:760px){.wrap{width:min(100% - 36px,560px)}.header-inner{min-height:65px}.hero{grid-template-columns:1fr;padding-top:46px;padding-bottom:56px;gap:35px}.hero-media{min-height:260px;max-height:470px}.section{padding:51px 0}.features{grid-template-columns:1fr}.footer-inner{align-items:flex-start}.site-footer nav{flex-wrap:wrap;justify-content:flex-end;gap:9px 17px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* Product identities: editorial, utility, journal, and game compositions. */
+body{--muted:color-mix(in srgb,var(--ink) 72%,var(--paper));--line:color-mix(in srgb,var(--ink) 16%,var(--paper));--surface:color-mix(in srgb,var(--accent) 7%,var(--paper));--white:var(--paper)}
+.site-header{background:var(--paper)}
+.brand.product-brand{display:flex;gap:12px;align-items:center;letter-spacing:-.035em;font-size:17px;max-width:65%;line-height:1.3}
+.product-brand span{color:var(--ink)}
+.product-brand .app-icon{width:34px;height:34px;margin:0;border-radius:9px;flex-shrink:0}
+.hero{padding-top:88px;padding-bottom:88px;min-height:700px;gap:55px}
+h1{font-size:clamp(38px,4.2vw,60px);line-height:1.28;letter-spacing:-.065em;word-break:keep-all;overflow-wrap:break-word}
+html[lang=en] h1{letter-spacing:-.045em;font-size:clamp(40px,4.5vw,62px)}
+.hero-copy .eyebrow{letter-spacing:.12em;font-size:11px;line-height:1.8;margin-bottom:30px}
+.lead{font-size:18px;color:var(--muted);margin:27px 0 30px;max-width:510px}
+.store-button{background:var(--accent);color:var(--paper);border:1px solid var(--accent);border-radius:7px;font-size:14px}
+.store-button:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.store-button:not(:first-child){background:transparent;color:var(--ink);border-color:var(--line)}
+.store-button:not(:first-child):hover{border-color:var(--accent);color:var(--accent)}
+.hero-media{background:var(--surface);padding:20px;box-shadow:none;min-height:400px;max-height:none;position:relative;border:1px solid var(--line)}
+.screen-composition{height:535px;width:100%;position:relative;isolation:isolate}
+.hero-media .screen-primary{position:absolute;left:5%;top:0;width:64%;height:94%;max-height:none;object-fit:contain;filter:drop-shadow(0 18px 20px #0002);border-radius:18px;z-index:2}
+.hero-media .screen-secondary{position:absolute;right:0;bottom:0;width:49%;height:78%;max-height:none;object-fit:contain;filter:drop-shadow(0 15px 18px #0002);border-radius:15px;z-index:1;transform:rotate(5deg)}
+.highlights{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.highlights>div{padding:25px 30px;display:flex;align-items:baseline;gap:20px}
+.highlights>div+div{border-left:1px solid var(--line)}
+.highlight-number{font-size:11px;font-weight:750;letter-spacing:.08em;color:var(--accent);font-variant-numeric:tabular-nums}
+.highlights p{font-size:15px;font-weight:650;margin:0;line-height:1.5}
+.content{border-top:0}
+.intro{max-width:none;display:grid;grid-template-columns:1fr 2fr;column-gap:60px}
+.intro h2{grid-row:1 / span 20;font-size:20px}
+.intro p{grid-column:2;color:var(--muted);font-size:16px;max-width:680px}
+.features li{background:var(--surface);color:var(--ink)}
+.features{gap:0 30px}
+.features li{border:0;border-bottom:1px solid var(--line);border-radius:0;padding:20px 0;background:none}
+.features li:before{color:var(--accent)}
+.gallery a{background:var(--surface);border-color:var(--line)}
+.gallery img{height:460px}
+.closing{text-align:center;padding:85px 0 90px}
+.closing .actions{justify-content:center;margin:30px 0}
+.closing .back-link{font-size:13px;color:var(--muted)}
+.product-game .hero{display:flex;flex-direction:column;text-align:center;gap:42px;min-height:0;padding-top:64px}
+.product-game .hero-copy{max-width:850px}
+.product-game h1{font-size:clamp(42px,5.5vw,76px)}
+.product-game .lead{max-width:670px;margin-left:auto;margin-right:auto}
+.product-game .actions{justify-content:center}
+.product-game .hero-media{width:100%;max-width:940px;min-height:0;padding:20px;border-radius:12px;background:var(--surface)}
+.product-game .hero-media>img{max-height:460px;width:100%;object-fit:contain}
+.product-game .cover-fallback{padding:80px 20px}
+
+/* Warm diaries and the reading room. */
+.design-library{font-family:Georgia,"Batang","바탕",serif}
+.design-library .hero{grid-template-columns:1.05fr 1fr}
+.design-library .hero-media{background:transparent;border:0;border-radius:0;border-bottom:8px solid #b29270}
+.design-library .screen-secondary{transform:rotate(7deg);right:-1%}
+.design-library .store-button,.design-library nav,.design-library .eyebrow{font-family:system-ui,sans-serif}
+.design-library .section h2{font-weight:500}
+.design-library .highlights{border-top:3px double var(--line);border-bottom:3px double var(--line)}
+.design-memory .hero-media{border:0;border-radius:46% 46% 22px 22px;background:linear-gradient(145deg,#f9d9d9,#e8def1)}
+.design-memory .screen-primary{transform:rotate(-4deg)}
+.design-memory .features li,.design-journal .features li{border-radius:16px;background:var(--surface);padding:20px;margin:6px 0;border:0}
+.design-journal .hero-media{background:radial-gradient(ellipse at 25% 30%,#eed4f0,transparent 65%),#efeafa;border:0;border-radius:44px 12px 44px 12px}
+.design-journal h1{font-weight:650}
+.design-journal .highlights>div{border-left:0}
+.design-journal .highlight-number{width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%}
+
+/* Calendars, ledgers, and field notebooks. */
+.design-ledger .hero-media{border-radius:0;background:linear-gradient(90deg,var(--line) 1px,transparent 1px),linear-gradient(var(--line) 1px,transparent 1px);background-size:44px 44px}
+.design-ledger .highlights{background:var(--ink);color:var(--paper)}
+.design-ledger .highlight-number{color:#bcd1ff}
+.design-ledger .features li{font-variant-numeric:tabular-nums}
+.design-planner .hero-media{border-radius:8px;background:repeating-linear-gradient(var(--surface),var(--surface) 35px,var(--line) 36px)}
+.design-planner .hero-copy{border-left:3px solid var(--accent);padding-left:28px}
+.design-planner .highlights>div{border-top:4px solid var(--accent)}
+.design-field .hero-media{border-radius:180px 180px 12px 12px;background:#dce6d3}
+.design-field .eyebrow{font-family:monospace;letter-spacing:.17em}
+.design-field .highlights{border-top:2px solid var(--ink)}
+.design-field .features li{border-left:3px solid var(--accent);padding-left:18px;margin-bottom:12px}
+.design-wellness .hero-media{border-radius:240px 240px 28px 28px;background:#e0ead5;border:0}
+.design-wellness h1{font-weight:600;letter-spacing:-.07em}
+.design-wellness .highlights>div{justify-content:center}
+.design-atlas .hero-media{border-radius:4px;background-color:#dcebed;background-image:linear-gradient(#176b8715 1px,transparent 1px),linear-gradient(90deg,#176b8715 1px,transparent 1px);background-size:38px 38px;border:1px solid #176b8750}
+.design-atlas .highlights{border:1px dashed var(--accent)}
+.design-atlas .highlight-number{border:1px solid var(--accent);border-radius:50%;padding:7px}
+.design-atlas .hero-copy .eyebrow{letter-spacing:.2em}
+
+/* Training and quests have their own pace. */
+.design-training h1{font-weight:950;letter-spacing:-.075em;text-transform:uppercase}
+.design-training .hero-media{background:linear-gradient(135deg,#b8ee581c,transparent);border-radius:0;border-right:5px solid var(--accent)}
+.design-training .store-button,.design-quest .store-button{color:var(--paper)}
+.design-training .store-button:not(:first-child),.design-quest .store-button:not(:first-child){color:var(--ink)}
+.design-training .highlights{background:var(--accent);color:var(--paper);border:0}
+.design-training .highlight-number{color:var(--paper)}
+.design-training .section h2{font-weight:900}
+.design-quest .hero-media{border:1px solid #e8b95066;background:radial-gradient(ellipse at center,#57483455,transparent 70%);border-radius:12px}
+.design-quest .highlights{border:1px solid #e8b95055}
+.design-quest .highlight-number{font-family:Georgia,serif;font-size:22px}
+.design-quest .features li{border:1px solid var(--line);padding:20px;margin-bottom:12px;background:var(--surface)}
+
+/* Game pages use a broad stage for art and gameplay. */
+.design-cosmos{background-image:radial-gradient(ellipse at 80% 10%,#6d52962b,transparent 45%)}
+.design-cosmos .hero-media{border-radius:50px;background:radial-gradient(ellipse,#49417466,transparent 70%);border:0}
+.design-neon .hero-media{border-color:#95e6ed55;box-shadow:0 0 60px #8877dd22}
+.design-neon h1{background:linear-gradient(110deg,#95e6ed,#e7b6f1,#eed697);background-clip:text;color:transparent}
+.design-terminal{font-family:"Consolas",system-ui,sans-serif}
+.design-terminal .hero-media{border-radius:0;border:1px solid #9be27566;background-image:linear-gradient(#9be2750b 1px,transparent 1px),linear-gradient(90deg,#9be2750b 1px,transparent 1px);background-size:20px 20px}
+.design-stadium .hero-media{border:1px solid #b6f06a66;border-radius:100px 100px 12px 12px;background:repeating-linear-gradient(90deg,#b6f06a08,#b6f06a08 80px,transparent 80px,transparent 160px)}
+.design-stadium h1,.design-training h1{font-style:italic}
+.design-blocks .hero-media{border:0;background-image:linear-gradient(#2b64a015 2px,transparent 2px),linear-gradient(90deg,#2b64a015 2px,transparent 2px);background-size:40px 40px}
+.design-type h1{font-family:Consolas,monospace;letter-spacing:-.03em}
+.design-type .hero-media{border:2px solid var(--ink);border-radius:0}
+.design-playful .hero-media{border-radius:60px 16px;background:#f8dfd4;border:0}
+.design-picnic .hero-media{border:8px solid #ead3b7;background:repeating-linear-gradient(45deg,#f1d7bd55,#f1d7bd55 20px,transparent 20px,transparent 40px)}
+.design-maze .hero-media{border:2px solid var(--accent);border-radius:0;box-shadow:10px 10px 0 #e6cf6e20}
+.design-castle h1{font-family:Georgia,"Batang",serif;font-weight:700}
+.design-castle .hero-media{border:1px solid #dec59160;border-radius:0;outline:1px solid #dec59130;outline-offset:8px}
+.design-shadow .hero-media{border:0;background:radial-gradient(ellipse,#d6a9ed17,transparent 70%);border-bottom:1px solid var(--line)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:5px}
+
+@media(max-width:900px){
+  .hero{gap:26px;min-height:0}.screen-composition{height:460px}
+  .highlights>div{padding:22px 16px;gap:12px}
+}
+@media(max-width:760px){
+  .brand.product-brand{font-size:14px;gap:8px;max-width:62%}.product-brand .app-icon{width:28px;height:28px}
+  .header-inner nav{gap:13px}.header-inner nav a{font-size:12px}
+  .hero,.design-library .hero{grid-template-columns:1fr;padding-top:50px;padding-bottom:48px;gap:36px}
+  h1,html[lang=en] h1{font-size:clamp(34px,8.8vw,48px)}.lead{font-size:16px}
+  .hero-copy .eyebrow{font-size:10px;margin-bottom:22px}
+  .hero-media{min-height:0;padding:17px;max-height:none}
+  .screen-composition{height:475px;max-width:440px;margin:auto}
+  .hero-media .screen-primary{width:66%;left:1%}
+  .hero-media .screen-secondary{width:50%;right:1%}
+  .highlights{grid-template-columns:1fr}
+  .highlights>div{padding:17px 12px}
+  .highlights>div+div{border-left:0;border-top:1px solid var(--line)}
+  .highlights p{font-size:14px}.highlight-number{min-width:27px}
+  .intro{display:block}.intro p{font-size:15px}
+  .section{padding:45px 0}.gallery img{height:390px}
+  .features{grid-template-columns:1fr}.features li{font-size:14px}
+  .product-game .hero{padding-top:48px;gap:30px}
+  .product-game h1{font-size:clamp(34px,8.5vw,50px)}
+  .product-game .hero-media{padding:12px}
+  .design-planner .hero-copy{padding-left:18px}
+  .design-wellness .highlights>div{justify-content:flex-start}
+  .design-library .hero-media{padding-bottom:0}
+  .closing{padding:55px 0}
+}
+@media(max-width:380px){.wrap{width:calc(100% - 28px)}.screen-composition{height:390px}.store-button{font-size:13px;padding:11px 13px}}
