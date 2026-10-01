@@ -63,7 +63,9 @@ layout: hub-base
       '<p>' + esc(d) + '</p><div class="meta-row">' +
       (tag ? '<span class="tag">' + esc(tag) + '</span>' : '<span></span>') +
       '<span class="stores">' + stores + '</span></div></div>';
-    return '<a class="card' + (soon ? ' soon' : '') + '" href="#' + esc(item.slug) + '">' + art + body + '</a>';
+    var landing = item.type === 'game' ? '/games/' : '/apps/';
+    landing += encodeURIComponent(item.slug) + '/' + (LANG === 'en' ? 'en/' : '');
+    return '<a class="card' + (soon ? ' soon' : '') + '" href="' + landing + '">' + art + body + '</a>';
   }
 
   // ---- detail modal -----------------------------------------------------------
