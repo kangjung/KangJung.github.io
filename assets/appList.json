@@ -3,19 +3,22 @@
     "type": "game",
     "slug": "animal-escape",
     "landingMode": "manual",
-    "status": "developing",
+    "status": "released",
     "title": { "ko": "Animal Escape", "en": "Animal Escape" },
     "desc": {
       "ko": "동물들을 움직여 길을 만들고 목표 동물을 탈출시키는 모바일 3D 퍼즐",
       "en": "A mobile 3D puzzle about moving animals to clear a path to the exit."
     },
     "longDesc": {
-      "ko": "각기 다른 크기의 동물을 움직여 목표 동물을 탈출시키세요. 300개 스테이지와 30종의 동물이 기다립니다. Android 버전 개발 중입니다.",
-      "en": "Move animals of different sizes to guide the target to the exit. Explore 300 stages and 30 animal species. In development for Android."
+      "ko": "각기 다른 크기의 동물을 움직여 목표 동물을 탈출시키세요. 300개 스테이지와 30종의 동물이 기다립니다. Google Play에서 무료로 받을 수 있습니다.",
+      "en": "Move animals of different sizes to guide the target to the exit. Explore 300 stages and 30 animal species. Available free on Google Play."
     },
     "img": "/games/animal-escape/images/feature-animals.png",
     "icon": "/games/animal-escape/images/icon.png",
-    "tags": ["Unity", "Android", "Puzzle"]
+    "tags": ["Unity", "Android", "Puzzle"],
+    "stores": [
+      { "name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.KangJung.animalescape" }
+    ]
   },
   {
     "type": "game",
