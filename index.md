@@ -18,7 +18,7 @@ img: ":banner.png"
         그때그때 가볍게 만듭니다. 본업은 웹 개발이고, 이건 취미예요.
       </p>
       <div class="stats reveal" style="animation-delay:.18s">
-        <div class="stat"><div class="num" id="stat-games">9</div><div class="lab">게임</div></div>
+        <div class="stat"><div class="num" id="stat-games">12</div><div class="lab">게임</div></div>
         <div class="stat"><div class="num" id="stat-apps">5</div><div class="lab">앱과 서비스</div></div>
         <div class="stat"><div class="num" id="stat-tools">6</div><div class="lab">웹 도구</div></div>
       </div>
@@ -46,7 +46,7 @@ img: ":banner.png"
     <div class="sec-head">
       <span class="eyebrow">Games</span>
       <h2>게임</h2>
-      <p>Unity와 HTML5로 만들어 여러 스토어에 출시했어요.</p>
+      <p>Unity와 HTML5로 게임을 만들고 있어요.</p>
     </div>
     <div class="grid games" id="games-grid"></div>
   </section>
