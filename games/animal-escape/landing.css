@@ -42,6 +42,28 @@ h1 { margin: 0 0 24px; font-size: clamp(36px, 4.1vw, 57px); line-height: 1.27; l
 .rules h2 { margin: 0; max-width: 420px; font-size: 25px; line-height: 1.5; letter-spacing: -.045em; word-break: keep-all; }
 .rules p { margin: 0 0 14px; color: var(--muted); font-size: 15px; }
 .rules .tip { font-size: 13px; }
+.modes { padding: 50px 0 62px; border-top: 1px solid var(--line); scroll-margin-top: 24px; }
+.section-heading { margin-bottom: 30px; }
+.section-heading h2, .beyond h2 { margin: 0 0 12px; font-size: 30px; line-height: 1.4; letter-spacing: -.045em; }
+.section-heading > p { margin: 0; color: var(--muted); font-size: 15px; }
+.mode-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+.mode-grid article { border-top: 3px solid var(--yellow); padding-top: 18px; }
+.mode-grid h3 { margin: 6px 0 14px; font-size: 23px; line-height: 1.35; letter-spacing: -.035em; }
+.mode-grid p { margin: 0; color: var(--muted); font-size: 14px; }
+.mode-grid .eyebrow { color: var(--ink); font-size: 12px; font-weight: 700; }
+.mode-grid .unlock { margin-top: 16px; font-size: 12px; }
+.ranking-note { margin-top: 32px; padding: 23px 25px; border-radius: 6px; background: var(--green); }
+.ranking-note h3 { margin: 0 0 7px; font-size: 17px; }
+.ranking-note p { margin: 0; font-size: 14px; color: var(--muted); }
+.beyond { display: grid; grid-template-columns: .82fr 1.18fr; align-items: center; gap: 70px; padding: 68px 0; border-bottom: 1px solid var(--line); }
+.meadow-shot { width: min(100%, 330px); justify-self: center; }
+.meadow-shot img { width: 100%; border: 1px solid var(--line); border-radius: 8px; }
+.meadow-shot figcaption { padding-top: 12px; color: var(--muted); font-size: 12px; }
+.beyond-copy h2 { margin-bottom: 26px; }
+.beyond-copy h3 { margin: 0 0 8px; font-size: 18px; letter-spacing: -.025em; }
+.beyond-copy > div { margin-top: 24px; }
+.beyond-copy p { margin: 0; color: var(--muted); font-size: 14px; }
+.beyond-copy .languages { margin-top: 28px; font-size: 12px; }
 .screens { background: var(--green); padding: 66px 0 70px; }
 .screens-header { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 32px; }
 .screens-header h2 { margin: 0; font-size: 30px; line-height: 1.3; letter-spacing: -.04em; }
@@ -69,6 +91,8 @@ footer { border-top: 1px solid var(--line); padding: 23px 0 28px; }
   .rules, .screens-layout, .developer { gap: 30px; }
   .screens-header { align-items: start; flex-direction: column; gap: 10px; }
   .screens-layout { grid-template-columns: 1fr 1fr; }
+  .mode-grid { gap: 22px; }
+  .beyond { gap: 32px; }
 }
 @media (max-width: 600px) {
   .topbar { min-height: 62px; }
@@ -87,7 +111,17 @@ footer { border-top: 1px solid var(--line); padding: 23px 0 28px; }
   .screens-layout { grid-template-columns: 1fr; gap: 32px; }
   .screens-pair { gap: 12px; }
   .game-notes h3 { font-size: 24px; }
+  .modes { padding: 35px 0 42px; }
+  .section-heading h2, .beyond h2 { font-size: 27px; }
+  .mode-grid { grid-template-columns: 1fr; gap: 26px; }
+  .mode-grid article { padding-top: 15px; }
+  .mode-grid h3 { font-size: 22px; }
+  .ranking-note { padding: 20px; }
+  .beyond { grid-template-columns: 1fr; gap: 30px; padding: 42px 0; }
+  .beyond-copy { grid-row: 1; }
+  .meadow-shot { width: min(100%, 290px); }
   .developer { grid-template-columns: 1fr; gap: 17px; padding: 35px 0; }
   .footer-inner { flex-direction: column; gap: 12px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
