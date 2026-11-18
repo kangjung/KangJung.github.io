@@ -1,0 +1,9 @@
+{
+    "loaderUrl": "Build/WebRelease.loader.js",
+    "dataUrl": "Build/WebRelease.data.unityweb",
+    "frameworkUrl": "Build/WebRelease.framework.js.unityweb",
+    "codeUrl": "Build/WebRelease.wasm.unityweb",
+    "companyName": "KangJung",
+    "productName": "Spin Harvest",
+    "productVersion": "Preview 1"
+}

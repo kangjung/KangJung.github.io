@@ -1,0 +1,203 @@
+{
+    "version": "preview-1",
+    "stages": [
+        {
+            "id": "1",
+            "title": "First tomato",
+            "chapter": "기본 농장",
+            "number": 1
+        },
+        {
+            "id": "2",
+            "title": "Two branches",
+            "chapter": "기본 농장",
+            "number": 2
+        },
+        {
+            "id": "3",
+            "title": "Pocket and shortcut",
+            "chapter": "기본 농장",
+            "number": 3
+        },
+        {
+            "id": "4",
+            "title": "Share the harvest",
+            "chapter": "기본 농장",
+            "number": 4
+        },
+        {
+            "id": "5",
+            "title": "Choose an exit",
+            "chapter": "기본 농장",
+            "number": 5
+        },
+        {
+            "id": "6",
+            "title": "Small and large",
+            "chapter": "기본 농장",
+            "number": 6
+        },
+        {
+            "id": "7",
+            "title": "Tomato shortcut",
+            "chapter": "기본 농장",
+            "number": 7
+        },
+        {
+            "id": "8",
+            "title": "Pumpkin bridge",
+            "chapter": "기본 농장",
+            "number": 8
+        },
+        {
+            "id": "9",
+            "title": "Three crop decisions",
+            "chapter": "기본 농장",
+            "number": 9
+        },
+        {
+            "id": "10",
+            "title": "Apple picking",
+            "chapter": "과수원",
+            "number": 1
+        },
+        {
+            "id": "11",
+            "title": "Two deliveries",
+            "chapter": "과수원",
+            "number": 2
+        },
+        {
+            "id": "12",
+            "title": "Apple shortcut",
+            "chapter": "과수원",
+            "number": 3
+        },
+        {
+            "id": "13",
+            "title": "Pumpkin detour",
+            "chapter": "과수원",
+            "number": 4
+        },
+        {
+            "id": "14",
+            "title": "Two fruit shelves",
+            "chapter": "과수원",
+            "number": 5
+        },
+        {
+            "id": "15",
+            "title": "Orchard finale",
+            "chapter": "과수원",
+            "number": 6
+        },
+        {
+            "id": "16",
+            "title": "Pumpkin is the key",
+            "chapter": "호박 열쇠",
+            "number": 1
+        },
+        {
+            "id": "17",
+            "title": "Open, then sort",
+            "chapter": "호박 열쇠",
+            "number": 2
+        },
+        {
+            "id": "18",
+            "title": "One key, two doors",
+            "chapter": "호박 열쇠",
+            "number": 3
+        },
+        {
+            "id": "19",
+            "title": "Enter the open room",
+            "chapter": "호박 릴레이",
+            "number": 1
+        },
+        {
+            "id": "20",
+            "title": "Keep a spare key",
+            "chapter": "호박 릴레이",
+            "number": 2
+        },
+        {
+            "id": "21",
+            "title": "Three room relay",
+            "chapter": "호박 릴레이",
+            "number": 3
+        },
+        {
+            "id": "22",
+            "title": "Sift before release",
+            "chapter": "수확의 선택",
+            "number": 1
+        },
+        {
+            "id": "23",
+            "title": "Release the worker",
+            "chapter": "수확의 선택",
+            "number": 2
+        },
+        {
+            "id": "24",
+            "title": "Keep your footing",
+            "chapter": "수확의 선택",
+            "number": 3
+        },
+        {
+            "id": "25",
+            "title": "Help from inside",
+            "chapter": "이웃 구출",
+            "number": 1
+        },
+        {
+            "id": "26",
+            "title": "Rescue your neighbour",
+            "chapter": "이웃 구출",
+            "number": 2
+        },
+        {
+            "id": "27",
+            "title": "The side window",
+            "chapter": "이웃 구출",
+            "number": 3
+        },
+        {
+            "id": "28",
+            "title": "One for each",
+            "chapter": "나눠 담기",
+            "number": 1
+        },
+        {
+            "id": "29",
+            "title": "One then two",
+            "chapter": "나눠 담기",
+            "number": 2
+        },
+        {
+            "id": "30",
+            "title": "Release by demand",
+            "chapter": "나눠 담기",
+            "number": 3
+        },
+        {
+            "id": "31",
+            "title": "Across the divider",
+            "chapter": "교차로",
+            "number": 1
+        },
+        {
+            "id": "32",
+            "title": "Small fruit first?",
+            "chapter": "교차로",
+            "number": 2
+        },
+        {
+            "id": "33",
+            "title": "Two crossings",
+            "chapter": "교차로",
+            "number": 3
+        }
+    ]
+}
