@@ -14,3 +14,32 @@ body{display:block;height:auto;min-height:100dvh}
 .ad-label{display:block;font:12px/1.5 system-ui,sans-serif;color:#77836e;margin-bottom:12px}
 .privacy-link{text-align:center;margin:32px 0 0;font-size:12px}
 .privacy-link a{color:#738269}
+
+/* Play uses the whole viewport; navigation and hold controls share the old bottom UI strip. */
+body.playing .game-shell{grid-template-rows:minmax(0,1fr)}
+body.playing .game-shell>header,body.playing .game-shell>footer{display:none}
+body.playing #play{padding:0}
+body.playing .play-tip{display:none}
+#game-frame{max-height:none;flex:none}
+#turn-controls{position:absolute;left:8px;right:8px;bottom:max(8px,env(safe-area-inset-bottom));display:flex;justify-content:space-between;align-items:center;gap:8px;z-index:2;pointer-events:none}
+#turn-controls button{pointer-events:auto;touch-action:none;user-select:none;-webkit-user-select:none;margin:0;min-height:56px;min-width:64px;box-shadow:0 4px 0 #26472c;border-color:#2f5834;background:#eff8d1;color:#315834}
+#turn-controls .turn-button{width:78px;height:64px;padding:2px 10px;border-radius:22px;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.turn-button span{font:36px/1 system-ui,sans-serif}.turn-button small{font-size:12px}
+#turn-controls button.held{background:#8ab45e;transform:translateY(3px);box-shadow:none;color:#fff}
+#turn-controls #play-menu{font-size:14px;padding:8px 12px;min-width:90px;min-height:44px;background:#fff5d5}
+@media(max-height:520px){#turn-controls .turn-button{width:58px;min-width:48px;height:48px;min-height:48px}.turn-button span{font-size:26px}.turn-button small{font-size:10px}#turn-controls #play-menu{font-size:11px;min-width:66px;padding:5px}}
+
+/* One small persistent banner, reserved below the game; no overlay or explanatory panel. */
+body{height:100dvh;min-height:0;display:grid;grid-template-rows:minmax(0,1fr) auto;overflow:hidden}
+.game-shell{height:auto;min-height:0}
+.harvest-ad{width:100%;max-width:none;min-height:0;margin:0;padding:20px 0 max(4px,env(safe-area-inset-bottom));background:#fffcef;text-align:center;border-top:1px solid #dedec8;line-height:0}
+.ad-label{font:10px/14px system-ui,sans-serif;margin:0 0 4px;color:#66725e}
+.ad-label a{color:inherit;text-decoration:none;margin-left:6px}
+.harvest-banner{vertical-align:bottom}
+@media(max-width:339px){.harvest-banner{width:300px!important}}
+
+body.playing .game-shell{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+/* The banner row already reserves the bottom safe area. Do not lift controls twice. */
+#turn-controls{bottom:8px}
+
+@media(max-height:600px){#turn-controls .turn-button{height:52px;min-height:52px;width:70px}.turn-button span{font-size:30px}}
