@@ -27,3 +27,27 @@ window.addEventListener("spinharvest:state",event=>{const n=Number(event.detail?
 $("menu-button").onclick=openMenu;$("resume").onclick=hideMenu;$("start").onclick=()=>launch(stages.find(s=>!completed.has(Number(s.id)))?.id*1||1);
 window.addEventListener("resize",resize);document.addEventListener("keydown",event=>{if(event.key==="Escape"&&!$("chooser").hidden&&player){event.preventDefault();hideMenu();}});
 (async()=>{try{const response=await fetch("stages.json");if(!response.ok)throw new Error("스테이지 목록을 불러오지 못했어요.");const data=await response.json();stages=data.stages;if(!Array.isArray(stages)||stages.length!==33)throw new Error("스테이지 목록을 확인해 주세요.");draw();$("start").disabled=false;$("start").textContent=completed.size?"다음 밭으로 가기 →":"첫 수확 시작하기 →";const requested=Number(new URL(location.href).searchParams.get("stage"));if(requested>=1&&requested<=stages.length)$("start").onclick=()=>launch(requested);}catch(e){error(e);}})();
+
+// A single manual unit below the full-height game and guide. No stage-change refresh.
+// Local previews never contact the live advertising service.
+(function setupHarvestAd() {
+ const placement = document.getElementById("harvest-ad");
+ if (!placement || location.hostname !== "kangjung.github.io") return;
+ let requested = false;
+ function requestAd() {
+  if (requested || placement.clientWidth === 0) return;
+  requested = true;
+  const script = document.createElement("script");
+  script.async = true;
+  script.crossOrigin = "anonymous";
+  script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2007216448786117";
+  document.head.append(script);
+  try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch { /* Gameplay is independent of ads. */ }
+ }
+ if ("IntersectionObserver" in window) {
+  const observer = new IntersectionObserver(entries => {
+   if (entries.some(entry => entry.isIntersecting)) { requestAd(); observer.disconnect(); }
+  });
+  observer.observe(placement);
+ } else requestAd();
+})();
