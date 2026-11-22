@@ -5,7 +5,8 @@ body{margin:0;height:100vh;height:100dvh;display:grid;grid-template-rows:auto mi
 /* An ordinary, reserved document row. No fixed/sticky ad overlay or web game controls. */
 #harvest-ad{display:flex;flex-direction:column;align-items:center;gap:4px;padding:calc(5px + env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) 14px max(8px,env(safe-area-inset-left));background:#f7f6e8;border-bottom:1px solid #d6dfc8;min-width:0}
 .ad-label{font:11px/14px system-ui,sans-serif;color:#66725e}
-#harvest-ad ins{flex:0 0 50px}
+/* A dimensioned parent opts out of mobile ad-size optimization (AdSense help 9139818). Do not crop ad creatives. */
+.ad-slot{width:300px;height:50px;flex:0 0 50px}
 #game{position:relative;min-width:0;min-height:0;margin:0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
 #unity-canvas{display:block;width:100%;height:100%;touch-action:none;outline:none;background:#263f36}
 .overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:#e9f0d5;padding:24px;text-align:center}
