@@ -1,0 +1,20 @@
+{
+  "release": "goal2-20261122",
+  "sourceCommit": "b76d2f4",
+  "verificationCommit": "d6845d9",
+  "companyName": "DefaultCompany",
+  "productName": "Spin Harvest",
+  "productVersion": "0.1",
+  "worlds": 4,
+  "stages": 60,
+  "sha256": {
+    "Build/goal2-20261122/GoalTwoReviewWebGL.data.unityweb": "7ea414a9007bff7498e5f9892a976e704b38be077ea384a3ed6024958151f189",
+    "Build/goal2-20261122/GoalTwoReviewWebGL.framework.js.unityweb": "aa46b87de975353a76f84faf40c508d6f4330eea0ea96a1d297dbe315e73a49d",
+    "Build/goal2-20261122/GoalTwoReviewWebGL.loader.js": "e7d09424a1b7bd894bbb1b08446448d828a59e48684523902e5eb39c1965f68b",
+    "Build/goal2-20261122/GoalTwoReviewWebGL.wasm.unityweb": "f1516fb98fc8dec17644ebe119cd6eba1b4db3a1a7863905e662b564ca1e857f"
+  },
+  "loaderUrl": "Build/goal2-20261122/GoalTwoReviewWebGL.loader.js",
+  "dataUrl": "Build/goal2-20261122/GoalTwoReviewWebGL.data.unityweb",
+  "frameworkUrl": "Build/goal2-20261122/GoalTwoReviewWebGL.framework.js.unityweb",
+  "codeUrl": "Build/goal2-20261122/GoalTwoReviewWebGL.wasm.unityweb"
+}
