@@ -28,7 +28,7 @@
 
   async function start() {
     try {
-      const response = await fetch("player-manifest.json?v=bumper-20261122", {cache:"no-store"});
+      const response = await fetch("player-manifest.json?v=touch-20261126", {cache:"no-store"});
       if (!response.ok) throw new Error(`Manifest ${response.status}`);
       const manifest = await response.json();
       await new Promise((resolve, reject) => {

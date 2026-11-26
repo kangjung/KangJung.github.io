@@ -1,20 +1,20 @@
 {
-  "release": "bumper-20261122",
-  "sourceCommit": "41db565",
-  "verificationCommit": "41db565",
+  "release": "touch-20261126",
+  "sourceCommit": "2eb9e7e",
+  "verificationCommit": "2eb9e7e",
   "companyName": "DefaultCompany",
   "productName": "Spin Harvest",
   "productVersion": "0.1",
   "worlds": 4,
   "stages": 61,
   "sha256": {
-    "Build/bumper-20261122/BumperHarvestWebGL.data.unityweb": "c431bb729df09f17d2af888a18834d3563eb69a2fce02849fa1e9810c25caaac",
-    "Build/bumper-20261122/BumperHarvestWebGL.framework.js.unityweb": "742bc0503f7fde3923d975786aadf76c4ae96903fab1f0f24290a3fabfea6416",
-    "Build/bumper-20261122/BumperHarvestWebGL.loader.js": "be22112596f9c55f4339863f28da0d80f824521ac759aae6e3e407b2e4d7f49e",
-    "Build/bumper-20261122/BumperHarvestWebGL.wasm.unityweb": "fe0acbda7333c18cb691d6abff7833c35ee5c5e0611cb5c0db6122d963af390e"
+    "Build/touch-20261126/TouchRotationWebGL.data.unityweb": "8c28b01abfdca32c14f414dcfcbfe8c3846be6809da371e7d63364885c5a6c5b",
+    "Build/touch-20261126/TouchRotationWebGL.framework.js.unityweb": "c693cfacbe2175840a97e16acf29c702290f17ae60b7edb190e5c05ba055f0a6",
+    "Build/touch-20261126/TouchRotationWebGL.loader.js": "a5ac0bd8ab76aadae551d51d9683500d66f03bf389771f733942424b5c994e94",
+    "Build/touch-20261126/TouchRotationWebGL.wasm.unityweb": "6e5762f863c35143f31747abc2688b29070d5040389d5795973340cbd285d0e9"
   },
-  "loaderUrl": "Build/bumper-20261122/BumperHarvestWebGL.loader.js",
-  "dataUrl": "Build/bumper-20261122/BumperHarvestWebGL.data.unityweb",
-  "frameworkUrl": "Build/bumper-20261122/BumperHarvestWebGL.framework.js.unityweb",
-  "codeUrl": "Build/bumper-20261122/BumperHarvestWebGL.wasm.unityweb"
+  "loaderUrl": "Build/touch-20261126/TouchRotationWebGL.loader.js",
+  "dataUrl": "Build/touch-20261126/TouchRotationWebGL.data.unityweb",
+  "frameworkUrl": "Build/touch-20261126/TouchRotationWebGL.framework.js.unityweb",
+  "codeUrl": "Build/touch-20261126/TouchRotationWebGL.wasm.unityweb"
 }
